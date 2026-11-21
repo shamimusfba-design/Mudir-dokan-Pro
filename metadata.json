@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "description": "",
+  "name": "MudirDokan Pro — Bangladesh Grocery POS & Digital Khata",
+  "description": "Offline-first Bangladesh Grocery POS, Weighted-Average Inventory Management, Digital Customer Khata, Credit Tracking & Self-Service Portal PWA.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
