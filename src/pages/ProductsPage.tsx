@@ -138,6 +138,16 @@ export const ProductsPage: React.FC = () => {
     });
   }, [products, search, catFilter, brandFilter, photoFilter, brandMap]);
 
+  const [displayLimit, setDisplayLimit] = useState(60);
+
+  useEffect(() => {
+    setDisplayLimit(60);
+  }, [search, catFilter, brandFilter, photoFilter]);
+
+  const visibleProducts = useMemo(() => {
+    return filtered.slice(0, displayLimit);
+  }, [filtered, displayLimit]);
+
   const filteredBrands = useMemo(() => {
     const q = search.trim().toLowerCase();
     return brands.filter(
@@ -562,7 +572,7 @@ export const ProductsPage: React.FC = () => {
       {/* TAB 1: PRODUCTS (VISUAL GRID OR DATA TABLE) */}
       {products.length > 0 && activeTab === 'products' && viewMode === 'grid' && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {filtered.map((p) => {
+          {visibleProducts.map((p) => {
             const cat = catMap.get(p.categoryId);
             const br = p.brandId ? brandMap.get(p.brandId) : null;
             const stock = Number(p.currentStock);
@@ -662,6 +672,28 @@ export const ProductsPage: React.FC = () => {
               </div>
             );
           })}
+          {displayLimit < filtered.length && (
+            <div className="col-span-full mt-6 flex flex-col items-center justify-center gap-2 py-4">
+              <p className="text-xs font-semibold text-slate-500">
+                {tx(
+                  lang,
+                  `Showing ${visibleProducts.length} of ${filtered.length} products`,
+                  `${filtered.length}টি পণ্যের মধ্যে ${visibleProducts.length}টি প্রদর্শিত`
+                )}
+              </p>
+              <button
+                type="button"
+                onClick={() => setDisplayLimit((prev) => prev + 60)}
+                className="rounded-xl border border-slate-300 bg-white px-6 py-2.5 text-sm font-bold text-slate-800 shadow-xs hover:border-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 transition dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
+              >
+                {tx(
+                  lang,
+                  `Load More Products (${filtered.length - visibleProducts.length} remaining)`,
+                  `আরও পণ্য দেখুন (বাকি ${filtered.length - visibleProducts.length}টি)`
+                )}
+              </button>
+            </div>
+          )}
         </div>
       )}
 
@@ -684,7 +716,7 @@ export const ProductsPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {filtered.map((p) => {
+                {visibleProducts.map((p) => {
                   const cat = catMap.get(p.categoryId);
                   const br = p.brandId ? brandMap.get(p.brandId) : null;
                   return (
@@ -783,6 +815,21 @@ export const ProductsPage: React.FC = () => {
               </tbody>
             </table>
           </div>
+          {displayLimit < filtered.length && (
+            <div className="flex flex-col items-center justify-center gap-2 border-t border-slate-100 p-4 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setDisplayLimit((prev) => prev + 60)}
+                className="rounded-xl border border-slate-300 bg-white px-5 py-2 text-xs font-bold text-slate-800 shadow-xs hover:border-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 transition dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
+              >
+                {tx(
+                  lang,
+                  `Load More (${filtered.length - visibleProducts.length} remaining)`,
+                  `আরও পণ্য দেখুন (বাকি ${filtered.length - visibleProducts.length}টি)`
+                )}
+              </button>
+            </div>
+          )}
         </div>
       )}
 

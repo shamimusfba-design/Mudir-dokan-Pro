@@ -196,6 +196,16 @@ export const PosPage: React.FC = () => {
     });
   }, [products, query, selectedCatId, selectedBrandId, stockFilter, variantFilter, priceRange, brandMap]);
 
+  const [displayLimit, setDisplayLimit] = useState(60);
+
+  useEffect(() => {
+    setDisplayLimit(60);
+  }, [query, selectedCatId, selectedBrandId, stockFilter, variantFilter, priceRange]);
+
+  const visibleProducts = useMemo(() => {
+    return filteredProducts.slice(0, displayLimit);
+  }, [filteredProducts, displayLimit]);
+
   const hasActiveFilters =
     selectedBrandId !== 'ALL' || stockFilter !== 'ALL' || variantFilter !== 'ALL' || priceRange !== 'ALL';
 
@@ -796,7 +806,7 @@ export const PosPage: React.FC = () => {
 
         {/* Visually Rich Product Selection Grid */}
         <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.map((prod) => {
+          {visibleProducts.map((prod) => {
             const stock = Number(prod.currentStock);
             const isOut = stock <= 0;
             const isLow = stock > 0 && stock <= Number(prod.minStock);
@@ -930,6 +940,28 @@ export const PosPage: React.FC = () => {
               </div>
             );
           })}
+          {displayLimit < filteredProducts.length && (
+            <div className="col-span-full mt-4 flex flex-col items-center justify-center gap-2 py-4">
+              <p className="text-xs font-semibold text-slate-500">
+                {tx(
+                  lang,
+                  `Showing ${visibleProducts.length} of ${filteredProducts.length} items`,
+                  `${filteredProducts.length}টি পণ্যের মধ্যে ${visibleProducts.length}টি প্রদর্শিত`
+                )}
+              </p>
+              <button
+                type="button"
+                onClick={() => setDisplayLimit((prev) => prev + 60)}
+                className="rounded-xl border border-slate-300 bg-white px-5 py-2 text-xs font-bold text-slate-800 shadow-xs hover:border-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 transition dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
+              >
+                {tx(
+                  lang,
+                  `Load More (${filteredProducts.length - visibleProducts.length} remaining)`,
+                  `আরও পণ্য দেখুন (বাকি ${filteredProducts.length - visibleProducts.length}টি)`
+                )}
+              </button>
+            </div>
+          )}
           {filteredProducts.length === 0 && (
             <div className="col-span-full rounded-2xl border border-dashed border-slate-300 bg-white py-14 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900">
               {tx(lang, 'No matching products found.', 'কোনো মিল থাকা পণ্য পাওয়া যায়নি।')}

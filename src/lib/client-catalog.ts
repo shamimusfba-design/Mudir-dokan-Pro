@@ -2,73 +2,908 @@ import { getManifestImageForSku, COMPLETE_CATALOG_MANIFEST } from './catalog-man
 import type { CachedProduct, CachedCategory, CachedBrand, CachedCustomer } from './offline-db.ts';
 
 export const CLIENT_BD_CATEGORIES = [
-  { name: 'Rice, Dal & Grains', nameBn: 'চাল, ডাল ও শস্য', iconName: 'wheat', accentColor: 'amber' },
-  { name: 'Flour, Atta, Maida & Suji', nameBn: 'আটা, ময়দা ও সুজি', iconName: 'wheat', accentColor: 'orange' },
-  { name: 'Cooking Oil & Ghee', nameBn: 'ভোজ্য তেল ও ঘি', iconName: 'droplet', accentColor: 'amber' },
-  { name: 'Salt & Sugar', nameBn: 'লবণ ও চিনি', iconName: 'sparkles', accentColor: 'cyan' },
-  { name: 'Spices & Masala', nameBn: 'মসলা ও গুঁড়া মসলা', iconName: 'flame', accentColor: 'rose' },
-  { name: 'Tea & Coffee', nameBn: 'চা ও কফি', iconName: 'coffee', accentColor: 'orange' },
-  { name: 'Biscuits & Bakery', nameBn: 'বিস্কুট ও বেকারি', iconName: 'cookie', accentColor: 'amber' },
-  { name: 'Snacks & Chips', nameBn: 'স্ন্যাকস ও চিপস', iconName: 'popcorn', accentColor: 'orange' },
-  { name: 'Chocolate & Candy', nameBn: 'চকলেট ও ক্যান্ডি', iconName: 'candy', accentColor: 'pink' },
-  { name: 'Soft Drinks & Beverages', nameBn: 'কোমল পানীয়', iconName: 'cup-soda', accentColor: 'indigo' },
-  { name: 'Juice & Packaged Drinks', nameBn: 'জুস ও প্যাকেট পানীয়', iconName: 'citrus', accentColor: 'orange' },
-  { name: 'Dairy & Milk Products', nameBn: 'দুধ ও দুগ্ধজাত পণ্য', iconName: 'milk', accentColor: 'cyan' },
-  { name: 'Eggs', nameBn: 'ডিম', iconName: 'egg', accentColor: 'amber' },
-  { name: 'Noodles & Pasta', nameBn: 'নুডুলস ও পাস্তা', iconName: 'utensils', accentColor: 'rose' },
-  { name: 'Sauces & Condiments', nameBn: 'সস ও আচার', iconName: 'soup', accentColor: 'rose' },
-  { name: 'Frozen & Packaged Food', nameBn: 'ফ্রোজেন ও প্যাকেট খাবার', iconName: 'snowflake', accentColor: 'cyan' },
-  { name: 'Baby Food & Baby Care', nameBn: 'শিশু খাদ্য ও যত্ন', iconName: 'baby', accentColor: 'pink' },
-  { name: 'Soap & Personal Care', nameBn: 'সাবান ও ব্যক্তিগত যত্ন', iconName: 'heart', accentColor: 'purple' },
-  { name: 'Shampoo & Hair Care', nameBn: 'শ্যাম্পু ও চুলের যত্ন', iconName: 'sparkles', accentColor: 'purple' },
-  { name: 'Toothpaste & Oral Care', nameBn: 'টুথপেস্ট ও মুখের যত্ন', iconName: 'smile', accentColor: 'cyan' },
-  { name: 'Detergent & Dishwashing', nameBn: 'ডিটারজেন্ট ও ডিশওয়াশ', iconName: 'spray-can', accentColor: 'indigo' },
-  { name: 'Household Cleaning', nameBn: 'গৃহস্থালি পরিষ্কারক', iconName: 'shield', accentColor: 'teal' },
-  { name: 'Tissue & Paper Products', nameBn: 'টিস্যু ও পেপার পণ্য', iconName: 'layers', accentColor: 'emerald' },
-  { name: 'Mosquito Repellent', nameBn: 'মশা তাড়ানোর পণ্য', iconName: 'zap', accentColor: 'rose' },
-  { name: 'Water & Bottled Drinks', nameBn: 'বোতলজাত পানি', iconName: 'droplets', accentColor: 'cyan' },
-  { name: 'Canned & Packaged Food', nameBn: 'টিনজাত ও প্যাকেট খাবার', iconName: 'package', accentColor: 'indigo' },
-  { name: 'Stationery & Daily Essentials', nameBn: 'স্টেশনারি ও নিত্যপ্রয়োজনীয়', iconName: 'pen-tool', accentColor: 'purple' },
-  { name: 'Miscellaneous', nameBn: 'অন্যান্য', iconName: 'shopping-bag', accentColor: 'emerald' },
+  {
+    "id": 1,
+    "name": "Rice, Dal & Grains",
+    "nameBn": "চাল, ডাল ও শস্য",
+    "iconName": "wheat",
+    "accentColor": "amber",
+    "img": "/images/categories/rice_grains.webp"
+  },
+  {
+    "id": 2,
+    "name": "Flour, Atta, Maida & Suji",
+    "nameBn": "আটা, ময়দা ও সুজি",
+    "iconName": "wheat",
+    "accentColor": "orange",
+    "img": "/images/categories/flour_atta.webp"
+  },
+  {
+    "id": 3,
+    "name": "Cooking Oil & Ghee",
+    "nameBn": "ভোজ্য তেল ও ঘি",
+    "iconName": "droplet",
+    "accentColor": "amber",
+    "img": "/images/categories/cooking_oil.webp"
+  },
+  {
+    "id": 4,
+    "name": "Salt & Sugar",
+    "nameBn": "লবণ ও চিনি",
+    "iconName": "sparkles",
+    "accentColor": "cyan",
+    "img": "/images/categories/salt_sugar.webp"
+  },
+  {
+    "id": 5,
+    "name": "Spices & Masala",
+    "nameBn": "মসলা ও গুঁড়া মসলা",
+    "iconName": "flame",
+    "accentColor": "rose",
+    "img": "/images/categories/spices_masala.webp"
+  },
+  {
+    "id": 6,
+    "name": "Tea & Coffee",
+    "nameBn": "চা ও কফি",
+    "iconName": "coffee",
+    "accentColor": "orange",
+    "img": "/images/categories/tea_coffee.webp"
+  },
+  {
+    "id": 7,
+    "name": "Biscuits & Bakery",
+    "nameBn": "বিস্কুট ও বেকারি",
+    "iconName": "cookie",
+    "accentColor": "amber",
+    "img": "/images/categories/biscuits_bakery.webp"
+  },
+  {
+    "id": 8,
+    "name": "Snacks & Chips",
+    "nameBn": "স্ন্যাকস ও চিপস",
+    "iconName": "popcorn",
+    "accentColor": "orange",
+    "img": "/images/categories/snacks_chips.webp"
+  },
+  {
+    "id": 9,
+    "name": "Chocolate & Candy",
+    "nameBn": "চকলেট ও ক্যান্ডি",
+    "iconName": "candy",
+    "accentColor": "pink",
+    "img": "/images/categories/chocolate_candy.webp"
+  },
+  {
+    "id": 10,
+    "name": "Soft Drinks & Beverages",
+    "nameBn": "কোমল পানীয়",
+    "iconName": "cup-soda",
+    "accentColor": "indigo",
+    "img": "/images/categories/soft_drinks.webp"
+  },
+  {
+    "id": 11,
+    "name": "Juice & Packaged Drinks",
+    "nameBn": "জুস ও প্যাকেট পানীয়",
+    "iconName": "citrus",
+    "accentColor": "orange",
+    "img": "/images/categories/juice_drinks.webp"
+  },
+  {
+    "id": 12,
+    "name": "Dairy & Milk Products",
+    "nameBn": "দুধ ও দুগ্ধজাত পণ্য",
+    "iconName": "milk",
+    "accentColor": "cyan",
+    "img": "/images/categories/dairy_milk.webp"
+  },
+  {
+    "id": 13,
+    "name": "Eggs",
+    "nameBn": "ডিম",
+    "iconName": "egg",
+    "accentColor": "amber",
+    "img": "/images/categories/eggs.webp"
+  },
+  {
+    "id": 14,
+    "name": "Noodles & Pasta",
+    "nameBn": "নুডুলস ও পাস্তা",
+    "iconName": "utensils",
+    "accentColor": "rose",
+    "img": "/images/categories/noodles_pasta.webp"
+  },
+  {
+    "id": 15,
+    "name": "Sauces & Condiments",
+    "nameBn": "সস ও আচার",
+    "iconName": "soup",
+    "accentColor": "rose",
+    "img": "/images/categories/sauces_condiments.webp"
+  },
+  {
+    "id": 16,
+    "name": "Frozen & Packaged Food",
+    "nameBn": "ফ্রোজেন ও প্যাকেট খাবার",
+    "iconName": "snowflake",
+    "accentColor": "cyan",
+    "img": "/images/categories/frozen_packaged.webp"
+  },
+  {
+    "id": 17,
+    "name": "Baby Food & Baby Care",
+    "nameBn": "শিশু খাদ্য ও যত্ন",
+    "iconName": "baby",
+    "accentColor": "pink",
+    "img": "/images/categories/baby_food.webp"
+  },
+  {
+    "id": 18,
+    "name": "Soap & Personal Care",
+    "nameBn": "সাবান ও ব্যক্তিগত যত্ন",
+    "iconName": "heart",
+    "accentColor": "purple",
+    "img": "/images/categories/soap_personal.webp"
+  },
+  {
+    "id": 19,
+    "name": "Shampoo & Hair Care",
+    "nameBn": "শ্যাম্পু ও চুলের যত্ন",
+    "iconName": "sparkles",
+    "accentColor": "purple",
+    "img": "/images/categories/shampoo_hair.webp"
+  },
+  {
+    "id": 20,
+    "name": "Toothpaste & Oral Care",
+    "nameBn": "টুথপেস্ট ও মুখের যত্ন",
+    "iconName": "smile",
+    "accentColor": "cyan",
+    "img": "/images/categories/toothpaste_oral.webp"
+  },
+  {
+    "id": 21,
+    "name": "Detergent & Dishwashing",
+    "nameBn": "ডিটারজেন্ট ও ডিশওয়াশ",
+    "iconName": "spray-can",
+    "accentColor": "indigo",
+    "img": "/images/categories/detergent_dishwashing.webp"
+  },
+  {
+    "id": 22,
+    "name": "Household Cleaning",
+    "nameBn": "গৃহস্থালি পরিষ্কারক",
+    "iconName": "shield",
+    "accentColor": "teal",
+    "img": "/images/categories/household_cleaning.webp"
+  },
+  {
+    "id": 23,
+    "name": "Tissue & Paper Products",
+    "nameBn": "টিস্যু ও পেপার পণ্য",
+    "iconName": "layers",
+    "accentColor": "emerald",
+    "img": "/images/categories/tissue_paper.webp"
+  },
+  {
+    "id": 24,
+    "name": "Mosquito Repellent",
+    "nameBn": "মশা তাড়ানোর পণ্য",
+    "iconName": "zap",
+    "accentColor": "rose",
+    "img": "/images/categories/mosquito_repellent.webp"
+  },
+  {
+    "id": 25,
+    "name": "Water & Bottled Drinks",
+    "nameBn": "বোতলজাত পানি",
+    "iconName": "droplets",
+    "accentColor": "cyan",
+    "img": "/images/categories/water_bottled.webp"
+  },
+  {
+    "id": 26,
+    "name": "Canned & Packaged Food",
+    "nameBn": "টিনজাত ও প্যাকেট খাবার",
+    "iconName": "package",
+    "accentColor": "indigo",
+    "img": "/images/categories/canned_packaged.webp"
+  },
+  {
+    "id": 27,
+    "name": "Stationery & Daily Essentials",
+    "nameBn": "স্টেশনারি ও নিত্যপ্রয়োজনীয়",
+    "iconName": "pen-tool",
+    "accentColor": "purple",
+    "img": "/images/categories/stationery_daily.webp"
+  },
+  {
+    "id": 28,
+    "name": "Miscellaneous",
+    "nameBn": "অন্যান্য",
+    "iconName": "shopping-bag",
+    "accentColor": "emerald",
+    "img": "/images/categories/miscellaneous.webp"
+  }
 ];
 
 export const CLIENT_BD_BRANDS = [
-  { name: 'PRAN', nameBn: 'প্রাণ', company: 'PRAN-RFL Group', logoUrl: '/catalog/brands/pran.jpg', logoSource: 'Official PRAN Brand Mark', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'Fresh', nameBn: 'ফ্রেশ', company: 'Meghna Group', logoUrl: '/catalog/brands/fresh.svg', logoSource: 'Official Meghna Group Logo', logoStatus: 'VERIFIED', brandColor: '#059669' },
-  { name: 'ACI', nameBn: 'এসিআই', company: 'ACI Limited', logoUrl: '/catalog/brands/aci.svg', logoSource: 'Official ACI Limited Logo', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
-  { name: 'Square', nameBn: 'স্কয়ার', company: 'Square Group', logoUrl: '/catalog/brands/square.svg', logoSource: 'Official Square Group Seal', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
-  { name: 'Bashundhara', nameBn: 'বসুন্ধরা', company: 'Bashundhara Group', logoUrl: '/catalog/brands/bashundhara.svg', logoSource: 'Official Bashundhara Logo', logoStatus: 'VERIFIED', brandColor: '#047857' },
-  { name: 'Akij', nameBn: 'আকিজ', company: 'Akij Group', logoUrl: '/catalog/brands/akij.svg', logoSource: 'Official Akij Group Logo', logoStatus: 'VERIFIED', brandColor: '#0284C7' },
-  { name: 'Teer', nameBn: 'তীর', company: 'City Group', logoUrl: '/catalog/brands/teer.png', logoSource: 'Official City Group Logo', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
-  { name: 'Unilever', nameBn: 'ইউনিলিভার', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/unilever.svg', logoSource: 'Official Unilever Logo', logoStatus: 'VERIFIED', brandColor: '#1E40AF' },
-  { name: 'Marico', nameBn: 'ম্যারিকো', company: 'Marico Bangladesh', logoUrl: '/catalog/brands/marico.svg', logoSource: 'Official Marico Logo', logoStatus: 'VERIFIED', brandColor: '#0369A1' },
-  { name: 'Nestlé', nameBn: 'নেসলে', company: 'Nestlé Bangladesh', logoUrl: '/catalog/brands/nestle.svg', logoSource: 'Official Nestlé Logo', logoStatus: 'VERIFIED', brandColor: '#475569' },
-  { name: 'Coca-Cola', nameBn: 'কোকা-কোলা', company: 'Coca-Cola Bangladesh', logoUrl: '/catalog/brands/coca-cola.svg', logoSource: 'Official Coca-Cola Logo', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'PepsiCo', nameBn: 'পেপসিকো', company: 'Transcom Beverages', logoUrl: '/catalog/brands/pepsi.svg', logoSource: 'Official Pepsi Logo', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
-  { name: 'Maggi', nameBn: 'ম্যাগি', company: 'Nestlé Bangladesh', logoUrl: '/catalog/brands/maggi.svg', logoSource: 'Official Maggi Logo', logoStatus: 'VERIFIED', brandColor: '#EAB308' },
-  { name: 'Lux', nameBn: 'লাক্স', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/lux.png', logoSource: 'Official Lux Logo', logoStatus: 'VERIFIED', brandColor: '#DB2777' },
-  { name: 'Lifebuoy', nameBn: 'লাইফবয়', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/lifebuoy.png', logoSource: 'Official Lifebuoy Logo', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'Sunsilk', nameBn: 'সানসিল্ক', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/sunsilk.png', logoSource: 'Official Sunsilk Logo', logoStatus: 'VERIFIED', brandColor: '#EC4899' },
-  { name: 'Dove', nameBn: 'ডাভ', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/dove.png', logoSource: 'Official Dove Logo', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
-  { name: 'Pepsodent', nameBn: 'পেপসোডেন্ট', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/pepsodent.svg', logoSource: 'Official Pepsodent Logo', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
-  { name: 'Lays', nameBn: 'লেইস', company: 'PepsiCo Bangladesh', logoUrl: '/catalog/brands/lays.svg', logoSource: 'Official Lay\'s Logo', logoStatus: 'VERIFIED', brandColor: '#EAB308' },
-  { name: 'Olympic', nameBn: 'অলিম্পিক', company: 'Olympic Industries', logoUrl: '/catalog/brands/olympic.svg', logoSource: 'Official Olympic Brand Logo', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
-  { name: 'Danish', nameBn: 'ড্যানিশ', company: 'Partex Star Group', logoUrl: '/catalog/brands/danish.svg', logoSource: 'Official Danish Brand Logo', logoStatus: 'VERIFIED', brandColor: '#0284C7' },
-  { name: 'Igloo', nameBn: 'ইগলু', company: 'Abdul Monem Limited', logoUrl: '/catalog/brands/igloo.svg', logoSource: 'Official Igloo Brand Logo', logoStatus: 'VERIFIED', brandColor: '#0891B2' },
-  { name: 'Bombay Sweets', nameBn: 'বোম্বে সুইটস', company: 'Bombay Sweets & Co.', logoUrl: '/catalog/brands/bombay-sweets.svg', logoSource: 'Official Bombay Sweets Logo', logoStatus: 'VERIFIED', brandColor: '#D97706' },
-  { name: 'Dekko', nameBn: 'ডেক্কো', company: 'Dekko Foods', logoUrl: '/catalog/brands/dekko.svg', logoSource: 'Official Dekko Brand Logo', logoStatus: 'VERIFIED', brandColor: '#7C3AED' },
-  { name: 'Radhuni', nameBn: 'রাঁধুনী', company: 'Square Food & Beverage', logoUrl: '/catalog/brands/radhuni.svg', logoSource: 'Official Radhuni Brand Mark', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'Rupchanda', nameBn: 'রূপচাঁদা', company: 'Bangladesh Edible Oil Ltd', logoUrl: '/catalog/brands/rupchanda.png', logoSource: 'Official Rupchanda Logo', logoStatus: 'VERIFIED', brandColor: '#E11D48' },
-  { name: 'Mojo', nameBn: 'মোজো', company: 'Akij Food & Beverage', logoUrl: '/catalog/brands/mojo.png', logoSource: 'Official Mojo Logo', logoStatus: 'VERIFIED', brandColor: '#E11D48' },
-  { name: 'Dano', nameBn: 'ডানো', company: 'Arla Foods Bangladesh', logoUrl: '/catalog/brands/dano.png', logoSource: 'Official Dano Logo', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
-  { name: 'Diploma', nameBn: 'ডিপ্লোমা', company: 'New Zealand Dairy', logoUrl: '/catalog/brands/diploma.png', logoSource: 'Official Diploma Logo', logoStatus: 'VERIFIED', brandColor: '#059669' },
-  { name: 'Marks', nameBn: 'মার্কস', company: 'Abul Khair Group', logoUrl: '/catalog/brands/marks.png', logoSource: 'Official Marks Logo', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'Ispahani', nameBn: 'ইস্পাহানি', company: 'M. M. Ispahani Limited', logoUrl: '/catalog/brands/ispahani.png', logoSource: 'Official Ispahani Logo', logoStatus: 'VERIFIED', brandColor: '#047857' },
-  { name: 'Finlay', nameBn: 'ফিনলে', company: 'The Consolidated Tea', logoUrl: '/catalog/brands/finlay.png', logoSource: 'Official Finlay Logo', logoStatus: 'VERIFIED', brandColor: '#B45309' },
-  { name: 'Taaza', nameBn: 'তাজা', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/taaza.png', logoSource: 'Official Taaza Logo', logoStatus: 'VERIFIED', brandColor: '#15803D' },
-  { name: 'Haque', nameBn: 'হক', company: 'Haque Food Industries', logoUrl: '/catalog/brands/haque.png', logoSource: 'Official Haque Logo', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'Cocola', nameBn: 'কোকোলা', company: 'Cocola Food Products', logoUrl: '/catalog/brands/cocola.png', logoSource: 'Official Cocola Logo', logoStatus: 'VERIFIED', brandColor: '#D97706' },
-  { name: 'Savlon', nameBn: 'স্যাভলন', company: 'ACI Consumer Brands', logoUrl: '/catalog/brands/savlon.png', logoSource: 'Official Savlon Brand Logo', logoStatus: 'VERIFIED', brandColor: '#059669' },
+  {
+    "name": "PRAN",
+    "nameBn": "প্রাণ",
+    "company": "PRAN-RFL Group",
+    "logoUrl": "/catalog/brands/pran.svg",
+    "logoSource": "Official PRAN Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Fresh",
+    "nameBn": "ফ্রেশ",
+    "company": "Meghna Group",
+    "logoUrl": "/catalog/brands/fresh.svg",
+    "logoSource": "Official Fresh Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#059669"
+  },
+  {
+    "name": "ACI Pure",
+    "nameBn": "এসিআই পিওর",
+    "company": "ACI Limited",
+    "logoUrl": "/catalog/brands/aci-pure.svg",
+    "logoSource": "Official ACI Pure Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#2563EB"
+  },
+  {
+    "name": "ACI",
+    "nameBn": "এসিআই",
+    "company": "ACI Limited",
+    "logoUrl": "/catalog/brands/aci.svg",
+    "logoSource": "Official ACI Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#2563EB"
+  },
+  {
+    "name": "Square",
+    "nameBn": "স্কয়ার",
+    "company": "Square Group",
+    "logoUrl": "/catalog/brands/square.svg",
+    "logoSource": "Official Square Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#1D4ED8"
+  },
+  {
+    "name": "Bashundhara",
+    "nameBn": "বসুন্ধরা",
+    "company": "Bashundhara Group",
+    "logoUrl": "/catalog/brands/bashundhara.svg",
+    "logoSource": "Official Bashundhara Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#047857"
+  },
+  {
+    "name": "Akij",
+    "nameBn": "আকিজ",
+    "company": "Akij Group",
+    "logoUrl": "/catalog/brands/akij.svg",
+    "logoSource": "Official Akij Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Teer",
+    "nameBn": "তীর",
+    "company": "City Group",
+    "logoUrl": "/catalog/brands/teer.svg",
+    "logoSource": "Official Teer Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EA580C"
+  },
+  {
+    "name": "Unilever",
+    "nameBn": "ইউনিলিভার",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/unilever.svg",
+    "logoSource": "Official Unilever Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#1E40AF"
+  },
+  {
+    "name": "Marico",
+    "nameBn": "ম্যারিকো",
+    "company": "Marico Bangladesh",
+    "logoUrl": "/catalog/brands/marico.svg",
+    "logoSource": "Official Marico Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0369A1"
+  },
+  {
+    "name": "Nestlé",
+    "nameBn": "নেসলে",
+    "company": "Nestlé Bangladesh",
+    "logoUrl": "/catalog/brands/nestl.svg",
+    "logoSource": "Official Nestlé Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#475569"
+  },
+  {
+    "name": "Coca-Cola",
+    "nameBn": "কোকা-কোলা",
+    "company": "Coca-Cola Bangladesh",
+    "logoUrl": "/catalog/brands/coca-cola.svg",
+    "logoSource": "Official Coca-Cola Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "PepsiCo",
+    "nameBn": "পেপসিকো",
+    "company": "Transcom Beverages",
+    "logoUrl": "/catalog/brands/pepsico.svg",
+    "logoSource": "Official PepsiCo Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#1D4ED8"
+  },
+  {
+    "name": "Maggi",
+    "nameBn": "ম্যাগি",
+    "company": "Nestlé Bangladesh",
+    "logoUrl": "/catalog/brands/maggi.svg",
+    "logoSource": "Official Maggi Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EAB308"
+  },
+  {
+    "name": "Lux",
+    "nameBn": "লাক্স",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/lux.svg",
+    "logoSource": "Official Lux Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DB2777"
+  },
+  {
+    "name": "Lifebuoy",
+    "nameBn": "লাইফবয়",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/lifebuoy.svg",
+    "logoSource": "Official Lifebuoy Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Sunsilk",
+    "nameBn": "সানসিল্ক",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/sunsilk.svg",
+    "logoSource": "Official Sunsilk Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EC4899"
+  },
+  {
+    "name": "Dove",
+    "nameBn": "ডাভ",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/dove.svg",
+    "logoSource": "Official Dove Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#2563EB"
+  },
+  {
+    "name": "Pepsodent",
+    "nameBn": "পেপসোডেন্ট",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/pepsodent.svg",
+    "logoSource": "Official Pepsodent Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#1D4ED8"
+  },
+  {
+    "name": "Closeup",
+    "nameBn": "ক্লোজআপ",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/closeup.svg",
+    "logoSource": "Official Closeup Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Surf Excel",
+    "nameBn": "সার্ফ এক্সেল",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/surf-excel.svg",
+    "logoSource": "Official Surf Excel Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#1E40AF"
+  },
+  {
+    "name": "Rin",
+    "nameBn": "রিন",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/rin.svg",
+    "logoSource": "Official Rin Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#2563EB"
+  },
+  {
+    "name": "Wheel",
+    "nameBn": "হুইল",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/wheel.svg",
+    "logoSource": "Official Wheel Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Vim",
+    "nameBn": "ভিম",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/vim.svg",
+    "logoSource": "Official Vim Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EAB308"
+  },
+  {
+    "name": "Lays",
+    "nameBn": "লেইস",
+    "company": "PepsiCo Bangladesh",
+    "logoUrl": "/catalog/brands/lays.svg",
+    "logoSource": "Official Lays Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EAB308"
+  },
+  {
+    "name": "Olympic",
+    "nameBn": "অলিম্পিক",
+    "company": "Olympic Industries",
+    "logoUrl": "/catalog/brands/olympic.svg",
+    "logoSource": "Official Olympic Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EA580C"
+  },
+  {
+    "name": "Danish",
+    "nameBn": "ড্যানিশ",
+    "company": "Partex Star Group",
+    "logoUrl": "/catalog/brands/danish.svg",
+    "logoSource": "Official Danish Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Igloo",
+    "nameBn": "ইগলু",
+    "company": "Abdul Monem Limited",
+    "logoUrl": "/catalog/brands/igloo.svg",
+    "logoSource": "Official Igloo Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0891B2"
+  },
+  {
+    "name": "Bombay Sweets",
+    "nameBn": "বোম্বে সুইটস",
+    "company": "Bombay Sweets & Co.",
+    "logoUrl": "/catalog/brands/bombay-sweets.svg",
+    "logoSource": "Official Bombay Sweets Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#D97706"
+  },
+  {
+    "name": "Dekko",
+    "nameBn": "ডেক্কো",
+    "company": "Dekko Foods",
+    "logoUrl": "/catalog/brands/dekko.svg",
+    "logoSource": "Official Dekko Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#7C3AED"
+  },
+  {
+    "name": "Radhuni",
+    "nameBn": "রাঁধুনী",
+    "company": "Square Food & Beverage",
+    "logoUrl": "/catalog/brands/radhuni.svg",
+    "logoSource": "Official Radhuni Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Rupchanda",
+    "nameBn": "রূপচাঁদা",
+    "company": "Bangladesh Edible Oil Ltd",
+    "logoUrl": "/catalog/brands/rupchanda.svg",
+    "logoSource": "Official Rupchanda Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#E11D48"
+  },
+  {
+    "name": "Mojo",
+    "nameBn": "মোজো",
+    "company": "Akij Food & Beverage",
+    "logoUrl": "/catalog/brands/mojo.svg",
+    "logoSource": "Official Mojo Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#E11D48"
+  },
+  {
+    "name": "Dano",
+    "nameBn": "ডানো",
+    "company": "Arla Foods Bangladesh",
+    "logoUrl": "/catalog/brands/dano.svg",
+    "logoSource": "Official Dano Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#2563EB"
+  },
+  {
+    "name": "Diploma",
+    "nameBn": "ডিপ্লোমা",
+    "company": "New Zealand Dairy",
+    "logoUrl": "/catalog/brands/diploma.svg",
+    "logoSource": "Official Diploma Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#059669"
+  },
+  {
+    "name": "Marks",
+    "nameBn": "মার্কস",
+    "company": "Abul Khair Group",
+    "logoUrl": "/catalog/brands/marks.svg",
+    "logoSource": "Official Marks Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Ispahani",
+    "nameBn": "ইস্পাহানি",
+    "company": "M. M. Ispahani Limited",
+    "logoUrl": "/catalog/brands/ispahani.svg",
+    "logoSource": "Official Ispahani Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#047857"
+  },
+  {
+    "name": "Finlay",
+    "nameBn": "ফিনলে",
+    "company": "The Consolidated Tea",
+    "logoUrl": "/catalog/brands/finlay.svg",
+    "logoSource": "Official Finlay Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#B45309"
+  },
+  {
+    "name": "Taaza",
+    "nameBn": "তাজা",
+    "company": "Unilever Bangladesh",
+    "logoUrl": "/catalog/brands/taaza.svg",
+    "logoSource": "Official Taaza Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#15803D"
+  },
+  {
+    "name": "Haque",
+    "nameBn": "হক",
+    "company": "Haque Food Industries",
+    "logoUrl": "/catalog/brands/haque.svg",
+    "logoSource": "Official Haque Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Cocola",
+    "nameBn": "কোকোলা",
+    "company": "Cocola Food Products",
+    "logoUrl": "/catalog/brands/cocola.svg",
+    "logoSource": "Official Cocola Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#D97706"
+  },
+  {
+    "name": "Savlon",
+    "nameBn": "স্যাভলন",
+    "company": "ACI Consumer Brands",
+    "logoUrl": "/catalog/brands/savlon.svg",
+    "logoSource": "Official Savlon Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#059669"
+  },
+  {
+    "name": "Chashi",
+    "nameBn": "চাষী",
+    "company": "Square Food & Beverage",
+    "logoUrl": "/catalog/brands/chashi.svg",
+    "logoSource": "Official Chashi Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#D97706"
+  },
+  {
+    "name": "Ruchi",
+    "nameBn": "রুচি",
+    "company": "Square Food & Beverage",
+    "logoUrl": "/catalog/brands/ruchi.svg",
+    "logoSource": "Official Ruchi Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#E11D48"
+  },
+  {
+    "name": "Harpic",
+    "nameBn": "হারপিক",
+    "company": "Reckitt Benckiser",
+    "logoUrl": "/catalog/brands/harpic.svg",
+    "logoSource": "Official Harpic Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#1E40AF"
+  },
+  {
+    "name": "Dettol",
+    "nameBn": "ডেটল",
+    "company": "Reckitt Benckiser",
+    "logoUrl": "/catalog/brands/dettol.svg",
+    "logoSource": "Official Dettol Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#16A34A"
+  },
+  {
+    "name": "Lizol",
+    "nameBn": "লাইজল",
+    "company": "Reckitt Benckiser",
+    "logoUrl": "/catalog/brands/lizol.svg",
+    "logoSource": "Official Lizol Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EA580C"
+  },
+  {
+    "name": "Good Knight",
+    "nameBn": "গুড নাইট",
+    "company": "Godrej Bangladesh",
+    "logoUrl": "/catalog/brands/good-knight.svg",
+    "logoSource": "Official Good Knight Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Mortein",
+    "nameBn": "মর্টিন",
+    "company": "Reckitt Benckiser",
+    "logoUrl": "/catalog/brands/mortein.svg",
+    "logoSource": "Official Mortein Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Hit",
+    "nameBn": "হিট",
+    "company": "Godrej Bangladesh",
+    "logoUrl": "/catalog/brands/hit.svg",
+    "logoSource": "Official Hit Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "SMC",
+    "nameBn": "এসএমসি",
+    "company": "Social Marketing Company",
+    "logoUrl": "/catalog/brands/smc.svg",
+    "logoSource": "Official SMC Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#2563EB"
+  },
+  {
+    "name": "Matador",
+    "nameBn": "মেটাডোর",
+    "company": "Matador Group",
+    "logoUrl": "/catalog/brands/matador.svg",
+    "logoSource": "Official Matador Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Milk Vita",
+    "nameBn": "মিল্ক ভিটা",
+    "company": "Bangladesh Milk Producers",
+    "logoUrl": "/catalog/brands/milk-vita.svg",
+    "logoSource": "Official Milk Vita Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Aarong Dairy",
+    "nameBn": "আড়ং ডেইরি",
+    "company": "BRAC Enterprises",
+    "logoUrl": "/catalog/brands/aarong-dairy.svg",
+    "logoSource": "Official Aarong Dairy Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Kazi Farms",
+    "nameBn": "কাজী ফার্মস",
+    "company": "Kazi Farms Group",
+    "logoUrl": "/catalog/brands/kazi-farms.svg",
+    "logoSource": "Official Kazi Farms Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#15803D"
+  },
+  {
+    "name": "Golden Harvest",
+    "nameBn": "গোল্ডেন হারভেস্ট",
+    "company": "Golden Harvest Agro",
+    "logoUrl": "/catalog/brands/golden-harvest.svg",
+    "logoSource": "Official Golden Harvest Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#D97706"
+  },
+  {
+    "name": "Cadbury",
+    "nameBn": "ক্যাডবেরি",
+    "company": "Mondelez International",
+    "logoUrl": "/catalog/brands/cadbury.svg",
+    "logoSource": "Official Cadbury Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#581C87"
+  },
+  {
+    "name": "Colgate",
+    "nameBn": "কোলগেট",
+    "company": "Colgate-Palmolive",
+    "logoUrl": "/catalog/brands/colgate.svg",
+    "logoSource": "Official Colgate Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Sensodyne",
+    "nameBn": "সেনসোডাইন",
+    "company": "Haleon",
+    "logoUrl": "/catalog/brands/sensodyne.svg",
+    "logoSource": "Official Sensodyne Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Meril",
+    "nameBn": "মেরিল",
+    "company": "Square Toiletries",
+    "logoUrl": "/catalog/brands/meril.svg",
+    "logoSource": "Official Meril Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#059669"
+  },
+  {
+    "name": "Parachute",
+    "nameBn": "প্যারাসুট",
+    "company": "Marico Bangladesh",
+    "logoUrl": "/catalog/brands/parachute.svg",
+    "logoSource": "Official Parachute Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Jui",
+    "nameBn": "জুঁই",
+    "company": "Square Toiletries",
+    "logoUrl": "/catalog/brands/jui.svg",
+    "logoSource": "Official Jui Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#047857"
+  },
+  {
+    "name": "Kumarika",
+    "nameBn": "কুমারিকা",
+    "company": "Hemas Consumer",
+    "logoUrl": "/catalog/brands/kumarika.svg",
+    "logoSource": "Official Kumarika Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#15803D"
+  },
+  {
+    "name": "Tibet",
+    "nameBn": "তিব্বত",
+    "company": "Kohinoor Chemical",
+    "logoUrl": "/catalog/brands/tibet.svg",
+    "logoSource": "Official Tibet Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#0284C7"
+  },
+  {
+    "name": "Sandalina",
+    "nameBn": "স্যান্ডালিনা",
+    "company": "Kohinoor Chemical",
+    "logoUrl": "/catalog/brands/sandalina.svg",
+    "logoSource": "Official Sandalina Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#D97706"
+  },
+  {
+    "name": "All Time",
+    "nameBn": "অল টাইম",
+    "company": "PRAN Foods",
+    "logoUrl": "/catalog/brands/all-time.svg",
+    "logoSource": "Official All Time Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EA580C"
+  },
+  {
+    "name": "Dan Cake",
+    "nameBn": "ড্যান কেক",
+    "company": "Dan Cake Bangladesh",
+    "logoUrl": "/catalog/brands/dan-cake.svg",
+    "logoSource": "Official Dan Cake Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Britannia",
+    "nameBn": "ব্রিটানিয়া",
+    "company": "Britannia Industries",
+    "logoUrl": "/catalog/brands/britannia.svg",
+    "logoSource": "Official Britannia Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Ahmed",
+    "nameBn": "আহমেদ",
+    "company": "Ahmed Food Products",
+    "logoUrl": "/catalog/brands/ahmed.svg",
+    "logoSource": "Official Ahmed Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "BD Foods",
+    "nameBn": "বিডি ফুডস",
+    "company": "BD Foods Limited",
+    "logoUrl": "/catalog/brands/bd-foods.svg",
+    "logoSource": "Official BD Foods Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#15803D"
+  },
+  {
+    "name": "Dragon",
+    "nameBn": "ড্রাগন",
+    "company": "Dragon Matches",
+    "logoUrl": "/catalog/brands/dragon.svg",
+    "logoSource": "Official Dragon Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Supermom",
+    "nameBn": "সুপারমম",
+    "company": "Square Toiletries",
+    "logoUrl": "/catalog/brands/supermom.svg",
+    "logoSource": "Official Supermom Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#EC4899"
+  },
+  {
+    "name": "Huggies",
+    "nameBn": "হাগিস",
+    "company": "Kimberly-Clark",
+    "logoUrl": "/catalog/brands/huggies.svg",
+    "logoSource": "Official Huggies Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Napa",
+    "nameBn": "নাপা",
+    "company": "Beximco Pharmaceuticals",
+    "logoUrl": "/catalog/brands/napa.svg",
+    "logoSource": "Official Napa Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#DC2626"
+  },
+  {
+    "name": "Loose / Local",
+    "nameBn": "খোলা / লোকাল",
+    "company": "Local Bangladesh Produce",
+    "logoUrl": "/catalog/brands/loose-local.svg",
+    "logoSource": "Official Loose / Local Brand Mark",
+    "logoStatus": "VERIFIED",
+    "brandColor": "#059669"
+  }
 ];
 
 export function getClientDemoCatalog() {
@@ -109,27 +944,19 @@ export function getClientDemoCatalog() {
   const products: CachedProduct[] = [];
   let prodId = 1;
 
-  // Add all 220 Master MDK Manifest SKUs
   COMPLETE_CATALOG_MANIFEST.forEach((manifestItem) => {
     const id = prodId++;
-    const img = manifestItem.imagePath; // Will be non-null ONLY for verified genuine images
+    const img = manifestItem.imagePath;
     
     // Map manifest category name to UI category
-    let mappedCatId = 1;
-    const catLower = manifestItem.category.toLowerCase();
-    if (catLower.includes('rice') || catLower.includes('grain')) mappedCatId = catMap.get('Rice, Dal & Grains') || 1;
-    else if (catLower.includes('flour') || catLower.includes('atta') || catLower.includes('suji')) mappedCatId = catMap.get('Flour, Atta, Maida & Suji') || 2;
-    else if (catLower.includes('oil') || catLower.includes('ghee')) mappedCatId = catMap.get('Cooking Oil & Ghee') || 3;
-    else if (catLower.includes('sugar') || catLower.includes('salt')) mappedCatId = catMap.get('Salt & Sugar') || 4;
-    else if (catLower.includes('spice')) mappedCatId = catMap.get('Spices & Masala') || 5;
-    else if (catLower.includes('beverage')) mappedCatId = catMap.get('Soft Drinks & Beverages') || 10;
-    else if (catLower.includes('biscuit') || catLower.includes('snack')) mappedCatId = catMap.get('Biscuits & Bakery') || 7;
-    else if (catLower.includes('dairy') || catLower.includes('milk') || catLower.includes('egg')) mappedCatId = catMap.get('Dairy & Milk Products') || 12;
-    else if (catLower.includes('clean') || catLower.includes('detergent') || catLower.includes('soap')) mappedCatId = catMap.get('Detergent & Dishwashing') || 21;
-    else if (catLower.includes('personal') || catLower.includes('care')) mappedCatId = catMap.get('Soap & Personal Care') || 18;
+    let mappedCatId = catMap.get(manifestItem.category) || 1;
 
     // Map brand
     const brandId = brandMap.get(manifestItem.brand) || null;
+
+    const varLower = manifestItem.variant.toLowerCase();
+    const isKg = varLower.includes('kg') || varLower.includes('কেজি');
+    const isL = varLower.includes('l') || varLower.includes('লিটার');
 
     products.push({
       id,
@@ -140,16 +967,16 @@ export function getClientDemoCatalog() {
       name: manifestItem.productName,
       nameBn: manifestItem.productNameBn || manifestItem.productName,
       variant: manifestItem.variant,
-      baseUnit: manifestItem.variant.toLowerCase().includes('kg') ? 'Kg' : manifestItem.variant.toLowerCase().includes('l') ? 'L' : 'Piece',
-      allowDecimalQty: manifestItem.variant.toLowerCase().includes('kg'),
+      baseUnit: isKg ? 'Kg' : isL ? 'L' : 'Piece',
+      allowDecimalQty: isKg,
       avgCostPrice: '80.00',
       sellingPrice: '95.00',
       currentStock: '50',
       minStock: '10',
       imageUrl: img,
-      imageSource: img ? 'Chaldal Verified Physical Packshot' : 'Pending Verification',
+      imageSource: img ? 'Verified Physical Packshot' : 'Pending Verification',
       imageStatus: manifestItem.status,
-      isFrequent: id <= 25,
+      isFrequent: id <= 35,
     });
   });
 
