@@ -18,6 +18,7 @@ import { syncVisualCatalogDefaults } from '../db/seed.ts';
 import { requireAuth, type AuthRequest } from '../middleware/auth.ts';
 import { resolveUserStore, logAudit, handleApiError, HttpError } from './context.ts';
 import { D, money, qty4 } from '../lib/decimal.ts';
+import { isSupabaseBackendEnabled, uploadBufferToSupabaseStorage } from '../lib/supabase-admin.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,13 +57,23 @@ catalogRouter.post('/upload-image', async (req: AuthRequest, res) => {
           ? 'svg'
           : 'jpg';
     const subDir = parsed.kind === 'brand' ? 'brands' : parsed.kind === 'store' ? 'stores' : 'products';
-    const targetDir = path.join(UPLOADS_ROOT, subDir);
-    fs.mkdirSync(targetDir, { recursive: true });
-
     const filename = `s${ctx.storeId}-${Date.now()}-${crypto.randomBytes(4).toString('hex')}.${ext}`;
-    fs.writeFileSync(path.join(targetDir, filename), buffer);
+    let url: string;
 
-    const url = `/uploads/${subDir}/${filename}`;
+    if (isSupabaseBackendEnabled) {
+      const uploaded = await uploadBufferToSupabaseStorage({
+        buffer,
+        mimeType: mime,
+        objectPath: `${subDir}/${filename}`,
+      });
+      url = uploaded.publicUrl;
+    } else {
+      const targetDir = path.join(UPLOADS_ROOT, subDir);
+      fs.mkdirSync(targetDir, { recursive: true });
+      fs.writeFileSync(path.join(targetDir, filename), buffer);
+      url = `/uploads/${subDir}/${filename}`;
+    }
+
     await logAudit(ctx.storeId, ctx.uid, 'UPLOAD_IMAGE', parsed.kind.toUpperCase(), null, url);
     res.status(201).json({ url, sizeBytes: buffer.length });
   } catch (error) {

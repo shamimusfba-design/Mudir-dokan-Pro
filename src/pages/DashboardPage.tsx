@@ -24,6 +24,7 @@ import {
   Warehouse,
   CalendarRange,
   ShoppingBag,
+  Database,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { apiFetch } from '../lib/api';
@@ -66,7 +67,7 @@ function defaultSixMonthWindow(todayISO: string): { start: string; end: string }
 }
 
 export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({ onNavigate }) => {
-  const { lang, staff, settings, categories } = useApp();
+  const { lang, staff, settings, categories, refreshCatalog } = useApp();
   const today = dhakaTodayISO();
   const fallback6m = useMemo(() => defaultSixMonthWindow(today), [today]);
   const sixMonthStart = settings?.demoPeriodStart || fallback6m.start;
@@ -77,6 +78,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
   const [to, setTo] = useState(() => (settings?.demoModeActive ? sixMonthEnd : today));
   const [demoAutoApplied, setDemoAutoApplied] = useState(Boolean(settings?.demoModeActive));
   const [loading, setLoading] = useState(true);
+  const [loadingDemo, setLoadingDemo] = useState(false);
   const [data, setData] = useState<any>(null);
 
   const catMap = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
@@ -151,11 +153,75 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
     }
   };
 
+  const handleQuickLoadDemo = async () => {
+    setLoadingDemo(true);
+    try {
+      const res = await apiFetch('/api/finance/demo/load', { method: 'POST' });
+      await refreshCatalog();
+      if (res?.periodStart && res?.periodEnd) {
+        setPreset('6m');
+        setFrom(res.periodStart);
+        setTo(res.periodEnd);
+        setDemoAutoApplied(true);
+      }
+      toast.success(
+        tx(
+          lang,
+          '6-month Bangladesh grocery demo dataset loaded!',
+          '৬ মাসের বাংলাদেশী মুদির দোকানের ডেমো ডেটা লোড হয়েছে!'
+        )
+      );
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : tx(lang, 'Failed to load demo dataset', 'ডেমো ডেটা লোড ব্যর্থ হয়েছে'));
+    } finally {
+      setLoadingDemo(false);
+    }
+  };
+
   const kpis = data?.kpis;
   const restrictedText = tx(lang, 'Restricted', 'সীমাবদ্ধ');
+  const canLoadQuickDemo =
+    !loading &&
+    !settings?.demoModeActive &&
+    kpis &&
+    Number(kpis.totalSales || 0) === 0 &&
+    (staff?.role === 'OWNER' || staff?.role === 'MANAGER');
 
   return (
     <div className="space-y-6">
+      {canLoadQuickDemo && (
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 via-orange-50 to-emerald-50 px-5 py-4 shadow-sm dark:border-amber-800/50 dark:from-amber-950/30 dark:via-slate-900 dark:to-emerald-950/30">
+          <div className="flex items-start gap-3">
+            <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white shadow-sm">
+              <Database className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                {tx(lang, 'Explore with 6 Months of Realistic Grocery Store Data', '৬ মাসের বাস্তবসম্মত মুদির দোকানের ডেমো ডেটা দেখুন')}
+              </h3>
+              <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-300">
+                {tx(
+                  lang,
+                  'Load 270 BD grocery products, 110+ customers, ৳60 lakh sales, credit khata, expenses, and reconciled daily cash registers in one click.',
+                  'এক ক্লিকেই ২৭০টি পণ্য, ১১০+ ক্রেতা, ৬০ লাখ টাকার বিক্রয়, বাকি খাতা, খরচ এবং দৈনিক ক্যাশ রেজিস্টার লোড করুন।'
+                )}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            disabled={loadingDemo}
+            onClick={handleQuickLoadDemo}
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-700 disabled:opacity-60 cursor-pointer"
+          >
+            {loadingDemo ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Database className="h-4 w-4" />}
+            {loadingDemo
+              ? tx(lang, 'Loading 6-Month Data (~35s)...', '৬ মাসের ডেটা লোড হচ্ছে (~৩৫ সেকেন্ড)...')
+              : tx(lang, 'Load 6-Month Demo Data', '৬ মাসের ডেমো ডেটা লোড করুন')}
+          </button>
+        </div>
+      )}
+
       {/* Filter Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>

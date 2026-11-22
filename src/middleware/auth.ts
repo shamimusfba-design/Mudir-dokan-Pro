@@ -1,10 +1,17 @@
 import type { Request, Response, NextFunction } from 'express';
-import type { DecodedIdToken } from 'firebase-admin/auth';
 import crypto from 'crypto';
 import { adminAuth } from '../lib/firebase-admin.ts';
+import { supabaseAdmin, isSupabaseBackendEnabled } from '../lib/supabase-admin.ts';
+
+export interface AuthenticatedUser {
+  uid: string;
+  email?: string;
+  name?: string;
+  provider: 'supabase' | 'firebase';
+}
 
 export interface AuthRequest extends Request {
-  user?: DecodedIdToken;
+  user?: AuthenticatedUser;
   storeId?: number;
   staffRole?: 'OWNER' | 'MANAGER' | 'CASHIER';
 }
@@ -19,7 +26,10 @@ export interface PortalRequest extends Request {
 
 const PORTAL_TOKEN_SECRET =
   process.env.PORTAL_SESSION_SECRET ||
-  crypto.createHash('sha256').update(`${process.env.SQL_DB_NAME || 'mudirdokan'}-portal-hmac-v1`).digest('hex');
+  crypto
+    .createHash('sha256')
+    .update(`${process.env.SQL_DB_NAME || process.env.SUPABASE_URL || 'mudirdokan'}-portal-hmac-v1`)
+    .digest('hex');
 
 export function signPortalToken(payload: { customerId: number; storeId: number; phone: string }): string {
   const exp = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days
@@ -55,10 +65,41 @@ export const requireAuth = async (req: AuthRequest, res: Response, next: NextFun
     return res.status(401).json({ error: 'Unauthorized: Missing token' });
   }
   const token = authHeader.split('Bearer ')[1];
+
+  // 1. Primary path when Supabase is configured: verify Supabase Auth JWT
+  if (isSupabaseBackendEnabled && supabaseAdmin) {
+    try {
+      const { data, error } = await supabaseAdmin.auth.getUser(token);
+      if (!error && data?.user) {
+        const meta = (data.user.user_metadata || {}) as Record<string, unknown>;
+        req.user = {
+          uid: data.user.id,
+          email: data.user.email || undefined,
+          name:
+            (typeof meta.full_name === 'string' && meta.full_name) ||
+            (typeof meta.name === 'string' && meta.name) ||
+            undefined,
+          provider: 'supabase',
+        };
+        return next();
+      }
+      return res.status(401).json({ error: 'Unauthorized: Invalid Supabase session token' });
+    } catch (error) {
+      console.error('Error verifying Supabase JWT:', error);
+      return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+    }
+  }
+
+  // 2. Fallback path before Supabase credentials are configured: Firebase Auth ID token
   try {
     const decodedToken = await adminAuth.verifyIdToken(token);
-    req.user = decodedToken;
-    next();
+    req.user = {
+      uid: decodedToken.uid,
+      email: decodedToken.email,
+      name: typeof decodedToken.name === 'string' ? decodedToken.name : undefined,
+      provider: 'firebase',
+    };
+    return next();
   } catch (error) {
     console.error('Error verifying Firebase ID token:', error);
     return res.status(401).json({ error: 'Unauthorized: Invalid token' });

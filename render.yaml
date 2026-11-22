@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: mudipro-api
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: mudipro-media
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGIN
+        value: https://mudipro-2c4b2.web.app,https://mudipro.web.app,https://vaulted-path-r91ww.web.app
+      - key: PORTAL_SESSION_SECRET
+        generateValue: true

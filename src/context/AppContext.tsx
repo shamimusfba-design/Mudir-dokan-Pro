@@ -1,7 +1,8 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signInWithPopup, signOut, type User as FirebaseUser } from 'firebase/auth';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { toast } from 'sonner';
 import { auth, googleAuthProvider } from '../lib/firebase';
+import { supabase, isSupabaseAuthEnabled } from '../lib/supabase';
 import { apiFetch } from '../lib/api';
 import {
   offlineDb,
@@ -14,6 +15,14 @@ import {
 } from '../lib/offline-db';
 import { getSavedLang, normalizeLang, saveLang, type LanguageMode } from '../lib/i18n';
 import { useOnlineStatus } from '../hooks/usePWAInstall';
+
+export interface AuthSessionUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL?: string | null;
+  provider: 'supabase' | 'firebase';
+}
 
 export interface StoreInfo {
   id: number;
@@ -59,7 +68,7 @@ export interface StaffProfile {
 }
 
 interface AppContextValue {
-  firebaseUser: FirebaseUser | null;
+  firebaseUser: AuthSessionUser | null;
   authLoading: boolean;
   bootstrapLoading: boolean;
   staff: StaffProfile | null;
@@ -86,7 +95,10 @@ interface AppContextValue {
 const AppContext = createContext<AppContextValue | null>(null);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
+  const [authUser, setAuthUser] = useState<AuthSessionUser | null>(null);
+  const authUserRef = useRef<AuthSessionUser | null>(null);
+  authUserRef.current = authUser;
+
   const [authLoading, setAuthLoading] = useState(true);
   const [bootstrapLoading, setBootstrapLoading] = useState(false);
 
@@ -139,7 +151,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   const refreshCatalog = useCallback(async () => {
-    if (!auth.currentUser) return;
+    if (!authUserRef.current) return;
     setBootstrapLoading(true);
     try {
       if (navigator.onLine) {
@@ -180,7 +192,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setCustomers(cust);
       }
     } catch (err) {
-      // Fallback to IndexedDB cache if server unreachable
       const [p, c, b, cust] = await Promise.all([
         offlineDb.products.toArray(),
         offlineDb.categories.toArray(),
@@ -203,7 +214,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [loadOfflineQueue]);
 
   const syncOfflineQueue = useCallback(async () => {
-    if (!navigator.onLine || !auth.currentUser || isSyncing) return;
+    if (!navigator.onLine || !authUserRef.current || isSyncing) return;
     const pending = await offlineDb.offlineSalesQueue
       .filter((q) => q.status === 'PENDING' || q.status === 'ERROR')
       .toArray();
@@ -279,32 +290,86 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [isSyncing, loadOfflineQueue, refreshCatalog]);
 
+  // Subscribe to Supabase Auth (when VITE_SUPABASE_* env vars are set) or Firebase Auth fallback
   useEffect(() => {
+    if (isSupabaseAuthEnabled && supabase) {
+      const toSessionUser = (u: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null): AuthSessionUser | null => {
+        if (!u) return null;
+        const meta = u.user_metadata || {};
+        return {
+          uid: u.id,
+          email: u.email || null,
+          displayName:
+            (typeof meta.full_name === 'string' && meta.full_name) ||
+            (typeof meta.name === 'string' && meta.name) ||
+            u.email ||
+            null,
+          photoURL: typeof meta.avatar_url === 'string' ? meta.avatar_url : null,
+          provider: 'supabase',
+        };
+      };
+
+      supabase.auth.getSession().then(({ data }) => {
+        setAuthUser(toSessionUser(data.session?.user ?? null));
+        setAuthLoading(false);
+      });
+
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((_event, session) => {
+        setAuthUser(toSessionUser(session?.user ?? null));
+        setAuthLoading(false);
+      });
+
+      return () => subscription.unsubscribe();
+    }
+
     const unsub = onAuthStateChanged(auth, (user) => {
-      setFirebaseUser(user);
+      setAuthUser(
+        user
+          ? {
+              uid: user.uid,
+              email: user.email,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+              provider: 'firebase',
+            }
+          : null
+      );
       setAuthLoading(false);
     });
     return () => unsub();
   }, []);
 
   useEffect(() => {
-    if (firebaseUser) {
+    if (authUser) {
       refreshCatalog();
     } else {
       setStaff(null);
       setStore(null);
     }
-  }, [firebaseUser, refreshCatalog]);
+  }, [authUser, refreshCatalog]);
 
   // Automatically flush offline queue when internet reconnects
   useEffect(() => {
-    if (isOnline && firebaseUser) {
+    if (isOnline && authUser) {
       syncOfflineQueue();
     }
-  }, [isOnline, firebaseUser, syncOfflineQueue]);
+  }, [isOnline, authUser, syncOfflineQueue]);
 
   const signInWithGoogle = async () => {
     try {
+      if (isSupabaseAuthEnabled && supabase) {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin,
+            queryParams: { prompt: 'select_account' },
+          },
+        });
+        if (error) throw error;
+        return;
+      }
       await signInWithPopup(auth, googleAuthProvider);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Google sign-in failed');
@@ -312,6 +377,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const logout = async () => {
+    if (isSupabaseAuthEnabled && supabase) {
+      await supabase.auth.signOut();
+      return;
+    }
     await signOut(auth);
   };
 
@@ -331,7 +400,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <AppContext.Provider
       value={{
-        firebaseUser,
+        firebaseUser: authUser,
         authLoading,
         bootstrapLoading,
         staff,

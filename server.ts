@@ -64,6 +64,37 @@ async function startServer() {
 
   app.use(express.json({ limit: '6mb' }));
 
+  // Allow cross-origin API access from Firebase Hosting (mudipro.web.app / vaulted-path-r91ww.web.app) and configured origins
+  const defaultAllowedOrigins = [
+    'https://mudipro-2c4b2.web.app',
+    'https://mudipro-2c4b2.firebaseapp.com',
+    'https://mudipro.web.app',
+    'https://mudipro.firebaseapp.com',
+    'https://vaulted-path-r91ww.web.app',
+    'https://vaulted-path-r91ww.firebaseapp.com',
+    'http://localhost:3000',
+    'http://localhost:5173',
+  ];
+  const extraOrigins = (process.env.CORS_ORIGIN || '')
+    .split(',')
+    .map((o) => o.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+  const allowedOrigins = new Set([...defaultAllowedOrigins, ...extraOrigins]);
+
+  app.use((req, res, next) => {
+    const origin = req.headers.origin?.replace(/\/$/, '');
+    if (origin && (allowedOrigins.has(origin) || allowedOrigins.has('*'))) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Vary', 'Origin');
+      res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Authorization,Content-Type,X-Requested-With');
+    }
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(204);
+    }
+    next();
+  });
+
   // Ensure disk storage directories exist for optimized product/brand/store images
   const uploadsDir = path.resolve(__dirname, 'public/uploads');
   const catalogDir = path.resolve(__dirname, 'public/catalog');

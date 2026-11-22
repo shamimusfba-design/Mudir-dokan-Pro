@@ -1,18 +1,39 @@
 import { auth } from './firebase';
+import { supabase, isSupabaseAuthEnabled } from './supabase';
 
-export async function apiFetch<T = any>(path: string, options: RequestInit = {}): Promise<T> {
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$/, '');
+
+function resolveApiUrl(path: string): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  return API_BASE_URL ? `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}` : path;
+}
+
+async function getActiveBearerToken(): Promise<string> {
+  if (isSupabaseAuthEnabled && supabase) {
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
+    if (!token) {
+      throw new Error('Please sign in first');
+    }
+    return token;
+  }
+
   const user = auth.currentUser;
   if (!user) {
     throw new Error('Please sign in first');
   }
-  const token = await user.getIdToken();
+  return user.getIdToken();
+}
+
+export async function apiFetch<T = any>(path: string, options: RequestInit = {}): Promise<T> {
+  const token = await getActiveBearerToken();
   const headers = new Headers(options.headers || {});
   headers.set('Authorization', `Bearer ${token}`);
   if (options.body && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
   }
 
-  const res = await fetch(path, { ...options, headers });
+  const res = await fetch(resolveApiUrl(path), { ...options, headers });
   const text = await res.text();
   const data = text ? JSON.parse(text) : {};
   if (!res.ok) {
@@ -34,7 +55,7 @@ export async function portalFetch<T = any>(
     headers.set('Content-Type', 'application/json');
   }
 
-  const res = await fetch(path, { ...options, headers });
+  const res = await fetch(resolveApiUrl(path), { ...options, headers });
   const text = await res.text();
   const data = text ? JSON.parse(text) : {};
   if (!res.ok) {

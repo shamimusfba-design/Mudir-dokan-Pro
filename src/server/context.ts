@@ -23,23 +23,59 @@ export async function resolveUserStore(req: AuthRequest): Promise<ResolvedStoreC
   const email = req.user.email || `${uid}@mudirdokan.local`;
   const displayName = req.user.name || email.split('@')[0] || 'Shop Owner';
 
-  // Safe concurrent upsert of Firebase user into PostgreSQL
-  let [userRow] = await db
-    .insert(users)
-    .values({
-      uid,
-      email,
-      name: displayName,
-      role: 'OWNER',
-    })
-    .onConflictDoUpdate({
-      target: users.uid,
-      set: {
+  // 1. Look up by current provider UID first
+  let [userRow] = await db.select().from(users).where(eq(users.uid, uid)).limit(1);
+
+  // 2. If migrating from Firebase UID -> Supabase UUID, preserve existing store ownership by matching verified email
+  if (!userRow && req.user.email) {
+    const [existingByEmail] = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    if (existingByEmail) {
+      const previousUid = existingByEmail.uid;
+      const [linked] = await db
+        .update(users)
+        .set({
+          uid,
+          name: existingByEmail.name || displayName,
+          updatedAt: new Date(),
+        })
+        .where(eq(users.id, existingByEmail.id))
+        .returning();
+
+      if (existingByEmail.storeId) {
+        await db
+          .update(stores)
+          .set({ ownerUid: uid })
+          .where(eq(stores.ownerUid, previousUid));
+      }
+      userRow = linked || existingByEmail;
+    }
+  }
+
+  // 3. Safe concurrent upsert for brand-new users
+  if (!userRow) {
+    const [inserted] = await db
+      .insert(users)
+      .values({
+        uid,
         email,
-        updatedAt: new Date(),
-      },
-    })
-    .returning();
+        name: displayName,
+        role: 'OWNER',
+      })
+      .onConflictDoUpdate({
+        target: users.uid,
+        set: {
+          email,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    userRow = inserted;
+  }
 
   let storeId = userRow.storeId;
   if (!storeId) {
