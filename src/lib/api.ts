@@ -41,7 +41,11 @@ export async function apiFetch<T = any>(path: string, options: RequestInit = {})
     if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
       throw new Error(`API endpoint ${path} returned HTML or non-JSON (${res.status}). Ensure backend server is active.`);
     }
-    data = JSON.parse(text);
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(`API endpoint ${path} returned invalid JSON payload.`);
+    }
   }
   if (!res.ok) {
     throw new Error(data.error || `Request failed (${res.status})`);
@@ -70,7 +74,11 @@ export async function portalFetch<T = any>(
     if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
       throw new Error(`API endpoint ${path} returned HTML or non-JSON (${res.status}). Ensure backend server is active.`);
     }
-    data = JSON.parse(text);
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(`API endpoint ${path} returned invalid JSON payload.`);
+    }
   }
   if (!res.ok) {
     throw new Error(data.error || `Request failed (${res.status})`);

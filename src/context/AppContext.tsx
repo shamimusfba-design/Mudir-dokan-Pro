@@ -155,7 +155,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const refreshCatalog = useCallback(async () => {
     setBootstrapLoading(true);
     try {
-      if (navigator.onLine && authUserRef.current) {
+      if (navigator.onLine && authUserRef.current && authUserRef.current.uid !== 'demo-shopkeeper-uid') {
         const [boot, custList] = await Promise.all([
           apiFetch<{
             user: StaffProfile;
@@ -170,15 +170,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setStaff(boot.user);
         setStore(boot.store);
         setSettings(boot.settings);
-        setCategories(boot.categories);
-        setBrands(boot.brands);
-        setProducts(boot.products);
-        setCustomers(custList);
+
+        // Fallback to client master catalog (1,359 items) if remote store is empty
+        const demoData = getClientDemoCatalog();
+        const finalProds = boot.products && boot.products.length > 0 ? boot.products : demoData.products;
+        const finalCats = boot.categories && boot.categories.length > 0 ? boot.categories : demoData.categories;
+        const finalBrands = boot.brands && boot.brands.length > 0 ? boot.brands : demoData.brands;
+        const finalCust = custList && custList.length > 0 ? custList : demoData.customers;
+
+        setCategories(finalCats);
+        setBrands(finalBrands);
+        setProducts(finalProds);
+        setCustomers(finalCust);
         await cacheStoreCatalog({
-          categories: boot.categories,
-          brands: boot.brands,
-          products: boot.products,
-          customers: custList,
+          categories: finalCats,
+          brands: finalBrands,
+          products: finalProds,
+          customers: finalCust,
         });
       } else {
         let [p, c, b, cust] = await Promise.all([
@@ -188,7 +196,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           offlineDb.customers.toArray(),
         ]);
         const demoData = getClientDemoCatalog();
-        if (p.length < demoData.products.length) {
+        if (!p || p.length < demoData.products.length) {
           await cacheStoreCatalog(demoData);
           p = demoData.products;
           c = demoData.categories;
@@ -210,12 +218,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           offlineDb.customers.toArray(),
         ]);
         const demoData = getClientDemoCatalog();
-        if (p.length < demoData.products.length) {
+        if (!p || p.length < demoData.products.length) {
+          await cacheStoreCatalog(demoData);
           p = demoData.products;
           c = demoData.categories;
           b = demoData.brands;
           cust = demoData.customers;
-          cacheStoreCatalog(demoData).catch(() => {});
         }
         setProducts(p);
         setCategories(c);
