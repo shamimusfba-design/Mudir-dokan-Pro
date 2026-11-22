@@ -224,6 +224,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
     darkMode,
     toggleDarkMode,
     signInWithGoogle,
+    enterDemoMode,
     logout,
     syncOfflineQueue,
   } = useApp();
@@ -356,6 +357,15 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
                 >
                   <span>{tx(lang, 'Continue with Google', 'গুগল দিয়ে লগইন করুন')}</span>
                   <ArrowRight className="h-4 w-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={enterDemoMode}
+                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50/80 px-4 py-2.5 text-sm font-bold text-indigo-700 hover:bg-indigo-100 dark:border-indigo-800 dark:bg-indigo-950/50 dark:text-indigo-300 dark:hover:bg-indigo-900/50 transition cursor-pointer"
+                >
+                  <Sparkles className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                  <span>{tx(lang, 'Explore Demo Store (270 Products & Images)', 'ডেমো স্টোরে সরাসরি প্রবেশ করুন (২৭০টি পণ্য ও ছবি)')}</span>
                 </button>
 
                 <div className="my-5 flex items-center gap-3">

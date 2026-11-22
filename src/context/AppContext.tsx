@@ -13,6 +13,7 @@ import {
   type CachedCustomer,
   type QueuedOfflineSale,
 } from '../lib/offline-db';
+import { getClientDemoCatalog } from '../lib/client-catalog.ts';
 import { getSavedLang, normalizeLang, saveLang, type LanguageMode } from '../lib/i18n';
 import { useOnlineStatus } from '../hooks/usePWAInstall';
 
@@ -86,6 +87,7 @@ interface AppContextValue {
   darkMode: boolean;
   toggleDarkMode: () => void;
   signInWithGoogle: () => Promise<void>;
+  enterDemoMode: () => Promise<void>;
   logout: () => Promise<void>;
   refreshCatalog: () => Promise<void>;
   syncOfflineQueue: () => Promise<void>;
@@ -96,11 +98,11 @@ const AppContext = createContext<AppContextValue | null>(null);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [authUser, setAuthUser] = useState<AuthSessionUser | null>(null);
-  const authUserRef = useRef<AuthSessionUser | null>(null);
-  authUserRef.current = authUser;
-
   const [authLoading, setAuthLoading] = useState(true);
   const [bootstrapLoading, setBootstrapLoading] = useState(false);
+
+  const authUserRef = useRef<AuthSessionUser | null>(null);
+  authUserRef.current = authUser;
 
   const [staff, setStaff] = useState<StaffProfile | null>(null);
   const [store, setStore] = useState<StoreInfo | null>(null);
@@ -151,10 +153,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   const refreshCatalog = useCallback(async () => {
-    if (!authUserRef.current) return;
     setBootstrapLoading(true);
     try {
-      if (navigator.onLine) {
+      if (navigator.onLine && authUserRef.current) {
         const [boot, custList] = await Promise.all([
           apiFetch<{
             user: StaffProfile;
@@ -180,33 +181,83 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           customers: custList,
         });
       } else {
-        const [p, c, b, cust] = await Promise.all([
+        let [p, c, b, cust] = await Promise.all([
           offlineDb.products.toArray(),
           offlineDb.categories.toArray(),
           offlineDb.brands.toArray(),
           offlineDb.customers.toArray(),
         ]);
+        if (p.length === 0) {
+          const demoData = getClientDemoCatalog();
+          await cacheStoreCatalog(demoData);
+          p = demoData.products;
+          c = demoData.categories;
+          b = demoData.brands;
+          cust = demoData.customers;
+        }
         setProducts(p);
         setCategories(c);
         setBrands(b);
         setCustomers(cust);
       }
-    } catch (err) {
-      const [p, c, b, cust] = await Promise.all([
+    } catch (_err) {
+      // Fallback to IndexedDB cache or instant Client Demo Catalog if server unreachable
+      let [p, c, b, cust] = await Promise.all([
         offlineDb.products.toArray(),
         offlineDb.categories.toArray(),
         offlineDb.brands.toArray(),
         offlineDb.customers.toArray(),
       ]);
-      if (p.length > 0) {
-        setProducts(p);
-        setCategories(c);
-        setBrands(b);
-        setCustomers(cust);
-        toast.warning('Loaded cached offline catalog');
-      } else {
-        toast.error(err instanceof Error ? err.message : 'Failed to load catalog');
+      if (p.length === 0) {
+        const demoData = getClientDemoCatalog();
+        await cacheStoreCatalog(demoData);
+        p = demoData.products;
+        c = demoData.categories;
+        b = demoData.brands;
+        cust = demoData.customers;
       }
+      setProducts(p);
+      setCategories(c);
+      setBrands(b);
+      setCustomers(cust);
+      setStaff((prev) => prev || {
+        uid: 'demo-shopkeeper-uid',
+        email: 'shopkeeper@mudirdokan.local',
+        name: 'মুদির দোকান প্রো (শপকিপার)',
+        role: 'OWNER',
+      });
+      setStore((prev) => prev || {
+        id: 1,
+        name: 'মুদির দোকান প্রো',
+        nameBn: 'মুদির দোকান প্রো',
+        phone: '01700000000',
+        address: 'মিরপুর-১০, ঢাকা',
+        addressBn: 'মিরপুর-১০, ঢাকা',
+        currency: 'BDT',
+        currencySymbol: '৳',
+        timezone: 'Asia/Dhaka',
+        dateFormat: 'YYYY-MM-DD',
+        logoUrl: null,
+      });
+      setSettings((prev) => prev || {
+        languageMode: 'BN',
+        receiptFormat: '58MM',
+        receiptHeader: 'মুদির দোকান প্রো',
+        receiptFooter: 'ধন্যবাদ, আবার আসবেন',
+        allowNegativeStock: false,
+        allowCashierPriceEdit: false,
+        allowCashierDiscount: true,
+        allowCashierReports: false,
+        invoicePrefix: 'INV',
+        purchasePrefix: 'PUR',
+        customerPrefix: 'CUST',
+        smsWebhookUrl: '',
+        smsSenderId: 'MudirDokan',
+        demoModeActive: true,
+        demoPeriodStart: '2026-05-01',
+        demoPeriodEnd: '2026-10-31',
+        smsProvider: 'WHATSAPP_LINK',
+      });
     } finally {
       await loadOfflineQueue();
       setBootstrapLoading(false);
@@ -226,10 +277,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         results: Array<{
           clientTransactionUuid: string;
           status: 'SYNCED' | 'DUPLICATE_SKIPPED' | 'CONFLICT' | 'ERROR';
-          invoiceNumber?: string;
+          serverSaleId?: number;
           message?: string;
         }>;
-      }>('/api/sales/sync', {
+      }>('/api/sales/batch-offline', {
         method: 'POST',
         body: JSON.stringify({
           sales: pending.map((q) => ({
@@ -237,17 +288,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             saleDate: q.payload.saleDate,
             customerId: q.payload.customerId,
             billDiscount: q.payload.billDiscount,
-            expectedPaymentDate: q.payload.expectedPaymentDate,
             notes: q.payload.notes,
-            isOfflineOrigin: true,
-            items: q.payload.items.map((i) => ({
-              productId: i.productId,
-              unitName: i.unitName,
-              conversionFactor: i.conversionFactor,
-              enteredQty: i.enteredQty,
-              unitSellingPrice: i.unitSellingPrice,
-              itemDiscount: i.itemDiscount,
-            })),
+            expectedPaymentDate: q.payload.expectedPaymentDate,
+            items: q.payload.items,
             payments: q.payload.payments,
           })),
         }),
@@ -290,7 +333,64 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [isSyncing, loadOfflineQueue, refreshCatalog]);
 
-  // Subscribe to Supabase Auth (when VITE_SUPABASE_* env vars are set) or Firebase Auth fallback
+  const enterDemoMode = useCallback(async () => {
+    const demoData = getClientDemoCatalog();
+    await cacheStoreCatalog(demoData);
+    setProducts(demoData.products);
+    setCategories(demoData.categories);
+    setBrands(demoData.brands);
+    setCustomers(demoData.customers);
+    const mockUser: AuthSessionUser = {
+      uid: 'demo-shopkeeper-uid',
+      email: 'demo@mudirdokan.local',
+      displayName: 'মুদির দোকান প্রো (শপকিপার)',
+      photoURL: null,
+      provider: 'firebase',
+    };
+    setAuthUser(mockUser);
+    setStaff({
+      uid: 'demo-shopkeeper-uid',
+      email: 'demo@mudirdokan.local',
+      name: 'মুদির দোকান প্রো (শপকিপার)',
+      role: 'OWNER',
+    });
+    setStore({
+      id: 1,
+      name: 'মুদির দোকান প্রো',
+      nameBn: 'মুদির দোকান প্রো',
+      phone: '01700000000',
+      address: 'মিরপুর-১০, ঢাকা',
+      addressBn: 'মিরপুর-১০, ঢাকা',
+      currency: 'BDT',
+      currencySymbol: '৳',
+      timezone: 'Asia/Dhaka',
+      dateFormat: 'YYYY-MM-DD',
+      logoUrl: null,
+    });
+    setSettings({
+      languageMode: 'BN',
+      receiptFormat: '58MM',
+      receiptHeader: 'মুদির দোকান প্রো',
+      receiptFooter: 'ধন্যবাদ, আবার আসবেন',
+      allowNegativeStock: false,
+      allowCashierPriceEdit: false,
+      allowCashierDiscount: true,
+      allowCashierReports: false,
+      invoicePrefix: 'INV',
+      purchasePrefix: 'PUR',
+      customerPrefix: 'CUST',
+      smsWebhookUrl: '',
+      smsSenderId: 'MudirDokan',
+      demoModeActive: true,
+      demoPeriodStart: '2026-05-01',
+      demoPeriodEnd: '2026-10-31',
+      smsProvider: 'WHATSAPP_LINK',
+    });
+    localStorage.setItem('mudirdokan_demo_session', 'true');
+    toast.success('ডেমো স্টোর ও ২৭০টি পণ্য সফলভাবে লোড হয়েছে');
+  }, []);
+
+  // Subscribe to Supabase Auth or Firebase Auth fallback
   useEffect(() => {
     if (isSupabaseAuthEnabled && supabase) {
       const toSessionUser = (u: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null): AuthSessionUser | null => {
@@ -325,21 +425,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
 
     const unsub = onAuthStateChanged(auth, (user) => {
-      setAuthUser(
-        user
-          ? {
-              uid: user.uid,
-              email: user.email,
-              displayName: user.displayName,
-              photoURL: user.photoURL,
-              provider: 'firebase',
-            }
-          : null
-      );
+      if (user) {
+        setAuthUser({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          provider: 'firebase',
+        });
+      } else if (localStorage.getItem('mudirdokan_demo_session') === 'true') {
+        enterDemoMode();
+      } else {
+        setAuthUser(null);
+      }
       setAuthLoading(false);
     });
     return () => unsub();
-  }, []);
+  }, [enterDemoMode]);
 
   useEffect(() => {
     if (authUser) {
@@ -377,6 +479,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const logout = async () => {
+    localStorage.removeItem('mudirdokan_demo_session');
+    setAuthUser(null);
+    setStaff(null);
+    setStore(null);
     if (isSupabaseAuthEnabled && supabase) {
       await supabase.auth.signOut();
       return;
@@ -418,6 +524,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         darkMode,
         toggleDarkMode,
         signInWithGoogle,
+        enterDemoMode,
         logout,
         refreshCatalog,
         syncOfflineQueue,
@@ -429,8 +536,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
-export function useApp() {
+export const useApp = () => {
   const ctx = useContext(AppContext);
-  if (!ctx) throw new Error('useApp must be used within AppProvider');
+  if (!ctx) throw new Error('useApp must be used within an AppProvider');
   return ctx;
-}
+};

@@ -13,6 +13,7 @@ import {
   ImageOff,
   Camera,
   Package,
+  Sparkles,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
@@ -32,7 +33,7 @@ import {
 import { getCategoryVisualImage } from '../lib/category-images';
 
 export const ProductsPage: React.FC = () => {
-  const { products, categories, brands, lang, staff, refreshCatalog } = useApp();
+  const { products, categories, brands, lang, staff, refreshCatalog, enterDemoMode } = useApp();
   const [activeTab, setActiveTab] = useState<'products' | 'brands' | 'categories'>('products');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
   const [search, setSearch] = useState('');
@@ -531,8 +532,35 @@ export const ProductsPage: React.FC = () => {
         )}
       </div>
 
+      {/* EMPTY CATALOG / OFFLINE HELPER */}
+      {products.length === 0 && (
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-indigo-200 bg-white p-12 text-center shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
+            <Package className="h-8 w-8" />
+          </div>
+          <h3 className="mt-4 text-base font-bold text-slate-900 dark:text-white">
+            {tx(lang, 'Catalog Empty or Offline', 'ক্যাটালগ খালি বা অফলাইনে আছে')}
+          </h3>
+          <p className="mt-1.5 max-w-md text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            {tx(
+              lang,
+              'Click below to instantly load all 270 Bangladeshi FMCG products, 28 categories, and 37 official brand logos with genuine packaging photos.',
+              'নিচের বাটনে ক্লিক করে তাৎক্ষণিক ২৭০টি বাংলাদেশি মুদি পণ্য, ২৮টি ক্যাটাগরি ও ৩৭টি অফিসিয়াল ব্র্যান্ড লোগো লোড করুন।'
+            )}
+          </p>
+          <button
+            type="button"
+            onClick={enterDemoMode}
+            className="mt-5 flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-500/25 hover:from-indigo-700 hover:to-blue-700 transition cursor-pointer"
+          >
+            <Sparkles className="h-4 w-4" />
+            <span>{tx(lang, 'Load All 270 Demo Products with Photos', '২৭০টি ডেমো পণ্য ও ছবি লোড করুন')}</span>
+          </button>
+        </div>
+      )}
+
       {/* TAB 1: PRODUCTS (VISUAL GRID OR DATA TABLE) */}
-      {activeTab === 'products' && viewMode === 'grid' && (
+      {products.length > 0 && activeTab === 'products' && viewMode === 'grid' && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {filtered.map((p) => {
             const cat = catMap.get(p.categoryId);
