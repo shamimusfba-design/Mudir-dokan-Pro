@@ -4,14 +4,41 @@ import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch, exportRowsToCsv } from '../lib/api';
 import { formatBDT, formatQty, dhakaTodayISO } from '../lib/decimal';
-import { tr, tx } from '../lib/i18n';
+import { tr, tx, formatMethodLabel, formatStatusLabel } from '../lib/i18n';
 import { BrandLogo, ProductImage } from '../components/ProductMedia';
+
+function getCompletedSixMonthRange(todayISO: string): { start: string; end: string } {
+  const [yStr, mStr] = todayISO.split('-');
+  const curYear = Number(yStr);
+  const curMonth = Number(mStr);
+  let sm = curMonth - 6;
+  let sy = curYear;
+  while (sm <= 0) {
+    sm += 12;
+    sy -= 1;
+  }
+  let em = curMonth - 1;
+  let ey = curYear;
+  if (em <= 0) {
+    em += 12;
+    ey -= 1;
+  }
+  const endDim = new Date(Date.UTC(ey, em, 0)).getUTCDate();
+  return {
+    start: `${sy}-${String(sm).padStart(2, '0')}-01`,
+    end: `${ey}-${String(em).padStart(2, '0')}-${String(endDim).padStart(2, '0')}`,
+  };
+}
 
 export const ReportsPage: React.FC = () => {
   const { lang, staff, settings, categories } = useApp();
   const today = dhakaTodayISO();
-  const [from, setFrom] = useState(`${today.slice(0, 7)}-01`);
-  const [to, setTo] = useState(today);
+  const fallback6m = useMemo(() => getCompletedSixMonthRange(today), [today]);
+  const sixMonthStart = settings?.demoPeriodStart || fallback6m.start;
+  const sixMonthEnd = settings?.demoPeriodEnd || fallback6m.end;
+
+  const [from, setFrom] = useState(() => (settings?.demoModeActive ? sixMonthStart : `${today.slice(0, 7)}-01`));
+  const [to, setTo] = useState(() => (settings?.demoModeActive ? sixMonthEnd : today));
   const [tab, setTab] = useState<'pnl' | 'product' | 'category' | 'brand' | 'slow'>('pnl');
   const [report, setReport] = useState<any>(null);
   const [denied, setDenied] = useState(false);
@@ -130,6 +157,36 @@ export const ReportsPage: React.FC = () => {
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center rounded-xl border border-slate-200 bg-white p-0.5 dark:border-slate-800 dark:bg-slate-900">
+            <button
+              type="button"
+              onClick={() => {
+                setFrom(`${today.slice(0, 7)}-01`);
+                setTo(today);
+              }}
+              className={`rounded-lg px-2.5 py-1 text-xs font-bold cursor-pointer ${
+                from === `${today.slice(0, 7)}-01` && to === today
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-600 hover:text-indigo-700 dark:text-slate-400'
+              }`}
+            >
+              {tx(lang, 'This Month', 'এই মাস')}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setFrom(sixMonthStart);
+                setTo(sixMonthEnd);
+              }}
+              className={`rounded-lg px-2.5 py-1 text-xs font-bold cursor-pointer ${
+                from === sixMonthStart && to === sixMonthEnd
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-600 hover:text-indigo-700 dark:text-slate-400'
+              }`}
+            >
+              {tx(lang, '6 Months', '৬ মাস')}
+            </button>
+          </div>
           <input
             type="date"
             value={from}
@@ -179,74 +236,184 @@ export const ReportsPage: React.FC = () => {
       </div>
 
       {report && tab === 'pnl' && (
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <div className="rounded-2xl border border-indigo-100 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-3">
-            <h2 className="text-sm font-extrabold text-indigo-700 dark:text-indigo-400">
-              {tx(lang, 'Income Statement (Weighted Average Costing)', 'আয়-ব্যয় বিবরণী (গড় ক্রয়মূল্য ভিত্তিক)')}
-            </h2>
-            <div className="space-y-2 text-xs">
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-                <span>
-                  {tx(lang, `Sales Revenue (${p.salesCount} completed invoices)`, `মোট বিক্রয় আয় (${p.salesCount}টি বিল)`)}
-                </span>
-                <span className="font-mono font-bold">{formatBDT(p.salesRevenue)}</span>
+        <div className="space-y-5">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <div className="rounded-2xl border border-indigo-100 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-3">
+              <h2 className="text-sm font-extrabold text-indigo-700 dark:text-indigo-400">
+                {tx(lang, 'Income Statement (Weighted Average Costing)', 'আয়-ব্যয় বিবরণী (গড় ক্রয়মূল্য ভিত্তিক)')}
+              </h2>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
+                  <span>
+                    {tx(lang, `Sales Revenue (${p.salesCount} completed invoices)`, `মোট বিক্রয় আয় (${p.salesCount}টি বিল)`)}
+                  </span>
+                  <span className="font-mono font-bold">{formatBDT(p.salesRevenue)}</span>
+                </div>
+                <div className="flex justify-between pl-3 py-1 text-[11px] text-slate-500">
+                  <span>{tx(lang, '↳ Instant Paid at Sale (Cash + MFS + Card/Bank)', '↳ তাৎক্ষণিক পরিশোধ (নগদ + ডিজিটাল)')}</span>
+                  <span className="font-mono font-semibold text-emerald-600">{formatBDT(p.paidAtSale ?? 0)}</span>
+                </div>
+                <div className="flex justify-between pl-3 pb-1.5 border-b border-slate-100 dark:border-slate-800 text-[11px] text-slate-500">
+                  <span>{tx(lang, '↳ Credit Sales Issued (Baki)', '↳ বাকিতে বিক্রয়')}</span>
+                  <span className="font-mono font-semibold text-rose-600">{formatBDT(p.creditIssued ?? 0)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400">
+                  <span>{tx(lang, 'Less: Cost of Goods Sold (COGS)', 'বাদ: বিক্রিত পণ্যের ক্রয়মূল্য')}</span>
+                  <span className="font-mono">-{formatBDT(p.cogs)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-700 font-bold text-emerald-700 dark:text-emerald-400">
+                  <span>
+                    {tx(lang, `Gross Profit (${p.grossMarginPct}% Margin)`, `মোট লাভ / গ্রস (${p.grossMarginPct}% মার্জিন)`)}
+                  </span>
+                  <span className="font-mono">{formatBDT(p.grossProfit)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800 text-orange-600">
+                  <span>{tx(lang, 'Less: Operating Expenses', 'বাদ: পরিচালনা খরচ')}</span>
+                  <span className="font-mono">-{formatBDT(p.operatingExpenses)}</span>
+                </div>
+                <div className="flex justify-between pt-2 text-base font-extrabold text-slate-900 dark:text-white">
+                  <span>{tx(lang, 'Operating Net Profit', 'নিট লাভ')}</span>
+                  <span className={`font-mono ${Number(p.netProfit) < 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                    {formatBDT(p.netProfit)}
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400">
-                <span>{tx(lang, 'Less: Cost of Goods Sold (COGS)', 'বাদ: বিক্রিত পণ্যের ক্রয়মূল্য')}</span>
-                <span className="font-mono">-{formatBDT(p.cogs)}</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-700 font-bold text-emerald-700 dark:text-emerald-400">
-                <span>
-                  {tx(lang, `Gross Profit (${p.grossMarginPct}% Margin)`, `মোট লাভ / গ্রস (${p.grossMarginPct}% মার্জিন)`)}
-                </span>
-                <span className="font-mono">{formatBDT(p.grossProfit)}</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800 text-orange-600">
-                <span>{tx(lang, 'Less: Operating Expenses', 'বাদ: পরিচালনা খরচ')}</span>
-                <span className="font-mono">-{formatBDT(p.operatingExpenses)}</span>
-              </div>
-              <div className="flex justify-between pt-2 text-base font-extrabold text-slate-900 dark:text-white">
-                <span>{tx(lang, 'Operating Net Profit', 'নিট লাভ')}</span>
-                <span className={`font-mono ${Number(p.netProfit) < 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
-                  {formatBDT(p.netProfit)}
-                </span>
+            </div>
+
+            <div className="rounded-2xl border border-emerald-100 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-3">
+              <h2 className="text-sm font-extrabold text-emerald-700 dark:text-emerald-400">
+                {tx(lang, 'Balance Sheet & Cash Flow Snapshot', 'ব্যালেন্স শিট ও ক্যাশ ফ্লো সংক্ষিপ্তসার')}
+              </h2>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
+                  <span>{tx(lang, 'Customer Due Collections (Non-Revenue)', 'ক্রেতার বাকি আদায় (নতুন আয় নয়)')}</span>
+                  <span className="font-mono font-bold text-indigo-600">{formatBDT(p.dueCollections ?? 0)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
+                  <span>{tx(lang, 'Inventory Asset Purchases (Period)', 'এই সময়ে পণ্য ক্রয় (সম্পদ)')}</span>
+                  <span className="font-mono font-bold">{formatBDT(p.totalPurchases)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
+                  <span>{tx(lang, 'Current Inventory Valuation (Cost)', 'বর্তমান মজুদ পণ্যের মূল্য')}</span>
+                  <span className="font-mono font-bold">{formatBDT(report.inventoryValuation.totalCostValue)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
+                  <span>{tx(lang, 'Customer Dues Receivable', 'ক্রেতার কাছে মোট পাওনা')}</span>
+                  <span className="font-mono font-bold text-rose-600">{formatBDT(report.dues.customerDueTotal)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
+                  <span>{tx(lang, 'Supplier Dues Payable', 'সরবরাহকারীর মোট পাওনা')}</span>
+                  <span className="font-mono font-bold text-orange-600">{formatBDT(report.dues.supplierDueTotal)}</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
+                  <span>{tx(lang, 'Physical Cash In / Out (Period)', 'নগদ জমা / খরচ (এই সময়ে)')}</span>
+                  <span className="font-mono">
+                    +{formatBDT(report.cashFlow.totalIn)} / -{formatBDT(report.cashFlow.totalOut)}
+                  </span>
+                </div>
+                <div className="flex justify-between pt-2 text-sm font-extrabold">
+                  <span>{tx(lang, 'Net Physical Cash Flow', 'নিট নগদ প্রবাহ')}</span>
+                  <span className="font-mono text-emerald-600">{formatBDT(report.cashFlow.netCashFlow)}</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-emerald-100 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-3">
-            <h2 className="text-sm font-extrabold text-emerald-700 dark:text-emerald-400">
-              {tx(lang, 'Balance Sheet & Cash Flow Snapshot', 'ব্যালেন্স শিট ও ক্যাশ ফ্লো সংক্ষিপ্তসার')}
-            </h2>
-            <div className="space-y-2 text-xs">
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-                <span>{tx(lang, 'Inventory Asset Purchases (Period)', 'এই সময়ে পণ্য ক্রয় (সম্পদ)')}</span>
-                <span className="font-mono font-bold">{formatBDT(p.totalPurchases)}</span>
+          {/* Monthly P&L Breakdown Table */}
+          {report.monthlyBreakdown && report.monthlyBreakdown.length > 0 && (
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+              <div className="border-b border-slate-200 px-5 py-3 dark:border-slate-800">
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                  {tx(lang, 'Monthly Sales, Credit & Profit Reconciliation', 'মাসিক বিক্রয়, বাকি ও লাভের হিসাব')}
+                </h3>
               </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-                <span>{tx(lang, 'Current Inventory Valuation (Cost)', 'বর্তমান মজুদ পণ্যের মূল্য')}</span>
-                <span className="font-mono font-bold">{formatBDT(report.inventoryValuation.totalCostValue)}</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-                <span>{tx(lang, 'Customer Dues Receivable', 'ক্রেতার কাছে মোট পাওনা')}</span>
-                <span className="font-mono font-bold text-rose-600">{formatBDT(report.dues.customerDueTotal)}</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-                <span>{tx(lang, 'Supplier Dues Payable', 'সরবরাহকারীর মোট পাওনা')}</span>
-                <span className="font-mono font-bold text-orange-600">{formatBDT(report.dues.supplierDueTotal)}</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-                <span>{tx(lang, 'Cash Flow In / Out (Period)', 'নগদ জমা / খরচ (এই সময়ে)')}</span>
-                <span className="font-mono">
-                  +{formatBDT(report.cashFlow.totalIn)} / -{formatBDT(report.cashFlow.totalOut)}
-                </span>
-              </div>
-              <div className="flex justify-between pt-2 text-sm font-extrabold">
-                <span>{tx(lang, 'Net Cash Flow', 'নিট ক্যাশ ফ্লো')}</span>
-                <span className="font-mono text-emerald-600">{formatBDT(report.cashFlow.netCashFlow)}</span>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="border-b border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-800 dark:bg-slate-950/60">
+                    <tr>
+                      <th className="px-4 py-2.5 font-bold">{tx(lang, 'Month', 'মাস')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'Invoices', 'বিল')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'Total Sales', 'মোট বিক্রয়')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'Paid at Sale', 'নগদ/ডিজিটাল')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'Credit Sales', 'বাকি বিক্রয়')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'COGS', 'ক্রয়মূল্য')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'Gross Profit', 'মোট লাভ')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'Margin', 'মার্জিন')}</th>
+                      <th className="px-3 py-2.5 text-right font-bold">{tx(lang, 'Expenses', 'খরচ')}</th>
+                      <th className="px-4 py-2.5 text-right font-bold">{tx(lang, 'Net Profit', 'নিট লাভ')}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {report.monthlyBreakdown.map((m: any) => (
+                      <tr key={m.ym} className="hover:bg-indigo-50/30 dark:hover:bg-slate-800/40">
+                        <td className="px-4 py-2.5 font-mono font-bold text-indigo-700 dark:text-indigo-400">{m.ym}</td>
+                        <td className="px-3 py-2.5 text-right font-mono text-slate-500">{m.salesCount}</td>
+                        <td className="px-3 py-2.5 text-right font-mono font-bold">{formatBDT(m.revenue)}</td>
+                        <td className="px-3 py-2.5 text-right font-mono text-emerald-700 dark:text-emerald-400">{formatBDT(m.paidAtSale)}</td>
+                        <td className="px-3 py-2.5 text-right font-mono text-rose-600 dark:text-rose-400">{formatBDT(m.creditIssued)}</td>
+                        <td className="px-3 py-2.5 text-right font-mono text-slate-500">{formatBDT(m.cogs)}</td>
+                        <td className="px-3 py-2.5 text-right font-mono font-bold text-emerald-600">{formatBDT(m.grossProfit)}</td>
+                        <td className="px-3 py-2.5 text-right font-mono font-semibold text-indigo-600">{m.grossMarginPct}%</td>
+                        <td className="px-3 py-2.5 text-right font-mono text-orange-600">{formatBDT(m.expenses)}</td>
+                        <td className="px-4 py-2.5 text-right font-mono font-extrabold text-slate-900 dark:text-white">{formatBDT(m.netProfit)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
-          </div>
+          )}
+
+          {/* Payment Channels & Cash Flow Breakdown */}
+          {report.paymentChannels && (
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-3">
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                  {tx(lang, 'Payment Channels (Sales vs Due Collections)', 'পেমেন্ট মাধ্যম (বিক্রয় বনাম বাকি আদায়)')}
+                </h3>
+                <div className="grid grid-cols-2 gap-4 text-xs">
+                  <div className="space-y-1.5">
+                    <p className="font-bold text-indigo-700 dark:text-indigo-400">
+                      {tx(lang, 'Paid at Counter', 'কাউন্টারে পরিশোধ')}
+                    </p>
+                    {report.paymentChannels.salesAtCounter.map((ch: any) => (
+                      <div key={ch.method} className="flex justify-between border-b border-slate-100 py-1 dark:border-slate-800">
+                        <span>{formatMethodLabel(ch.method, lang)}</span>
+                        <span className="font-mono font-bold">{formatBDT(ch.amount)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-1.5">
+                    <p className="font-bold text-emerald-700 dark:text-emerald-400">
+                      {tx(lang, 'Khata Due Collections', 'খাতা বাকি আদায়')}
+                    </p>
+                    {report.paymentChannels.dueCollections.map((ch: any) => (
+                      <div key={ch.method} className="flex justify-between border-b border-slate-100 py-1 dark:border-slate-800">
+                        <span>{formatMethodLabel(ch.method, lang)}</span>
+                        <span className="font-mono font-bold">{formatBDT(ch.amount)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-3">
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                  {tx(lang, 'Physical Cash Register Flows by Category', 'ক্যাশ রেজিস্টার লেনদেনের শ্রেণিবিভাগ')}
+                </h3>
+                <div className="space-y-1.5 text-xs">
+                  {(report.cashFlow?.byType || []).map((t: any) => (
+                    <div key={`${t.txType}-${t.direction}`} className="flex justify-between border-b border-slate-100 py-1 dark:border-slate-800">
+                      <span>{formatStatusLabel(t.txType, lang)}</span>
+                      <span className={`font-mono font-bold ${t.direction === 'IN' ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {t.direction === 'IN' ? '+' : '-'}{formatBDT(t.amount)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

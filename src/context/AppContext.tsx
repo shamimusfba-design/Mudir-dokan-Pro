@@ -45,6 +45,10 @@ export interface StoreSettingsInfo {
   smsProvider: 'NONE' | 'WEBHOOK' | 'WHATSAPP_LINK';
   smsWebhookUrl: string;
   smsSenderId: string;
+  demoModeActive?: boolean;
+  demoPeriodStart?: string | null;
+  demoPeriodEnd?: string | null;
+  demoLoadedAt?: string | null;
 }
 
 export interface StaffProfile {

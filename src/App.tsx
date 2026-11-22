@@ -215,6 +215,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
     bootstrapLoading,
     staff,
     store,
+    settings,
     pendingOfflineSales,
     isOnline,
     isSyncing,
@@ -577,6 +578,43 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
             )}
           </div>
         </header>
+
+        {settings?.demoModeActive && (
+          <div className="no-print flex flex-wrap items-center justify-between gap-2 border-b border-amber-200 bg-gradient-to-r from-amber-50 via-orange-50/70 to-indigo-50/60 px-4 py-2 text-xs dark:border-amber-900/60 dark:from-amber-950/50 dark:via-slate-900 dark:to-indigo-950/40">
+            <div className="flex flex-wrap items-center gap-2 text-amber-950 dark:text-amber-200">
+              <span className="inline-flex items-center gap-1 rounded-md bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+                {tx(lang, 'DEMO MODE', 'ডেমো মোড')}
+              </span>
+              <span className="font-semibold">
+                {tx(
+                  lang,
+                  `6-Month Bangladesh Store Dataset Active (${settings.demoPeriodStart || ''} to ${settings.demoPeriodEnd || ''})`,
+                  `৬ মাসের বাংলাদেশি মুদির দোকান ডেমো ডেটা সক্রিয় (${settings.demoPeriodStart || ''} থেকে ${settings.demoPeriodEnd || ''})`
+                )}
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              {activeTab !== 'reports' && (
+                <button
+                  type="button"
+                  onClick={() => handleNavigate('reports')}
+                  className="font-bold text-indigo-700 hover:underline dark:text-indigo-300 cursor-pointer"
+                >
+                  {tx(lang, 'View 6-Month P&L', '৬ মাসের লাভ-ক্ষতি দেখুন')}
+                </button>
+              )}
+              {activeTab !== 'settings' && (
+                <button
+                  type="button"
+                  onClick={() => handleNavigate('settings')}
+                  className="font-bold text-amber-800 hover:underline dark:text-amber-300 cursor-pointer"
+                >
+                  {tx(lang, 'Manage / Reset Demo', 'ডেমো পরিচালনা / রিসেট')}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
         {!isOnline && (
           <div className="no-print border-b border-orange-200 bg-orange-50 px-4 py-2 text-xs font-medium text-orange-800 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300">

@@ -18,12 +18,14 @@ import {
   categories,
   brands,
   customers,
+  customerPayments,
   suppliers,
   syncLogs,
 } from '../db/schema.ts';
 import { requireAuth, type AuthRequest } from '../middleware/auth.ts';
 import { resolveUserStore, logAudit, handleApiError, HttpError } from './context.ts';
 import { D, money, dhakaTodayISO } from '../lib/decimal.ts';
+import { loadDemoData, resetDemoData, verifyDemoReconciliation } from '../db/demo-seed.ts';
 
 export const financeRouter = Router();
 financeRouter.use(requireAuth);
@@ -380,9 +382,19 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
       ]);
 
     const saleIds = periodSales.map((r) => r.sale.id);
-    const [periodSaleItems, periodPayments, cashInflows] = await Promise.all([
+    const [periodSaleItems, periodPayments, periodDueCollections, cashInflows] = await Promise.all([
       saleIds.length ? db.select().from(saleItems).where(inArray(saleItems.saleId, saleIds)) : Promise.resolve([]),
       saleIds.length ? db.select().from(payments).where(inArray(payments.saleId, saleIds)) : Promise.resolve([]),
+      db
+        .select()
+        .from(customerPayments)
+        .where(
+          and(
+            eq(customerPayments.storeId, ctx.storeId),
+            gte(customerPayments.paymentDate, from),
+            lte(customerPayments.paymentDate, to)
+          )
+        ),
       db
         .select()
         .from(cashTransactions)
@@ -399,8 +411,12 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
     const totalSales = periodSales.reduce((acc, r) => acc.plus(D(r.sale.totalAmount)), D(0));
     const totalCogs = periodSales.reduce((acc, r) => acc.plus(D(r.sale.totalCogs)), D(0));
     const grossProfit = totalSales.minus(totalCogs);
+    const grossMarginPct = totalSales.gt(0) ? grossProfit.dividedBy(totalSales).times(100).toFixed(1) : '0.0';
     const totalExpenses = periodExpenses.reduce((acc, e) => acc.plus(D(e.amount)), D(0));
     const netProfit = grossProfit.minus(totalExpenses);
+    const paidAtSale = periodPayments.reduce((acc, p) => acc.plus(D(p.amount)), D(0));
+    const creditSalesIssued = totalSales.minus(paidAtSale);
+    const dueCollectionsTotal = periodDueCollections.reduce((acc, p) => acc.plus(D(p.amount)), D(0));
     const todaySalesTotal = todayOnlySales.reduce((acc, r) => acc.plus(D(r.totalAmount)), D(0));
     const todayProfitTotal = todayOnlySales.reduce((acc, r) => acc.plus(D(r.grossProfit)), D(0));
     const monthlyRevenueTotal = monthOnlySales.reduce((acc, r) => acc.plus(D(r.totalAmount)), D(0));
@@ -414,24 +430,27 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
       D(0)
     );
 
-    // Daily trend (last 14 days or within range)
+    // Trend aggregation: monthly buckets when range > 45 days (e.g., 6-Month Demo), daily buckets otherwise
+    const rangeDays = Math.max(1, Math.round((new Date(`${to}T00:00:00Z`).getTime() - new Date(`${from}T00:00:00Z`).getTime()) / 86400000));
+    const groupByMonth = rangeDays > 45;
     const trendMap = new Map<string, { date: string; sales: number; grossProfit: number }>();
     for (const r of periodSales) {
-      const d = r.sale.saleDate;
-      const prev = trendMap.get(d) || { date: d, sales: 0, grossProfit: 0 };
+      const key = groupByMonth ? r.sale.saleDate.slice(0, 7) : r.sale.saleDate;
+      const prev = trendMap.get(key) || { date: key, sales: 0, grossProfit: 0 };
       prev.sales += D(r.sale.totalAmount).toNumber();
       prev.grossProfit += D(r.sale.grossProfit).toNumber();
-      trendMap.set(d, prev);
+      trendMap.set(key, prev);
     }
-    const dailyTrend = Array.from(trendMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+    const dailyTrend = Array.from(trendMap.values())
+      .map((d) => ({ date: d.date, sales: Number(d.sales.toFixed(2)), grossProfit: Number(d.grossProfit.toFixed(2)) }))
+      .sort((a, b) => a.date.localeCompare(b.date));
 
-    // Payment method breakdown
+    // Payment method breakdown at sale (strictly paid at sale + credit issued at sale)
     const pmtMap = new Map<string, number>();
     for (const p of periodPayments) {
       pmtMap.set(p.method, (pmtMap.get(p.method) || 0) + D(p.amount).toNumber());
     }
-    const totalCreditIssued = periodSales.reduce((acc, r) => acc.plus(D(r.sale.dueAmount)), D(0)).toNumber();
-    if (totalCreditIssued > 0) pmtMap.set('CREDIT_DUE', totalCreditIssued);
+    if (creditSalesIssued.gt(0)) pmtMap.set('CREDIT_DUE', creditSalesIssued.toNumber());
     const paymentBreakdown = Array.from(pmtMap.entries()).map(([method, amount]) => ({
       method,
       amount: Number(amount.toFixed(2)),
@@ -495,9 +514,14 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
       canViewProfit: !hideProfit,
       kpis: {
         sales: money(totalSales),
+        cogs: hideProfit ? null : money(totalCogs),
         grossProfit: hideProfit ? null : money(grossProfit),
+        grossMarginPct: hideProfit ? null : grossMarginPct,
         netProfit: hideProfit ? null : money(netProfit),
         expenses: money(totalExpenses),
+        paidAtSale: money(paidAtSale),
+        creditSalesIssued: money(creditSalesIssued),
+        dueCollections: money(dueCollectionsTotal),
         cashReceived: money(cashReceived),
         customerOutstanding: money(customerOutstanding),
         supplierOutstanding: money(supplierOutstanding),
@@ -577,7 +601,20 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
       ]);
 
     const saleIds = periodSales.map((s) => s.id);
-    const items = saleIds.length ? await db.select().from(saleItems).where(inArray(saleItems.saleId, saleIds)) : [];
+    const [items, periodSalePmts, periodDuePmts] = await Promise.all([
+      saleIds.length ? db.select().from(saleItems).where(inArray(saleItems.saleId, saleIds)) : Promise.resolve([]),
+      saleIds.length ? db.select().from(payments).where(inArray(payments.saleId, saleIds)) : Promise.resolve([]),
+      db
+        .select()
+        .from(customerPayments)
+        .where(
+          and(
+            eq(customerPayments.storeId, ctx.storeId),
+            gte(customerPayments.paymentDate, from),
+            lte(customerPayments.paymentDate, to)
+          )
+        ),
+    ]);
 
     const totalRevenue = periodSales.reduce((acc, s) => acc.plus(D(s.totalAmount)), D(0));
     const totalCogs = periodSales.reduce((acc, s) => acc.plus(D(s.totalCogs)), D(0));
@@ -585,6 +622,91 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
     const totalOperatingExpenses = periodExpenses.reduce((acc, r) => acc.plus(D(r.expense.amount)), D(0));
     const netProfit = grossProfit.minus(totalOperatingExpenses);
     const totalPurchasesAmt = periodPurchases.reduce((acc, p) => acc.plus(D(p.totalAmount)), D(0));
+    const paidAtSaleTotal = periodSalePmts.reduce((acc, p) => acc.plus(D(p.amount)), D(0));
+    const creditIssuedTotal = totalRevenue.minus(paidAtSaleTotal);
+    const dueCollectionsTotal = periodDuePmts.reduce((acc, p) => acc.plus(D(p.amount)), D(0));
+
+    // Monthly P&L breakdown across the selected date range
+    const saleDateById = new Map(periodSales.map((s) => [s.id, s.saleDate]));
+    const monthlyMap = new Map<
+      string,
+      {
+        ym: string;
+        salesCount: number;
+        revenue: ReturnType<typeof D>;
+        paidAtSale: ReturnType<typeof D>;
+        cogs: ReturnType<typeof D>;
+        expenses: ReturnType<typeof D>;
+        dueCollections: ReturnType<typeof D>;
+      }
+    >();
+    const ensureMonth = (ym: string) => {
+      let entry = monthlyMap.get(ym);
+      if (!entry) {
+        entry = { ym, salesCount: 0, revenue: D(0), paidAtSale: D(0), cogs: D(0), expenses: D(0), dueCollections: D(0) };
+        monthlyMap.set(ym, entry);
+      }
+      return entry;
+    };
+    for (const s of periodSales) {
+      const m = ensureMonth(s.saleDate.slice(0, 7));
+      m.salesCount += 1;
+      m.revenue = m.revenue.plus(D(s.totalAmount));
+      m.cogs = m.cogs.plus(D(s.totalCogs));
+    }
+    for (const p of periodSalePmts) {
+      const sDate = saleDateById.get(p.saleId);
+      if (sDate) {
+        const m = ensureMonth(sDate.slice(0, 7));
+        m.paidAtSale = m.paidAtSale.plus(D(p.amount));
+      }
+    }
+    for (const e of periodExpenses) {
+      const m = ensureMonth(e.expense.expenseDate.slice(0, 7));
+      m.expenses = m.expenses.plus(D(e.expense.amount));
+    }
+    for (const dp of periodDuePmts) {
+      const m = ensureMonth(dp.paymentDate.slice(0, 7));
+      m.dueCollections = m.dueCollections.plus(D(dp.amount));
+    }
+    const monthlyBreakdown = Array.from(monthlyMap.values())
+      .sort((a, b) => a.ym.localeCompare(b.ym))
+      .map((m) => {
+        const gp = m.revenue.minus(m.cogs);
+        const np = gp.minus(m.expenses);
+        const cred = m.revenue.minus(m.paidAtSale);
+        return {
+          ym: m.ym,
+          salesCount: m.salesCount,
+          revenue: money(m.revenue),
+          paidAtSale: money(m.paidAtSale),
+          creditIssued: money(cred),
+          dueCollections: money(m.dueCollections),
+          cogs: money(m.cogs),
+          grossProfit: money(gp),
+          grossMarginPct: m.revenue.gt(0) ? gp.dividedBy(m.revenue).times(100).toFixed(1) : '0.0',
+          expenses: money(m.expenses),
+          netProfit: money(np),
+        };
+      });
+
+    // Payment Channels Breakdown (distinguishing Sales Payments vs Subsequent Due Collections)
+    const saleChannelMap = new Map<string, number>();
+    for (const p of periodSalePmts) {
+      saleChannelMap.set(p.method, (saleChannelMap.get(p.method) || 0) + D(p.amount).toNumber());
+    }
+    const dueChannelMap = new Map<string, number>();
+    for (const dp of periodDuePmts) {
+      dueChannelMap.set(dp.paymentMethod, (dueChannelMap.get(dp.paymentMethod) || 0) + D(dp.amount).toNumber());
+    }
+    const cashFlowByTypeMap = new Map<string, { txType: string; direction: string; amount: number }>();
+    for (const t of cashTxs) {
+      if (t.txType === 'OPENING') continue;
+      const key = `${t.txType}:${t.direction}`;
+      const prev = cashFlowByTypeMap.get(key) || { txType: t.txType, direction: t.direction, amount: 0 };
+      prev.amount += D(t.amount).toNumber();
+      cashFlowByTypeMap.set(key, prev);
+    }
 
     const prodMap = new Map(allProducts.map((p) => [p.id, p]));
     const catMap = new Map(allCats.map((c) => [c.id, c.name]));
@@ -673,13 +795,18 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
       }))
       .slice(0, 25);
 
-    const cashIn = cashTxs.filter((t) => t.direction === 'IN').reduce((acc, t) => acc.plus(D(t.amount)), D(0));
+    const cashIn = cashTxs
+      .filter((t) => t.direction === 'IN' && t.txType !== 'OPENING')
+      .reduce((acc, t) => acc.plus(D(t.amount)), D(0));
     const cashOut = cashTxs.filter((t) => t.direction === 'OUT').reduce((acc, t) => acc.plus(D(t.amount)), D(0));
 
     res.json({
       range: { from, to },
       profitSummary: {
         salesRevenue: money(totalRevenue),
+        paidAtSale: money(paidAtSaleTotal),
+        creditIssued: money(creditIssuedTotal),
+        dueCollections: money(dueCollectionsTotal),
         cogs: money(totalCogs),
         grossProfit: money(grossProfit),
         grossMarginPct: totalRevenue.gt(0) ? grossProfit.dividedBy(totalRevenue).times(100).toFixed(1) : '0.0',
@@ -687,6 +814,17 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
         netProfit: money(netProfit),
         totalPurchases: money(totalPurchasesAmt),
         salesCount: periodSales.length,
+      },
+      monthlyBreakdown,
+      paymentChannels: {
+        salesAtCounter: Array.from(saleChannelMap.entries()).map(([method, amount]) => ({
+          method,
+          amount: Number(amount.toFixed(2)),
+        })),
+        dueCollections: Array.from(dueChannelMap.entries()).map(([method, amount]) => ({
+          method,
+          amount: Number(amount.toFixed(2)),
+        })),
       },
       productProfit: Array.from(prodStats.values()).sort((a, b) => b.grossProfit - a.grossProfit),
       categoryProfit: Array.from(catStats.values()).sort((a, b) => b.grossProfit - a.grossProfit),
@@ -704,6 +842,7 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
         totalIn: money(cashIn),
         totalOut: money(cashOut),
         netCashFlow: money(cashIn.minus(cashOut)),
+        byType: Array.from(cashFlowByTypeMap.values()).map((x) => ({ ...x, amount: Number(x.amount.toFixed(2)) })),
       },
       dues: {
         customerDueTotal: money(allCustomers.reduce((acc, c) => acc.plus(D(c.currentDue)), D(0))),
@@ -726,6 +865,51 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
     });
   } catch (error) {
     handleApiError(res, error, 'Failed to generate financial reports');
+  }
+});
+
+// --- 6-Month Demo Dataset Management (Load / Reset / Accounting Verification) ---
+financeRouter.post('/demo/load', async (req: AuthRequest, res) => {
+  try {
+    const ctx = await resolveUserStore(req);
+    if (ctx.role === 'CASHIER') throw new HttpError(403, 'Only Owner or Manager can load the 6-month demo dataset');
+    const summary = await loadDemoData(ctx.storeId, ctx.uid);
+    await logAudit(
+      ctx.storeId,
+      ctx.uid,
+      'LOAD_DEMO_DATA',
+      'STORE',
+      ctx.storeId,
+      `Loaded 6-month demo dataset (${summary.periodStart} to ${summary.periodEnd}, ৳${summary.totalSales} sales)`
+    );
+    res.json(summary);
+  } catch (error) {
+    handleApiError(res, error, 'Failed to load 6-month demo dataset');
+  }
+});
+
+financeRouter.post('/demo/reset', async (req: AuthRequest, res) => {
+  try {
+    const ctx = await resolveUserStore(req);
+    if (ctx.role === 'CASHIER') throw new HttpError(403, 'Only Owner or Manager can reset demo data');
+    const result = await resetDemoData(ctx.storeId);
+    await logAudit(ctx.storeId, ctx.uid, 'RESET_DEMO_DATA', 'STORE', ctx.storeId, 'Removed demo-tagged records while preserving real data');
+    res.json(result);
+  } catch (error) {
+    handleApiError(res, error, 'Failed to reset demo data');
+  }
+});
+
+financeRouter.get('/demo/verify', async (req: AuthRequest, res) => {
+  try {
+    const ctx = await resolveUserStore(req);
+    if (ctx.role === 'CASHIER' && !ctx.settings.allowCashierReports) {
+      throw new HttpError(403, 'Verification reports require Owner or Manager authorization');
+    }
+    const report = await verifyDemoReconciliation(ctx.storeId);
+    res.json(report);
+  } catch (error) {
+    handleApiError(res, error, 'Failed to verify accounting reconciliation');
   }
 });
 

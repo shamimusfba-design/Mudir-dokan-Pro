@@ -34,7 +34,7 @@ const customerSchema = z.object({
   area: z.string().max(120).optional().default(''),
   road: z.string().max(120).optional().default(''),
   house: z.string().max(120).optional().default(''),
-  customerType: z.enum(['REGULAR', 'VIP', 'WHOLESALE']).optional().default('REGULAR'),
+  customerType: z.enum(['REGULAR', 'VIP', 'WHOLESALE', 'OCCASIONAL']).optional().default('REGULAR'),
   creditLimit: z.union([z.string(), z.number()]).optional().default('5000'),
   openingBalance: z.union([z.string(), z.number()]).optional().default('0'),
   registrationDate: z.string().optional(),

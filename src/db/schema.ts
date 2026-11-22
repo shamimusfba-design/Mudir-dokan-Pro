@@ -67,6 +67,10 @@ export const storeSettings = pgTable('store_settings', {
   smsProvider: text('sms_provider').notNull().default('WHATSAPP_LINK'), // NONE | WEBHOOK | WHATSAPP_LINK
   smsWebhookUrl: text('sms_webhook_url').default(''),
   smsSenderId: text('sms_sender_id').default('MudirDokan'),
+  demoModeActive: boolean('demo_mode_active').notNull().default(false),
+  demoPeriodStart: text('demo_period_start'),
+  demoPeriodEnd: text('demo_period_end'),
+  demoLoadedAt: timestamp('demo_loaded_at'),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
@@ -142,6 +146,7 @@ export const products = pgTable(
     imageUpdatedAt: timestamp('image_updated_at'),
     isFrequent: boolean('is_frequent').notNull().default(false),
     isActive: boolean('is_active').notNull().default(true),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },
@@ -191,6 +196,7 @@ export const stockMovements = pgTable(
     referenceType: text('reference_type').notNull(), // SEED | PURCHASE | SALE | ADJUSTMENT | RETURN
     referenceId: integer('reference_id'),
     notes: text('notes').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -215,6 +221,7 @@ export const stockAdjustments = pgTable(
     quantity: numeric('quantity', { precision: 14, scale: 4 }).notNull(),
     unitCost: numeric('unit_cost', { precision: 14, scale: 4 }).notNull().default('0'),
     reason: text('reason').notNull(),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -240,6 +247,7 @@ export const suppliers = pgTable(
     currentDue: numeric('current_due', { precision: 14, scale: 2 }).notNull().default('0'),
     notes: text('notes').default(''),
     isActive: boolean('is_active').notNull().default(true),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [index('suppliers_store_idx').on(t.storeId)]
@@ -269,6 +277,7 @@ export const purchases = pgTable(
     paymentMethod: text('payment_method').notNull().default('CASH'),
     status: text('status').notNull().default('COMPLETED'), // COMPLETED | RETURNED | PARTIAL_RETURN
     notes: text('notes').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -317,6 +326,7 @@ export const purchaseReturns = pgTable('purchase_returns', {
   returnNumber: text('return_number').notNull(),
   totalAmount: numeric('total_amount', { precision: 14, scale: 2 }).notNull(),
   reason: text('reason').default(''),
+  isDemo: boolean('is_demo').notNull().default(false),
   createdByUid: text('created_by_uid').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
@@ -351,6 +361,7 @@ export const supplierPayments = pgTable(
     paymentMethod: text('payment_method').notNull().default('CASH'),
     paymentDate: text('payment_date').notNull(),
     remarks: text('remarks').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -377,6 +388,7 @@ export const supplierLedger = pgTable(
     runningBalance: numeric('running_balance', { precision: 14, scale: 2 }).notNull().default('0'),
     paymentMethod: text('payment_method').default(''),
     description: text('description').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [index('supplier_ledger_supplier_idx').on(t.supplierId)]
@@ -407,6 +419,7 @@ export const customers = pgTable(
     registrationDate: text('registration_date').notNull(), // YYYY-MM-DD
     notes: text('notes').default(''),
     isActive: boolean('is_active').notNull().default(true),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },
@@ -442,6 +455,7 @@ export const sales = pgTable(
     expectedPaymentDate: text('expected_payment_date'), // YYYY-MM-DD
     isOfflineOrigin: boolean('is_offline_origin').notNull().default(false),
     notes: text('notes').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     cashierUid: text('cashier_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -494,6 +508,7 @@ export const payments = pgTable(
     method: text('method').notNull(), // CASH | BKASH | NAGAD | ROCKET | CARD | BANK
     amount: numeric('amount', { precision: 14, scale: 2 }).notNull(),
     referenceNo: text('reference_no').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     paidAt: timestamp('paid_at').defaultNow().notNull(),
   },
   (t) => [index('payments_sale_idx').on(t.saleId)]
@@ -514,6 +529,7 @@ export const salesReturns = pgTable('sales_returns', {
   totalCogsReversed: numeric('total_cogs_reversed', { precision: 14, scale: 4 }).notNull().default('0'),
   refundMethod: text('refund_method').notNull().default('CASH'), // CASH | CREDIT_ADJUSTMENT
   reason: text('reason').default(''),
+  isDemo: boolean('is_demo').notNull().default(false),
   createdByUid: text('created_by_uid').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
@@ -551,6 +567,7 @@ export const customerPayments = pgTable(
     paymentDate: text('payment_date').notNull(), // YYYY-MM-DD
     referenceNo: text('reference_no').default(''),
     remarks: text('remarks').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -575,6 +592,7 @@ export const paymentAllocations = pgTable(
       .references(() => sales.id)
       .notNull(),
     allocatedAmount: numeric('allocated_amount', { precision: 14, scale: 2 }).notNull(),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [
@@ -597,6 +615,7 @@ export const ledgerAdjustments = pgTable(
     direction: text('direction').notNull(), // DEBIT | CREDIT
     amount: numeric('amount', { precision: 14, scale: 2 }).notNull(),
     reason: text('reason').notNull(),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -628,6 +647,7 @@ export const customerLedger = pgTable(
     paymentMethod: text('payment_method').default(''),
     expectedPaymentDate: text('expected_payment_date'),
     description: text('description').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [
@@ -715,6 +735,7 @@ export const dueReminders = pgTable(
     message: text('message').notNull(),
     status: text('status').notNull().default('SENT'), // QUEUED | SENT | FAILED
     scheduledFor: text('scheduled_for'),
+    isDemo: boolean('is_demo').notNull().default(false),
     sentAt: timestamp('sent_at').defaultNow(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -737,6 +758,7 @@ export const customerDisputes = pgTable(
     reason: text('reason').notNull(),
     status: text('status').notNull().default('OPEN'), // OPEN | RESOLVED | REJECTED
     resolutionNote: text('resolution_note').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     resolvedAt: timestamp('resolved_at'),
   },
@@ -753,6 +775,7 @@ export const expenseCategories = pgTable(
       .notNull(),
     name: text('name').notNull(),
     nameBn: text('name_bn').notNull().default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [index('expense_categories_store_idx').on(t.storeId)]
@@ -774,6 +797,7 @@ export const expenses = pgTable(
     paymentMethod: text('payment_method').notNull().default('CASH'),
     description: text('description').default(''),
     attachmentRef: text('attachment_ref').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
@@ -797,6 +821,7 @@ export const cashRegisters = pgTable(
     actualClosing: numeric('actual_closing', { precision: 14, scale: 2 }),
     status: text('status').notNull().default('OPEN'), // OPEN | CLOSED
     notes: text('notes').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
   },
   (t) => [index('cash_registers_store_idx').on(t.storeId)]
 );
@@ -816,6 +841,7 @@ export const cashTransactions = pgTable(
     referenceType: text('reference_type').default(''),
     referenceId: integer('reference_id'),
     description: text('description').default(''),
+    isDemo: boolean('is_demo').notNull().default(false),
     createdByUid: text('created_by_uid').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },

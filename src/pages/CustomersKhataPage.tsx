@@ -25,7 +25,7 @@ export const CustomersKhataPage: React.FC = () => {
   const { store, settings, staff, lang, refreshCatalog } = useApp();
   const [customers, setCustomers] = useState<any[]>([]);
   const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState<'ALL' | 'REGULAR' | 'VIP' | 'WHOLESALE'>('ALL');
+  const [typeFilter, setTypeFilter] = useState<'ALL' | 'REGULAR' | 'VIP' | 'WHOLESALE' | 'OCCASIONAL'>('ALL');
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [khata, setKhata] = useState<any>(null);
   const [khataTab, setKhataTab] = useState<'ledger' | 'invoices' | 'analytics' | 'portal'>('ledger');
@@ -40,7 +40,7 @@ export const CustomersKhataPage: React.FC = () => {
     area: '',
     road: '',
     house: '',
-    customerType: 'REGULAR' as 'REGULAR' | 'VIP' | 'WHOLESALE',
+    customerType: 'REGULAR' as 'REGULAR' | 'VIP' | 'WHOLESALE' | 'OCCASIONAL',
     creditLimit: '5000',
     openingBalance: '0',
     registrationDate: dhakaTodayISO(),
@@ -248,6 +248,7 @@ export const CustomersKhataPage: React.FC = () => {
                   ['REGULAR', formatStatusLabel('REGULAR', lang)],
                   ['VIP', formatStatusLabel('VIP', lang)],
                   ['WHOLESALE', formatStatusLabel('WHOLESALE', lang)],
+                  ['OCCASIONAL', formatStatusLabel('OCCASIONAL', lang)],
                 ] as const
               ).map(([t, label]) => (
                 <button
@@ -867,6 +868,7 @@ export const CustomersKhataPage: React.FC = () => {
                   <option value="REGULAR">{formatStatusLabel('REGULAR', lang)}</option>
                   <option value="VIP">{formatStatusLabel('VIP', lang)}</option>
                   <option value="WHOLESALE">{formatStatusLabel('WHOLESALE', lang)}</option>
+                  <option value="OCCASIONAL">{formatStatusLabel('OCCASIONAL', lang)}</option>
                 </select>
               </div>
               <div>

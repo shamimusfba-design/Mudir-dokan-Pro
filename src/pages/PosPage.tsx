@@ -67,7 +67,7 @@ export const PosPage: React.FC = () => {
     name: '',
     phone: '',
     area: '',
-    customerType: 'REGULAR' as 'REGULAR' | 'VIP' | 'WHOLESALE',
+    customerType: 'REGULAR' as 'REGULAR' | 'VIP' | 'WHOLESALE' | 'OCCASIONAL',
     creditLimit: '5000',
   });
 
@@ -1356,13 +1356,14 @@ export const PosPage: React.FC = () => {
                   <select
                     value={newCust.customerType}
                     onChange={(e) =>
-                      setNewCust({ ...newCust, customerType: e.target.value as 'REGULAR' | 'VIP' | 'WHOLESALE' })
+                      setNewCust({ ...newCust, customerType: e.target.value as 'REGULAR' | 'VIP' | 'WHOLESALE' | 'OCCASIONAL' })
                     }
                     className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
                   >
                     <option value="REGULAR">{formatStatusLabel('REGULAR', lang)}</option>
                     <option value="VIP">{formatStatusLabel('VIP', lang)}</option>
                     <option value="WHOLESALE">{formatStatusLabel('WHOLESALE', lang)}</option>
+                    <option value="OCCASIONAL">{formatStatusLabel('OCCASIONAL', lang)}</option>
                   </select>
                 </div>
                 <div>

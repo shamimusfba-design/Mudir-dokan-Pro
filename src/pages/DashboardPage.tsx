@@ -32,7 +32,7 @@ import { tr, trCompact, tx, formatMethodLabel, formatStatusLabel, formatUnitLabe
 import { useApp } from '../context/AppContext';
 import { ProductImage } from '../components/ProductMedia';
 
-type RangePreset = 'today' | 'yesterday' | 'week' | 'month' | 'custom';
+type RangePreset = 'today' | 'yesterday' | 'week' | 'month' | '6m' | 'custom';
 
 const BAR_COLORS = ['#4F46E5', '#10B981', '#F97316', '#EC4899', '#8B5CF6', '#06B6D4', '#F59E0B', '#14B8A6'];
 
@@ -42,16 +42,53 @@ function shiftDays(iso: string, delta: number): string {
   return d.toISOString().slice(0, 10);
 }
 
+function defaultSixMonthWindow(todayISO: string): { start: string; end: string } {
+  const [yStr, mStr] = todayISO.split('-');
+  const curYear = Number(yStr);
+  const curMonth = Number(mStr);
+  let sm = curMonth - 6;
+  let sy = curYear;
+  while (sm <= 0) {
+    sm += 12;
+    sy -= 1;
+  }
+  let em = curMonth - 1;
+  let ey = curYear;
+  if (em <= 0) {
+    em += 12;
+    ey -= 1;
+  }
+  const endDim = new Date(Date.UTC(ey, em, 0)).getUTCDate();
+  return {
+    start: `${sy}-${String(sm).padStart(2, '0')}-01`,
+    end: `${ey}-${String(em).padStart(2, '0')}-${String(endDim).padStart(2, '0')}`,
+  };
+}
+
 export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({ onNavigate }) => {
-  const { lang, staff, categories } = useApp();
+  const { lang, staff, settings, categories } = useApp();
   const today = dhakaTodayISO();
-  const [preset, setPreset] = useState<RangePreset>('month');
-  const [from, setFrom] = useState(`${today.slice(0, 7)}-01`);
-  const [to, setTo] = useState(today);
+  const fallback6m = useMemo(() => defaultSixMonthWindow(today), [today]);
+  const sixMonthStart = settings?.demoPeriodStart || fallback6m.start;
+  const sixMonthEnd = settings?.demoPeriodEnd || fallback6m.end;
+
+  const [preset, setPreset] = useState<RangePreset>(() => (settings?.demoModeActive ? '6m' : 'month'));
+  const [from, setFrom] = useState(() => (settings?.demoModeActive ? sixMonthStart : `${today.slice(0, 7)}-01`));
+  const [to, setTo] = useState(() => (settings?.demoModeActive ? sixMonthEnd : today));
+  const [demoAutoApplied, setDemoAutoApplied] = useState(Boolean(settings?.demoModeActive));
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
 
   const catMap = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
+
+  useEffect(() => {
+    if (settings?.demoModeActive && !demoAutoApplied && settings.demoPeriodStart && settings.demoPeriodEnd) {
+      setPreset('6m');
+      setFrom(settings.demoPeriodStart);
+      setTo(settings.demoPeriodEnd);
+      setDemoAutoApplied(true);
+    }
+  }, [settings?.demoModeActive, settings?.demoPeriodStart, settings?.demoPeriodEnd, demoAutoApplied]);
 
   const applyPreset = (p: RangePreset) => {
     setPreset(p);
@@ -68,6 +105,9 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
     } else if (p === 'month') {
       setFrom(`${today.slice(0, 7)}-01`);
       setTo(today);
+    } else if (p === '6m') {
+      setFrom(sixMonthStart);
+      setTo(sixMonthEnd);
     }
   };
 
@@ -136,6 +176,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                 ['yesterday', 'Yesterday', 'গতকাল'],
                 ['week', '7 Days', '৭ দিন'],
                 ['month', 'This Month', 'এই মাস'],
+                ['6m', '6 Months', '৬ মাস'],
                 ['custom', 'Custom', 'কাস্টম'],
               ] as const
             ).map(([key, en, bn]) => (
@@ -185,32 +226,44 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
 
       {/* 8 Colorful KPI Cards */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {/* 1. Today's Sales (Gradient Hero) */}
+        {/* 1. Period / Today Sales (Gradient Hero) */}
         <div
           onClick={() => onNavigate('pos')}
           className="cursor-pointer rounded-2xl bg-gradient-to-br from-indigo-600 via-blue-600 to-indigo-700 p-4 text-white shadow-md shadow-indigo-500/20 transition hover:-translate-y-0.5"
         >
           <div className="flex items-center justify-between text-xs font-semibold text-indigo-100">
-            <span className="truncate">{tx(lang, "Today's Sales", 'আজকের বিক্রয়')}</span>
+            <span className="truncate">
+              {preset === 'today' ? tx(lang, "Today's Sales", 'আজকের বিক্রয়') : tx(lang, 'Period Sales', 'সময়ের মোট বিক্রয়')}
+            </span>
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/15">
               <ShoppingBag className="h-4 w-4 text-white" />
             </span>
           </div>
           <div className="mt-2 font-mono text-2xl font-extrabold tabular-nums">
-            {loading ? <span className="inline-block h-7 w-24 animate-pulse rounded bg-white/25" /> : formatBDT(kpis?.todaySales ?? 0)}
+            {loading ? (
+              <span className="inline-block h-7 w-24 animate-pulse rounded bg-white/25" />
+            ) : (
+              formatBDT(preset === 'today' ? kpis?.todaySales ?? 0 : kpis?.sales ?? 0)
+            )}
           </div>
           <div className="mt-1 text-[11px] text-indigo-100/90">
-            {tx(lang, 'Period Sales:', 'সময়ের বিক্রয়:')} <span className="font-mono font-bold">{kpis ? formatBDT(kpis.sales) : '—'}</span>
+            {tx(lang, 'Paid:', 'নগদ/ডিজিটাল:')}{' '}
+            <span className="font-mono font-bold">{kpis ? formatBDT(kpis.paidAtSale ?? 0) : '—'}</span> ·{' '}
+            {tx(lang, 'Credit:', 'বাকি:')}{' '}
+            <span className="font-mono font-bold">{kpis ? formatBDT(kpis.creditSalesIssued ?? 0) : '—'}</span>
           </div>
         </div>
 
-        {/* 2. Today's Profit (Gradient Emerald) */}
+        {/* 2. Gross & Net Profit (Gradient Emerald) */}
         <div
           onClick={() => onNavigate('reports')}
           className="cursor-pointer rounded-2xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 p-4 text-white shadow-md shadow-emerald-500/20 transition hover:-translate-y-0.5"
         >
           <div className="flex items-center justify-between text-xs font-semibold text-emerald-100">
-            <span className="truncate">{tx(lang, "Today's Profit", 'আজকের লাভ')}</span>
+            <span className="truncate">
+              {tx(lang, 'Gross Profit', 'মোট লাভ (গ্রস)')}{' '}
+              {kpis?.grossMarginPct ? `(${kpis.grossMarginPct}%)` : ''}
+            </span>
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/15">
               <TrendingUp className="h-4 w-4 text-white" />
             </span>
@@ -218,33 +271,34 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
           <div className="mt-2 font-mono text-2xl font-extrabold tabular-nums">
             {loading ? (
               <span className="inline-block h-7 w-24 animate-pulse rounded bg-white/25" />
-            ) : kpis?.todayProfit !== null && kpis?.todayProfit !== undefined ? (
-              formatBDT(kpis.todayProfit)
+            ) : kpis?.grossProfit !== null && kpis?.grossProfit !== undefined ? (
+              formatBDT(kpis.grossProfit)
             ) : (
               restrictedText
             )}
           </div>
           <div className="mt-1 text-[11px] text-emerald-100/90">
-            {tx(lang, 'Period Net:', 'নিট লাভ:')}{' '}
+            {tx(lang, 'Net Profit:', 'নিট লাভ:')}{' '}
             <span className="font-mono font-bold">
               {kpis ? (kpis.netProfit !== null ? formatBDT(kpis.netProfit) : restrictedText) : '—'}
             </span>
           </div>
         </div>
 
-        {/* 3. Monthly Revenue */}
+        {/* 3. Due Collections & Cash In */}
         <div className="rounded-2xl border border-purple-200/80 bg-white p-4 shadow-xs dark:border-purple-900/50 dark:bg-slate-900">
           <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300">
-            <span className="truncate">{tx(lang, 'Monthly Revenue', 'মাসিক বিক্রয় আয়')}</span>
+            <span className="truncate">{tx(lang, 'Cash Received (Till)', 'ক্যাশ ড্রয়ারে নগদ গ্রহণ')}</span>
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-purple-400">
               <CalendarRange className="h-4 w-4" />
             </span>
           </div>
           <div className="mt-2 font-mono text-xl font-extrabold tabular-nums text-purple-700 dark:text-purple-400">
-            {loading ? <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : formatBDT(kpis?.monthlyRevenue ?? 0)}
+            {loading ? <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : formatBDT(kpis?.cashReceived ?? 0)}
           </div>
           <div className="mt-1 text-[11px] text-slate-500">
-            {tx(lang, 'Cash In:', 'নগদ গ্রহণ:')} <span className="font-mono font-semibold">{kpis ? formatBDT(kpis.cashReceived) : '—'}</span>
+            {tx(lang, 'Due Collected:', 'বাকি আদায়:')}{' '}
+            <span className="font-mono font-semibold">{kpis ? formatBDT(kpis.dueCollections ?? 0) : '—'}</span>
           </div>
         </div>
 
@@ -362,7 +416,9 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
         <div className="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-slate-900 dark:text-white">
-              {trCompact('Daily Sales & Gross Profit Trend', 'দৈনিক বিক্রয় ও লাভের ধারা', lang)}
+              {preset === '6m'
+                ? trCompact('Monthly Sales & Gross Profit Trend (6 Months)', 'মাসিক বিক্রয় ও লাভের ধারা (৬ মাস)', lang)
+                : trCompact('Daily Sales & Gross Profit Trend', 'দৈনিক বিক্রয় ও লাভের ধারা', lang)}
             </h2>
             <div className="flex items-center gap-3 text-[11px] font-semibold">
               <span className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400">

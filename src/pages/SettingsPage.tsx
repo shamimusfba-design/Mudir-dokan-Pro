@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { RefreshCw, Save, ShieldCheck, ExternalLink } from 'lucide-react';
+import {
+  RefreshCw,
+  Save,
+  ShieldCheck,
+  ExternalLink,
+  Database,
+  Trash2,
+  CheckCircle2,
+  XCircle,
+  Loader2,
+  ClipboardCheck,
+  AlertTriangle,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch } from '../lib/api';
@@ -48,6 +60,11 @@ export const SettingsPage: React.FC = () => {
   });
 
   const [syncLogs, setSyncLogs] = useState<any[]>([]);
+  const [demoLoading, setDemoLoading] = useState(false);
+  const [demoResetting, setDemoResetting] = useState(false);
+  const [demoVerifying, setDemoVerifying] = useState(false);
+  const [confirmResetOpen, setConfirmResetOpen] = useState(false);
+  const [verifyReport, setVerifyReport] = useState<any>(null);
 
   useEffect(() => {
     apiFetch('/api/finance/settings')
@@ -63,6 +80,64 @@ export const SettingsPage: React.FC = () => {
       })
       .catch(() => {});
   }, []);
+
+  const handleLoadDemo = async () => {
+    setDemoLoading(true);
+    try {
+      const res = await apiFetch<any>('/api/finance/demo/load', { method: 'POST' });
+      setVerifyReport(res.reconciliation || null);
+      toast.success(
+        tx(
+          lang,
+          `Loaded 6-month Bangladesh grocery dataset (${res.salesCount} sales, ৳${res.totalSales})`,
+          `৬ মাসের ডেমো ডেটা লোড সম্পন্ন (${res.salesCount}টি বিক্রয়, ৳${res.totalSales})`
+        )
+      );
+      await refreshCatalog();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : tx(lang, 'Failed to load demo data', 'ডেমো ডেটা লোড ব্যর্থ হয়েছে'));
+    } finally {
+      setDemoLoading(false);
+    }
+  };
+
+  const handleResetDemo = async () => {
+    setConfirmResetOpen(false);
+    setDemoResetting(true);
+    try {
+      await apiFetch('/api/finance/demo/reset', { method: 'POST' });
+      setVerifyReport(null);
+      toast.success(
+        tx(
+          lang,
+          'Demo data removed cleanly. Your real business records are preserved.',
+          'সব ডেমো ডেটা নিরাপদে মুছে ফেলা হয়েছে। আপনার প্রকৃত ব্যবসায়িক তথ্য সুরক্ষিত আছে।'
+        )
+      );
+      await refreshCatalog();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : tx(lang, 'Failed to reset demo data', 'ডেমো ডেটা রিসেট ব্যর্থ হয়েছে'));
+    } finally {
+      setDemoResetting(false);
+    }
+  };
+
+  const handleVerifyDemo = async () => {
+    setDemoVerifying(true);
+    try {
+      const rep = await apiFetch<any>('/api/finance/demo/verify');
+      setVerifyReport(rep);
+      if (rep.allPassed) {
+        toast.success(tx(lang, 'All accounting & reconciliation checks passed!', 'সব হিসাব ও রিকনসিলিয়েশন যাচাই সফল হয়েছে!'));
+      } else {
+        toast.warning(tx(lang, 'Verification completed — review check details below.', 'যাচাই সম্পন্ন — নিচের ফলাফল দেখুন।'));
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : tx(lang, 'Verification failed', 'যাচাই ব্যর্থ হয়েছে'));
+    } finally {
+      setDemoVerifying(false);
+    }
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,6 +213,186 @@ export const SettingsPage: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* 6-Month Demo Dataset & Accounting Reconciliation Control Center */}
+      {staff?.role !== 'CASHIER' && (
+        <div className="rounded-2xl border border-amber-200/90 bg-gradient-to-br from-amber-50/70 via-white to-indigo-50/40 p-5 shadow-xs dark:border-amber-900/50 dark:from-amber-950/20 dark:via-slate-900 dark:to-slate-900 space-y-4">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Database className="h-4 w-4 text-amber-600" />
+                <h2 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                  {tx(lang, '6-Month Bangladesh Grocery Demo Dataset', '৬ মাসের বাংলাদেশি মুদির দোকান ডেমো ডেটাসেট')}
+                </h2>
+                {settings?.demoModeActive && (
+                  <span className="rounded-md bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-white">
+                    {tx(lang, 'DEMO MODE', 'ডেমো মোড')}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                {settings?.demoModeActive
+                  ? tx(
+                      lang,
+                      `Active demo period: ${settings.demoPeriodStart} to ${settings.demoPeriodEnd} (~৳60L sales, 50% instant paid / 50% credit, 20% gross margin, 270 SKUs, 110 customers, 20 suppliers).`,
+                      `সক্রিয় ডেমো সময়কাল: ${settings.demoPeriodStart} থেকে ${settings.demoPeriodEnd} (প্রায় ৬০ লাখ টাকা বিক্রয়, ৫০% নগদ/ডিজিটাল ও ৫০% বাকি, ২০% গ্রস মার্জিন)।`
+                    )
+                  : tx(
+                      lang,
+                      'Load 6 completed calendar months of realistic, fully reconciled Bangladeshi grocery store transactions. All demo records are safely tagged so Reset never deletes your real business data.',
+                      '৬ মাসের বাস্তবসম্মত বাংলাদেশি মুদির দোকানের লেনদেন লোড করুন। সব ডেমো ডেটা আলাদাভাবে ট্যাগ করা থাকে, তাই রিসেট করলে আপনার প্রকৃত ডেটা কখনোই মুছবে না।'
+                    )}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              disabled={demoLoading || demoResetting}
+              onClick={handleLoadDemo}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:from-indigo-700 hover:to-blue-700 disabled:opacity-50 cursor-pointer"
+            >
+              {demoLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Database className="h-3.5 w-3.5" />}
+              {demoLoading
+                ? tx(lang, 'Generating 6-Month Dataset...', '৬ মাসের ডেটা তৈরি হচ্ছে...')
+                : settings?.demoModeActive
+                  ? tx(lang, 'Reload 6-Month Demo Data', '৬ মাসের ডেমো ডেটা পুনরায় লোড করুন')
+                  : tx(lang, 'Load 6-Month Demo Data', '৬ মাসের ডেমো ডেটা লোড করুন')}
+            </button>
+
+            <button
+              type="button"
+              disabled={demoLoading || demoResetting || !settings?.demoModeActive}
+              onClick={() => setConfirmResetOpen(true)}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2 text-xs font-bold text-rose-700 hover:bg-rose-100 disabled:opacity-45 dark:border-rose-900/60 dark:bg-rose-950/30 dark:text-rose-300 cursor-pointer"
+            >
+              {demoResetting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+              {demoResetting ? tx(lang, 'Resetting...', 'রিসেট হচ্ছে...') : tx(lang, 'Reset Demo Data', 'ডেমো ডেটা রিসেট করুন')}
+            </button>
+
+            <button
+              type="button"
+              disabled={demoVerifying || demoLoading || demoResetting}
+              onClick={handleVerifyDemo}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-emerald-300 cursor-pointer"
+            >
+              {demoVerifying ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ClipboardCheck className="h-3.5 w-3.5" />}
+              {tx(lang, 'Verify Accounting Reconciliation', 'হিসাব রিকনসিলিয়েশন যাচাই করুন')}
+            </button>
+          </div>
+
+          {verifyReport && (
+            <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5 dark:border-slate-800">
+                <span className="text-xs font-extrabold text-slate-900 dark:text-white">
+                  {tx(
+                    lang,
+                    `PostgreSQL Accounting Audit (${verifyReport.periodStart} to ${verifyReport.periodEnd})`,
+                    `ডাটাবেস হিসাব নিরীক্ষা (${verifyReport.periodStart} থেকে ${verifyReport.periodEnd})`
+                  )}
+                </span>
+                <span
+                  className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-bold ${
+                    verifyReport.allPassed
+                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                      : 'bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300'
+                  }`}
+                >
+                  {verifyReport.allPassed ? (
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                  ) : (
+                    <AlertTriangle className="h-3.5 w-3.5" />
+                  )}
+                  {verifyReport.allPassed
+                    ? tx(lang, 'All Checks Passed', 'সব যাচাই সফল')
+                    : tx(lang, 'Needs Attention', 'পর্যালোচনা প্রয়োজন')}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 text-xs">
+                <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-900">
+                  <div className="text-[10px] font-semibold text-slate-500">{tx(lang, '6-Mo Total Sales', '৬ মাসের বিক্রয়')}</div>
+                  <div className="font-mono font-extrabold text-indigo-700 dark:text-indigo-400">
+                    {formatBDT(verifyReport.sixMonthFinancials.totalSales)}
+                  </div>
+                </div>
+                <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-900">
+                  <div className="text-[10px] font-semibold text-slate-500">{tx(lang, 'Gross Profit & Margin', 'মোট লাভ ও মার্জিন')}</div>
+                  <div className="font-mono font-extrabold text-emerald-600">
+                    {formatBDT(verifyReport.sixMonthFinancials.grossProfit)} ({verifyReport.sixMonthFinancials.grossMarginPct}%)
+                  </div>
+                </div>
+                <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-900">
+                  <div className="text-[10px] font-semibold text-slate-500">{tx(lang, 'Operating Expenses', 'পরিচালনা খরচ')}</div>
+                  <div className="font-mono font-extrabold text-orange-600">
+                    {formatBDT(verifyReport.sixMonthFinancials.operatingExpenses)}
+                  </div>
+                </div>
+                <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-900">
+                  <div className="text-[10px] font-semibold text-slate-500">{tx(lang, 'Net Profit', 'নিট লাভ')}</div>
+                  <div className="font-mono font-extrabold text-slate-900 dark:text-white">
+                    {formatBDT(verifyReport.sixMonthFinancials.netProfit)}
+                  </div>
+                </div>
+              </div>
+
+              <div className="divide-y divide-slate-100 text-xs dark:divide-slate-800">
+                {(verifyReport.checks || []).map((c: any) => (
+                  <div key={c.key} className="flex flex-wrap items-center justify-between gap-2 py-1.5">
+                    <div className="flex items-center gap-2">
+                      {c.passed ? (
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+                      ) : (
+                        <XCircle className="h-4 w-4 shrink-0 text-rose-600" />
+                      )}
+                      <span className="font-semibold text-slate-800 dark:text-slate-200">{c.label}</span>
+                    </div>
+                    <span className="font-mono text-[11px] text-slate-600 dark:text-slate-400">{c.actual}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Confirmation Modal for Safe Non-Destructive Demo Reset */}
+      {confirmResetOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-xs">
+          <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 space-y-4">
+            <div className="flex items-center gap-2.5 text-rose-600">
+              <AlertTriangle className="h-5 w-5 shrink-0" />
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
+                {tx(lang, 'Confirm Reset Demo Data?', 'ডেমো ডেটা রিসেট নিশ্চিত করবেন?')}
+              </h3>
+            </div>
+            <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+              {tx(
+                lang,
+                'This removes ONLY records tagged as demo data (is_demo = true) and exits DEMO MODE. Any real products, sales, customers, purchases, or expenses you created manually will be safely preserved.',
+                'এতে শুধুমাত্র ডেমো হিসেবে ট্যাগ করা লেনদেন ও রেকর্ড মুছে যাবে এবং ডেমো মোড বন্ধ হবে। আপনার নিজস্ব তৈরি কোনো পণ্য, বিক্রয়, ক্রেতা বা খরচ মুছবে না।'
+              )}
+            </p>
+            <div className="flex justify-end gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setConfirmResetOpen(false)}
+                className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 cursor-pointer"
+              >
+                {tr('cancel', lang)}
+              </button>
+              <button
+                type="button"
+                onClick={handleResetDemo}
+                className="rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold text-white hover:bg-rose-700 cursor-pointer"
+              >
+                {tx(lang, 'Yes, Remove Demo Data', 'হ্যাঁ, ডেমো ডেটা মুছুন')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Store & POS Configuration Form with Store Logo Uploader */}
       <form
