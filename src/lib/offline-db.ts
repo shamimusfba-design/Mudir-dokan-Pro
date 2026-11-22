@@ -26,6 +26,11 @@ export interface CachedProduct {
   currentStock: string;
   minStock: string;
   expiryDate?: string | null;
+  imageUrl?: string | null;
+  gallery?: string[];
+  imageSource?: string | null;
+  imageStatus?: 'VERIFIED' | 'PENDING' | 'UNAVAILABLE' | string;
+  imageUpdatedAt?: string | null;
   isFrequent: boolean;
   units?: CachedProductUnit[];
 }
@@ -34,6 +39,8 @@ export interface CachedCategory {
   id: number;
   name: string;
   nameBn: string;
+  iconName?: string | null;
+  accentColor?: string | null;
 }
 
 export interface CachedBrand {
@@ -41,6 +48,10 @@ export interface CachedBrand {
   name: string;
   nameBn: string;
   company?: string | null;
+  logoUrl?: string | null;
+  logoSource?: string | null;
+  logoStatus?: 'VERIFIED' | 'PENDING' | 'UNAVAILABLE' | string;
+  brandColor?: string | null;
 }
 
 export interface CachedCustomer {

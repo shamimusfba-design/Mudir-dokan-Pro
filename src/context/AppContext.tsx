@@ -23,6 +23,7 @@ export interface StoreInfo {
   address: string;
   addressBn: string;
   binNumber?: string | null;
+  logoUrl?: string | null;
   currency: string;
   currencySymbol: string;
   timezone: string;

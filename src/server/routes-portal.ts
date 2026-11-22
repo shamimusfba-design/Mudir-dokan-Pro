@@ -16,6 +16,7 @@ import {
   customerDisputes,
   sales,
   saleItems,
+  products,
 } from '../db/schema.ts';
 import { requirePortalAuth, signPortalToken, type PortalRequest } from '../middleware/auth.ts';
 import { handleApiError, HttpError } from './context.ts';
@@ -43,6 +44,7 @@ portalRouter.get('/invite/:token', async (req, res) => {
         customerCode: customers.customerCode,
         storeName: stores.name,
         storeNameBn: stores.nameBn,
+        storeLogoUrl: stores.logoUrl,
       })
       .from(customerInvitations)
       .innerJoin(customers, eq(customerInvitations.customerId, customers.id))
@@ -57,6 +59,7 @@ portalRouter.get('/invite/:token', async (req, res) => {
     res.json({
       storeName: inv.storeName,
       storeNameBn: inv.storeNameBn,
+      storeLogoUrl: inv.storeLogoUrl,
       customerName: inv.customerName,
       customerCode: inv.customerCode,
       phone: inv.customerPhone,
@@ -232,6 +235,7 @@ portalRouter.get('/me', requirePortalAuth, async (req: PortalRequest, res) => {
           address: stores.address,
           addressBn: stores.addressBn,
           currencySymbol: stores.currencySymbol,
+          logoUrl: stores.logoUrl,
         })
         .from(stores)
         .where(eq(stores.id, storeId))
@@ -344,8 +348,10 @@ portalRouter.get('/me', requirePortalAuth, async (req: PortalRequest, res) => {
             unitSellingPrice: saleItems.unitSellingPrice,
             itemDiscount: saleItems.itemDiscount,
             lineTotal: saleItems.lineTotal,
+            productImageUrl: products.imageUrl,
           })
           .from(saleItems)
+          .leftJoin(products, eq(saleItems.productId, products.id))
           .where(inArray(saleItems.saleId, saleIds))
       : [];
 

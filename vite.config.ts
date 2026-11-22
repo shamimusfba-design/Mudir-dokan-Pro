@@ -78,6 +78,20 @@ export default defineConfig(() => {
                 },
               },
             },
+            {
+              urlPattern: /\/(?:catalog|uploads)\/.*\.(?:png|jpg|jpeg|webp|svg)$/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'mudirdokan-product-media-cache',
+                expiration: {
+                  maxEntries: 500,
+                  maxAgeSeconds: 60 * 60 * 24 * 30,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
           ],
         },
         devOptions: {

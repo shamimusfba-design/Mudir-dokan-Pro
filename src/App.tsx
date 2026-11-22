@@ -23,14 +23,15 @@ import {
   WifiOff,
   Smartphone,
   Plus,
-  Store,
   ShieldCheck,
   Loader2,
   ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 import { AppProvider, useApp } from './context/AppContext';
 import { tr, trCompact, tx, formatStatusLabel, type LanguageMode } from './lib/i18n';
 import { PWAInstallButton } from './hooks/usePWAInstall';
+import { StoreLogoBadge } from './components/ProductMedia';
 import { DashboardPage } from './pages/DashboardPage';
 import { PosPage } from './pages/PosPage';
 import { ProductsPage } from './pages/ProductsPage';
@@ -65,22 +66,115 @@ interface NavItem {
   labelKey: string;
   icon: React.ComponentType<{ className?: string }>;
   group: 'operations' | 'credit' | 'finance';
+  activeBg: string;
+  iconColor: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'dashboard', labelKey: 'dashboard', icon: LayoutDashboard, group: 'operations' },
-  { id: 'pos', labelKey: 'pos', icon: ShoppingCart, group: 'operations' },
-  { id: 'products', labelKey: 'products', icon: Package, group: 'operations' },
-  { id: 'inventory', labelKey: 'inventory', icon: Warehouse, group: 'operations' },
-  { id: 'purchases', labelKey: 'purchases', icon: Truck, group: 'operations' },
-  { id: 'suppliers', labelKey: 'suppliers', icon: Building2, group: 'operations' },
-  { id: 'customers', labelKey: 'customers', icon: BookOpen, group: 'credit' },
-  { id: 'customer-due', labelKey: 'customerDue', icon: Clock, group: 'credit' },
-  { id: 'supplier-due', labelKey: 'supplierDue', icon: HandCoins, group: 'credit' },
-  { id: 'expenses', labelKey: 'expenses', icon: Receipt, group: 'finance' },
-  { id: 'reports', labelKey: 'reports', icon: BarChart3, group: 'finance' },
-  { id: 'cash', labelKey: 'cashManagement', icon: Vault, group: 'finance' },
-  { id: 'settings', labelKey: 'settings', icon: Settings, group: 'finance' },
+  {
+    id: 'dashboard',
+    labelKey: 'dashboard',
+    icon: LayoutDashboard,
+    group: 'operations',
+    activeBg: 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-sm shadow-indigo-500/20',
+    iconColor: 'text-indigo-500 dark:text-indigo-400',
+  },
+  {
+    id: 'pos',
+    labelKey: 'pos',
+    icon: ShoppingCart,
+    group: 'operations',
+    activeBg: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-sm shadow-emerald-500/20',
+    iconColor: 'text-emerald-500 dark:text-emerald-400',
+  },
+  {
+    id: 'products',
+    labelKey: 'products',
+    icon: Package,
+    group: 'operations',
+    activeBg: 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-sm shadow-indigo-500/20',
+    iconColor: 'text-purple-500 dark:text-purple-400',
+  },
+  {
+    id: 'inventory',
+    labelKey: 'inventory',
+    icon: Warehouse,
+    group: 'operations',
+    activeBg: 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-sm shadow-cyan-500/20',
+    iconColor: 'text-cyan-500 dark:text-cyan-400',
+  },
+  {
+    id: 'purchases',
+    labelKey: 'purchases',
+    icon: Truck,
+    group: 'operations',
+    activeBg: 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm shadow-orange-500/20',
+    iconColor: 'text-orange-500 dark:text-orange-400',
+  },
+  {
+    id: 'suppliers',
+    labelKey: 'suppliers',
+    icon: Building2,
+    group: 'operations',
+    activeBg: 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm shadow-blue-500/20',
+    iconColor: 'text-blue-500 dark:text-blue-400',
+  },
+  {
+    id: 'customers',
+    labelKey: 'customers',
+    icon: BookOpen,
+    group: 'credit',
+    activeBg: 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-sm shadow-rose-500/20',
+    iconColor: 'text-rose-500 dark:text-rose-400',
+  },
+  {
+    id: 'customer-due',
+    labelKey: 'customerDue',
+    icon: Clock,
+    group: 'credit',
+    activeBg: 'bg-gradient-to-r from-orange-500 to-rose-500 text-white shadow-sm shadow-orange-500/20',
+    iconColor: 'text-amber-500 dark:text-amber-400',
+  },
+  {
+    id: 'supplier-due',
+    labelKey: 'supplierDue',
+    icon: HandCoins,
+    group: 'credit',
+    activeBg: 'bg-gradient-to-r from-purple-600 to-rose-600 text-white shadow-sm shadow-purple-500/20',
+    iconColor: 'text-pink-500 dark:text-pink-400',
+  },
+  {
+    id: 'expenses',
+    labelKey: 'expenses',
+    icon: Receipt,
+    group: 'finance',
+    activeBg: 'bg-gradient-to-r from-rose-600 to-orange-500 text-white shadow-sm shadow-rose-500/20',
+    iconColor: 'text-rose-500 dark:text-rose-400',
+  },
+  {
+    id: 'reports',
+    labelKey: 'reports',
+    icon: BarChart3,
+    group: 'finance',
+    activeBg: 'bg-gradient-to-r from-indigo-600 to-emerald-600 text-white shadow-sm shadow-indigo-500/20',
+    iconColor: 'text-indigo-500 dark:text-indigo-400',
+  },
+  {
+    id: 'cash',
+    labelKey: 'cashManagement',
+    icon: Vault,
+    group: 'finance',
+    activeBg: 'bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-sm shadow-emerald-500/20',
+    iconColor: 'text-teal-500 dark:text-teal-400',
+  },
+  {
+    id: 'settings',
+    labelKey: 'settings',
+    icon: Settings,
+    group: 'finance',
+    activeBg: 'bg-gradient-to-r from-slate-700 to-indigo-700 text-white shadow-sm',
+    iconColor: 'text-slate-500 dark:text-slate-400',
+  },
 ];
 
 const LanguageSwitcher: React.FC<{ lang: LanguageMode; setLang: (m: LanguageMode) => void }> = ({
@@ -88,7 +182,7 @@ const LanguageSwitcher: React.FC<{ lang: LanguageMode; setLang: (m: LanguageMode
   setLang,
 }) => (
   <div
-    className="inline-flex items-center rounded-lg border border-slate-200 bg-slate-100 p-0.5 dark:border-slate-700 dark:bg-slate-800 shrink-0"
+    className="inline-flex items-center rounded-lg border border-indigo-200/80 bg-indigo-50/70 p-0.5 dark:border-slate-700 dark:bg-slate-800/90 shrink-0"
     role="group"
     aria-label="Language mode"
   >
@@ -104,8 +198,8 @@ const LanguageSwitcher: React.FC<{ lang: LanguageMode; setLang: (m: LanguageMode
         onClick={() => setLang(mode)}
         className={`rounded-md px-2.5 py-1 text-xs font-semibold transition cursor-pointer whitespace-nowrap ${
           lang === mode
-            ? 'bg-white text-emerald-700 shadow-xs dark:bg-slate-700 dark:text-emerald-300'
-            : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+            ? 'bg-indigo-600 text-white shadow-xs dark:bg-indigo-500 dark:text-white'
+            : 'text-slate-600 hover:text-indigo-700 dark:text-slate-400 dark:hover:text-white'
         }`}
       >
         {label}
@@ -150,9 +244,9 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
 
   if (authLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-[#0B1120]">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
           <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
             {tx(lang, 'Loading MudirDokan Pro...', 'মুদির দোকান প্রো লোড হচ্ছে...')}
           </p>
@@ -163,12 +257,10 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
 
   if (!firebaseUser) {
     return (
-      <div className="flex min-h-screen flex-col justify-between bg-slate-50 px-4 py-8 dark:bg-slate-950">
+      <div className="flex min-h-screen flex-col justify-between bg-gradient-to-br from-indigo-50/60 via-white to-emerald-50/50 px-4 py-8 dark:from-[#0B1120] dark:via-[#0F172A] dark:to-[#0B1120]">
         <header className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white shadow-sm">
-              <Store className="h-5 w-5" />
-            </div>
+            <StoreLogoBadge storeName={tr('appName', lang)} size="md" />
             <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white whitespace-nowrap">
               {tr('appName', lang)}
             </span>
@@ -187,42 +279,43 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
           </div>
         </header>
 
-        <main className="mx-auto my-auto flex w-full max-w-4xl flex-col items-center py-10">
+        <main className="mx-auto my-auto flex w-full max-w-5xl flex-col items-center py-10">
           <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-12 md:items-center">
             <div className="md:col-span-7 space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
-                {tx(lang, 'Bangladesh Grocery POS & Digital Khata', 'বাংলাদেশ মুদির দোকান পস ও ডিজিটাল খাতা')}
-              </p>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+                <Sparkles className="h-3.5 w-3.5 text-orange-500" />
+                <span>{tx(lang, 'Bangladesh Grocery POS & Digital Khata', 'বাংলাদেশ মুদির দোকান পস ও ডিজিটাল খাতা')}</span>
+              </div>
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
                 {tx(
                   lang,
-                  'Fast Counter Billing, Stock & Customer Khata.',
-                  'দ্রুত কাউন্টার বিলিং, স্টক ও ক্রেতার ডিজিটাল খাতা।'
+                  'Visual Counter Billing, Smart Stock & Digital Khata.',
+                  'ভিজ্যুয়াল কাউন্টার বিলিং, স্মার্ট স্টক ও ডিজিটাল খাতা।'
                 )}
               </h1>
               <p className="text-base leading-relaxed text-slate-600 dark:text-slate-400">
                 {tx(
                   lang,
-                  'Built for Bangladeshi grocery stores and mini-supermarkets. Preloaded with 50 popular BD FMCG products, weighted-average profit tracking, offline-first POS, and customer due management.',
-                  'বাংলাদেশের মুদির দোকান, জেনারেল স্টোর ও মিনি সুপারমার্কেটের জন্য তৈরি। ৫০টি জনপ্রিয় বাংলাদেশি পণ্য, প্রকৃত লাভের হিসাব, অফলাইন পস এবং ক্রেতার বাকি ব্যবস্থাপনা একসাথে।'
+                  'Built for Bangladeshi grocery stores and mini-supermarkets. Real FMCG product visuals, official brand logos, weighted-average profit engine, offline-first POS, and customer self-service Khata.',
+                  'বাংলাদেশের মুদির দোকান, জেনারেল স্টোর ও মিনি সুপারমার্কেটের জন্য তৈরি। আসল পণ্যের ছবি, অফিসিয়াল ব্র্যান্ড লোগো, প্রকৃত লাভের হিসাব, অফলাইন পস এবং ক্রেতার ডিজিটাল খাতা একসাথে।'
                 )}
               </p>
 
-              <div className="grid grid-cols-2 gap-4 pt-2 text-sm text-slate-700 dark:text-slate-300">
-                <div className="rounded-xl border border-slate-200 bg-white p-3.5 dark:border-slate-800 dark:bg-slate-900">
-                  <p className="font-semibold text-slate-900 dark:text-white">
-                    {tx(lang, 'Offline-First Counter', 'অফলাইন-প্রথম কাউন্টার')}
+              <div className="grid grid-cols-2 gap-4 pt-2 text-sm">
+                <div className="rounded-2xl border border-indigo-100 bg-white p-4 shadow-xs dark:border-indigo-900/50 dark:bg-slate-900/90">
+                  <p className="font-bold text-indigo-700 dark:text-indigo-400">
+                    {tx(lang, 'Visual Offline Counter', 'ভিজ্যুয়াল অফলাইন কাউন্টার')}
                   </p>
                   <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                     {tx(
                       lang,
-                      'Keep billing if internet drops; auto-syncs to cloud database on reconnect.',
-                      'ইন্টারনেট না থাকলেও বিক্রি চালু রাখুন; সংযোগ ফিরলেই স্বয়ংক্রিয়ভাবে সিঙ্ক হবে।'
+                      'Instant barcode scan, product photos, brand filters & auto cloud sync.',
+                      'দ্রুত বারকোড স্ক্যান, পণ্যের ছবি, ব্র্যান্ড ফিল্টার এবং স্বয়ংক্রিয় সিঙ্ক।'
                     )}
                   </p>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-white p-3.5 dark:border-slate-800 dark:bg-slate-900">
-                  <p className="font-semibold text-slate-900 dark:text-white">
+                <div className="rounded-2xl border border-emerald-100 bg-white p-4 shadow-xs dark:border-emerald-900/50 dark:bg-slate-900/90">
+                  <p className="font-bold text-emerald-700 dark:text-emerald-400">
                     {tx(lang, 'Digital Khata & Portal', 'ডিজিটাল খাতা ও পোর্টাল')}
                   </p>
                   <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
@@ -237,10 +330,10 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
             </div>
 
             <div className="md:col-span-5">
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+              <div className="rounded-2xl border border-indigo-100 bg-white p-6 shadow-lg shadow-indigo-500/5 dark:border-slate-800 dark:bg-slate-900">
+                <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
                   <ShieldCheck className="h-5 w-5" />
-                  <span className="text-xs font-semibold uppercase tracking-wider">
+                  <span className="text-xs font-bold uppercase tracking-wider">
                     {tx(lang, 'Shopkeeper Access', 'দোকানদার লগইন')}
                   </span>
                 </div>
@@ -250,15 +343,15 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
                 <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                   {tx(
                     lang,
-                    'First sign-in automatically sets up your shop with 50 Bangladeshi FMCG starter items.',
-                    'প্রথমবার লগইনেই ৫০টি জনপ্রিয় বাংলাদেশি পণ্যসহ আপনার দোকান স্বয়ংক্রিয়ভাবে প্রস্তুত হয়ে যাবে।'
+                    'First sign-in automatically sets up your shop with 50 Bangladeshi FMCG starter items & official brand logos.',
+                    'প্রথমবার লগইনেই ৫০টি জনপ্রিয় বাংলাদেশি পণ্য ও অফিসিয়াল ব্র্যান্ড লোগোসহ আপনার দোকান প্রস্তুত হয়ে যাবে।'
                   )}
                 </p>
 
                 <button
                   type="button"
                   onClick={signInWithGoogle}
-                  className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 transition cursor-pointer"
+                  className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-3 text-sm font-bold text-white shadow-md shadow-indigo-500/25 hover:from-indigo-700 hover:to-blue-700 transition cursor-pointer"
                 >
                   <span>{tx(lang, 'Continue with Google', 'গুগল দিয়ে লগইন করুন')}</span>
                   <ArrowRight className="h-4 w-4" />
@@ -273,9 +366,9 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
                 <button
                   type="button"
                   onClick={onOpenPortal}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/70 transition cursor-pointer"
                 >
-                  <Smartphone className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <Smartphone className="h-4 w-4" />
                   <span>{tx(lang, 'Open Customer Self-Service Portal', 'ক্রেতা সেলফ-সার্ভিস পোর্টাল খুলুন')}</span>
                 </button>
               </div>
@@ -298,7 +391,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
     const items = NAV_ITEMS.filter((i) => i.group === group);
     return (
       <div className="space-y-1">
-        <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        <p className="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
           {title}
         </p>
         {items.map((item) => {
@@ -309,17 +402,13 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
               key={item.id}
               type="button"
               onClick={() => handleNavigate(item.id)}
-              className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm font-medium transition cursor-pointer ${
+              className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm font-medium transition cursor-pointer ${
                 active
-                  ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100'
+                  ? item.activeBg
+                  : 'text-slate-600 hover:bg-indigo-50/70 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100'
               }`}
             >
-              <Icon
-                className={`h-4 w-4 shrink-0 ${
-                  active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'
-                }`}
-              />
+              <Icon className={`h-4 w-4 shrink-0 ${active ? 'text-white' : item.iconColor}`} />
               <span className="truncate">{tr(item.labelKey, lang)}</span>
             </button>
           );
@@ -333,32 +422,35 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
     : staff?.name || firebaseUser.displayName || tr('appName', lang);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="flex min-h-screen bg-[#F6F8FC] text-slate-900 dark:bg-[#0B1120] dark:text-slate-100">
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-900/50 lg:hidden"
+          className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`no-print fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-slate-200 bg-white transition-transform duration-200 dark:border-slate-800 dark:bg-slate-900 lg:static lg:translate-x-0 ${
+        className={`no-print fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-slate-200/80 bg-white transition-transform duration-200 dark:border-slate-800/90 dark:bg-[#0F172A] lg:static lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-200 px-4 dark:border-slate-800">
+        <div className="flex h-15 shrink-0 items-center justify-between border-b border-slate-200/80 px-4 dark:border-slate-800">
           <button
             type="button"
             onClick={() => handleNavigate('dashboard')}
-            className="flex items-center gap-2.5 text-left cursor-pointer"
+            className="flex min-w-0 items-center gap-2.5 text-left cursor-pointer"
           >
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-600 text-white">
-              <Store className="h-4 w-4" />
+            <StoreLogoBadge logoUrl={store?.logoUrl} storeName={displayStoreName} size="sm" />
+            <div className="min-w-0">
+              <span className="block truncate text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">
+                {tr('appName', lang)}
+              </span>
+              <span className="block truncate text-[10px] font-medium text-indigo-600 dark:text-indigo-400">
+                {displayStoreName}
+              </span>
             </div>
-            <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-white whitespace-nowrap">
-              {tr('appName', lang)}
-            </span>
           </button>
           <button
             type="button"
@@ -376,13 +468,13 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
           {renderGroup(tx(lang, 'Finance & Admin', 'হিসাব ও সেটিংস'), 'finance')}
         </nav>
 
-        <div className="shrink-0 space-y-2 border-t border-slate-200 p-3 dark:border-slate-800">
+        <div className="shrink-0 space-y-2 border-t border-slate-200/80 p-3 dark:border-slate-800">
           <button
             type="button"
             onClick={onOpenPortal}
-            className="flex w-full items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer"
+            className="flex w-full items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/70 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/70 cursor-pointer"
           >
-            <Smartphone className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <Smartphone className="h-3.5 w-3.5 shrink-0" />
             <span className="truncate">{tr('customerPortal', lang)}</span>
           </button>
 
@@ -400,7 +492,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
               onClick={logout}
               title={tr('signOut', lang)}
               aria-label={tr('signOut', lang)}
-              className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-rose-600 dark:hover:bg-slate-800 dark:hover:text-rose-400 cursor-pointer shrink-0"
+              className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-slate-800 dark:hover:text-rose-400 cursor-pointer shrink-0"
             >
               <LogOut className="h-4 w-4" />
             </button>
@@ -410,7 +502,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
 
       {/* Main Content Area */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="no-print sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-slate-200 bg-white/95 px-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+        <header className="no-print sticky top-0 z-30 flex h-15 shrink-0 items-center justify-between gap-3 border-b border-slate-200/80 bg-white/95 px-4 backdrop-blur dark:border-slate-800 dark:bg-[#0F172A]/95">
           <div className="flex min-w-0 items-center gap-3">
             <button
               type="button"
@@ -421,11 +513,11 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
               <Menu className="h-5 w-5" />
             </button>
             <div className="flex min-w-0 items-center gap-2">
-              <h1 className="truncate text-sm font-semibold text-slate-900 sm:text-base dark:text-white">
+              <h1 className="truncate text-sm font-bold text-slate-900 sm:text-base dark:text-white">
                 {tr(activeNav.labelKey, lang)}
               </h1>
               {bootstrapLoading && (
-                <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin text-emerald-600" />
+                <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin text-indigo-600" />
               )}
             </div>
           </div>
@@ -438,7 +530,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
                 disabled={!isOnline || isSyncing}
                 className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition whitespace-nowrap shrink-0 cursor-pointer ${
                   !isOnline
-                    ? 'border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-700/60 dark:bg-amber-950/60 dark:text-amber-300'
+                    ? 'border-orange-300 bg-orange-50 text-orange-800 dark:border-orange-700/60 dark:bg-orange-950/60 dark:text-orange-300'
                     : 'border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700/60 dark:bg-emerald-950/60 dark:text-emerald-300'
                 }`}
               >
@@ -470,14 +562,14 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
               aria-label={tx(lang, 'Toggle dark mode', 'ডার্ক মোড পরিবর্তন করুন')}
               className="rounded-lg border border-slate-200 p-1.5 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer shrink-0"
             >
-              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              {darkMode ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-indigo-600" />}
             </button>
 
             {activeTab !== 'pos' && (
               <button
                 type="button"
                 onClick={() => handleNavigate('pos')}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 transition whitespace-nowrap shrink-0 cursor-pointer"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 px-3 py-1.5 text-xs font-bold text-white shadow-sm shadow-emerald-500/20 hover:from-emerald-700 hover:to-teal-700 transition whitespace-nowrap shrink-0 cursor-pointer"
               >
                 <Plus className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">{tr('newSale', lang)}</span>
@@ -487,7 +579,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
         </header>
 
         {!isOnline && (
-          <div className="no-print border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs font-medium text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
+          <div className="no-print border-b border-orange-200 bg-orange-50 px-4 py-2 text-xs font-medium text-orange-800 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300">
             {tr('offlineModeBanner', lang)}
           </div>
         )}

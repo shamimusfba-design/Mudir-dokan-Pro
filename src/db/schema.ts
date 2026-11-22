@@ -24,6 +24,7 @@ export const stores = pgTable('stores', {
   currencySymbol: text('currency_symbol').notNull().default('৳'),
   timezone: text('timezone').notNull().default('Asia/Dhaka'),
   dateFormat: text('date_format').notNull().default('DD/MM/YYYY'),
+  logoUrl: text('logo_url'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
@@ -81,6 +82,8 @@ export const categories = pgTable(
     nameBn: text('name_bn').notNull().default(''),
     parentId: integer('parent_id'),
     sortOrder: integer('sort_order').notNull().default(0),
+    iconName: text('icon_name').default(''),
+    accentColor: text('accent_color').default('indigo'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [index('categories_store_idx').on(t.storeId)]
@@ -97,7 +100,12 @@ export const brands = pgTable(
     name: text('name').notNull(),
     nameBn: text('name_bn').notNull().default(''),
     company: text('company').default(''),
+    logoUrl: text('logo_url'),
+    logoSource: text('logo_source').default(''),
+    logoStatus: text('logo_status').notNull().default('UNAVAILABLE'), // VERIFIED | PENDING | UNAVAILABLE
+    brandColor: text('brand_color').default('#4f46e5'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },
   (t) => [index('brands_store_idx').on(t.storeId)]
 );
@@ -128,6 +136,10 @@ export const products = pgTable(
     minStock: numeric('min_stock', { precision: 14, scale: 4 }).notNull().default('5'),
     expiryDate: text('expiry_date'),
     imageUrl: text('image_url'),
+    galleryUrls: text('gallery_urls').default('[]'),
+    imageSource: text('image_source').default(''),
+    imageStatus: text('image_status').notNull().default('UNAVAILABLE'), // VERIFIED | PENDING | UNAVAILABLE
+    imageUpdatedAt: timestamp('image_updated_at'),
     isFrequent: boolean('is_frequent').notNull().default(false),
     isActive: boolean('is_active').notNull().default(true),
     createdAt: timestamp('created_at').defaultNow().notNull(),

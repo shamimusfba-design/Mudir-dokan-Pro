@@ -162,6 +162,13 @@ export const ReceiptModal: React.FC<{
           >
             {/* Header */}
             <div className="text-center border-b border-dashed border-slate-400 pb-3">
+              {store?.logoUrl && (
+                <img
+                  src={store.logoUrl}
+                  alt={storeTitle}
+                  className="mx-auto mb-1.5 h-10 max-w-[120px] object-contain"
+                />
+              )}
               <div className="text-base font-bold tracking-tight">{storeTitle}</div>
               {storeAddress && <div className="mt-0.5 text-[11px] text-slate-600">{storeAddress}</div>}
               {store?.phone && (

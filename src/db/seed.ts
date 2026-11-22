@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { and, eq, isNull } from 'drizzle-orm';
 import { db } from './index.ts';
 import {
   stores,
@@ -17,57 +17,93 @@ import {
 } from './schema.ts';
 import { dhakaTodayISO } from '../lib/decimal.ts';
 
-const BD_CATEGORIES: Array<{ name: string; nameBn: string }> = [
-  { name: 'Rice, Dal & Grains', nameBn: 'চাল, ডাল ও শস্য' },
-  { name: 'Flour, Atta, Maida & Suji', nameBn: 'আটা, ময়দা ও সুজি' },
-  { name: 'Cooking Oil & Ghee', nameBn: 'ভোজ্য তেল ও ঘি' },
-  { name: 'Salt & Sugar', nameBn: 'লবণ ও চিনি' },
-  { name: 'Spices & Masala', nameBn: 'মসলা ও গুঁড়া মসলা' },
-  { name: 'Tea & Coffee', nameBn: 'চা ও কফি' },
-  { name: 'Biscuits & Bakery', nameBn: 'বিস্কুট ও বেকারি' },
-  { name: 'Snacks & Chips', nameBn: 'স্ন্যাকস ও চিপস' },
-  { name: 'Chocolate & Candy', nameBn: 'চকলেট ও ক্যান্ডি' },
-  { name: 'Soft Drinks & Beverages', nameBn: 'কোমল পানীয়' },
-  { name: 'Juice & Packaged Drinks', nameBn: 'জুস ও প্যাকেট পানীয়' },
-  { name: 'Dairy & Milk Products', nameBn: 'দুধ ও দুগ্ধজাত পণ্য' },
-  { name: 'Eggs', nameBn: 'ডিম' },
-  { name: 'Noodles & Pasta', nameBn: 'নুডুলস ও পাস্তা' },
-  { name: 'Sauces & Condiments', nameBn: 'সস ও আচার' },
-  { name: 'Frozen & Packaged Food', nameBn: 'ফ্রোজেন ও প্যাকেট খাবার' },
-  { name: 'Baby Food & Baby Care', nameBn: 'শিশু খাদ্য ও যত্ন' },
-  { name: 'Soap & Personal Care', nameBn: 'সাবান ও ব্যক্তিগত যত্ন' },
-  { name: 'Shampoo & Hair Care', nameBn: 'শ্যাম্পু ও চুলের যত্ন' },
-  { name: 'Toothpaste & Oral Care', nameBn: 'টুথপেস্ট ও মুখের যত্ন' },
-  { name: 'Detergent & Dishwashing', nameBn: 'ডিটারজেন্ট ও ডিশওয়াশ' },
-  { name: 'Household Cleaning', nameBn: 'গৃহস্থালি পরিষ্কারক' },
-  { name: 'Tissue & Paper Products', nameBn: 'টিস্যু ও পেপার পণ্য' },
-  { name: 'Mosquito Repellent', nameBn: 'মশা তাড়ানোর পণ্য' },
-  { name: 'Water & Bottled Drinks', nameBn: 'বোতলজাত পানি' },
-  { name: 'Canned & Packaged Food', nameBn: 'টিনজাত ও প্যাকেট খাবার' },
-  { name: 'Stationery & Daily Essentials', nameBn: 'স্টেশনারি ও নিত্যপ্রয়োজনীয়' },
-  { name: 'Miscellaneous', nameBn: 'অন্যান্য' },
+export const BD_CATEGORIES: Array<{ name: string; nameBn: string; iconName: string; accentColor: string }> = [
+  { name: 'Rice, Dal & Grains', nameBn: 'চাল, ডাল ও শস্য', iconName: 'wheat', accentColor: 'amber' },
+  { name: 'Flour, Atta, Maida & Suji', nameBn: 'আটা, ময়দা ও সুজি', iconName: 'wheat', accentColor: 'orange' },
+  { name: 'Cooking Oil & Ghee', nameBn: 'ভোজ্য তেল ও ঘি', iconName: 'droplet', accentColor: 'amber' },
+  { name: 'Salt & Sugar', nameBn: 'লবণ ও চিনি', iconName: 'sparkles', accentColor: 'cyan' },
+  { name: 'Spices & Masala', nameBn: 'মসলা ও গুঁড়া মসলা', iconName: 'flame', accentColor: 'rose' },
+  { name: 'Tea & Coffee', nameBn: 'চা ও কফি', iconName: 'coffee', accentColor: 'orange' },
+  { name: 'Biscuits & Bakery', nameBn: 'বিস্কুট ও বেকারি', iconName: 'cookie', accentColor: 'amber' },
+  { name: 'Snacks & Chips', nameBn: 'স্ন্যাকস ও চিপস', iconName: 'popcorn', accentColor: 'orange' },
+  { name: 'Chocolate & Candy', nameBn: 'চকলেট ও ক্যান্ডি', iconName: 'candy', accentColor: 'pink' },
+  { name: 'Soft Drinks & Beverages', nameBn: 'কোমল পানীয়', iconName: 'cup-soda', accentColor: 'indigo' },
+  { name: 'Juice & Packaged Drinks', nameBn: 'জুস ও প্যাকেট পানীয়', iconName: 'citrus', accentColor: 'orange' },
+  { name: 'Dairy & Milk Products', nameBn: 'দুধ ও দুগ্ধজাত পণ্য', iconName: 'milk', accentColor: 'cyan' },
+  { name: 'Eggs', nameBn: 'ডিম', iconName: 'egg', accentColor: 'amber' },
+  { name: 'Noodles & Pasta', nameBn: 'নুডুলস ও পাস্তা', iconName: 'utensils', accentColor: 'rose' },
+  { name: 'Sauces & Condiments', nameBn: 'সস ও আচার', iconName: 'soup', accentColor: 'rose' },
+  { name: 'Frozen & Packaged Food', nameBn: 'ফ্রোজেন ও প্যাকেট খাবার', iconName: 'snowflake', accentColor: 'cyan' },
+  { name: 'Baby Food & Baby Care', nameBn: 'শিশু খাদ্য ও যত্ন', iconName: 'baby', accentColor: 'pink' },
+  { name: 'Soap & Personal Care', nameBn: 'সাবান ও ব্যক্তিগত যত্ন', iconName: 'heart', accentColor: 'purple' },
+  { name: 'Shampoo & Hair Care', nameBn: 'শ্যাম্পু ও চুলের যত্ন', iconName: 'sparkles', accentColor: 'purple' },
+  { name: 'Toothpaste & Oral Care', nameBn: 'টুথপেস্ট ও মুখের যত্ন', iconName: 'smile', accentColor: 'cyan' },
+  { name: 'Detergent & Dishwashing', nameBn: 'ডিটারজেন্ট ও ডিশওয়াশ', iconName: 'spray-can', accentColor: 'indigo' },
+  { name: 'Household Cleaning', nameBn: 'গৃহস্থালি পরিষ্কারক', iconName: 'shield', accentColor: 'teal' },
+  { name: 'Tissue & Paper Products', nameBn: 'টিস্যু ও পেপার পণ্য', iconName: 'layers', accentColor: 'emerald' },
+  { name: 'Mosquito Repellent', nameBn: 'মশা তাড়ানোর পণ্য', iconName: 'zap', accentColor: 'rose' },
+  { name: 'Water & Bottled Drinks', nameBn: 'বোতলজাত পানি', iconName: 'droplets', accentColor: 'cyan' },
+  { name: 'Canned & Packaged Food', nameBn: 'টিনজাত ও প্যাকেট খাবার', iconName: 'package', accentColor: 'indigo' },
+  { name: 'Stationery & Daily Essentials', nameBn: 'স্টেশনারি ও নিত্যপ্রয়োজনীয়', iconName: 'pen-tool', accentColor: 'purple' },
+  { name: 'Miscellaneous', nameBn: 'অন্যান্য', iconName: 'shopping-bag', accentColor: 'emerald' },
 ];
 
-const BD_BRANDS: Array<{ name: string; nameBn: string; company: string }> = [
-  { name: 'PRAN', nameBn: 'প্রাণ', company: 'PRAN-RFL Group' },
-  { name: 'Fresh', nameBn: 'ফ্রেশ', company: 'Meghna Group of Industries' },
-  { name: 'ACI', nameBn: 'এসিআই', company: 'ACI Limited' },
-  { name: 'Square', nameBn: 'স্কয়ার', company: 'Square Food & Beverage / Toiletries' },
-  { name: 'Bashundhara', nameBn: 'বসুন্ধরা', company: 'Bashundhara Group' },
-  { name: 'Akij', nameBn: 'আকিজ', company: 'Akij Food & Beverage' },
-  { name: 'Teer', nameBn: 'তীর', company: 'City Group' },
-  { name: 'Unilever', nameBn: 'ইউনিলিভার', company: 'Unilever Bangladesh' },
-  { name: 'Marico', nameBn: 'ম্যারিকো', company: 'Marico Bangladesh' },
-  { name: 'Nestlé', nameBn: 'নেসলে', company: 'Nestlé Bangladesh' },
-  { name: 'Coca-Cola', nameBn: 'কোকা-কোলা', company: 'Coca-Cola Bangladesh' },
-  { name: 'PepsiCo', nameBn: 'পেপসিকো', company: 'Transcom Beverages' },
-  { name: 'Olympic', nameBn: 'অলিম্পিক', company: 'Olympic Industries' },
-  { name: 'Danish', nameBn: 'ড্যানিশ', company: 'Partex Star Group' },
-  { name: 'Igloo', nameBn: 'ইগলু', company: 'Abdul Monem Limited' },
-  { name: 'Bombay Sweets', nameBn: 'বোম্বে সুইটস', company: 'Bombay Sweets & Co.' },
-  { name: 'Dekko', nameBn: 'ডেক্কো', company: 'Dekko Foods' },
-  { name: 'Local / Loose', nameBn: 'স্থানীয় / খোলা', company: 'Local Wholesale' },
+export const BD_BRANDS: Array<{
+  name: string;
+  nameBn: string;
+  company: string;
+  logoUrl: string | null;
+  logoSource: string;
+  logoStatus: 'VERIFIED' | 'UNAVAILABLE';
+  brandColor: string;
+}> = [
+  { name: 'PRAN', nameBn: 'প্রাণ', company: 'PRAN-RFL Group', logoUrl: '/catalog/brands/pran.jpg', logoSource: 'Official PRAN-RFL Brand Mark (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
+  { name: 'Fresh', nameBn: 'ফ্রেশ', company: 'Meghna Group of Industries', logoUrl: '/catalog/brands/fresh.svg', logoSource: 'Official Meghna Group Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#059669' },
+  { name: 'ACI', nameBn: 'এসিআই', company: 'ACI Limited', logoUrl: '/catalog/brands/aci.svg', logoSource: 'Official ACI Limited Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
+  { name: 'Square', nameBn: 'স্কয়ার', company: 'Square Food & Beverage / Toiletries', logoUrl: '/catalog/brands/square.svg', logoSource: 'Official Square Group Seal (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
+  { name: 'Bashundhara', nameBn: 'বসুন্ধরা', company: 'Bashundhara Group', logoUrl: '/catalog/brands/bashundhara.svg', logoSource: 'Official Bashundhara Group Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#047857' },
+  { name: 'Akij', nameBn: 'আকিজ', company: 'Akij Food & Beverage', logoUrl: '/catalog/brands/akij.svg', logoSource: 'Official Akij Group Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#0284C7' },
+  { name: 'Teer', nameBn: 'তীর', company: 'City Group', logoUrl: '/catalog/brands/teer.png', logoSource: 'Official City Group Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
+  { name: 'Unilever', nameBn: 'ইউনিলিভার', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/unilever.svg', logoSource: 'Official Unilever Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#1E40AF' },
+  { name: 'Marico', nameBn: 'ম্যারিকো', company: 'Marico Bangladesh', logoUrl: '/catalog/brands/marico.svg', logoSource: 'Official Marico Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#0369A1' },
+  { name: 'Nestlé', nameBn: 'নেসলে', company: 'Nestlé Bangladesh', logoUrl: '/catalog/brands/nestle.svg', logoSource: 'Official Nestlé Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#475569' },
+  { name: 'Coca-Cola', nameBn: 'কোকা-কোলা', company: 'Coca-Cola Bangladesh', logoUrl: '/catalog/brands/coca-cola.svg', logoSource: 'Official Coca-Cola Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
+  { name: 'PepsiCo', nameBn: 'পেপসিকো', company: 'Transcom Beverages', logoUrl: '/catalog/brands/pepsi.svg', logoSource: 'Official Pepsi Brand Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
+  { name: 'Maggi', nameBn: 'ম্যাগি', company: 'Nestlé Bangladesh', logoUrl: '/catalog/brands/maggi.svg', logoSource: 'Official Maggi Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#EAB308' },
+  { name: 'Lux', nameBn: 'লাক্স', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/lux.png', logoSource: 'Official Lux Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#DB2777' },
+  { name: 'Lifebuoy', nameBn: 'লাইফবয়', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/lifebuoy.png', logoSource: 'Official Lifebuoy Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
+  { name: 'Sunsilk', nameBn: 'সানসিল্ক', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/sunsilk.png', logoSource: 'Official Sunsilk Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#EC4899' },
+  { name: 'Dove', nameBn: 'ডাভ', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/dove.png', logoSource: 'Official Dove Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
+  { name: 'Pepsodent', nameBn: 'পেপসোডেন্ট', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/pepsodent.svg', logoSource: 'Official Pepsodent Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
+  { name: 'Lays', nameBn: 'লেইস', company: 'PepsiCo Bangladesh', logoUrl: '/catalog/brands/lays.svg', logoSource: 'Official Lay\'s Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#EAB308' },
+  { name: 'Olympic', nameBn: 'অলিম্পিক', company: 'Olympic Industries', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#EA580C' },
+  { name: 'Danish', nameBn: 'ড্যানিশ', company: 'Partex Star Group', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#0284C7' },
+  { name: 'Igloo', nameBn: 'ইগলু', company: 'Abdul Monem Limited', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#0891B2' },
+  { name: 'Bombay Sweets', nameBn: 'বোম্বে সুইটস', company: 'Bombay Sweets & Co.', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#D97706' },
+  { name: 'Dekko', nameBn: 'ডেক্কো', company: 'Dekko Foods', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#7C3AED' },
+  { name: 'Radhuni', nameBn: 'রাঁধুনী', company: 'Square Food & Beverage', logoUrl: '/catalog/brands/square.svg', logoSource: 'Square Food & Beverage Brand Family', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
+  { name: 'Local / Loose', nameBn: 'স্থানীয় / খোলা', company: 'Local Wholesale', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#059669' },
 ];
+
+// Strictly verified authentic product packaging photographs (zero AI fakes, zero substitutes)
+export const VERIFIED_PRODUCT_MEDIA: Record<string, { imageUrl: string; imageSource: string }> = {
+  'PR-FRT-250M': { imageUrl: '/catalog/products/pr-frt-250m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Frooto)' },
+  'PR-FRT-500M': { imageUrl: '/catalog/products/pr-frt-500m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Frooto)' },
+  'PR-FRT-1L': { imageUrl: '/catalog/products/pr-frt-1l.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Frooto)' },
+  'PR-POT-100G': { imageUrl: '/catalog/products/pr-pot-100g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Potata)' },
+  'PR-CHICK-50G': { imageUrl: '/catalog/products/pr-chick-50g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Masala)' },
+  'PR-MRN-8PK': { imageUrl: '/catalog/products/pr-mrn-8pk.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Mr. Noodles)' },
+  'CC-COKE-125L': { imageUrl: '/catalog/products/cc-coke-125l.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Coca-Cola)' },
+  'NES-MAG-8PK': { imageUrl: '/catalog/products/nes-mag-8pk.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Maggi 2-Minute Noodles)' },
+  'NES-CLAS-50G': { imageUrl: '/catalog/products/nes-clas-50g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Nescafé Classic)' },
+  'NES-CER-350G': { imageUrl: '/catalog/products/nes-cer-350g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Nestlé Cerelac)' },
+  'PEP-LAYS-45G': { imageUrl: '/catalog/products/pep-lays-45g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Lay\'s Classic)' },
+  'UNI-LB-100G': { imageUrl: '/catalog/products/uni-lb-100g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Lifebuoy Soap)' },
+  'UNI-SURF-500G': { imageUrl: '/catalog/products/uni-surf-500g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Surf Excel)' },
+  'UNI-VIM-500M': { imageUrl: '/catalog/products/uni-vim-500m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Vim Dishwash)' },
+  'UNI-SUN-180M': { imageUrl: '/catalog/products/uni-sun-180m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Sunsilk Shampoo)' },
+  'MAR-PAR-200M': { imageUrl: '/catalog/products/mar-par-200m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Parachute Coconut Oil)' },
+};
 
 const BD_EXPENSE_CATEGORIES: Array<{ name: string; nameBn: string }> = [
   { name: 'Shop Rent', nameBn: 'দোকান ভাড়া' },
@@ -124,7 +160,7 @@ const STARTER_SKUS: StarterSku[] = [
   { sku: 'PR-CHICK-50G', barcode: '8941100310102', category: 'Spices & Masala', brand: 'PRAN', name: 'PRAN Chicken Masala', nameBn: 'প্রাণ মুরগির মাংসের মসলা', variant: '50g', baseUnit: 'Packet', allowDecimalQty: false, cost: '46.00', price: '55.00', stock: '48', minStock: '10' },
   // Tea & Coffee
   { sku: 'FR-TEA-400G', barcode: '8941152000507', category: 'Tea & Coffee', brand: 'Fresh', name: 'Fresh Premium Tea', nameBn: 'ফ্রেশ চা পাতা', variant: '400g', baseUnit: 'Packet', allowDecimalQty: false, cost: '188.00', price: '215.00', stock: '30', minStock: '6', isFrequent: true },
-  { sku: 'NES-CLAS-50G', barcode: '8941160000109', category: 'Tea & Coffee', brand: 'Nestlé', name: 'Nescafé Classic Jar', nameBn: 'নেসক্যাফে ক্লাসিক কফি', variant: '50g', baseUnit: 'Bottle', allowDecimalQty: false, cost: '190.00', price: '220.00', stock: '18', minStock: '5' },
+  { sku: 'NES-CLAS-50G', barcode: '8941160000109', category: 'Tea & Coffee', brand: 'Nestlé', name: 'Nescafé Classic Jar', nameBn: 'নেসক্যাফে ক্লাসিক কফি', variant: '50g', baseUnit: 'Bottle', allowDecimalQty: false, cost: '190.00', price: '220.00', stock: '18', minStock: '5', isFrequent: true },
   // Biscuits & Bakery
   { sku: 'OLY-ENP-145G', barcode: '8941122000103', category: 'Biscuits & Bakery', brand: 'Olympic', name: 'Olympic Energy Plus Biscuit', nameBn: 'অলিম্পিক এনার্জি প্লাস বিস্কুট', variant: '145g', baseUnit: 'Packet', allowDecimalQty: false, cost: '29.00', price: '35.00', stock: '72', minStock: '15', isFrequent: true, packUnit: { unitName: 'Carton', unitNameBn: 'কার্টন (২৪ প্যাকেট)', factor: '24' } },
   { sku: 'PR-POT-100G', barcode: '8941100310201', category: 'Biscuits & Bakery', brand: 'PRAN', name: 'PRAN Potata Spicy Biscuit', nameBn: 'প্রাণ পটাটা বিস্কুট', variant: '100g', baseUnit: 'Packet', allowDecimalQty: false, cost: '25.00', price: '30.00', stock: '65', minStock: '12', isFrequent: true },
@@ -132,11 +168,11 @@ const STARTER_SKUS: StarterSku[] = [
   // Snacks & Chips
   { sku: 'BS-CHANA-300G', barcode: '8941118000100', category: 'Snacks & Chips', brand: 'Bombay Sweets', name: 'Bombay Sweets Chanachur', nameBn: 'বোম্বে সুইটস চানাচুর', variant: '300g', baseUnit: 'Packet', allowDecimalQty: false, cost: '68.00', price: '80.00', stock: '44', minStock: '10' },
   { sku: 'PR-CHIPS-25G', barcode: '8941100310300', category: 'Snacks & Chips', brand: 'PRAN', name: 'PRAN Potato Crackers', nameBn: 'প্রাণ পটেটো ক্র্যাকার্স', variant: '25g', baseUnit: 'Packet', allowDecimalQty: false, cost: '12.50', price: '15.00', stock: '110', minStock: '20', isFrequent: true },
-  { sku: 'PEP-LAYS-45G', barcode: '8941180000102', category: 'Snacks & Chips', brand: 'PepsiCo', name: 'Lays Classic Salted', nameBn: 'লেইস ক্লাসিক চিপস', variant: '45g', baseUnit: 'Packet', allowDecimalQty: false, cost: '42.00', price: '50.00', stock: '36', minStock: '8' },
+  { sku: 'PEP-LAYS-45G', barcode: '8941180000102', category: 'Snacks & Chips', brand: 'Lays', name: 'Lays Classic Salted', nameBn: 'লেইস ক্লাসিক চিপস', variant: '45g', baseUnit: 'Packet', allowDecimalQty: false, cost: '42.00', price: '50.00', stock: '36', minStock: '8', isFrequent: true },
   // Soft Drinks & Beverages
   { sku: 'AK-MOJO-250M', barcode: '8941170000101', category: 'Soft Drinks & Beverages', brand: 'Akij', name: 'Mojo Cola', nameBn: 'মোজো', variant: '250ml PET', baseUnit: 'Bottle', allowDecimalQty: false, cost: '20.00', price: '25.00', stock: '96', minStock: '24', isFrequent: true, packUnit: { unitName: 'Carton', unitNameBn: 'কার্টন (২৪ বোতল)', factor: '24' } },
   { sku: 'AK-MOJO-1L', barcode: '8941170000118', category: 'Soft Drinks & Beverages', brand: 'Akij', name: 'Mojo Cola', nameBn: 'মোজো', variant: '1 Liter', baseUnit: 'Bottle', allowDecimalQty: false, cost: '60.00', price: '70.00', stock: '36', minStock: '12' },
-  { sku: 'CC-COKE-125L', barcode: '8941190000108', category: 'Soft Drinks & Beverages', brand: 'Coca-Cola', name: 'Coca-Cola', nameBn: 'কোকা-কোলা', variant: '1.25 Liter', baseUnit: 'Bottle', allowDecimalQty: false, cost: '74.00', price: '85.00', stock: '30', minStock: '8' },
+  { sku: 'CC-COKE-125L', barcode: '8941190000108', category: 'Soft Drinks & Beverages', brand: 'Coca-Cola', name: 'Coca-Cola', nameBn: 'কোকা-কোলা', variant: '1.25 Liter', baseUnit: 'Bottle', allowDecimalQty: false, cost: '74.00', price: '85.00', stock: '30', minStock: '8', isFrequent: true },
   { sku: 'PR-UP-500M', barcode: '8941100310409', category: 'Soft Drinks & Beverages', brand: 'PRAN', name: 'PRAN Up', nameBn: 'প্রাণ আপ', variant: '500 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '33.00', price: '40.00', stock: '48', minStock: '12' },
   // Juice & Packaged Drinks
   { sku: 'PR-FRT-250M', barcode: '8941100310508', category: 'Juice & Packaged Drinks', brand: 'PRAN', name: 'PRAN Frooto Mango', nameBn: 'প্রাণ ফ্রুটো আম', variant: '250 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '21.00', price: '25.00', stock: '120', minStock: '24', isFrequent: true, packUnit: { unitName: 'Carton', unitNameBn: 'কার্টন (২৪ পিস)', factor: '24' } },
@@ -150,21 +186,21 @@ const STARTER_SKUS: StarterSku[] = [
   // Eggs
   { sku: 'EGG-FARM-PC', barcode: '8941001000907', category: 'Eggs', brand: 'Local / Loose', name: 'Farm Brown Eggs', nameBn: 'ফার্মের লাল ডিম', variant: 'Per Piece', baseUnit: 'Piece', allowDecimalQty: false, cost: '11.50', price: '13.50', stock: '240', minStock: '36', isFrequent: true, packUnit: { unitName: 'Dozen', unitNameBn: 'ডজন (১২ পিস)', factor: '12' } },
   // Noodles & Pasta
-  { sku: 'NES-MAG-8PK', barcode: '8941160000208', category: 'Noodles & Pasta', brand: 'Nestlé', name: 'Maggi 2-Minute Noodles', nameBn: 'ম্যাগি নুডুলস ৮ প্যাক', variant: '8 Pack (496g)', baseUnit: 'Packet', allowDecimalQty: false, cost: '155.00', price: '175.00', stock: '35', minStock: '8', isFrequent: true },
-  { sku: 'PR-MRN-8PK', barcode: '8941100310706', category: 'Noodles & Pasta', brand: 'PRAN', name: 'Mr. Noodles Magic Masala', nameBn: 'মিস্টার নুডুলস ৮ প্যাক', variant: '8 Pack', baseUnit: 'Packet', allowDecimalQty: false, cost: '142.00', price: '165.00', stock: '42', minStock: '10' },
+  { sku: 'NES-MAG-8PK', barcode: '8941160000208', category: 'Noodles & Pasta', brand: 'Maggi', name: 'Maggi 2-Minute Noodles', nameBn: 'ম্যাগি নুডুলস ৮ প্যাক', variant: '8 Pack (496g)', baseUnit: 'Packet', allowDecimalQty: false, cost: '155.00', price: '175.00', stock: '35', minStock: '8', isFrequent: true },
+  { sku: 'PR-MRN-8PK', barcode: '8941100310706', category: 'Noodles & Pasta', brand: 'PRAN', name: 'Mr. Noodles Magic Masala', nameBn: 'মিস্টার নুডুলস ৮ প্যাক', variant: '8 Pack', baseUnit: 'Packet', allowDecimalQty: false, cost: '142.00', price: '165.00', stock: '42', minStock: '10', isFrequent: true },
   // Sauces & Condiments
   { sku: 'PR-KETCH-340G', barcode: '8941100310805', category: 'Sauces & Condiments', brand: 'PRAN', name: 'PRAN Tomato Ketchup', nameBn: 'প্রাণ টমেটো কেচাপ', variant: '340g Bottle', baseUnit: 'Bottle', allowDecimalQty: false, cost: '105.00', price: '125.00', stock: '28', minStock: '6' },
   // Baby Food
   { sku: 'NES-CER-350G', barcode: '8941160000307', category: 'Baby Food & Baby Care', brand: 'Nestlé', name: 'Nestlé Cerelac Wheat', nameBn: 'সেরেলাক গম', variant: '350g', baseUnit: 'Box', allowDecimalQty: false, cost: '390.00', price: '440.00', stock: '14', minStock: '4' },
   // Soap & Personal Care
-  { sku: 'UNI-LUX-100G', barcode: '8941101000106', category: 'Soap & Personal Care', brand: 'Unilever', name: 'Lux Velvet Glow Soap', nameBn: 'লাক্স সাবান', variant: '100g', baseUnit: 'Piece', allowDecimalQty: false, cost: '54.00', price: '65.00', stock: '72', minStock: '15', isFrequent: true, packUnit: { unitName: 'Dozen', unitNameBn: 'ডজন (১২ পিস)', factor: '12' } },
-  { sku: 'UNI-LUX-150G', barcode: '8941101000113', category: 'Soap & Personal Care', brand: 'Unilever', name: 'Lux Velvet Glow Soap', nameBn: 'লাক্স সাবান (বড়)', variant: '150g', baseUnit: 'Piece', allowDecimalQty: false, cost: '78.00', price: '92.00', stock: '48', minStock: '10' },
-  { sku: 'UNI-LB-100G', barcode: '8941101000120', category: 'Soap & Personal Care', brand: 'Unilever', name: 'Lifebuoy Total Soap', nameBn: 'লাইফবয় সাবান', variant: '100g', baseUnit: 'Piece', allowDecimalQty: false, cost: '50.00', price: '60.00', stock: '60', minStock: '12' },
+  { sku: 'UNI-LUX-100G', barcode: '8941101000106', category: 'Soap & Personal Care', brand: 'Lux', name: 'Lux Velvet Glow Soap', nameBn: 'লাক্স সাবান', variant: '100g', baseUnit: 'Piece', allowDecimalQty: false, cost: '54.00', price: '65.00', stock: '72', minStock: '15', isFrequent: true, packUnit: { unitName: 'Dozen', unitNameBn: 'ডজন (১২ পিস)', factor: '12' } },
+  { sku: 'UNI-LUX-150G', barcode: '8941101000113', category: 'Soap & Personal Care', brand: 'Lux', name: 'Lux Velvet Glow Soap', nameBn: 'লাক্স সাবান (বড়)', variant: '150g', baseUnit: 'Piece', allowDecimalQty: false, cost: '78.00', price: '92.00', stock: '48', minStock: '10' },
+  { sku: 'UNI-LB-100G', barcode: '8941101000120', category: 'Soap & Personal Care', brand: 'Lifebuoy', name: 'Lifebuoy Total Soap', nameBn: 'লাইফবয় সাবান', variant: '100g', baseUnit: 'Piece', allowDecimalQty: false, cost: '50.00', price: '60.00', stock: '60', minStock: '12', isFrequent: true },
   // Shampoo & Hair Care
-  { sku: 'MAR-PAR-200M', barcode: '8941130000102', category: 'Shampoo & Hair Care', brand: 'Marico', name: 'Parachute Coconut Oil', nameBn: 'প্যারাসুট নারিকেল তেল', variant: '200 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '148.00', price: '170.00', stock: '34', minStock: '8' },
-  { sku: 'UNI-SUN-180M', barcode: '8941101000205', category: 'Shampoo & Hair Care', brand: 'Unilever', name: 'Sunsilk Black Shine Shampoo', nameBn: 'সানসিল্ক শ্যাম্পু', variant: '180 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '185.00', price: '215.00', stock: '24', minStock: '6' },
+  { sku: 'MAR-PAR-200M', barcode: '8941130000102', category: 'Shampoo & Hair Care', brand: 'Marico', name: 'Parachute Coconut Oil', nameBn: 'প্যারাসুট নারিকেল তেল', variant: '200 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '148.00', price: '170.00', stock: '34', minStock: '8', isFrequent: true },
+  { sku: 'UNI-SUN-180M', barcode: '8941101000205', category: 'Shampoo & Hair Care', brand: 'Sunsilk', name: 'Sunsilk Black Shine Shampoo', nameBn: 'সানসিল্ক শ্যাম্পু', variant: '180 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '185.00', price: '215.00', stock: '24', minStock: '6' },
   // Toothpaste & Oral Care
-  { sku: 'UNI-PEP-140G', barcode: '8941101000304', category: 'Toothpaste & Oral Care', brand: 'Unilever', name: 'Pepsodent GermiCheck', nameBn: 'পেপসোডেন্ট টুথপেস্ট', variant: '140g', baseUnit: 'Piece', allowDecimalQty: false, cost: '102.00', price: '120.00', stock: '36', minStock: '8' },
+  { sku: 'UNI-PEP-140G', barcode: '8941101000304', category: 'Toothpaste & Oral Care', brand: 'Pepsodent', name: 'Pepsodent GermiCheck', nameBn: 'পেপসোডেন্ট টুথপেস্ট', variant: '140g', baseUnit: 'Piece', allowDecimalQty: false, cost: '102.00', price: '120.00', stock: '36', minStock: '8' },
   // Detergent & Dishwashing
   { sku: 'UNI-SURF-500G', barcode: '8941101000403', category: 'Detergent & Dishwashing', brand: 'Unilever', name: 'Surf Excel Powder', nameBn: 'সার্ফ এক্সেল ডিটারজেন্ট', variant: '500g', baseUnit: 'Packet', allowDecimalQty: false, cost: '115.00', price: '132.00', stock: '42', minStock: '10', isFrequent: true },
   { sku: 'UNI-VIM-500M', barcode: '8941101000410', category: 'Detergent & Dishwashing', brand: 'Unilever', name: 'Vim Dishwash Liquid', nameBn: 'ভিম লিকুইড ডিশওয়াশ', variant: '500 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '125.00', price: '145.00', stock: '30', minStock: '6' },
@@ -174,6 +210,83 @@ const STARTER_SKUS: StarterSku[] = [
   { sku: 'FR-WAT-500M', barcode: '8941152000903', category: 'Water & Bottled Drinks', brand: 'Fresh', name: 'Fresh Drinking Water', nameBn: 'ফ্রেশ খাবার পানি', variant: '500 ml', baseUnit: 'Bottle', allowDecimalQty: false, cost: '15.00', price: '20.00', stock: '120', minStock: '24', isFrequent: true, packUnit: { unitName: 'Carton', unitNameBn: 'কার্টন (২৪ বোতল)', factor: '24' } },
 ];
 
+/**
+ * Idempotently enriches an existing store's categories, brands, and starter products
+ * with verified authentic brand logos, category colors/icons, and verified product photos
+ * WITHOUT overwriting any user-uploaded custom images or modifying stock/financial data.
+ */
+export async function syncVisualCatalogDefaults(storeId: number): Promise<void> {
+  const [existingCats, existingBrands, existingProducts] = await Promise.all([
+    db.select().from(categories).where(eq(categories.storeId, storeId)),
+    db.select().from(brands).where(eq(brands.storeId, storeId)),
+    db.select().from(products).where(eq(products.storeId, storeId)),
+  ]);
+
+  // 1. Update category iconName / accentColor where missing
+  const catMetaByName = new Map(BD_CATEGORIES.map((c) => [c.name.toLowerCase(), c]));
+  for (const cat of existingCats) {
+    if (!cat.iconName) {
+      const meta = catMetaByName.get(cat.name.toLowerCase());
+      if (meta) {
+        await db
+          .update(categories)
+          .set({ iconName: meta.iconName, accentColor: meta.accentColor })
+          .where(eq(categories.id, cat.id));
+      }
+    }
+  }
+
+  // 2. Update brand logos & colors where missing, and ensure dedicated popular sub-brands exist
+  const brandByLower = new Map(existingBrands.map((b) => [b.name.toLowerCase(), b]));
+  for (const bMeta of BD_BRANDS) {
+    const existing = brandByLower.get(bMeta.name.toLowerCase());
+    if (existing) {
+      if (!existing.logoUrl && bMeta.logoUrl) {
+        await db
+          .update(brands)
+          .set({
+            logoUrl: bMeta.logoUrl,
+            logoSource: bMeta.logoSource,
+            logoStatus: bMeta.logoStatus,
+            brandColor: bMeta.brandColor,
+            updatedAt: new Date(),
+          })
+          .where(eq(brands.id, existing.id));
+      }
+    } else if (bMeta.logoUrl) {
+      await db.insert(brands).values({
+        storeId,
+        name: bMeta.name,
+        nameBn: bMeta.nameBn,
+        company: bMeta.company,
+        logoUrl: bMeta.logoUrl,
+        logoSource: bMeta.logoSource,
+        logoStatus: bMeta.logoStatus,
+        brandColor: bMeta.brandColor,
+      });
+    }
+  }
+
+  // 3. Backfill strictly-verified product images only where imageUrl is still empty/null
+  const now = new Date();
+  for (const prod of existingProducts) {
+    if (!prod.imageUrl) {
+      const media = VERIFIED_PRODUCT_MEDIA[prod.sku];
+      if (media) {
+        await db
+          .update(products)
+          .set({
+            imageUrl: media.imageUrl,
+            imageSource: media.imageSource,
+            imageStatus: 'VERIFIED',
+            imageUpdatedAt: now,
+          })
+          .where(and(eq(products.id, prod.id), isNull(products.imageUrl)));
+      }
+    }
+  }
+}
+
 export async function provisionStoreForUser(uid: string, ownerName: string): Promise<number> {
   const existing = await db.select().from(stores).where(eq(stores.ownerUid, uid)).limit(1);
   if (existing.length > 0) {
@@ -182,6 +295,7 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
 
   return await db.transaction(async (tx) => {
     const today = dhakaTodayISO();
+    const now = new Date();
     const [store] = await tx
       .insert(stores)
       .values({
@@ -200,7 +314,7 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
 
     await tx.insert(storeSettings).values({
       storeId: store.id,
-      languageMode: 'BOTH',
+      languageMode: 'EN',
       receiptFormat: '80MM',
       allowNegativeStock: false,
       allowCashierPriceEdit: false,
@@ -208,7 +322,7 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
       allowCashierReports: false,
     });
 
-    // Seed 28 BD Grocery Categories
+    // Seed 28 BD Grocery Categories with icons & colors
     const insertedCategories = await tx
       .insert(categories)
       .values(
@@ -216,6 +330,8 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
           storeId: store.id,
           name: c.name,
           nameBn: c.nameBn,
+          iconName: c.iconName,
+          accentColor: c.accentColor,
           sortOrder: idx + 1,
         }))
       )
@@ -224,7 +340,7 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
     const catByName = new Map<string, number>();
     for (const c of insertedCategories) catByName.set(c.name, c.id);
 
-    // Seed 18 BD FMCG Brands
+    // Seed Authentic BD & Global FMCG Brands with verified official logos
     const insertedBrands = await tx
       .insert(brands)
       .values(
@@ -233,6 +349,10 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
           name: b.name,
           nameBn: b.nameBn,
           company: b.company,
+          logoUrl: b.logoUrl,
+          logoSource: b.logoSource,
+          logoStatus: b.logoStatus,
+          brandColor: b.brandColor,
         }))
       )
       .returning();
@@ -249,9 +369,10 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
       }))
     );
 
-    // Seed 50 Starter BD FMCG SKUs + Unit Conversions + Opening Stock Movements
+    // Seed Starter BD FMCG SKUs + Verified Real Packaging Photos + Opening Stock Movements
     const defaultCatId = insertedCategories[0].id;
     for (const item of STARTER_SKUS) {
+      const verifiedMedia = VERIFIED_PRODUCT_MEDIA[item.sku];
       const [prod] = await tx
         .insert(products)
         .values({
@@ -270,6 +391,11 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
           sellingPrice: item.price,
           currentStock: item.stock,
           minStock: item.minStock,
+          imageUrl: verifiedMedia?.imageUrl ?? null,
+          galleryUrls: '[]',
+          imageSource: verifiedMedia?.imageSource ?? '',
+          imageStatus: verifiedMedia ? 'VERIFIED' : 'UNAVAILABLE',
+          imageUpdatedAt: verifiedMedia ? now : null,
           isFrequent: Boolean(item.isFrequent),
         })
         .returning();

@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import http from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,12 +16,63 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Lightweight WebSocket-free /@vite/client shim for proxied environments where HMR WebSockets are disabled
+const NO_WS_VITE_CLIENT = `
+const sheetsMap = new Map();
+export function updateStyle(id, content) {
+  let style = sheetsMap.get(id);
+  if (!style) {
+    style = document.createElement('style');
+    style.setAttribute('type', 'text/css');
+    style.setAttribute('data-vite-dev-id', id);
+    style.textContent = content;
+    document.head.appendChild(style);
+    sheetsMap.set(id, style);
+  } else {
+    style.textContent = content;
+  }
+}
+export function removeStyle(id) {
+  const style = sheetsMap.get(id);
+  if (style) {
+    document.head.removeChild(style);
+    sheetsMap.delete(id);
+  }
+}
+export function createHotContext() {
+  const hot = {
+    data: {},
+    accept() {},
+    acceptExports() {},
+    dispose() {},
+    prune() {},
+    invalidate() {},
+    on() {},
+    off() {},
+    send() {},
+  };
+  return hot;
+}
+export function injectQuery(url) { return url; }
+export class ErrorOverlay extends HTMLElement {}
+`;
+
 async function startServer() {
   const app = express();
   const httpServer = http.createServer(app);
   const PORT = Number(process.env.PORT) || 3000;
 
-  app.use(express.json({ limit: '5mb' }));
+  app.use(express.json({ limit: '6mb' }));
+
+  // Ensure disk storage directories exist for optimized product/brand/store images
+  const uploadsDir = path.resolve(__dirname, 'public/uploads');
+  const catalogDir = path.resolve(__dirname, 'public/catalog');
+  fs.mkdirSync(path.join(uploadsDir, 'products'), { recursive: true });
+  fs.mkdirSync(path.join(uploadsDir, 'brands'), { recursive: true });
+  fs.mkdirSync(path.join(uploadsDir, 'stores'), { recursive: true });
+
+  app.use('/uploads', express.static(uploadsDir, { maxAge: '7d' }));
+  app.use('/catalog', express.static(catalogDir, { maxAge: '30d' }));
 
   app.get('/api/health', (_req, res) => {
     res.json({ ok: true, service: 'MudirDokan Pro API' });
@@ -38,12 +90,17 @@ async function startServer() {
 
   // Vite dev middleware in development, static dist in production
   if (process.env.NODE_ENV !== 'production') {
+    // Serve WebSocket-free Vite client shim before Vite middlewares to prevent HMR WebSocket errors
+    app.get('/@vite/client', (_req, res) => {
+      res.type('application/javascript; charset=utf-8').send(NO_WS_VITE_CLIENT);
+    });
+
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: {
-        middlewareMode: { server: httpServer },
-        hmr: process.env.DISABLE_HMR === 'true' ? false : { server: httpServer },
-        ws: { server: httpServer },
+        middlewareMode: true,
+        hmr: false,
+        ws: false,
       },
       appType: 'spa',
     });

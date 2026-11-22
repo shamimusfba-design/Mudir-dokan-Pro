@@ -310,7 +310,8 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
     const from = String(req.query.from || today).slice(0, 10);
     const to = String(req.query.to || today).slice(0, 10);
 
-    const [periodSales, periodExpenses, allProducts, allCats, allCustomers, allSuppliers, recentPurchases] =
+    const monthStart = `${today.slice(0, 7)}-01`;
+    const [periodSales, todayOnlySales, monthOnlySales, periodExpenses, allProducts, allCats, allCustomers, allSuppliers, recentPurchases] =
       await Promise.all([
         db
           .select({
@@ -328,6 +329,26 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
             )
           )
           .orderBy(desc(sales.createdAt)),
+        db
+          .select({
+            totalAmount: sales.totalAmount,
+            grossProfit: sales.grossProfit,
+          })
+          .from(sales)
+          .where(and(eq(sales.storeId, ctx.storeId), eq(sales.status, 'COMPLETED'), eq(sales.saleDate, today))),
+        db
+          .select({
+            totalAmount: sales.totalAmount,
+          })
+          .from(sales)
+          .where(
+            and(
+              eq(sales.storeId, ctx.storeId),
+              eq(sales.status, 'COMPLETED'),
+              gte(sales.saleDate, monthStart),
+              lte(sales.saleDate, today)
+            )
+          ),
         db
           .select()
           .from(expenses)
@@ -380,6 +401,9 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
     const grossProfit = totalSales.minus(totalCogs);
     const totalExpenses = periodExpenses.reduce((acc, e) => acc.plus(D(e.amount)), D(0));
     const netProfit = grossProfit.minus(totalExpenses);
+    const todaySalesTotal = todayOnlySales.reduce((acc, r) => acc.plus(D(r.totalAmount)), D(0));
+    const todayProfitTotal = todayOnlySales.reduce((acc, r) => acc.plus(D(r.grossProfit)), D(0));
+    const monthlyRevenueTotal = monthOnlySales.reduce((acc, r) => acc.plus(D(r.totalAmount)), D(0));
     const cashReceived = cashInflows
       .filter((t) => t.txType === 'SALE_CASH' || t.txType === 'CUSTOMER_DUE_COLLECTION')
       .reduce((acc, t) => acc.plus(D(t.amount)), D(0));
@@ -417,7 +441,19 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
     const prodMap = new Map(allProducts.map((p) => [p.id, p]));
     const catMap = new Map(allCats.map((c) => [c.id, c.name]));
     const catSalesMap = new Map<string, number>();
-    const topProdMap = new Map<number, { productId: number; name: string; variant: string; qty: number; revenue: number; profit: number }>();
+    const topProdMap = new Map<
+      number,
+      {
+        productId: number;
+        name: string;
+        variant: string;
+        imageUrl: string | null;
+        categoryId: number;
+        qty: number;
+        revenue: number;
+        profit: number;
+      }
+    >();
 
     for (const item of periodSaleItems) {
       const prod = prodMap.get(item.productId);
@@ -428,6 +464,8 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
         productId: item.productId,
         name: item.productName,
         variant: item.variant || '',
+        imageUrl: prod?.imageUrl ?? null,
+        categoryId: prod?.categoryId ?? 0,
         qty: 0,
         revenue: 0,
         profit: 0,
@@ -464,6 +502,12 @@ financeRouter.get('/dashboard', async (req: AuthRequest, res) => {
         customerOutstanding: money(customerOutstanding),
         supplierOutstanding: money(supplierOutstanding),
         inventoryValue: hideProfit ? null : money(inventoryValue),
+        todaySales: money(todaySalesTotal),
+        todayProfit: hideProfit ? null : money(todayProfitTotal),
+        monthlyRevenue: money(monthlyRevenueTotal),
+        totalProducts: allProducts.length,
+        lowStockCount: lowStockProducts.length,
+        outOfStockCount: outOfStockProducts.length,
       },
       dailyTrend: hideProfit ? dailyTrend.map((d) => ({ ...d, grossProfit: 0 })) : dailyTrend,
       salesByCategory,
@@ -544,14 +588,28 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
 
     const prodMap = new Map(allProducts.map((p) => [p.id, p]));
     const catMap = new Map(allCats.map((c) => [c.id, c.name]));
-    const brandMap = new Map(allBrands.map((b) => [b.id, b.name]));
+    const brandObjMap = new Map(allBrands.map((b) => [b.id, b]));
 
     const prodStats = new Map<
       number,
-      { productId: number; sku: string; name: string; variant: string; qtySold: number; revenue: number; cogs: number; grossProfit: number }
+      {
+        productId: number;
+        sku: string;
+        name: string;
+        variant: string;
+        imageUrl: string | null;
+        categoryId: number;
+        qtySold: number;
+        revenue: number;
+        cogs: number;
+        grossProfit: number;
+      }
     >();
     const catStats = new Map<string, { category: string; revenue: number; cogs: number; grossProfit: number }>();
-    const brandStats = new Map<string, { brand: string; revenue: number; qtySold: number }>();
+    const brandStats = new Map<
+      string,
+      { brandId: number | null; brand: string; logoUrl: string | null; brandColor: string | null; revenue: number; qtySold: number }
+    >();
 
     for (const i of items) {
       const prod = prodMap.get(i.productId);
@@ -565,6 +623,8 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
         sku: prod?.sku || '',
         name: i.productName,
         variant: i.variant || '',
+        imageUrl: prod?.imageUrl ?? null,
+        categoryId: prod?.categoryId ?? 0,
         qtySold: 0,
         revenue: 0,
         cogs: 0,
@@ -583,8 +643,16 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
       cStat.grossProfit += gp;
       catStats.set(catName, cStat);
 
-      const brandName = prod?.brandId ? brandMap.get(prod.brandId) || 'Unbranded' : 'Unbranded';
-      const bStat = brandStats.get(brandName) || { brand: brandName, revenue: 0, qtySold: 0 };
+      const brandObj = prod?.brandId ? brandObjMap.get(prod.brandId) : undefined;
+      const brandName = brandObj ? brandObj.name : 'Unbranded';
+      const bStat = brandStats.get(brandName) || {
+        brandId: brandObj?.id ?? null,
+        brand: brandName,
+        logoUrl: brandObj?.logoUrl ?? null,
+        brandColor: brandObj?.brandColor ?? null,
+        revenue: 0,
+        qtySold: 0,
+      };
       bStat.revenue += rev;
       bStat.qtySold += qty;
       brandStats.set(brandName, bStat);
@@ -598,6 +666,8 @@ financeRouter.get('/reports', async (req: AuthRequest, res) => {
         sku: p.sku,
         name: p.name,
         variant: p.variant,
+        imageUrl: p.imageUrl ?? null,
+        categoryId: p.categoryId,
         currentStock: p.currentStock,
         stockValue: money(D(p.currentStock).times(D(p.avgCostPrice))),
       }))
@@ -697,6 +767,7 @@ financeRouter.put('/settings', async (req: AuthRequest, res) => {
           address: storeInput.address ?? ctx.store.address,
           addressBn: storeInput.addressBn ?? ctx.store.addressBn,
           binNumber: storeInput.binNumber ?? ctx.store.binNumber,
+          logoUrl: storeInput.logoUrl !== undefined ? (storeInput.logoUrl || null) : ctx.store.logoUrl,
         })
         .where(eq(stores.id, ctx.storeId));
     }

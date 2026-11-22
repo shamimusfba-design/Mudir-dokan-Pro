@@ -1,5 +1,21 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, Barcode, Plus, Minus, Trash2, UserPlus, CheckCircle2, WifiOff, Split, X } from 'lucide-react';
+import {
+  Search,
+  Barcode,
+  Plus,
+  Minus,
+  Trash2,
+  UserPlus,
+  CheckCircle2,
+  WifiOff,
+  Split,
+  X,
+  Star,
+  LayoutGrid,
+  SlidersHorizontal,
+  ShoppingBag,
+  AlertTriangle,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch } from '../lib/api';
@@ -7,6 +23,7 @@ import { D, money, formatBDT, formatQty, dhakaTodayISO, PAYMENT_METHODS } from '
 import { tr, trCompact, tx, formatStatusLabel, formatUnitLabel } from '../lib/i18n';
 import { enqueueOfflineSale, type CachedProduct } from '../lib/offline-db';
 import { ReceiptModal, type PrintableReceipt } from '../components/ReceiptModal';
+import { ProductImage, BrandLogo, CategoryIcon, getCategoryTheme } from '../components/ProductMedia';
 
 interface CartItem {
   product: CachedProduct;
@@ -28,7 +45,14 @@ export const PosPage: React.FC = () => {
 
   const searchRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
-  const [selectedCatId, setSelectedCatId] = useState<number | 'ALL' | 'FREQUENT'>('FREQUENT');
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [selectedCatId, setSelectedCatId] = useState<number | 'ALL' | 'FREQUENT'>('ALL');
+  const [selectedBrandId, setSelectedBrandId] = useState<number | 'ALL'>('ALL');
+  const [stockFilter, setStockFilter] = useState<'ALL' | 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK'>('ALL');
+  const [variantFilter, setVariantFilter] = useState<string>('ALL');
+  const [priceRange, setPriceRange] = useState<'ALL' | 'UNDER_100' | '100_500' | 'OVER_500'>('ALL');
+  const [showFilters, setShowFilters] = useState(false);
+
   const [cart, setCart] = useState<CartItem[]>([]);
   const [billDiscount, setBillDiscount] = useState('0');
   const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null);
@@ -48,10 +72,58 @@ export const PosPage: React.FC = () => {
   });
 
   const brandMap = useMemo(() => new Map(brands.map((b) => [b.id, b])), [brands]);
+  const catMap = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
   const selectedCustomer = useMemo(
     () => customers.find((c) => c.id === selectedCustomerId) || null,
     [customers, selectedCustomerId]
   );
+
+  // Active categories that have products (plus all categories sorted so populated come first)
+  const categoryCounts = useMemo(() => {
+    const map = new Map<number, number>();
+    for (const p of products) {
+      map.set(p.categoryId, (map.get(p.categoryId) || 0) + 1);
+    }
+    return map;
+  }, [products]);
+
+  const activeCategories = useMemo(() => {
+    return [...categories]
+      .filter((c) => (categoryCounts.get(c.id) || 0) > 0)
+      .sort((a, b) => (categoryCounts.get(b.id) || 0) - (categoryCounts.get(a.id) || 0));
+  }, [categories, categoryCounts]);
+
+  const brandsWithProducts = useMemo(() => {
+    const counts = new Map<number, number>();
+    for (const p of products) {
+      if (p.brandId) counts.set(p.brandId, (counts.get(p.brandId) || 0) + 1);
+    }
+    return brands
+      .filter((b) => (counts.get(b.id) || 0) > 0)
+      .sort((a, b) => {
+        const aLogo = a.logoUrl ? 1 : 0;
+        const bLogo = b.logoUrl ? 1 : 0;
+        if (bLogo !== aLogo) return bLogo - aLogo;
+        return (counts.get(b.id) || 0) - (counts.get(a.id) || 0);
+      });
+  }, [brands, products]);
+
+  const uniqueVariants = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of products) {
+      if (p.variant && p.variant.trim()) set.add(p.variant.trim());
+    }
+    return Array.from(set).sort().slice(0, 24);
+  }, [products]);
+
+  // Cart quick lookup map (productId -> index & total qty)
+  const cartQtyMap = useMemo(() => {
+    const map = new Map<number, number>();
+    for (const item of cart) {
+      map.set(item.product.id, (map.get(item.product.id) || 0) + Number(item.enteredQty || 0));
+    }
+    return map;
+  }, [cart]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -69,27 +141,70 @@ export const PosPage: React.FC = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   });
 
-  const filteredProducts = useMemo(() => {
+  const searchSuggestions = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return products.filter((p) => {
-      if (q) {
+    if (!q) return [];
+    return products
+      .filter((p) => {
         const b = p.brandId ? brandMap.get(p.brandId) : null;
-        const bName = (b?.name || '').toLowerCase();
-        const bNameBn = (b?.nameBn || '').toLowerCase();
         return (
           p.name.toLowerCase().includes(q) ||
           p.nameBn.toLowerCase().includes(q) ||
           p.sku.toLowerCase().includes(q) ||
           (p.barcode || '').toLowerCase().includes(q) ||
-          bName.includes(q) ||
-          bNameBn.includes(q)
+          (p.variant || '').toLowerCase().includes(q) ||
+          (b?.name || '').toLowerCase().includes(q) ||
+          (b?.nameBn || '').toLowerCase().includes(q)
         );
+      })
+      .slice(0, 7);
+  }, [products, query, brandMap]);
+
+  const filteredProducts = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return products.filter((p) => {
+      if (q) {
+        const b = p.brandId ? brandMap.get(p.brandId) : null;
+        const matchedQuery =
+          p.name.toLowerCase().includes(q) ||
+          p.nameBn.toLowerCase().includes(q) ||
+          p.sku.toLowerCase().includes(q) ||
+          (p.barcode || '').toLowerCase().includes(q) ||
+          (p.variant || '').toLowerCase().includes(q) ||
+          (b?.name || '').toLowerCase().includes(q) ||
+          (b?.nameBn || '').toLowerCase().includes(q);
+        if (!matchedQuery) return false;
       }
-      if (selectedCatId === 'FREQUENT') return p.isFrequent;
-      if (selectedCatId === 'ALL') return true;
-      return p.categoryId === selectedCatId;
+      if (selectedCatId === 'FREQUENT' && !p.isFrequent) return false;
+      if (typeof selectedCatId === 'number' && p.categoryId !== selectedCatId) return false;
+      if (selectedBrandId !== 'ALL' && p.brandId !== selectedBrandId) return false;
+
+      const stock = Number(p.currentStock);
+      const min = Number(p.minStock);
+      if (stockFilter === 'IN_STOCK' && stock <= 0) return false;
+      if (stockFilter === 'LOW_STOCK' && !(stock > 0 && stock <= min)) return false;
+      if (stockFilter === 'OUT_OF_STOCK' && stock > 0) return false;
+
+      if (variantFilter !== 'ALL' && p.variant !== variantFilter) return false;
+
+      const price = Number(p.sellingPrice);
+      if (priceRange === 'UNDER_100' && price >= 100) return false;
+      if (priceRange === '100_500' && (price < 100 || price > 500)) return false;
+      if (priceRange === 'OVER_500' && price <= 500) return false;
+
+      return true;
     });
-  }, [products, query, selectedCatId, brandMap]);
+  }, [products, query, selectedCatId, selectedBrandId, stockFilter, variantFilter, priceRange, brandMap]);
+
+  const hasActiveFilters =
+    selectedBrandId !== 'ALL' || stockFilter !== 'ALL' || variantFilter !== 'ALL' || priceRange !== 'ALL';
+
+  const clearFilters = () => {
+    setSelectedBrandId('ALL');
+    setStockFilter('ALL');
+    setVariantFilter('ALL');
+    setPriceRange('ALL');
+  };
 
   const addToCart = (prod: CachedProduct) => {
     setCart((prev) => {
@@ -114,6 +229,19 @@ export const PosPage: React.FC = () => {
     });
   };
 
+  const decrementProductInCart = (prodId: number) => {
+    setCart((prev) => {
+      const idx = prev.findIndex((i) => i.product.id === prodId);
+      if (idx < 0) return prev;
+      const step = prev[idx].product.allowDecimalQty ? 0.5 : 1;
+      const next = D(prev[idx].enteredQty).minus(step);
+      if (next.lte(0)) {
+        return prev.filter((_, i) => i !== idx);
+      }
+      return prev.map((item, i) => (i === idx ? { ...item, enteredQty: formatQty(next) } : item));
+    });
+  };
+
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && query.trim()) {
       const q = query.trim().toLowerCase();
@@ -123,6 +251,7 @@ export const PosPage: React.FC = () => {
       if (exact) {
         addToCart(exact);
         setQuery('');
+        setSearchFocused(false);
         toast.success(
           tx(
             lang,
@@ -133,6 +262,7 @@ export const PosPage: React.FC = () => {
       } else if (filteredProducts.length === 1) {
         addToCart(filteredProducts[0]);
         setQuery('');
+        setSearchFocused(false);
       }
     }
   };
@@ -212,7 +342,7 @@ export const PosPage: React.FC = () => {
       return;
     }
     try {
-      const created = await apiFetch('/api/customers', {
+      const created = await apiFetch<{ id: number; name: string; customerCode: string }>('/api/customers', {
         method: 'POST',
         body: JSON.stringify(newCust),
       });
@@ -377,141 +507,470 @@ export const PosPage: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-start">
-      {/* Left: Search, Categories, Product Grid */}
+      {/* Left: Search with Thumbnails, Colorful Category Cards, Brand Logos, Multi-Filter & Studio Grid */}
       <div className="lg:col-span-7 xl:col-span-8 space-y-4">
         {!isOnline && (
-          <div className="flex items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-4 py-2.5 text-xs font-medium text-amber-900 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-200">
+          <div className="flex items-center gap-2 rounded-xl border border-orange-300 bg-orange-50 px-4 py-2.5 text-xs font-semibold text-orange-900 dark:border-orange-700/60 dark:bg-orange-950/40 dark:text-orange-200">
             <WifiOff className="h-4 w-4 shrink-0" />
             <span>{tr('offlineModeBanner', lang)}</span>
           </div>
         )}
 
-        {/* Search & Barcode Input */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="relative flex-1 min-w-[240px]">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        {/* Instant Search Bar with Visual Suggestions + Filter Toggle */}
+        <div className="flex items-center gap-2.5">
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-indigo-500" />
             <input
               ref={searchRef}
               type="text"
               value={query}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setTimeout(() => setSearchFocused(false), 180)}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleSearchKeyDown}
               placeholder={tx(
                 lang,
-                'Scan barcode or search product, brand, SKU... (F2)',
-                'বারকোড স্ক্যান করুন অথবা পণ্য, ব্র্যান্ড, কোড খুঁজুন... (F2)'
+                'Scan barcode or search product, brand, size... (F2)',
+                'বারকোড স্ক্যান করুন অথবা পণ্য, ব্র্যান্ড, সাইজ খুঁজুন... (F2)'
               )}
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-10 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+              className="w-full rounded-xl border border-indigo-200 bg-white py-3 pl-10 pr-16 text-sm text-slate-900 shadow-xs placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
             />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                className="absolute right-10 top-1/2 -translate-y-1/2 rounded p-1 text-slate-400 hover:text-slate-600 cursor-pointer"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
             <Barcode className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          </div>
-        </div>
 
-        {/* Category Filter Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+            {/* Live Search Suggestions with Product Thumbnails & Brand Logos */}
+            {searchFocused && searchSuggestions.length > 0 && (
+              <div className="absolute left-0 right-0 top-full z-40 mt-1.5 overflow-hidden rounded-2xl border border-indigo-100 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
+                <div className="border-b border-slate-100 bg-slate-50/80 px-3.5 py-1.5 text-[11px] font-semibold text-slate-500 dark:border-slate-800 dark:bg-slate-950/60">
+                  {tx(lang, 'Quick Add Matches', 'দ্রুত যোগ করুন')}
+                </div>
+                <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                  {searchSuggestions.map((p) => {
+                    const br = p.brandId ? brandMap.get(p.brandId) : null;
+                    const cat = catMap.get(p.categoryId);
+                    return (
+                      <button
+                        key={p.id}
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          addToCart(p);
+                          setQuery('');
+                          setSearchFocused(false);
+                        }}
+                        className="flex w-full items-center justify-between gap-3 px-3.5 py-2.5 text-left hover:bg-indigo-50/70 dark:hover:bg-slate-800/80 cursor-pointer"
+                      >
+                        <div className="flex min-w-0 items-center gap-3">
+                          <ProductImage
+                            src={p.imageUrl}
+                            alt={p.name}
+                            iconName={cat?.iconName}
+                            accentColor={cat?.accentColor}
+                            fallbackIndex={p.categoryId}
+                            size="sm"
+                          />
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-1.5">
+                              {br && (
+                                <BrandLogo
+                                  logoUrl={br.logoUrl}
+                                  name={br.name}
+                                  brandColor={br.brandColor}
+                                  size="xs"
+                                />
+                              )}
+                              <span className="truncate text-xs font-bold text-slate-900 dark:text-white">
+                                {trCompact(p.name, p.nameBn, lang)}
+                              </span>
+                            </div>
+                            <div className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                              {p.variant} · {p.sku} · {tx(lang, 'Stock:', 'স্টক:')} {formatQty(p.currentStock)}{' '}
+                              {formatUnitLabel(p.baseUnit, lang)}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="shrink-0 text-right">
+                          <div className="font-mono text-sm font-extrabold text-indigo-700 dark:text-indigo-400">
+                            {formatBDT(p.sellingPrice)}
+                          </div>
+                          <div className="text-[10px] font-semibold text-emerald-600">
+                            + {tx(lang, 'Add', 'যোগ')}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
           <button
             type="button"
-            onClick={() => setSelectedCatId('FREQUENT')}
-            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition whitespace-nowrap shrink-0 cursor-pointer ${
-              selectedCatId === 'FREQUENT'
-                ? 'bg-emerald-600 text-white'
-                : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
+            onClick={() => setShowFilters((s) => !s)}
+            className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl border px-3.5 py-3 text-xs font-bold transition cursor-pointer ${
+              showFilters || hasActiveFilters
+                ? 'border-indigo-500 bg-indigo-600 text-white shadow-sm'
+                : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200'
             }`}
           >
-            {trCompact('Frequent Items', 'জনপ্রিয় পণ্য', lang)}
+            <SlidersHorizontal className="h-4 w-4" />
+            <span className="hidden sm:inline">{tx(lang, 'Filters', 'ফিল্টার')}</span>
           </button>
+        </div>
+
+        {/* Collapsible Multi-Filter Panel (Stock, Size/Variant, Price Range) */}
+        {showFilters && (
+          <div className="flex flex-wrap items-center gap-2.5 rounded-2xl border border-indigo-100 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <select
+              value={stockFilter}
+              onChange={(e) => setStockFilter(e.target.value as any)}
+              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium dark:border-slate-700 dark:bg-slate-950"
+            >
+              <option value="ALL">{tx(lang, 'Availability: All', 'স্টক: সব')}</option>
+              <option value="IN_STOCK">{tx(lang, 'In Stock Only', 'স্টক আছে')}</option>
+              <option value="LOW_STOCK">{tx(lang, 'Low Stock', 'কম স্টক')}</option>
+              <option value="OUT_OF_STOCK">{tx(lang, 'Out of Stock', 'স্টক শেষ')}</option>
+            </select>
+
+            <select
+              value={variantFilter}
+              onChange={(e) => setVariantFilter(e.target.value)}
+              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium dark:border-slate-700 dark:bg-slate-950"
+            >
+              <option value="ALL">{tx(lang, 'Size / Variant: All', 'সাইজ / ধরন: সব')}</option>
+              {uniqueVariants.map((v) => (
+                <option key={v} value={v}>
+                  {v}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={priceRange}
+              onChange={(e) => setPriceRange(e.target.value as any)}
+              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium dark:border-slate-700 dark:bg-slate-950"
+            >
+              <option value="ALL">{tx(lang, 'Price: Any', 'মূল্য: সব')}</option>
+              <option value="UNDER_100">{tx(lang, 'Under ৳100', '৳১০০ এর নিচে')}</option>
+              <option value="100_500">{tx(lang, '৳100 – ৳500', '৳১০০ – ৳৫০০')}</option>
+              <option value="OVER_500">{tx(lang, 'Above ৳500', '৳৫০০ এর বেশি')}</option>
+            </select>
+
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="ml-auto inline-flex items-center gap-1 rounded-lg bg-rose-50 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-100 dark:bg-rose-950/50 dark:text-rose-300 cursor-pointer"
+              >
+                <X className="h-3.5 w-3.5" />
+                {tx(lang, 'Reset', 'রিসেট')}
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Colorful Category Icon Strip */}
+        <div className="flex items-stretch gap-2 overflow-x-auto pb-1">
           <button
             type="button"
             onClick={() => setSelectedCatId('ALL')}
-            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`flex shrink-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition cursor-pointer ${
               selectedCatId === 'ALL'
-                ? 'bg-emerald-600 text-white'
-                : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
+                ? 'border-indigo-600 bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-sm shadow-indigo-500/20'
+                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
             }`}
           >
-            {trCompact('All Products', 'সব পণ্য', lang)} ({products.length})
-          </button>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => setSelectedCatId(cat.id)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition whitespace-nowrap shrink-0 cursor-pointer ${
-                selectedCatId === cat.id
-                  ? 'bg-emerald-600 text-white'
-                  : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
+            <span
+              className={`flex h-7 w-7 items-center justify-center rounded-lg ${
+                selectedCatId === 'ALL' ? 'bg-white/20 text-white' : 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
               }`}
             >
-              {trCompact(cat.name, cat.nameBn, lang)}
-            </button>
-          ))}
-        </div>
+              <LayoutGrid className="h-4 w-4" />
+            </span>
+            <div>
+              <div className="text-xs font-bold whitespace-nowrap">{tx(lang, 'All Items', 'সব পণ্য')}</div>
+              <div className={`text-[10px] font-mono ${selectedCatId === 'ALL' ? 'text-indigo-100' : 'text-slate-400'}`}>
+                {products.length}
+              </div>
+            </div>
+          </button>
 
-        {/* Product Selection Grid */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.map((prod) => {
-            const stock = Number(prod.currentStock);
-            const isOut = stock <= 0;
-            const isLow = stock > 0 && stock <= Number(prod.minStock);
-            const brand = prod.brandId ? brandMap.get(prod.brandId) : null;
-            const brandLabel = brand ? trCompact(brand.name, brand.nameBn, lang) : prod.sku;
+          <button
+            type="button"
+            onClick={() => setSelectedCatId('FREQUENT')}
+            className={`flex shrink-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition cursor-pointer ${
+              selectedCatId === 'FREQUENT'
+                ? 'border-orange-500 bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm shadow-orange-500/20'
+                : 'border-slate-200 bg-white text-slate-700 hover:border-orange-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
+            }`}
+          >
+            <span
+              className={`flex h-7 w-7 items-center justify-center rounded-lg ${
+                selectedCatId === 'FREQUENT' ? 'bg-white/20 text-white' : 'bg-orange-50 text-orange-600 dark:bg-orange-950/60 dark:text-orange-400'
+              }`}
+            >
+              <Star className="h-4 w-4" />
+            </span>
+            <div>
+              <div className="text-xs font-bold whitespace-nowrap">{tx(lang, 'Frequent', 'জনপ্রিয়')}</div>
+              <div className={`text-[10px] font-mono ${selectedCatId === 'FREQUENT' ? 'text-orange-100' : 'text-slate-400'}`}>
+                {products.filter((p) => p.isFrequent).length}
+              </div>
+            </div>
+          </button>
+
+          {activeCategories.map((cat, idx) => {
+            const theme = getCategoryTheme(cat.accentColor, idx);
+            const active = selectedCatId === cat.id;
             return (
               <button
-                key={prod.id}
+                key={cat.id}
                 type="button"
-                onClick={() => addToCart(prod)}
-                className={`group flex flex-col justify-between rounded-xl border p-3.5 text-left transition cursor-pointer ${
-                  isOut
-                    ? 'border-red-200 bg-red-50/40 dark:border-red-900/50 dark:bg-red-950/20'
-                    : 'border-slate-200 bg-white hover:border-emerald-500 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500'
+                onClick={() => setSelectedCatId(cat.id)}
+                className={`flex shrink-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition cursor-pointer ${
+                  active
+                    ? `border-transparent bg-gradient-to-r ${theme.gradient} text-white shadow-sm`
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
                 }`}
               >
+                <span
+                  className={`flex h-7 w-7 items-center justify-center rounded-lg ${
+                    active ? 'bg-white/20 text-white' : `${theme.bgSoft} ${theme.text}`
+                  }`}
+                >
+                  <CategoryIcon iconName={cat.iconName} className="h-4 w-4" />
+                </span>
                 <div>
-                  <div className="flex items-center justify-between gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-                    <span className="truncate">{brandLabel}</span>
-                    <span className="font-mono shrink-0">{prod.variant}</span>
-                  </div>
-                  <div className="mt-1 text-sm font-semibold leading-snug text-slate-900 dark:text-white line-clamp-2">
-                    {trCompact(prod.name, prod.nameBn, lang)}
-                  </div>
-                </div>
-                <div className="mt-3 flex items-end justify-between border-t border-slate-100 pt-2 dark:border-slate-800">
-                  <div className="font-mono text-base font-bold text-emerald-700 dark:text-emerald-400">
-                    {formatBDT(prod.sellingPrice)}
-                    <span className="text-[10px] font-normal text-slate-500">/{formatUnitLabel(prod.baseUnit, lang)}</span>
-                  </div>
-                  <div
-                    className={`font-mono text-[11px] font-semibold ${
-                      isOut ? 'text-red-600' : isLow ? 'text-amber-600' : 'text-slate-500 dark:text-slate-400'
-                    }`}
-                  >
-                    {formatQty(prod.currentStock)} {formatUnitLabel(prod.baseUnit, lang)}
-                    {!isOnline ? ` (${tx(lang, 'Cached', 'ক্যাশ')})` : ''}
+                  <div className="text-xs font-bold whitespace-nowrap">{trCompact(cat.name, cat.nameBn, lang)}</div>
+                  <div className={`text-[10px] font-mono ${active ? 'text-white/80' : 'text-slate-400'}`}>
+                    {categoryCounts.get(cat.id) || 0}
                   </div>
                 </div>
               </button>
             );
           })}
+        </div>
+
+        {/* Visual Brand Logo Filter Strip */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <button
+            type="button"
+            onClick={() => setSelectedBrandId('ALL')}
+            className={`shrink-0 rounded-xl border px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+              selectedBrandId === 'ALL'
+                ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-950/60 dark:text-indigo-300'
+                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
+            }`}
+          >
+            {tx(lang, 'All Brands', 'সব ব্র্যান্ড')}
+          </button>
+          {brandsWithProducts.map((b) => {
+            const active = selectedBrandId === b.id;
+            return (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => setSelectedBrandId(active ? 'ALL' : b.id)}
+                className={`inline-flex shrink-0 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition cursor-pointer ${
+                  active
+                    ? 'border-indigo-600 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-500/20 dark:border-indigo-400 dark:bg-indigo-950/70 dark:text-indigo-200'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
+                }`}
+              >
+                <BrandLogo logoUrl={b.logoUrl} name={b.name} brandColor={b.brandColor} size="xs" />
+                <span className="whitespace-nowrap">{trCompact(b.name, b.nameBn, lang)}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Visually Rich Product Selection Grid */}
+        <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 xl:grid-cols-4">
+          {filteredProducts.map((prod) => {
+            const stock = Number(prod.currentStock);
+            const isOut = stock <= 0;
+            const isLow = stock > 0 && stock <= Number(prod.minStock);
+            const brand = prod.brandId ? brandMap.get(prod.brandId) : null;
+            const cat = catMap.get(prod.categoryId);
+            const inCartQty = cartQtyMap.get(prod.id) || 0;
+
+            return (
+              <div
+                key={prod.id}
+                className={`group flex flex-col justify-between overflow-hidden rounded-2xl border bg-white p-3 shadow-xs transition duration-150 hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900 ${
+                  inCartQty > 0
+                    ? 'border-emerald-500 ring-2 ring-emerald-500/20'
+                    : isOut
+                      ? 'border-rose-200 bg-rose-50/30 dark:border-rose-900/50 dark:bg-rose-950/10'
+                      : 'border-slate-200/90 hover:border-indigo-400 dark:border-slate-800 dark:hover:border-indigo-500'
+                }`}
+              >
+                {/* Top Photo Stage with Official Brand Logo & In-Cart Counter */}
+                <button
+                  type="button"
+                  onClick={() => addToCart(prod)}
+                  className="relative w-full text-left cursor-pointer"
+                >
+                  <ProductImage
+                    src={prod.imageUrl}
+                    alt={trCompact(prod.name, prod.nameBn, lang)}
+                    iconName={cat?.iconName}
+                    accentColor={cat?.accentColor}
+                    fallbackIndex={prod.categoryId}
+                    size="card"
+                  />
+
+                  {brand && (
+                    <div className="absolute left-2 top-2">
+                      <BrandLogo
+                        logoUrl={brand.logoUrl}
+                        name={brand.name}
+                        brandColor={brand.brandColor}
+                        size="xs"
+                      />
+                    </div>
+                  )}
+
+                  {inCartQty > 0 && (
+                    <span className="absolute right-2 top-2 flex h-6 min-w-6 items-center justify-center rounded-full bg-emerald-600 px-1.5 font-mono text-xs font-extrabold text-white shadow-sm">
+                      {formatQty(inCartQty)}
+                    </span>
+                  )}
+
+                  {isLow && !isOut && (
+                    <span className="absolute bottom-2 right-2 inline-flex items-center gap-0.5 rounded-md bg-orange-500/95 px-1.5 py-0.5 text-[10px] font-bold text-white shadow-xs">
+                      <AlertTriangle className="h-2.5 w-2.5" />
+                      {tx(lang, 'Low', 'কম')}
+                    </span>
+                  )}
+                </button>
+
+                {/* Product Metadata */}
+                <div className="mt-2.5 flex-1">
+                  <div className="flex items-center justify-between gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="truncate font-medium">
+                      {brand ? trCompact(brand.name, brand.nameBn, lang) : prod.sku}
+                    </span>
+                    <span className="shrink-0 font-mono text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">
+                      {prod.variant}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => addToCart(prod)}
+                    className="mt-0.5 block w-full text-left text-sm font-bold leading-snug text-slate-900 line-clamp-2 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-300 cursor-pointer"
+                  >
+                    {trCompact(prod.name, prod.nameBn, lang)}
+                  </button>
+                </div>
+
+                {/* Price & Stock Row + Add to Cart Button */}
+                <div className="mt-2.5 space-y-2 border-t border-slate-100 pt-2 dark:border-slate-800">
+                  <div className="flex items-baseline justify-between gap-1">
+                    <div className="font-mono text-base font-extrabold text-indigo-700 dark:text-indigo-400">
+                      {formatBDT(prod.sellingPrice)}
+                      <span className="text-[10px] font-normal text-slate-400">/{formatUnitLabel(prod.baseUnit, lang)}</span>
+                    </div>
+                    <div
+                      className={`font-mono text-[11px] font-bold ${
+                        isOut
+                          ? 'text-rose-600 dark:text-rose-400'
+                          : isLow
+                            ? 'text-orange-600 dark:text-orange-400'
+                            : 'text-emerald-600 dark:text-emerald-400'
+                      }`}
+                    >
+                      {isOut
+                        ? tx(lang, 'Out', 'শেষ')
+                        : `${formatQty(prod.currentStock)} ${formatUnitLabel(prod.baseUnit, lang)}`}
+                    </div>
+                  </div>
+
+                  {inCartQty > 0 ? (
+                    <div className="flex items-center justify-between rounded-xl bg-emerald-50 p-1 dark:bg-emerald-950/50">
+                      <button
+                        type="button"
+                        onClick={() => decrementProductInCart(prod.id)}
+                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-emerald-700 shadow-xs hover:bg-emerald-100 dark:bg-slate-800 dark:text-emerald-300 cursor-pointer"
+                      >
+                        <Minus className="h-3.5 w-3.5" />
+                      </button>
+                      <span className="font-mono text-xs font-extrabold text-emerald-800 dark:text-emerald-200">
+                        {formatQty(inCartQty)} {formatUnitLabel(prod.baseUnit, lang)}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => addToCart(prod)}
+                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-white shadow-xs hover:bg-emerald-700 cursor-pointer"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => addToCart(prod)}
+                      className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-indigo-50 py-1.5 text-xs font-bold text-indigo-700 transition hover:bg-indigo-600 hover:text-white dark:bg-indigo-950/60 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:text-white cursor-pointer"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                      <span>{tx(lang, 'Add to Cart', 'কার্টে যোগ')}</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
           {filteredProducts.length === 0 && (
-            <div className="col-span-full rounded-xl border border-dashed border-slate-300 py-12 text-center text-sm text-slate-500 dark:border-slate-700">
+            <div className="col-span-full rounded-2xl border border-dashed border-slate-300 bg-white py-14 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900">
               {tx(lang, 'No matching products found.', 'কোনো মিল থাকা পণ্য পাওয়া যায়নি।')}
             </div>
           )}
         </div>
       </div>
 
-      {/* Right: Sticky Live Cart, Customer Credit & Split Payment Panel */}
-      <div className="lg:col-span-5 xl:col-span-4 rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-20 flex flex-col">
+      {/* Right: Sticky Live Billing Cart, Customer Credit & Split Payment Panel */}
+      <div className="lg:col-span-5 xl:col-span-4 rounded-2xl border border-indigo-100 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-20 flex flex-col overflow-hidden">
+        {/* Vibrant Cart Header */}
+        <div className="flex items-center justify-between bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-3 text-white">
+          <div className="flex items-center gap-2">
+            <ShoppingBag className="h-4 w-4" />
+            <span className="text-sm font-bold">{tx(lang, 'Billing Counter', 'বিলিং কার্ট')}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="rounded-md bg-white/20 px-2 py-0.5 font-mono text-xs font-bold">
+              {cart.length} {tx(lang, 'items', 'আইটেম')}
+            </span>
+            {cart.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setCart([])}
+                className="rounded-md bg-white/15 px-2 py-0.5 text-[11px] font-semibold hover:bg-white/25 cursor-pointer"
+              >
+                {tx(lang, 'Clear', 'মুছুন')}
+              </button>
+            )}
+          </div>
+        </div>
+
         {/* Customer Selector Bar */}
         <div className="border-b border-slate-200 p-4 dark:border-slate-800">
           <div className="flex items-center justify-between gap-2">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
               {trCompact('Customer / Digital Khata', 'ক্রেতা নির্বাচন', lang)}
             </label>
             <button
               type="button"
               onClick={() => setShowQuickCustomer(true)}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 hover:underline cursor-pointer"
+              className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400 cursor-pointer"
             >
               <UserPlus className="h-3.5 w-3.5" />
               {tx(lang, 'Quick Add', 'দ্রুত যোগ')}
@@ -520,7 +979,7 @@ export const PosPage: React.FC = () => {
           <select
             value={selectedCustomerId ?? ''}
             onChange={(e) => setSelectedCustomerId(e.target.value ? Number(e.target.value) : null)}
-            className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+            className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
           >
             <option value="">{tr('walkInCustomer', lang)}</option>
             {customers.map((c) => (
@@ -536,14 +995,14 @@ export const PosPage: React.FC = () => {
               </span>
               <span className="font-mono">
                 {tx(lang, 'Due:', 'বাকি:')}{' '}
-                <strong className="text-red-600">{formatBDT(selectedCustomer.currentDue)}</strong> /{' '}
+                <strong className="text-rose-600">{formatBDT(selectedCustomer.currentDue)}</strong> /{' '}
                 {tx(lang, 'Limit', 'লিমিট')} {formatBDT(selectedCustomer.creditLimit)}
               </span>
             </div>
           )}
         </div>
 
-        {/* Cart Items List */}
+        {/* Cart Items List with Real Product Thumbnails */}
         <div className="max-h-[320px] overflow-y-auto divide-y divide-slate-100 px-4 dark:divide-slate-800">
           {cart.length === 0 ? (
             <div className="py-12 text-center text-xs text-slate-400">
@@ -552,19 +1011,30 @@ export const PosPage: React.FC = () => {
           ) : (
             cart.map((item, idx) => {
               const lineTotal = D(item.enteredQty).times(D(item.unitSellingPrice)).minus(D(item.itemDiscount));
+              const cat = catMap.get(item.product.categoryId);
               return (
                 <div key={`${item.product.id}-${item.unitName}-${idx}`} className="py-3 space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">
-                        {trCompact(item.product.name, item.product.nameBn, lang)}
+                  <div className="flex items-start justify-between gap-2.5">
+                    <div className="flex min-w-0 items-center gap-2.5">
+                      <ProductImage
+                        src={item.product.imageUrl}
+                        alt={item.product.name}
+                        iconName={cat?.iconName}
+                        accentColor={cat?.accentColor}
+                        fallbackIndex={item.product.categoryId}
+                        size="sm"
+                      />
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                          {trCompact(item.product.name, item.product.nameBn, lang)}
+                        </div>
+                        <div className="text-[11px] text-slate-500">{item.product.variant}</div>
                       </div>
-                      <div className="text-[11px] text-slate-500">{item.product.variant}</div>
                     </div>
                     <button
                       type="button"
                       onClick={() => setCart((prev) => prev.filter((_, i) => i !== idx))}
-                      className="text-slate-400 hover:text-red-600 cursor-pointer"
+                      className="text-slate-400 hover:text-rose-600 cursor-pointer"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
@@ -579,7 +1049,7 @@ export const PosPage: React.FC = () => {
                           const next = D(item.enteredQty).minus(step);
                           if (next.gt(0)) updateCartItem(idx, { enteredQty: formatQty(next) });
                         }}
-                        className="flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 cursor-pointer"
+                        className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 cursor-pointer"
                       >
                         <Minus className="h-3 w-3" />
                       </button>
@@ -589,7 +1059,7 @@ export const PosPage: React.FC = () => {
                         min="0.01"
                         value={item.enteredQty}
                         onChange={(e) => updateCartItem(idx, { enteredQty: e.target.value })}
-                        className="w-16 rounded-md border border-slate-200 bg-white px-2 py-1 text-center font-mono text-xs font-semibold dark:border-slate-700 dark:bg-slate-950"
+                        className="w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center font-mono text-xs font-bold dark:border-slate-700 dark:bg-slate-950"
                       />
                       <button
                         type="button"
@@ -598,7 +1068,7 @@ export const PosPage: React.FC = () => {
                           const next = D(item.enteredQty).plus(step);
                           updateCartItem(idx, { enteredQty: formatQty(next) });
                         }}
-                        className="flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 cursor-pointer"
+                        className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 cursor-pointer"
                       >
                         <Plus className="h-3 w-3" />
                       </button>
@@ -607,7 +1077,7 @@ export const PosPage: React.FC = () => {
                         <select
                           value={item.unitName}
                           onChange={(e) => switchItemUnit(idx, e.target.value)}
-                          className="rounded-md border border-slate-200 bg-slate-50 px-1.5 py-1 text-[11px] dark:border-slate-700 dark:bg-slate-950"
+                          className="rounded-lg border border-slate-200 bg-slate-50 px-1.5 py-1 text-[11px] dark:border-slate-700 dark:bg-slate-950"
                         >
                           <option value={item.product.baseUnit}>{formatUnitLabel(item.product.baseUnit, lang)}</option>
                           {(item.product.units || []).map((u) => (
@@ -628,14 +1098,14 @@ export const PosPage: React.FC = () => {
                           value={item.unitSellingPrice}
                           onChange={(e) => updateCartItem(idx, { unitSellingPrice: e.target.value })}
                           title={tx(lang, 'Unit selling price', 'একক বিক্রয় মূল্য')}
-                          className="w-20 rounded-md border border-slate-200 bg-white px-2 py-1 text-right font-mono text-xs dark:border-slate-700 dark:bg-slate-950"
+                          className="w-20 rounded-lg border border-slate-200 bg-white px-2 py-1 text-right font-mono text-xs dark:border-slate-700 dark:bg-slate-950"
                         />
                       ) : (
                         <span className="font-mono text-xs text-slate-600 dark:text-slate-400">
                           ×{formatBDT(item.unitSellingPrice)}
                         </span>
                       )}
-                      <span className="w-20 text-right font-mono text-xs font-bold text-slate-900 dark:text-white">
+                      <span className="w-20 text-right font-mono text-xs font-extrabold text-slate-900 dark:text-white">
                         {formatBDT(lineTotal)}
                       </span>
                     </div>
@@ -674,13 +1144,13 @@ export const PosPage: React.FC = () => {
                   min="0"
                   value={billDiscount}
                   onChange={(e) => setBillDiscount(e.target.value)}
-                  className="w-24 rounded-md border border-slate-200 bg-white px-2 py-1 text-right font-mono text-xs dark:border-slate-700 dark:bg-slate-950"
+                  className="w-24 rounded-lg border border-slate-200 bg-white px-2 py-1 text-right font-mono text-xs dark:border-slate-700 dark:bg-slate-950"
                 />
               </div>
             )}
-            <div className="flex justify-between border-t border-slate-200 pt-2 text-base font-bold text-slate-900 dark:border-slate-800 dark:text-white">
+            <div className="flex justify-between border-t border-slate-200 pt-2 text-base font-extrabold text-slate-900 dark:border-slate-800 dark:text-white">
               <span>{tr('grandTotal', lang)}</span>
-              <span className="font-mono text-emerald-700 dark:text-emerald-400">{formatBDT(totals.grandTotal)}</span>
+              <span className="font-mono text-indigo-700 dark:text-indigo-400">{formatBDT(totals.grandTotal)}</span>
             </div>
           </div>
 
@@ -688,21 +1158,21 @@ export const PosPage: React.FC = () => {
             <button
               type="button"
               onClick={setFullCashPayment}
-              className="rounded-lg border border-emerald-600/30 bg-emerald-50 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-300 cursor-pointer"
+              className="rounded-xl border border-emerald-200 bg-emerald-50 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/50 dark:text-emerald-300 cursor-pointer"
             >
               {tx(lang, 'Full Cash', 'পূর্ণ নগদ')}
             </button>
             <button
               type="button"
               onClick={setFullCreditSale}
-              className="rounded-lg border border-amber-600/30 bg-amber-50 py-1.5 text-xs font-semibold text-amber-800 hover:bg-amber-100 dark:bg-amber-950/50 dark:text-amber-300 cursor-pointer"
+              className="rounded-xl border border-orange-200 bg-orange-50 py-1.5 text-xs font-bold text-orange-700 hover:bg-orange-100 dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300 cursor-pointer"
             >
               {tx(lang, 'Full Credit', 'সম্পূর্ণ বাকি')}
             </button>
             <button
               type="button"
               onClick={() => setPaymentRows((prev) => [...prev, { method: 'BKASH', amount: '', referenceNo: '' }])}
-              className="inline-flex items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 cursor-pointer"
+              className="inline-flex items-center justify-center gap-1 rounded-xl border border-indigo-200 bg-indigo-50/70 py-1.5 text-xs font-bold text-indigo-700 hover:bg-indigo-100 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-300 cursor-pointer"
             >
               <Split className="h-3.5 w-3.5" />
               {tx(lang, 'Split', 'ভাগ করুন')}
@@ -719,7 +1189,7 @@ export const PosPage: React.FC = () => {
                       prev.map((r, i) => (i === idx ? { ...r, method: e.target.value as PaymentRow['method'] } : r))
                     )
                   }
-                  className="w-28 rounded-lg border border-slate-200 bg-white px-2 py-2 text-xs font-medium dark:border-slate-700 dark:bg-slate-950"
+                  className="w-28 rounded-xl border border-slate-200 bg-white px-2 py-2 text-xs font-semibold dark:border-slate-700 dark:bg-slate-950"
                 >
                   {PAYMENT_METHODS.map((m) => (
                     <option key={m.code} value={m.code}>
@@ -735,13 +1205,13 @@ export const PosPage: React.FC = () => {
                   onChange={(e) =>
                     setPaymentRows((prev) => prev.map((r, i) => (i === idx ? { ...r, amount: e.target.value } : r)))
                   }
-                  className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right font-mono text-sm font-semibold dark:border-slate-700 dark:bg-slate-950"
+                  className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-right font-mono text-sm font-bold dark:border-slate-700 dark:bg-slate-950"
                 />
                 {paymentRows.length > 1 && (
                   <button
                     type="button"
                     onClick={() => setPaymentRows((prev) => prev.filter((_, i) => i !== idx))}
-                    className="p-1 text-slate-400 hover:text-red-600 cursor-pointer"
+                    className="p-1 text-slate-400 hover:text-rose-600 cursor-pointer"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -750,21 +1220,23 @@ export const PosPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="rounded-lg bg-slate-50 p-3 text-xs space-y-1 dark:bg-slate-950">
+          <div className="rounded-xl bg-slate-50 p-3 text-xs space-y-1 dark:bg-slate-950">
             <div className="flex justify-between">
               <span className="text-slate-600 dark:text-slate-400">{tr('paidAmount', lang)}</span>
-              <span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">
+              <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">
                 {formatBDT(totals.appliedPaid)}
               </span>
             </div>
             {totals.changeReturn.gt(0) && (
               <div className="flex justify-between">
                 <span className="text-slate-600 dark:text-slate-400">{tr('changeReturn', lang)}</span>
-                <span className="font-mono font-semibold text-blue-600">{formatBDT(totals.changeReturn)}</span>
+                <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                  {formatBDT(totals.changeReturn)}
+                </span>
               </div>
             )}
             {totals.due.gt(0) && (
-              <div className="flex justify-between font-bold text-red-600 dark:text-red-400">
+              <div className="flex justify-between font-extrabold text-rose-600 dark:text-rose-400">
                 <span>{tr('dueAmount', lang)}</span>
                 <span className="font-mono">{formatBDT(totals.due)}</span>
               </div>
@@ -772,9 +1244,9 @@ export const PosPage: React.FC = () => {
           </div>
 
           {totals.due.gt(0) && (
-            <div className="space-y-2 rounded-lg border border-amber-200 bg-amber-50/70 p-3 dark:border-amber-900/50 dark:bg-amber-950/30">
+            <div className="space-y-2 rounded-xl border border-orange-200 bg-orange-50/70 p-3 dark:border-orange-900/50 dark:bg-orange-950/30">
               {!selectedCustomerId && (
-                <p className="text-xs font-semibold text-red-600 dark:text-red-400">
+                <p className="text-xs font-bold text-rose-600 dark:text-rose-400">
                   {tx(
                     lang,
                     'Select or Quick-Add a customer above to record a credit/baki sale.',
@@ -783,18 +1255,18 @@ export const PosPage: React.FC = () => {
                 </p>
               )}
               <div>
-                <label className="block text-[11px] font-medium text-slate-700 dark:text-slate-300">
+                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                   {tr('expectedPayDate', lang)}
                 </label>
                 <input
                   type="date"
                   value={expectedPaymentDate}
                   onChange={(e) => setExpectedPaymentDate(e.target.value)}
-                  className="mt-1 w-full rounded-md border border-slate-200 bg-white px-2.5 py-1.5 font-mono text-xs dark:border-slate-700 dark:bg-slate-900"
+                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 font-mono text-xs dark:border-slate-700 dark:bg-slate-900"
                 />
               </div>
               {creditLimitExceeded && (
-                <div className="space-y-1.5 text-xs text-red-700 dark:text-red-400">
+                <div className="space-y-1.5 text-xs text-rose-700 dark:text-rose-400">
                   <p className="font-semibold">
                     {tx(
                       lang,
@@ -827,7 +1299,7 @@ export const PosPage: React.FC = () => {
             type="button"
             disabled={submitting || cart.length === 0}
             onClick={handleCheckout}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-emerald-700 disabled:opacity-50 transition cursor-pointer"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 py-3.5 text-sm font-extrabold text-white shadow-md shadow-emerald-500/25 hover:from-emerald-700 hover:to-teal-700 disabled:opacity-50 transition cursor-pointer"
           >
             <CheckCircle2 className="h-4 w-4" />
             {submitting
@@ -839,16 +1311,16 @@ export const PosPage: React.FC = () => {
 
       {/* Quick-Create Customer Modal */}
       {showQuickCustomer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-xs">
           <form
             onSubmit={handleQuickCreateCustomer}
-            className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 space-y-4"
+            className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-800 dark:bg-slate-900 space-y-4"
           >
             <div className="flex items-center justify-between">
               <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 {trCompact('Quick Create Customer', 'দ্রুত নতুন ক্রেতা যোগ করুন', lang)}
               </h3>
-              <button type="button" onClick={() => setShowQuickCustomer(false)} className="text-slate-400">
+              <button type="button" onClick={() => setShowQuickCustomer(false)} className="text-slate-400 cursor-pointer">
                 <X className="h-4 w-4" />
               </button>
             </div>
@@ -861,7 +1333,7 @@ export const PosPage: React.FC = () => {
                   required
                   value={newCust.name}
                   onChange={(e) => setNewCust({ ...newCust, name: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
+                  className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
                 />
               </div>
               <div>
@@ -873,7 +1345,7 @@ export const PosPage: React.FC = () => {
                   placeholder="017XXXXXXXX"
                   value={newCust.phone}
                   onChange={(e) => setNewCust({ ...newCust, phone: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 font-mono text-sm dark:border-slate-700 dark:bg-slate-950"
+                  className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 font-mono text-sm dark:border-slate-700 dark:bg-slate-950"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -886,7 +1358,7 @@ export const PosPage: React.FC = () => {
                     onChange={(e) =>
                       setNewCust({ ...newCust, customerType: e.target.value as 'REGULAR' | 'VIP' | 'WHOLESALE' })
                     }
-                    className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
+                    className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
                   >
                     <option value="REGULAR">{formatStatusLabel('REGULAR', lang)}</option>
                     <option value="VIP">{formatStatusLabel('VIP', lang)}</option>
@@ -901,7 +1373,7 @@ export const PosPage: React.FC = () => {
                     type="number"
                     value={newCust.creditLimit}
                     onChange={(e) => setNewCust({ ...newCust, creditLimit: e.target.value })}
-                    className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 font-mono text-sm dark:border-slate-700 dark:bg-slate-950"
+                    className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 font-mono text-sm dark:border-slate-700 dark:bg-slate-950"
                   />
                 </div>
               </div>
@@ -912,7 +1384,7 @@ export const PosPage: React.FC = () => {
                 <input
                   value={newCust.area}
                   onChange={(e) => setNewCust({ ...newCust, area: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
+                  className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
                 />
               </div>
             </div>
@@ -920,13 +1392,13 @@ export const PosPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowQuickCustomer(false)}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-xs font-medium dark:border-slate-700"
+                className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold dark:border-slate-700 cursor-pointer"
               >
                 {tr('cancel', lang)}
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 cursor-pointer"
+                className="rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2 text-xs font-bold text-white hover:from-indigo-700 hover:to-blue-700 cursor-pointer"
               >
                 {tx(lang, 'Create & Select', 'তৈরি ও নির্বাচন করুন')}
               </button>

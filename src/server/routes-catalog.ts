@@ -1,4 +1,8 @@
 import { Router } from 'express';
+import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { and, desc, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { db } from '../db/index.ts';
@@ -10,17 +14,69 @@ import {
   stockMovements,
   stockAdjustments,
 } from '../db/schema.ts';
+import { syncVisualCatalogDefaults } from '../db/seed.ts';
 import { requireAuth, type AuthRequest } from '../middleware/auth.ts';
 import { resolveUserStore, logAudit, handleApiError, HttpError } from './context.ts';
 import { D, money, qty4 } from '../lib/decimal.ts';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const UPLOADS_ROOT = path.resolve(__dirname, '../../public/uploads');
+
 export const catalogRouter = Router();
 catalogRouter.use(requireAuth);
+
+// POST /api/catalog/upload-image - Save optimized product/brand/store image to disk (never store large blobs in Postgres)
+const uploadImageSchema = z.object({
+  dataUrl: z.string().min(20),
+  kind: z.enum(['product', 'brand', 'store']).default('product'),
+});
+
+catalogRouter.post('/upload-image', async (req: AuthRequest, res) => {
+  try {
+    const ctx = await resolveUserStore(req);
+    const parsed = uploadImageSchema.parse(req.body);
+
+    const match = parsed.dataUrl.match(/^data:(image\/(?:webp|jpeg|jpg|png|svg\+xml));base64,([A-Za-z0-9+/=]+)$/);
+    if (!match) {
+      throw new HttpError(400, 'Invalid image format. Allowed: WebP, JPEG, PNG, or SVG.');
+    }
+
+    const mime = match[1].toLowerCase();
+    const buffer = Buffer.from(match[2], 'base64');
+    if (buffer.length > 2 * 1024 * 1024) {
+      throw new HttpError(400, 'Image exceeds 2 MB limit. Please upload a smaller image.');
+    }
+
+    const ext = mime.includes('webp')
+      ? 'webp'
+      : mime.includes('png')
+        ? 'png'
+        : mime.includes('svg')
+          ? 'svg'
+          : 'jpg';
+    const subDir = parsed.kind === 'brand' ? 'brands' : parsed.kind === 'store' ? 'stores' : 'products';
+    const targetDir = path.join(UPLOADS_ROOT, subDir);
+    fs.mkdirSync(targetDir, { recursive: true });
+
+    const filename = `s${ctx.storeId}-${Date.now()}-${crypto.randomBytes(4).toString('hex')}.${ext}`;
+    fs.writeFileSync(path.join(targetDir, filename), buffer);
+
+    const url = `/uploads/${subDir}/${filename}`;
+    await logAudit(ctx.storeId, ctx.uid, 'UPLOAD_IMAGE', parsed.kind.toUpperCase(), null, url);
+    res.status(201).json({ url, sizeBytes: buffer.length });
+  } catch (error) {
+    handleApiError(res, error, 'Failed to upload image');
+  }
+});
 
 // GET /api/catalog/bootstrap - Full catalog & store info for POS & Offline Cache
 catalogRouter.get('/bootstrap', async (req: AuthRequest, res) => {
   try {
     const ctx = await resolveUserStore(req);
+    // Idempotently ensure visual defaults (verified brand logos, category icons, verified SKU images) exist
+    await syncVisualCatalogDefaults(ctx.storeId);
+
     const [cats, brnds, prods, units] = await Promise.all([
       db.select().from(categories).where(eq(categories.storeId, ctx.storeId)).orderBy(categories.sortOrder, categories.name),
       db.select().from(brands).where(eq(brands.storeId, ctx.storeId)).orderBy(brands.name),
@@ -35,10 +91,20 @@ catalogRouter.get('/bootstrap', async (req: AuthRequest, res) => {
       unitsByProd.set(u.productId, list);
     }
 
-    const enrichedProducts = prods.map((p) => ({
-      ...p,
-      units: unitsByProd.get(p.id) || [],
-    }));
+    const enrichedProducts = prods.map((p) => {
+      let parsedGallery: string[] = [];
+      try {
+        const g = JSON.parse(p.galleryUrls || '[]');
+        if (Array.isArray(g)) parsedGallery = g.filter((x) => typeof x === 'string' && x.trim().length > 0);
+      } catch {
+        parsedGallery = [];
+      }
+      return {
+        ...p,
+        gallery: parsedGallery,
+        units: unitsByProd.get(p.id) || [],
+      };
+    });
 
     res.json({
       user: { uid: ctx.uid, email: ctx.email, name: ctx.userName, role: ctx.role },
@@ -58,6 +124,8 @@ const categorySchema = z.object({
   name: z.string().min(1).max(120),
   nameBn: z.string().max(120).optional().default(''),
   parentId: z.number().int().nullable().optional(),
+  iconName: z.string().max(40).optional().default(''),
+  accentColor: z.string().max(30).optional().default('indigo'),
 });
 
 catalogRouter.get('/categories', async (req: AuthRequest, res) => {
@@ -85,6 +153,8 @@ catalogRouter.post('/categories', async (req: AuthRequest, res) => {
         name: parsed.name.trim(),
         nameBn: (parsed.nameBn || '').trim(),
         parentId: parsed.parentId ?? null,
+        iconName: (parsed.iconName || '').trim(),
+        accentColor: parsed.accentColor || 'indigo',
       })
       .returning();
     await logAudit(ctx.storeId, ctx.uid, 'CREATE_CATEGORY', 'CATEGORY', created.id, created.name);
@@ -94,11 +164,47 @@ catalogRouter.post('/categories', async (req: AuthRequest, res) => {
   }
 });
 
-// Brands CRUD
+catalogRouter.put('/categories/:id', async (req: AuthRequest, res) => {
+  try {
+    const ctx = await resolveUserStore(req);
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) throw new HttpError(400, 'Invalid category ID');
+    const parsed = categorySchema.partial().parse(req.body);
+
+    const [existing] = await db
+      .select()
+      .from(categories)
+      .where(and(eq(categories.id, id), eq(categories.storeId, ctx.storeId)))
+      .limit(1);
+    if (!existing) throw new HttpError(404, 'Category not found');
+
+    const [updated] = await db
+      .update(categories)
+      .set({
+        name: parsed.name ? parsed.name.trim() : existing.name,
+        nameBn: parsed.nameBn !== undefined ? parsed.nameBn.trim() : existing.nameBn,
+        iconName: parsed.iconName !== undefined ? parsed.iconName.trim() : existing.iconName,
+        accentColor: parsed.accentColor !== undefined ? parsed.accentColor : existing.accentColor,
+      })
+      .where(and(eq(categories.id, id), eq(categories.storeId, ctx.storeId)))
+      .returning();
+
+    await logAudit(ctx.storeId, ctx.uid, 'UPDATE_CATEGORY', 'CATEGORY', updated.id, updated.name);
+    res.json(updated);
+  } catch (error) {
+    handleApiError(res, error, 'Failed to update category');
+  }
+});
+
+// Brands CRUD (with authentic logo management)
 const brandSchema = z.object({
   name: z.string().min(1).max(120),
   nameBn: z.string().max(120).optional().default(''),
   company: z.string().max(160).optional().default(''),
+  logoUrl: z.string().max(500).nullable().optional(),
+  logoSource: z.string().max(250).optional().default(''),
+  logoStatus: z.enum(['VERIFIED', 'PENDING', 'UNAVAILABLE']).optional(),
+  brandColor: z.string().max(30).optional().default('#4f46e5'),
 });
 
 catalogRouter.get('/brands', async (req: AuthRequest, res) => {
@@ -115,6 +221,8 @@ catalogRouter.post('/brands', async (req: AuthRequest, res) => {
   try {
     const ctx = await resolveUserStore(req);
     const parsed = brandSchema.parse(req.body);
+    const cleanLogo = parsed.logoUrl?.trim() || null;
+    const status = parsed.logoStatus || (cleanLogo ? 'VERIFIED' : 'UNAVAILABLE');
     const [created] = await db
       .insert(brands)
       .values({
@@ -122,6 +230,10 @@ catalogRouter.post('/brands', async (req: AuthRequest, res) => {
         name: parsed.name.trim(),
         nameBn: (parsed.nameBn || '').trim(),
         company: (parsed.company || '').trim(),
+        logoUrl: cleanLogo,
+        logoSource: (parsed.logoSource || (cleanLogo ? 'Admin Upload / Official Source' : '')).trim(),
+        logoStatus: status,
+        brandColor: parsed.brandColor || '#4f46e5',
       })
       .returning();
     await logAudit(ctx.storeId, ctx.uid, 'CREATE_BRAND', 'BRAND', created.id, created.name);
@@ -131,7 +243,68 @@ catalogRouter.post('/brands', async (req: AuthRequest, res) => {
   }
 });
 
-// Products CRUD
+catalogRouter.put('/brands/:id', async (req: AuthRequest, res) => {
+  try {
+    const ctx = await resolveUserStore(req);
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) throw new HttpError(400, 'Invalid brand ID');
+    const parsed = brandSchema.partial().parse(req.body);
+
+    const [existing] = await db
+      .select()
+      .from(brands)
+      .where(and(eq(brands.id, id), eq(brands.storeId, ctx.storeId)))
+      .limit(1);
+    if (!existing) throw new HttpError(404, 'Brand not found');
+
+    const nextLogo = parsed.logoUrl !== undefined ? parsed.logoUrl?.trim() || null : existing.logoUrl;
+    const nextStatus =
+      parsed.logoStatus ?? (nextLogo ? (existing.logoStatus === 'UNAVAILABLE' ? 'VERIFIED' : existing.logoStatus) : 'UNAVAILABLE');
+
+    const [updated] = await db
+      .update(brands)
+      .set({
+        name: parsed.name ? parsed.name.trim() : existing.name,
+        nameBn: parsed.nameBn !== undefined ? parsed.nameBn.trim() : existing.nameBn,
+        company: parsed.company !== undefined ? parsed.company.trim() : existing.company,
+        logoUrl: nextLogo,
+        logoSource: parsed.logoSource !== undefined ? parsed.logoSource.trim() : existing.logoSource,
+        logoStatus: nextStatus,
+        brandColor: parsed.brandColor ?? existing.brandColor,
+        updatedAt: new Date(),
+      })
+      .where(and(eq(brands.id, id), eq(brands.storeId, ctx.storeId)))
+      .returning();
+
+    await logAudit(ctx.storeId, ctx.uid, 'UPDATE_BRAND', 'BRAND', updated.id, updated.name);
+    res.json(updated);
+  } catch (error) {
+    handleApiError(res, error, 'Failed to update brand');
+  }
+});
+
+catalogRouter.delete('/brands/:id', async (req: AuthRequest, res) => {
+  try {
+    const ctx = await resolveUserStore(req);
+    if (ctx.role === 'CASHIER') throw new HttpError(403, 'Cashiers cannot delete brands');
+    const id = Number(req.params.id);
+    await db
+      .update(products)
+      .set({ brandId: null, updatedAt: new Date() })
+      .where(and(eq(products.brandId, id), eq(products.storeId, ctx.storeId)));
+    const deleted = await db
+      .delete(brands)
+      .where(and(eq(brands.id, id), eq(brands.storeId, ctx.storeId)))
+      .returning();
+    if (!deleted.length) throw new HttpError(404, 'Brand not found');
+    await logAudit(ctx.storeId, ctx.uid, 'DELETE_BRAND', 'BRAND', id, deleted[0].name);
+    res.json({ success: true });
+  } catch (error) {
+    handleApiError(res, error, 'Failed to delete brand');
+  }
+});
+
+// Products CRUD (with full image & gallery asset management)
 const productUnitInputSchema = z.object({
   unitName: z.string().min(1),
   unitNameBn: z.string().optional().default(''),
@@ -155,6 +328,10 @@ const productSchema = z.object({
   currentStock: z.union([z.string(), z.number()]).optional().default('0'),
   minStock: z.union([z.string(), z.number()]).optional().default('5'),
   expiryDate: z.string().nullable().optional(),
+  imageUrl: z.string().max(600).nullable().optional(),
+  gallery: z.array(z.string().max(600)).optional(),
+  imageSource: z.string().max(250).optional().default(''),
+  imageStatus: z.enum(['VERIFIED', 'PENDING', 'UNAVAILABLE']).optional(),
   isFrequent: z.boolean().optional().default(false),
   units: z.array(productUnitInputSchema).optional(),
 });
@@ -166,6 +343,9 @@ catalogRouter.post('/products', async (req: AuthRequest, res) => {
     const initialStock = qty4(parsed.currentStock);
     const avgCost = D(parsed.avgCostPrice).toFixed(4);
     const sellPrice = money(parsed.sellingPrice);
+    const cleanImg = parsed.imageUrl?.trim() || null;
+    const cleanGallery = (parsed.gallery || []).map((g) => g.trim()).filter(Boolean).slice(0, 6);
+    const imgStatus = parsed.imageStatus || (cleanImg ? 'VERIFIED' : 'UNAVAILABLE');
 
     const created = await db.transaction(async (tx) => {
       const [prod] = await tx
@@ -187,6 +367,11 @@ catalogRouter.post('/products', async (req: AuthRequest, res) => {
           currentStock: initialStock,
           minStock: qty4(parsed.minStock),
           expiryDate: parsed.expiryDate || null,
+          imageUrl: cleanImg,
+          galleryUrls: JSON.stringify(cleanGallery),
+          imageSource: (parsed.imageSource || (cleanImg ? 'Admin Upload / Official Catalog' : '')).trim(),
+          imageStatus: imgStatus,
+          imageUpdatedAt: cleanImg ? new Date() : null,
           isFrequent: parsed.isFrequent,
         })
         .returning();
@@ -246,6 +431,16 @@ catalogRouter.put('/products/:id', async (req: AuthRequest, res) => {
       .limit(1);
     if (!existing) throw new HttpError(404, 'Product not found');
 
+    const nextImg = parsed.imageUrl !== undefined ? parsed.imageUrl?.trim() || null : existing.imageUrl;
+    const imgChanged = parsed.imageUrl !== undefined && nextImg !== existing.imageUrl;
+    const nextGallery =
+      parsed.gallery !== undefined
+        ? JSON.stringify(parsed.gallery.map((g) => g.trim()).filter(Boolean).slice(0, 6))
+        : existing.galleryUrls;
+    const nextImgStatus =
+      parsed.imageStatus ??
+      (nextImg ? (existing.imageStatus === 'UNAVAILABLE' ? 'VERIFIED' : existing.imageStatus) : 'UNAVAILABLE');
+
     const updated = await db.transaction(async (tx) => {
       // Never modify currentStock silently via PUT /products; stock must go through stock adjustments or purchases
       const [prod] = await tx
@@ -264,6 +459,11 @@ catalogRouter.put('/products/:id', async (req: AuthRequest, res) => {
           sellingPrice: parsed.sellingPrice !== undefined ? money(parsed.sellingPrice) : existing.sellingPrice,
           minStock: parsed.minStock !== undefined ? qty4(parsed.minStock) : existing.minStock,
           expiryDate: parsed.expiryDate !== undefined ? parsed.expiryDate : existing.expiryDate,
+          imageUrl: nextImg,
+          galleryUrls: nextGallery,
+          imageSource: parsed.imageSource !== undefined ? parsed.imageSource.trim() : existing.imageSource,
+          imageStatus: nextImgStatus,
+          imageUpdatedAt: imgChanged || parsed.imageStatus ? new Date() : existing.imageUpdatedAt,
           isFrequent: parsed.isFrequent ?? existing.isFrequent,
           updatedAt: new Date(),
         })
@@ -420,6 +620,7 @@ catalogRouter.get('/inventory/movements', async (req: AuthRequest, res) => {
         variant: products.variant,
         sku: products.sku,
         baseUnit: products.baseUnit,
+        imageUrl: products.imageUrl,
         movementType: stockMovements.movementType,
         quantityDelta: stockMovements.quantityDelta,
         unitCost: stockMovements.unitCost,
