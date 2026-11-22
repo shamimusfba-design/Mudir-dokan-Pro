@@ -554,8 +554,8 @@ export const ProductsPage: React.FC = () => {
           <p className="mt-1.5 max-w-md text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
             {tx(
               lang,
-              'Click below to instantly load all 270 Bangladeshi FMCG products, 28 categories, and 37 official brand logos with genuine packaging photos.',
-              'নিচের বাটনে ক্লিক করে তাৎক্ষণিক ২৭০টি বাংলাদেশি মুদি পণ্য, ২৮টি ক্যাটাগরি ও ৩৭টি অফিসিয়াল ব্র্যান্ড লোগো লোড করুন।'
+              'Click below to instantly load all 1,359 Bangladeshi FMCG products, 28 categories, and 75 official brand logos with genuine packaging photos.',
+              'নিচের বাটনে ক্লিক করে তাৎক্ষণিক ১,৩৫৯টি বাংলাদেশি মুদি পণ্য, ২৮টি ক্যাটাগরি ও ৭৫টি অফিসিয়াল ব্র্যান্ড লোগো লোড করুন।'
             )}
           </p>
           <button
@@ -564,7 +564,7 @@ export const ProductsPage: React.FC = () => {
             className="mt-5 flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-500/25 hover:from-indigo-700 hover:to-blue-700 transition cursor-pointer"
           >
             <Sparkles className="h-4 w-4" />
-            <span>{tx(lang, 'Load All 270 Demo Products with Photos', '২৭০টি ডেমো পণ্য ও ছবি লোড করুন')}</span>
+            <span>{tx(lang, 'Load All 1,359 Demo Products with Photos', '১,৩৫৯টি ডেমো পণ্য ও ছবি লোড করুন')}</span>
           </button>
         </div>
       )}

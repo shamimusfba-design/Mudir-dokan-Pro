@@ -187,8 +187,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           offlineDb.brands.toArray(),
           offlineDb.customers.toArray(),
         ]);
-        if (p.length === 0) {
-          const demoData = getClientDemoCatalog();
+        const demoData = getClientDemoCatalog();
+        if (p.length < demoData.products.length) {
           await cacheStoreCatalog(demoData);
           p = demoData.products;
           c = demoData.categories;
@@ -209,8 +209,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           offlineDb.brands.toArray(),
           offlineDb.customers.toArray(),
         ]);
-        if (p.length === 0) {
-          const demoData = getClientDemoCatalog();
+        const demoData = getClientDemoCatalog();
+        if (p.length < demoData.products.length) {
           p = demoData.products;
           c = demoData.categories;
           b = demoData.brands;
@@ -395,7 +395,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       smsProvider: 'WHATSAPP_LINK',
     });
     localStorage.setItem('mudirdokan_demo_session', 'true');
-    toast.success('ডেমো স্টোর ও ২৭০টি পণ্য সফলভাবে লোড হয়েছে');
+    toast.success('ডেমো স্টোর ও ১,৩৫৯টি পণ্য সফলভাবে লোড হয়েছে');
   }, []);
 
   // Subscribe to Supabase Auth or Firebase Auth fallback
