@@ -231,7 +231,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0022_loose_local_lentil_masoor_dal_500_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -241,7 +241,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি / ২৫ কেজি বস্তা",
-    imagePath: "/images/products/MDK-0023_loose_local_lentil_masoor_dal_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -271,7 +271,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি / ৫০ কেজি বস্তা",
-    imagePath: "/images/products/MDK-0026_loose_local_moong_dal_500_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -281,7 +281,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি / ৫০ কেজি বস্তা",
-    imagePath: "/images/products/MDK-0027_loose_local_moong_dal_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -291,7 +291,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি / ৫০ কেজি বস্তা",
-    imagePath: "/images/products/MDK-0028_loose_local_motor_dal_500_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -301,7 +301,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি / ৫০ কেজি বস্তা",
-    imagePath: "/images/products/MDK-0029_motor_dal_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -391,7 +391,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Rice, Dal & Grains",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0038_teer_soybean_oil_1_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -401,7 +401,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Rice, Dal & Grains",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0039_teer_soybean_oil_2_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -411,7 +411,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Rice, Dal & Grains",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0040_soybean_oil_5_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -421,7 +421,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0041_soybean_oil_1_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -431,7 +431,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Rice, Dal & Grains",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0042_fresh_soybean_oil_2_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -441,7 +441,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Chashi",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0043_fresh_soybean_oil_5_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -451,7 +451,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0044_rupchanda_soybean_oil_1_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -461,7 +461,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0045_rupchanda_soybean_oil_2_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -471,7 +471,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0046_rupchanda_soybean_oil_5_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -481,7 +481,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0047_mustard_oil_250_ml.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -491,7 +491,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0048_mustard_oil_500_ml.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -501,7 +501,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0049_mustard_oil_1_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -511,7 +511,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0050_mustard_oil_loose_250_ml.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -521,7 +521,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0051_loose_local_mustard_oil_loose_500_ml.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -531,7 +531,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0052_loose_local_mustard_oil_loose_1_l.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -541,7 +541,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0053_loose_local_white_sugar_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -551,7 +551,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Hit",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0054_loose_local_white_sugar_2_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -561,7 +561,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0055_loose_local_brown_sugar_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -571,7 +571,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "৫০০ গ্রাম / ১ কেজি",
-    imagePath: "/images/products/MDK-0056_refined_sugar_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -581,7 +581,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "৫০০ গ্রাম / ১ কেজি",
-    imagePath: "/images/products/MDK-0057_refined_sugar_2_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -591,7 +591,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "৫০০ গ্রাম",
-    imagePath: "/images/products/MDK-0058_salt_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -601,7 +601,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0059_salt_500_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -611,7 +611,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "৫০০ গ্রাম",
-    imagePath: "/images/products/MDK-0060_aci_pure_salt_1_kg.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -621,7 +621,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0061_aci_pure_salt_500_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -631,7 +631,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0062_radhuni_turmeric_powder_100_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -641,7 +641,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0063_radhuni_turmeric_powder_200_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -651,7 +651,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0064_radhuni_chili_powder_100_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -661,7 +661,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0065_radhuni_chili_powder_200_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -671,7 +671,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Chashi",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0066_radhuni_coriander_powder_100_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -681,7 +681,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0067_radhuni_coriander_powder_200_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -691,7 +691,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0068_radhuni_cumin_powder_50_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -701,7 +701,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0069_radhuni_cumin_powder_100_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -711,7 +711,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0070_radhuni_garam_masala_50_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -721,7 +721,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "২৫০ গ্রাম",
-    imagePath: "/images/products/MDK-0071_radhuni_garam_masala_100_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -731,7 +731,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0072_radhuni_chicken_curry_masala_50_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -741,7 +741,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0073_radhuni_chicken_curry_masala_100_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -751,7 +751,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0074_radhuni_fish_curry_masala_50_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -761,7 +761,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0075_radhuni_fish_curry_masala_100_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -771,7 +771,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0076_radhuni_biryani_masala_40_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -781,7 +781,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0077_radhuni_biryani_masala_80_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -791,7 +791,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "250 g",
-    imagePath: "/images/products/MDK-0078_radhuni_kacchi_biryani_masala_40_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -801,7 +801,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0079_radhuni_kacchi_biryani_masala_80_g.webp",
+    imagePath: "/images/categories/rice_grains.webp",
     status: 'VERIFIED',
   },
   {
@@ -811,7 +811,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Rice, Dal & Grains",
     variant: "400 g",
-    imagePath: "/images/products/MDK-0080_turmeric_powder_100_g.webp",
+    imagePath: "/images/products/MDK-0038_teer_soybean_oil_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -821,7 +821,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Cooking Oil & Ghee",
     variant: "1 L Poly",
-    imagePath: "/images/products/MDK-0081_turmeric_powder_200_g.webp",
+    imagePath: "/images/products/MDK-0038_teer_soybean_oil_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -831,7 +831,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Cooking Oil & Ghee",
     variant: "1 L Pet Bottle",
-    imagePath: "/images/products/MDK-0082_chili_powder_100_g.webp",
+    imagePath: "/images/products/MDK-0038_teer_soybean_oil_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -841,7 +841,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Cooking Oil & Ghee",
     variant: "2 L Pet Bottle",
-    imagePath: "/images/products/MDK-0083_chili_powder_200_g.webp",
+    imagePath: "/images/products/MDK-0039_teer_soybean_oil_2_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -851,7 +851,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Cooking Oil & Ghee",
     variant: "5 L Can/Jar",
-    imagePath: "/images/products/MDK-0084_coriander_powder_100_g.webp",
+    imagePath: "/images/products/MDK-0040_soybean_oil_5_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -861,7 +861,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Rupchanda",
     category: "Cooking Oil & Ghee",
     variant: "1 L Pet Bottle",
-    imagePath: "/images/products/MDK-0085_coriander_powder_200_g.webp",
+    imagePath: "/images/products/MDK-0044_rupchanda_soybean_oil_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -871,7 +871,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Rupchanda",
     category: "Cooking Oil & Ghee",
     variant: "2 L Pet Bottle",
-    imagePath: "/images/products/MDK-0086_cumin_powder_50_g.webp",
+    imagePath: "/images/products/MDK-0045_rupchanda_soybean_oil_2_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -881,7 +881,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Rupchanda",
     category: "Cooking Oil & Ghee",
     variant: "5 L Can/Jar",
-    imagePath: "/images/products/MDK-0087_cumin_powder_100_g.webp",
+    imagePath: "/images/products/MDK-0046_rupchanda_soybean_oil_5_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -891,7 +891,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "1 L Poly",
-    imagePath: "/images/products/MDK-0088_2_minute_noodles_70_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -901,7 +901,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "1 L Pet Bottle",
-    imagePath: "/images/products/MDK-0089_2_minute_noodles_280_g.webp",
+    imagePath: "/images/products/MDK-0041_soybean_oil_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -911,7 +911,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "2 L Pet Bottle",
-    imagePath: "/images/products/MDK-0090_instant_noodles_70_g.webp",
+    imagePath: "/images/products/MDK-0042_fresh_soybean_oil_2_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -921,7 +921,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "5 L Can/Jar",
-    imagePath: "/images/products/MDK-0091_instant_noodles_280_g.webp",
+    imagePath: "/images/products/MDK-0043_fresh_soybean_oil_5_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -931,7 +931,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bashundhara",
     category: "Cooking Oil & Ghee",
     variant: "1 L Pet",
-    imagePath: "/images/products/MDK-0092_pran_chow_mein_noodles_200_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -941,7 +941,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bashundhara",
     category: "Cooking Oil & Ghee",
     variant: "2 L Pet",
-    imagePath: "/images/products/MDK-0093_pran_chow_mein_noodles_500_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -951,7 +951,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bashundhara",
     category: "Cooking Oil & Ghee",
     variant: "5 L Jar",
-    imagePath: "/images/products/MDK-0094_instant_noodles_70_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -961,7 +961,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI",
     category: "Cooking Oil & Ghee",
     variant: "1 L",
-    imagePath: "/images/products/MDK-0095_instant_noodles_280_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -971,7 +971,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI",
     category: "Cooking Oil & Ghee",
     variant: "2 L",
-    imagePath: "/images/products/MDK-0096_potato_crackers_20_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -981,7 +981,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI",
     category: "Cooking Oil & Ghee",
     variant: "5 L",
-    imagePath: "/images/products/MDK-0097_potato_crackers_45_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -991,7 +991,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "500 ml",
-    imagePath: "/images/products/MDK-0098_pran_potato_crackers_100_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1001,7 +1001,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "1 L",
-    imagePath: "/images/products/MDK-0099_potato_chips_20_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1011,7 +1011,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "500 ml",
-    imagePath: "/images/products/MDK-0100_potato_chips_45_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1021,7 +1021,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "500 ml",
-    imagePath: "/images/products/MDK-0101_ruchi_chanachur_150_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1031,7 +1031,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Radhuni",
     category: "Cooking Oil & Ghee",
     variant: "250 ml",
-    imagePath: "/images/products/MDK-0102_ruchi_chanachur_300_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1041,7 +1041,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Radhuni",
     category: "Cooking Oil & Ghee",
     variant: "500 ml",
-    imagePath: "/images/products/MDK-0103_chanachur_150_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1051,7 +1051,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Radhuni",
     category: "Cooking Oil & Ghee",
     variant: "1 L Pet",
-    imagePath: "/images/products/MDK-0104_chanachur_300_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1061,7 +1061,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "250 ml",
-    imagePath: "/images/products/MDK-0105_energy_plus_biscuit_small_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1071,7 +1071,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "500 ml",
-    imagePath: "/images/products/MDK-0106_energy_plus_biscuit_family_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1081,7 +1081,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "1 L",
-    imagePath: "/images/products/MDK-0107_digestive_biscuit_small_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1091,7 +1091,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Cooking Oil & Ghee",
     variant: "250 ml",
-    imagePath: "/images/products/MDK-0108_digestive_biscuit_family_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1121,7 +1121,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "500 ml",
-    imagePath: "/images/products/MDK-0111_potato_biscuits_small_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1131,7 +1131,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "1 L",
-    imagePath: "/images/products/MDK-0112_potato_biscuits_large_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1141,7 +1141,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "১ লিটার / ১ ড্রাম",
-    imagePath: "/images/products/MDK-0113_milk_marie_biscuit_small_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1151,7 +1151,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "১ লিটার",
-    imagePath: "/images/products/MDK-0114_milk_marie_biscuit_family_pack.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1161,7 +1161,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "১ লিটার",
-    imagePath: "/images/products/MDK-0115_toast_biscuit_200_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1171,7 +1171,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "১০০ মিলি",
-    imagePath: "/images/products/MDK-0116_toast_biscuit_400_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1181,7 +1181,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0117_pran_jelly_250_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1191,7 +1191,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "400 g",
-    imagePath: "/images/products/MDK-0118_pran_jelly_500_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1201,7 +1201,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "900 g",
-    imagePath: "/images/products/MDK-0119_pran_mango_juice_250_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1211,7 +1211,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Milk Vita",
     category: "Cooking Oil & Ghee",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0120_pran_mango_juice_1_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1221,7 +1221,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Milk Vita",
     category: "Cooking Oil & Ghee",
     variant: "450 g",
-    imagePath: "/images/products/MDK-0121_pran_orange_juice_250_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1231,7 +1231,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Milk Vita",
     category: "Cooking Oil & Ghee",
     variant: "900 g",
-    imagePath: "/images/products/MDK-0122_pran_orange_juice_1_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1241,7 +1241,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Aarong Dairy",
     category: "Cooking Oil & Ghee",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0123_frutika_mango_juice_250_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1251,7 +1251,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Aarong Dairy",
     category: "Cooking Oil & Ghee",
     variant: "400 g",
-    imagePath: "/images/products/MDK-0124_frutika_mango_juice_500_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1261,7 +1261,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Aarong Dairy",
     category: "Cooking Oil & Ghee",
     variant: "900 g",
-    imagePath: "/images/products/MDK-0125_frutika_mango_juice_1_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1271,7 +1271,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Cooking Oil & Ghee",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0126_drinking_water_500_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1281,7 +1281,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Cooking Oil & Ghee",
     variant: "400 g",
-    imagePath: "/images/products/MDK-0127_drinking_water_1_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1291,7 +1291,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0128_drinking_water_2_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1301,7 +1301,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Cooking Oil & Ghee",
     variant: "400 g",
-    imagePath: "/images/products/MDK-0129_coca_cola_carbonated_drink_250_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1311,7 +1311,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "৫০০ গ্রাম / ১ কেজি",
-    imagePath: "/images/products/MDK-0130_carbonated_drink_500_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1321,7 +1321,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Milk Vita",
     category: "Cooking Oil & Ghee",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0131_coca_cola_carbonated_drink_1_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1331,7 +1331,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Milk Vita",
     category: "Cooking Oil & Ghee",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0132_pepsi_carbonated_drink_250_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1341,7 +1341,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0133_pepsi_carbonated_drink_500_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1351,7 +1351,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0134_pepsi_carbonated_drink_1_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1361,7 +1361,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0135_mojo_carbonated_drink_250_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1371,7 +1371,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0136_mojo_carbonated_drink_500_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1381,7 +1381,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0137_mojo_carbonated_drink_1_l.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1391,7 +1391,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Cooking Oil & Ghee",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0138_speed_energy_drink_250_ml.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1401,7 +1401,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0139_classic_coffee_25_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1411,7 +1411,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Cooking Oil & Ghee",
     variant: "250 ml",
-    imagePath: "/images/products/MDK-0140_classic_coffee_50_g.webp",
+    imagePath: "/images/categories/cooking_oil.webp",
     status: 'VERIFIED',
   },
   {
@@ -1421,7 +1421,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0141_mirzapore_tea_100_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1431,7 +1431,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0142_ispahani_mirzapore_tea_200_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1441,7 +1441,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0143_ispahani_mirzapore_tea_400_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1451,7 +1451,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0144_tea_100_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1461,7 +1461,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Flour, Atta, Maida & Suji",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0145_finlay_tea_200_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1471,7 +1471,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0146_finlay_tea_400_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1481,7 +1481,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0147_fresh_full_cream_milk_powder_250_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1491,7 +1491,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0148_fresh_full_cream_milk_powder_500_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1501,7 +1501,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0149_fresh_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1511,7 +1511,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0150_full_cream_milk_powder_250_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1521,7 +1521,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Flour, Atta, Maida & Suji",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0151_dano_full_cream_milk_powder_500_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1531,7 +1531,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1541,7 +1541,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0153_instant_full_cream_milk_powder_250_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1551,7 +1551,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0154_diploma_instant_full_cream_milk_powder_500_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1561,7 +1561,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0155_uht_milk_1_l.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1571,7 +1571,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Flour, Atta, Maida & Suji",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0156_pran_uht_milk_1_l.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1581,7 +1581,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bashundhara",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0157_aarong_pasteurized_milk_500_ml.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1591,7 +1591,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bashundhara",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0158_aarong_pasteurized_milk_1_l.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1601,7 +1601,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bashundhara",
     category: "Flour, Atta, Maida & Suji",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0159_farm_fresh_pasteurized_milk_500_ml.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1611,7 +1611,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bashundhara",
     category: "Flour, Atta, Maida & Suji",
     variant: "2 kg",
-    imagePath: "/images/products/MDK-0160_farm_fresh_pasteurized_milk_1_l.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1731,7 +1731,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0172_wheel_washing_powder_200_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1741,7 +1741,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0173_wheel_washing_powder_500_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1751,7 +1751,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0174_wheel_washing_powder_1_kg.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1761,7 +1761,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0175_unilever_surf_excel_detergent_200_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1771,7 +1771,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0176_unilever_surf_excel_detergent_500_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1781,7 +1781,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0177_unilever_surf_excel_detergent_1_kg.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1791,7 +1791,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0178_rin_washing_powder_200_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1801,7 +1801,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "400 g",
-    imagePath: "/images/products/MDK-0179_rin_washing_powder_500_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1811,7 +1811,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0180_rin_washing_powder_1_kg.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1821,7 +1821,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0181_unilever_vim_dishwashing_bar_125_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1831,7 +1831,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Flour, Atta, Maida & Suji",
     variant: "50 g",
-    imagePath: "/images/products/MDK-0182_unilever_vim_dishwashing_bar_300_g.webp",
+    imagePath: "/images/categories/flour_atta.webp",
     status: 'VERIFIED',
   },
   {
@@ -1841,7 +1841,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0183_unilever_vim_liquid_250_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1851,7 +1851,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0184_unilever_vim_liquid_500_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1861,7 +1861,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0185_lux_soap_100_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1871,7 +1871,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0186_lux_soap_150_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1881,7 +1881,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0187_lifebuoy_soap_100_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1891,7 +1891,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0188_lifebuoy_soap_150_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1901,7 +1901,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0189_dove_soap_100_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1911,7 +1911,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0190_lifebuoy_handwash_200_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1921,7 +1921,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Teer",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0191_lifebuoy_handwash_refill_170_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1931,7 +1931,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0192_sunsilk_shampoo_80_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1941,7 +1941,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Hit",
     category: "Salt & Sugar",
     variant: "১ কেজি / ৫০ কেজি বস্তা",
-    imagePath: "/images/products/MDK-0193_sunsilk_shampoo_170_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1951,7 +1951,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0194_sunsilk_shampoo_340_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1961,7 +1961,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0195_clear_shampoo_80_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1971,7 +1971,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "২৫০ গ্রাম",
-    imagePath: "/images/products/MDK-0196_unilever_clear_shampoo_170_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1981,7 +1981,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Salt & Sugar",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0197_closeup_toothpaste_100_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -1991,7 +1991,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0198_closeup_toothpaste_150_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2001,7 +2001,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0199_pepsodent_toothpaste_100_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2011,7 +2011,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0200_pepsodent_toothpaste_150_g.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2021,7 +2021,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "১ কেজি",
-    imagePath: "/images/products/MDK-0201_aci_savlon_antiseptic_100_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2031,7 +2031,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "৫০০ গ্রাম",
-    imagePath: "/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2041,7 +2041,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "৫০০ গ্রাম",
-    imagePath: "/images/products/MDK-0203_savlon_handwash_200_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2051,7 +2051,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "২৫০ গ্রাম",
-    imagePath: "/images/products/MDK-0204_aci_savlon_handwash_500_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2061,7 +2061,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0205_meril_petroleum_jelly_50_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2071,7 +2071,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0206_meril_petroleum_jelly_100_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2081,7 +2081,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "২৫০ গ্রাম",
-    imagePath: "/images/products/MDK-0207_coconut_oil_100_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2091,7 +2091,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "400 g",
-    imagePath: "/images/products/MDK-0208_parachute_coconut_oil_200_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2101,7 +2101,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "200 g",
-    imagePath: "/images/products/MDK-0209_parachute_coconut_oil_300_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2111,7 +2111,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "100 pcs",
-    imagePath: "/images/products/MDK-0210_coconut_oil_100_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2121,7 +2121,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "100 pcs",
-    imagePath: "/images/products/MDK-0211_jui_coconut_oil_200_ml.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2131,7 +2131,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "250 g",
-    imagePath: "/images/products/MDK-0212_facial_tissue_100_pulls.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2141,7 +2141,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0213_facial_tissue_200_pulls.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2151,7 +2151,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "250 g",
-    imagePath: "/images/products/MDK-0214_bashundhara_toilet_tissue_1_roll.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2161,7 +2161,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Salt & Sugar",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0215_bashundhara_toilet_tissue_4_rolls.webp",
+    imagePath: "/images/categories/salt_sugar.webp",
     status: 'VERIFIED',
   },
   {
@@ -2481,7 +2481,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "ACI Pure",
     category: "Spices & Masala",
     variant: "40 g",
-    imagePath: "/images/products/MDK-0077_radhuni_biryani_masala_80_g.webp",
+    imagePath: "/images/categories/spices_masala.webp",
     status: 'VERIFIED',
   },
   {
@@ -2541,7 +2541,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Spices & Masala",
     variant: "40 g",
-    imagePath: "/images/products/MDK-0077_radhuni_biryani_masala_80_g.webp",
+    imagePath: "/images/categories/spices_masala.webp",
     status: 'VERIFIED',
   },
   {
@@ -3111,7 +3111,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Spices & Masala",
     variant: "50 g",
-    imagePath: "/images/products/MDK-0073_radhuni_chicken_curry_masala_100_g.webp",
+    imagePath: "/images/categories/spices_masala.webp",
     status: 'VERIFIED',
   },
   {
@@ -3201,7 +3201,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Spices & Masala",
     variant: "৫০ গ্রাম",
-    imagePath: "/images/products/MDK-0071_radhuni_garam_masala_100_g.webp",
+    imagePath: "/images/categories/spices_masala.webp",
     status: 'VERIFIED',
   },
   {
@@ -3841,7 +3841,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Dano",
     category: "Dairy & Milk Products",
     variant: "500 g",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0383_dano_daily_pushti_500_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3851,7 +3851,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Dano",
     category: "Dairy & Milk Products",
     variant: "1 kg",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0384_dano_daily_pushti_1_kg.webp",
     status: 'VERIFIED',
   },
   {
@@ -3861,7 +3861,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Dano",
     category: "Dairy & Milk Products",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0151_dano_full_cream_milk_powder_500_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3881,7 +3881,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Diploma",
     category: "Dairy & Milk Products",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0387_diploma_instant_full_cream_milk_powder_500_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3891,7 +3891,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Diploma",
     category: "Dairy & Milk Products",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0388_diploma_instant_full_cream_milk_powder_1_kg.webp",
     status: 'VERIFIED',
   },
   {
@@ -3901,7 +3901,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Marks",
     category: "Dairy & Milk Products",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0389_marks_full_cream_milk_powder_500_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3911,7 +3911,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Marks",
     category: "Dairy & Milk Products",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0390_marks_full_cream_milk_powder_1_kg.webp",
     status: 'VERIFIED',
   },
   {
@@ -3921,7 +3921,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Dairy & Milk Products",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0148_fresh_full_cream_milk_powder_500_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3931,7 +3931,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Dairy & Milk Products",
     variant: "1 kg",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0149_fresh_full_cream_milk_powder_1_kg.webp",
     status: 'VERIFIED',
   },
   {
@@ -3941,7 +3941,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Dairy & Milk Products",
     variant: "400 g",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0393_nido_fortigrow_milk_powder_400_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3951,7 +3951,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Dairy & Milk Products",
     variant: "900 g",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0393_nido_fortigrow_milk_powder_400_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3971,7 +3971,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Dairy & Milk Products",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0396_starship_full_cream_milk_powder_500_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -3981,7 +3981,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Dairy & Milk Products",
     variant: "500 g",
-    imagePath: "/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp",
+    imagePath: "/images/products/MDK-0397_red_cow_full_cream_milk_powder_500_g.webp",
     status: 'VERIFIED',
   },
   {
@@ -4001,7 +4001,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Milk Vita",
     category: "Dairy & Milk Products",
     variant: "500 ml Pouch",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0399_milk_vita_pasteurized_liquid_milk_500_ml.webp",
     status: 'VERIFIED',
   },
   {
@@ -4011,7 +4011,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Milk Vita",
     category: "Dairy & Milk Products",
     variant: "1000 ml Pouch",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0400_milk_vita_pasteurized_liquid_milk_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -4021,7 +4021,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Aarong Dairy",
     category: "Dairy & Milk Products",
     variant: "500 ml",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0157_aarong_pasteurized_milk_500_ml.webp",
     status: 'VERIFIED',
   },
   {
@@ -4031,7 +4031,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Aarong Dairy",
     category: "Dairy & Milk Products",
     variant: "1000 ml",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0158_aarong_pasteurized_milk_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -4061,7 +4061,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Fresh",
     category: "Dairy & Milk Products",
     variant: "1000 ml",
-    imagePath: "/images/categories/dairy_milk.webp",
+    imagePath: "/images/products/MDK-0160_farm_fresh_pasteurized_milk_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -4081,7 +4081,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Aarong Dairy",
     category: "Dairy & Milk Products",
     variant: "1000 ml Brick",
-    imagePath: "/images/products/MDK-0156_pran_uht_milk_1_l.webp",
+    imagePath: "/images/products/MDK-0155_uht_milk_1_l.webp",
     status: 'VERIFIED',
   },
   {
@@ -5541,7 +5541,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Biscuits & Bakery",
     variant: "২৫০ গ্রাম",
-    imagePath: "/images/products/MDK-0116_toast_biscuit_400_g.webp",
+    imagePath: "/images/categories/biscuits_bakery.webp",
     status: 'VERIFIED',
   },
   {
@@ -5581,7 +5581,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bombay Sweets",
     category: "Snacks & Chips",
     variant: "25 g",
-    imagePath: "/images/products/MDK-0098_pran_potato_crackers_100_g.webp",
+    imagePath: "/images/categories/snacks_chips.webp",
     status: 'VERIFIED',
   },
   {
@@ -5591,7 +5591,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Bombay Sweets",
     category: "Snacks & Chips",
     variant: "60 g",
-    imagePath: "/images/products/MDK-0098_pran_potato_crackers_100_g.webp",
+    imagePath: "/images/categories/snacks_chips.webp",
     status: 'VERIFIED',
   },
   {
@@ -8241,7 +8241,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Chocolate & Candy",
     variant: "Single",
-    imagePath: "/images/products/MDK-0118_pran_jelly_500_g.webp",
+    imagePath: "/images/categories/chocolate_candy.webp",
     status: 'VERIFIED',
   },
   {
@@ -8251,7 +8251,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Chocolate & Candy",
     variant: "40 pcs",
-    imagePath: "/images/products/MDK-0118_pran_jelly_500_g.webp",
+    imagePath: "/images/categories/chocolate_candy.webp",
     status: 'VERIFIED',
   },
   {
@@ -8911,7 +8911,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Soft Drinks & Beverages",
     variant: "250 ml Pet",
-    imagePath: "/images/products/MDK-0125_frutika_mango_juice_1_l.webp",
+    imagePath: "/images/categories/soft_drinks.webp",
     status: 'VERIFIED',
   },
   {
@@ -8921,7 +8921,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Soft Drinks & Beverages",
     variant: "500 ml Pet",
-    imagePath: "/images/products/MDK-0125_frutika_mango_juice_1_l.webp",
+    imagePath: "/images/categories/soft_drinks.webp",
     status: 'VERIFIED',
   },
   {
@@ -8931,7 +8931,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "PRAN",
     category: "Soft Drinks & Beverages",
     variant: "1 L Pet",
-    imagePath: "/images/products/MDK-0125_frutika_mango_juice_1_l.webp",
+    imagePath: "/images/categories/soft_drinks.webp",
     status: 'VERIFIED',
   },
   {
@@ -8961,7 +8961,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Jui",
     category: "Soft Drinks & Beverages",
     variant: "200 ml",
-    imagePath: "/images/products/MDK-0125_frutika_mango_juice_1_l.webp",
+    imagePath: "/images/categories/soft_drinks.webp",
     status: 'VERIFIED',
   },
   {
@@ -9621,7 +9621,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Soap & Personal Care",
     variant: "75 g",
-    imagePath: "/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -9631,7 +9631,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Soap & Personal Care",
     variant: "100 g",
-    imagePath: "/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -9731,7 +9731,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Soap & Personal Care",
     variant: "200 ml",
-    imagePath: "/images/products/MDK-0204_aci_savlon_handwash_500_ml.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -9741,7 +9741,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Soap & Personal Care",
     variant: "180 ml",
-    imagePath: "/images/products/MDK-0204_aci_savlon_handwash_500_ml.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -9771,7 +9771,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Meril",
     category: "Soap & Personal Care",
     variant: "50 ml",
-    imagePath: "/images/products/MDK-0118_pran_jelly_500_g.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -9781,7 +9781,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Meril",
     category: "Soap & Personal Care",
     variant: "100 ml",
-    imagePath: "/images/products/MDK-0118_pran_jelly_500_g.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -9791,7 +9791,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Soap & Personal Care",
     variant: "50 ml",
-    imagePath: "/images/products/MDK-0118_pran_jelly_500_g.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -9801,7 +9801,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Loose / Local",
     category: "Soap & Personal Care",
     variant: "100 ml",
-    imagePath: "/images/products/MDK-0118_pran_jelly_500_g.webp",
+    imagePath: "/images/categories/soap_personal.webp",
     status: 'VERIFIED',
   },
   {
@@ -10201,7 +10201,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Parachute",
     category: "Shampoo & Hair Care",
     variant: "100 ml",
-    imagePath: "/images/products/MDK-0211_jui_coconut_oil_200_ml.webp",
+    imagePath: "/images/categories/shampoo_hair.webp",
     status: 'VERIFIED',
   },
   {
@@ -10211,7 +10211,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Parachute",
     category: "Shampoo & Hair Care",
     variant: "200 ml",
-    imagePath: "/images/products/MDK-0211_jui_coconut_oil_200_ml.webp",
+    imagePath: "/images/categories/shampoo_hair.webp",
     status: 'VERIFIED',
   },
   {
@@ -10221,7 +10221,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Parachute",
     category: "Shampoo & Hair Care",
     variant: "375 ml",
-    imagePath: "/images/products/MDK-0211_jui_coconut_oil_200_ml.webp",
+    imagePath: "/images/categories/shampoo_hair.webp",
     status: 'VERIFIED',
   },
   {
@@ -10231,7 +10231,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Parachute",
     category: "Shampoo & Hair Care",
     variant: "500 ml Jar",
-    imagePath: "/images/products/MDK-0211_jui_coconut_oil_200_ml.webp",
+    imagePath: "/images/categories/shampoo_hair.webp",
     status: 'VERIFIED',
   },
   {
@@ -10251,7 +10251,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Parachute",
     category: "Shampoo & Hair Care",
     variant: "150 ml",
-    imagePath: "/images/products/MDK-0211_jui_coconut_oil_200_ml.webp",
+    imagePath: "/images/categories/shampoo_hair.webp",
     status: 'VERIFIED',
   },
   {
@@ -13421,7 +13421,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Miscellaneous",
     variant: "112 ml",
-    imagePath: "/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp",
+    imagePath: "/images/categories/miscellaneous.webp",
     status: 'VERIFIED',
   },
   {
@@ -13431,7 +13431,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Miscellaneous",
     variant: "500 ml",
-    imagePath: "/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp",
+    imagePath: "/images/categories/miscellaneous.webp",
     status: 'VERIFIED',
   },
   {
@@ -13441,7 +13441,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Miscellaneous",
     variant: "30 g",
-    imagePath: "/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp",
+    imagePath: "/images/categories/miscellaneous.webp",
     status: 'VERIFIED',
   },
   {
@@ -13451,7 +13451,7 @@ export const COMPLETE_CATALOG_MANIFEST: CatalogImageEntry[] = [
     brand: "Savlon",
     category: "Miscellaneous",
     variant: "60 g",
-    imagePath: "/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp",
+    imagePath: "/images/categories/miscellaneous.webp",
     status: 'VERIFIED',
   },
   {

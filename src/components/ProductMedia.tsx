@@ -229,7 +229,7 @@ export const ProductImage: React.FC<{
           ? 'h-14 w-14 rounded-xl'
           : size === 'lg'
             ? 'h-24 w-24 rounded-xl'
-            : 'h-48 sm:h-52 w-full rounded-2xl';
+            : 'h-36 sm:h-40 w-full rounded-2xl';
 
   const iconSizeClass =
     size === 'xs'

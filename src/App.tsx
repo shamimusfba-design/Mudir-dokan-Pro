@@ -50,6 +50,8 @@ import { CustomerPortalPage } from './pages/CustomerPortalPage';
 import { LoginPage } from './pages/LoginPage';
 import { ShowcaseLandingPage } from './pages/ShowcaseLandingPage';
 import { BuyProModal } from './components/BuyProModal';
+import { OnlineStorePage } from './pages/OnlineStorePage';
+import { AdLandingPageBuilder } from './pages/AdLandingPageBuilder';
 
 type TabId =
   | 'dashboard'
@@ -64,6 +66,8 @@ type TabId =
   | 'expenses'
   | 'reports'
   | 'cash'
+  | 'store'
+  | 'campaign-builder'
   | 'settings';
 
 interface NavItem {
@@ -173,6 +177,22 @@ const NAV_ITEMS: NavItem[] = [
     iconColor: 'text-teal-500 dark:text-teal-400',
   },
   {
+    id: 'store',
+    labelKey: 'onlineStore',
+    icon: ShoppingBag,
+    group: 'operations',
+    activeBg: 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-sm shadow-amber-500/20',
+    iconColor: 'text-amber-500 dark:text-amber-400',
+  },
+  {
+    id: 'campaign-builder',
+    labelKey: 'adCampaigns',
+    icon: Sparkles,
+    group: 'finance',
+    activeBg: 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-sm shadow-purple-500/20',
+    iconColor: 'text-purple-500 dark:text-purple-400',
+  },
+  {
     id: 'settings',
     labelKey: 'settings',
     icon: Settings,
@@ -239,7 +259,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
   const [sidebarFolded, setSidebarFolded] = useState<boolean>(() => {
     return localStorage.getItem('mudirdokan_sidebar_folded') === 'true';
   });
-  const [unauthView, setUnauthView] = useState<'login' | 'showcase'>('login');
+  const [unauthView, setUnauthView] = useState<'login' | 'showcase' | 'store'>('login');
   const [isBuyProModalOpen, setIsBuyProModalOpen] = useState(false);
 
   const toggleSidebarFold = () => {
@@ -276,11 +296,19 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
   }
 
   if (!firebaseUser) {
+    if (unauthView === 'store') {
+      return <OnlineStorePage onBackToApp={() => setUnauthView('login')} />;
+    }
     if (unauthView === 'showcase') {
       return (
         <ShowcaseLandingPage
           onBackToLogin={() => setUnauthView('login')}
           onOpenPortal={onOpenPortal}
+          onOpenOnlineStore={() => setUnauthView('store')}
+          onOpenAdBuilder={() => {
+            setUnauthView('login');
+            toast.info(tx(lang, 'Please login as shop owner to build Ad Landing Pages', 'দোকানদার হিসেবে লগইন করে অ্যাড ল্যান্ডিং পেজ বিল্ডার ব্যবহার করুন'));
+          }}
         />
       );
     }
@@ -531,7 +559,11 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
           </div>
         )}
 
-        <main className="mx-auto w-full max-w-[1440px] flex-1 p-4 sm:p-6">
+        <main className={`w-full flex-1 transition-all ${
+          activeTab === 'pos'
+            ? 'max-w-none px-2 sm:px-3 lg:px-4 py-2 sm:py-3'
+            : 'mx-auto w-full max-w-[1440px] p-4 sm:p-6'
+        }`}>
           {activeTab === 'dashboard' && <DashboardPage onNavigate={handleNavigate} />}
           {activeTab === 'pos' && <PosPage />}
           {activeTab === 'products' && <ProductsPage />}
@@ -545,6 +577,8 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
           {activeTab === 'reports' && <ReportsPage />}
           {activeTab === 'cash' && <CashManagementPage />}
           {activeTab === 'settings' && <SettingsPage />}
+          {activeTab === 'store' && <OnlineStorePage />}
+          {activeTab === 'campaign-builder' && <AdLandingPageBuilder />}
         </main>
         <BuyProModal isOpen={isBuyProModalOpen} onClose={() => setIsBuyProModalOpen(false)} />
       </div>

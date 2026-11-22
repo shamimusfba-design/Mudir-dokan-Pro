@@ -19,20 +19,39 @@ export function qty4(val: string | number | Decimal | null | undefined): string 
   return D(val).toDecimalPlaces(4, Decimal.ROUND_HALF_UP).toFixed(4);
 }
 
-export function formatBDT(val: string | number | Decimal | null | undefined): string {
+const BN_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+
+export function toBnDigits(val: string | number | null | undefined): string {
+  if (val === null || val === undefined) return '';
+  return String(val).replace(/[0-9]/g, (d) => BN_DIGITS[Number(d)]);
+}
+
+export function toEnDigits(val: string | number | null | undefined): string {
+  if (val === null || val === undefined) return '';
+  return String(val).replace(/[০-৯]/g, (d) => String(d.charCodeAt(0) - 0x09e6));
+}
+
+export function formatBDT(val: string | number | Decimal | null | undefined, mode?: 'EN' | 'BN'): string {
   const num = D(val).toDecimalPlaces(2, Decimal.ROUND_HALF_UP).toNumber();
   const abs = Math.abs(num);
   const formatted = abs.toLocaleString('en-IN', {
     minimumFractionDigits: abs % 1 === 0 ? 0 : 2,
     maximumFractionDigits: 2,
   });
+  if (mode === 'BN') {
+    const bnFormatted = toBnDigits(formatted);
+    return num < 0 ? `-৳${bnFormatted}` : `৳${bnFormatted}`;
+  }
   return num < 0 ? `-৳${formatted}` : `৳${formatted}`;
 }
 
-export function formatQty(val: string | number | Decimal | null | undefined): string {
+export function formatQty(val: string | number | Decimal | null | undefined, mode?: 'EN' | 'BN'): string {
   const d = D(val);
-  if (d.isInteger()) return d.toFixed(0);
-  return d.toDecimalPlaces(3).toNumber().toString();
+  const enStr = d.isInteger() ? d.toFixed(0) : d.toDecimalPlaces(3).toNumber().toString();
+  if (mode === 'BN') {
+    return toBnDigits(enStr);
+  }
+  return enStr;
 }
 
 export function dhakaTodayISO(): string {

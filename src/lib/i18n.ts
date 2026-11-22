@@ -1,4 +1,4 @@
-import { BD_UNITS } from './decimal';
+import { BD_UNITS, toBnDigits, toEnDigits } from './decimal';
 
 export type LanguageMode = 'EN' | 'BN';
 
@@ -39,6 +39,8 @@ const DICT: Record<string, DictionaryEntry> = {
   cashManagement: { en: 'Cash Register', bn: 'ক্যাশ ব্যবস্থাপনা' },
   settings: { en: 'Settings', bn: 'সেটিংস' },
   customerPortal: { en: 'Customer Portal', bn: 'ক্রেতা পোর্টাল' },
+  onlineStore: { en: 'Online Storefront', bn: 'অনলাইন শপ (ই-কমার্স)' },
+  adCampaigns: { en: 'Ad Landing Builder', bn: 'অ্যাড ল্যান্ডিং বিল্ডার' },
 
   // Dashboard KPIs
   todaySales: { en: 'Sales Revenue', bn: 'মোট বিক্রয়' },
@@ -179,7 +181,53 @@ export function formatStatusLabel(status: string | null | undefined, mode: Langu
 
 export function formatUnitLabel(unit: string | null | undefined, mode: LanguageMode): string {
   if (!unit) return '';
-  if (mode !== 'BN') return unit;
-  const match = BD_UNITS.find((u) => u.code.toLowerCase() === unit.toLowerCase());
-  return match ? match.bn : unit;
+  if (mode === 'BN') {
+    const match = BD_UNITS.find((u) => u.code.toLowerCase() === unit.toLowerCase());
+    return match ? match.bn : toBnDigits(unit);
+  }
+  const match = BD_UNITS.find((u) => u.code.toLowerCase() === unit.toLowerCase() || u.bn === unit);
+  return match ? match.code : toEnDigits(unit);
+}
+
+export function formatVariant(variant: string | null | undefined, mode: LanguageMode): string {
+  if (!variant) return '';
+  if (mode === 'EN') {
+    let out = toEnDigits(variant);
+    out = out
+      .replace(/কেজি/gi, 'kg')
+      .replace(/গ্রাম/gi, 'g')
+      .replace(/মিলি/gi, 'ml')
+      .replace(/লিটার/gi, 'L')
+      .replace(/বস্তা/gi, 'Sack')
+      .replace(/পিস/gi, 'Pcs')
+      .replace(/প্যাকেট/gi, 'Pkt')
+      .replace(/বোতল/gi, 'Bottle')
+      .replace(/বক্স/gi, 'Box')
+      .replace(/কার্টন/gi, 'Carton')
+      .replace(/ডজন/gi, 'Dozen')
+      .replace(/জার/gi, 'Jar')
+      .replace(/ইঞ্চি/gi, 'inch')
+      .replace(/\s+/g, ' ')
+      .trim();
+    return out;
+  } else {
+    let out = toBnDigits(variant);
+    out = out
+      .replace(/\bkg\b|\bKg\b|\bKG\b/gi, 'কেজি')
+      .replace(/\bgm\b|\bg\b|\bgram\b|\bgrams\b/gi, 'গ্রাম')
+      .replace(/\bml\b|\bML\b/gi, 'মিলি')
+      .replace(/\bliter\b|\blitre\b|\bL\b/gi, 'লিটার')
+      .replace(/\bsack\b|\bSack\b|\bbag\b/gi, 'বস্তা')
+      .replace(/\bpcs\b|\bpc\b|\bpiece\b|\bPiece\b/gi, 'পিস')
+      .replace(/\bpkt\b|\bpack\b|\bpacket\b/gi, 'প্যাকেট')
+      .replace(/\bbottle\b|\bBottle\b/gi, 'বোতল')
+      .replace(/\bbox\b|\bBox\b/gi, 'বক্স')
+      .replace(/\bcarton\b|\bCarton\b/gi, 'কার্টন')
+      .replace(/\bdozen\b|\bDozen\b/gi, 'ডজন')
+      .replace(/\bjar\b|\bJar\b/gi, 'জার')
+      .replace(/\binch\b|\binches\b/gi, 'ইঞ্চি')
+      .replace(/\s+/g, ' ')
+      .trim();
+    return out;
+  }
 }

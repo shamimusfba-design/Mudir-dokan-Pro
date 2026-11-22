@@ -54,6 +54,28 @@
   background: #94a3b8;
 }
 
+/* Horizontal Sliding Bar for POS Categories & Brands */
+.pos-horizontal-slider::-webkit-scrollbar {
+  height: 6px;
+}
+.pos-horizontal-slider::-webkit-scrollbar-track {
+  background: rgba(226, 232, 240, 0.7);
+  border-radius: 9999px;
+}
+.pos-horizontal-slider::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 9999px;
+}
+.pos-horizontal-slider::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+.dark .pos-horizontal-slider::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.8);
+}
+.dark .pos-horizontal-slider::-webkit-scrollbar-thumb {
+  background: #10b981;
+}
+
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #64748b;
 }

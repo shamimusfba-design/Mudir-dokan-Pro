@@ -71,8 +71,11 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
       offlineDb.brands.toArray(),
     ]);
 
-    if (!prods || prods.length < demoData.products.length) {
+    const CURRENT_CATALOG_REV = 'rev_2026_11_22_dairy_images_fix';
+    const cachedRev = localStorage.getItem('mudir_catalog_rev');
+    if (!prods || prods.length < demoData.products.length || cachedRev !== CURRENT_CATALOG_REV) {
       await cacheStoreCatalog(demoData);
+      localStorage.setItem('mudir_catalog_rev', CURRENT_CATALOG_REV);
       prods = demoData.products;
       cats = demoData.categories;
       brs = demoData.brands;
@@ -651,50 +654,144 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
     }
   }
 
-  // 15. GET & POST /api/catalog/inventory/movements & /adjust
+  // 15. GET & POST /api/catalog/inventory/movements & /adjust & /batch-adjust
   if (pathname === '/api/catalog/inventory/movements') {
+    const prods = await offlineDb.products.toArray();
+    let totalCostVal = D(0);
+    let totalRetailVal = D(0);
+    for (const p of prods) {
+      const stock = Number(p.currentStock || 0);
+      if (stock > 0) {
+        totalCostVal = totalCostVal.plus(D(stock).times(D(p.avgCostPrice || 0)));
+        totalRetailVal = totalRetailVal.plus(D(stock).times(D(p.sellingPrice || 0)));
+      }
+    }
+    const movements = getStoredJson<any[]>('mudidokan_stock_movements', []);
     return {
-      movements: [],
-      valuation: { totalStockValue: '115500.00', totalItems: 1359, lowStockItems: 0 },
+      movements,
+      valuation: {
+        totalCostValue: money(totalCostVal.isZero() ? 115500 : totalCostVal),
+        totalRetailValue: money(totalRetailVal.isZero() ? 138500 : totalRetailVal),
+        totalSkus: prods.length || 1359,
+      },
     } as T;
   }
 
   if (pathname === '/api/catalog/inventory/adjust' && method === 'POST') {
     const pid = Number(body.productId);
     const qty = Number(body.quantity || 0);
-    const type = body.adjustmentType;
+    const type = body.adjustmentType || 'INCREASE';
+    const cost = body.costPrice ? String(body.costPrice) : undefined;
     const prod = await offlineDb.products.get(pid);
     if (prod) {
       const cur = Number(prod.currentStock || 0);
       const next = type === 'INCREASE' ? cur + qty : Math.max(0, cur - qty);
-      await offlineDb.products.update(pid, { currentStock: next.toFixed(4) });
+      const updates: any = { currentStock: next.toFixed(4) };
+      if (cost && Number(cost) > 0) {
+        updates.avgCostPrice = money(cost);
+      }
+      await offlineDb.products.update(pid, updates);
+
+      const movements = getStoredJson<any[]>('mudidokan_stock_movements', []);
+      movements.unshift({
+        id: movements.length + 1,
+        productId: pid,
+        productName: prod.name,
+        productNameBn: prod.nameBn,
+        variant: prod.variant,
+        type: type === 'INCREASE' ? 'STOCK_IN' : 'STOCK_OUT',
+        quantityChange: type === 'INCREASE' ? `+${qty}` : `-${qty}`,
+        balanceAfter: next.toFixed(2),
+        costRate: cost || prod.avgCostPrice,
+        createdAt: new Date().toISOString(),
+        reason: body.reason || 'সরাসরি ইনভেন্টরি স্টক আপডেট',
+      });
+      setStoredJson('mudidokan_stock_movements', movements.slice(0, 100));
     }
     return { success: true } as T;
   }
 
+  if (pathname === '/api/catalog/inventory/batch-adjust' && method === 'POST') {
+    const list = body.adjustments || [];
+    const movements = getStoredJson<any[]>('mudidokan_stock_movements', []);
+    for (const item of list) {
+      const pid = Number(item.productId);
+      const qty = Number(item.quantity || 0);
+      const type = item.adjustmentType || 'INCREASE';
+      const cost = item.costPrice ? String(item.costPrice) : undefined;
+      const prod = await offlineDb.products.get(pid);
+      if (prod) {
+        const cur = Number(prod.currentStock || 0);
+        const next = type === 'INCREASE' ? cur + qty : Math.max(0, cur - qty);
+        const updates: any = { currentStock: next.toFixed(4) };
+        if (cost && Number(cost) > 0) {
+          updates.avgCostPrice = money(cost);
+        }
+        await offlineDb.products.update(pid, updates);
+
+        movements.unshift({
+          id: movements.length + 1,
+          productId: pid,
+          productName: prod.name,
+          productNameBn: prod.nameBn,
+          variant: prod.variant,
+          type: type === 'INCREASE' ? 'BULK_STOCK_IN' : 'BULK_STOCK_OUT',
+          quantityChange: type === 'INCREASE' ? `+${qty}` : `-${qty}`,
+          balanceAfter: next.toFixed(2),
+          costRate: cost || prod.avgCostPrice,
+          createdAt: new Date().toISOString(),
+          reason: item.reason || 'বাল্ক স্টক সমন্বয়',
+        });
+      }
+    }
+    setStoredJson('mudidokan_stock_movements', movements.slice(0, 150));
+    return { success: true, count: list.length } as T;
+  }
+
   // 16. POST /api/sales
   if (pathname === '/api/sales' && method === 'POST') {
-    const queued = await enqueueOfflineSale({
-      clientTransactionUuid: body.clientTransactionUuid || crypto.randomUUID(),
-      saleDate: body.saleDate || today,
-      customerId: body.customerId || null,
-      billDiscount: body.billDiscount || '0.00',
-      expectedPaymentDate: body.expectedPaymentDate || null,
-      items: (body.items || []).map((i: any) => ({
+    let computedSubtotal = D(0);
+    const enrichedItems = (body.items || []).map((i: any) => {
+      const gross = D(i.enteredQty || 1).times(D(i.unitSellingPrice || 0));
+      const disc = D(i.itemDiscount || 0);
+      const lineTotal = money(gross.minus(disc));
+      computedSubtotal = computedSubtotal.plus(D(lineTotal));
+      return {
         productId: i.productId,
         productName: i.productName || 'পণ্য',
         variant: i.variant || '',
         unitName: i.unitName || 'Piece',
         conversionFactor: String(i.conversionFactor || 1),
         enteredQty: String(i.enteredQty || 1),
-        unitSellingPrice: String(i.unitSellingPrice || 0),
-        itemDiscount: String(i.itemDiscount || 0),
-      })),
-      payments: body.payments || [],
-      computedSubtotal: body.subtotal || '0.00',
-      computedTotal: body.totalAmount || '0.00',
-      computedPaid: body.paidAmount || '0.00',
-      computedDue: body.dueAmount || '0.00',
+        unitSellingPrice: money(i.unitSellingPrice || 0),
+        itemDiscount: money(i.itemDiscount || 0),
+        lineTotal,
+      };
+    });
+
+    const billDisc = D(body.billDiscount || 0);
+    const totalAmount = money(computedSubtotal.minus(billDisc).lt(0) ? D(0) : computedSubtotal.minus(billDisc));
+    const validPayments = (body.payments || []).map((p: any) => ({
+      method: p.method || 'CASH',
+      amount: money(p.amount || 0),
+      referenceNo: p.referenceNo || '',
+    }));
+    const paidAmount = money(validPayments.reduce((acc: any, p: any) => acc.plus(D(p.amount)), D(0)));
+    const dueAmount = money(D(totalAmount).minus(D(paidAmount)).lt(0) ? D(0) : D(totalAmount).minus(D(paidAmount)));
+
+    const queued = await enqueueOfflineSale({
+      clientTransactionUuid: body.clientTransactionUuid || crypto.randomUUID(),
+      saleDate: body.saleDate || today,
+      customerId: body.customerId || null,
+      customerName: body.customerName || undefined,
+      billDiscount: money(billDisc),
+      expectedPaymentDate: body.expectedPaymentDate || null,
+      items: enrichedItems,
+      payments: validPayments,
+      computedSubtotal: money(computedSubtotal),
+      computedTotal: totalAmount,
+      computedPaid: paidAmount,
+      computedDue: dueAmount,
     });
 
     return {
@@ -703,15 +800,15 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
         invoiceNumber: queued.localInvoiceNumber,
         saleDate: body.saleDate || today,
         expectedPaymentDate: body.expectedPaymentDate || null,
-        subtotal: body.subtotal || '0.00',
+        subtotal: money(computedSubtotal),
         itemDiscountTotal: '0.00',
-        billDiscount: body.billDiscount || '0.00',
-        totalAmount: body.totalAmount || '0.00',
-        paidAmount: body.paidAmount || '0.00',
-        dueAmount: body.dueAmount || '0.00',
+        billDiscount: money(billDisc),
+        totalAmount,
+        paidAmount,
+        dueAmount,
       },
-      items: queued.payload.items,
-      payments: queued.payload.payments,
+      items: enrichedItems,
+      payments: validPayments,
     } as T;
   }
 

@@ -27,6 +27,7 @@ import { tr, trCompact, tx, formatStatusLabel, formatUnitLabel } from '../lib/i1
 import { enqueueOfflineSale, offlineDb, type CachedProduct } from '../lib/offline-db';
 import { ReceiptModal, type PrintableReceipt } from '../components/ReceiptModal';
 import { ProductImage, BrandLogo, CategoryIcon, getCategoryTheme } from '../components/ProductMedia';
+import { matchesBanglishQuery } from '../lib/search-banglish';
 
 interface CartItem {
   product: CachedProduct;
@@ -63,6 +64,8 @@ export const PosPage: React.FC = () => {
 
   // Due customer assignment: 'EXISTING' or 'NEW'
   const [dueCustomerMode, setDueCustomerMode] = useState<'EXISTING' | 'NEW'>('EXISTING');
+  const [existingCustQuery, setExistingCustQuery] = useState<string>('');
+  const [showCustDropdown, setShowCustDropdown] = useState<boolean>(false);
   const [dueCustName, setDueCustName] = useState<string>('');
   const [dueCustPhone, setDueCustPhone] = useState<string>('');
   const [dueCustArea, setDueCustArea] = useState<string>('');
@@ -93,11 +96,25 @@ export const PosPage: React.FC = () => {
     return map;
   }, [products]);
 
+  const filteredExistingCustomers = useMemo(() => {
+    const q = existingCustQuery.trim().toLowerCase();
+    if (!q) return customers;
+    return customers.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        (c.phone && c.phone.includes(q))
+    );
+  }, [customers, existingCustQuery]);
+
   const activeCategories = useMemo(() => {
     return [...categories]
       .filter((c) => (categoryCounts.get(c.id) || 0) > 0)
-      .sort((a, b) => (categoryCounts.get(b.id) || 0) - (categoryCounts.get(a.id) || 0));
-  }, [categories, categoryCounts]);
+      .sort((a, b) => {
+        const nameA = lang === 'BN' && a.nameBn ? a.nameBn : a.name;
+        const nameB = lang === 'BN' && b.nameBn ? b.nameBn : b.name;
+        return nameA.localeCompare(nameB, lang === 'BN' ? 'bn' : 'en');
+      });
+  }, [categories, categoryCounts, lang]);
 
   const brandsWithProducts = useMemo(() => {
     const counts = new Map<number, number>();
@@ -153,37 +170,26 @@ export const PosPage: React.FC = () => {
     return products
       .filter((p) => {
         const b = p.brandId ? brandMap.get(p.brandId) : null;
-        return (
-          p.name.toLowerCase().includes(q) ||
-          p.nameBn.toLowerCase().includes(q) ||
-          p.sku.toLowerCase().includes(q) ||
-          (p.barcode || '').toLowerCase().includes(q) ||
-          (p.variant || '').toLowerCase().includes(q) ||
-          (b?.name || '').toLowerCase().includes(q) ||
-          (b?.nameBn || '').toLowerCase().includes(q)
-        );
+        const c = catMap.get(p.categoryId);
+        const corpus = `${p.name} ${p.nameBn} ${p.sku} ${p.barcode || ''} ${p.variant || ''} ${b?.name || ''} ${b?.nameBn || ''} ${c?.name || ''} ${c?.nameBn || ''}`.toLowerCase();
+        return matchesBanglishQuery(corpus, q);
       })
       .slice(0, 7);
-  }, [products, query, brandMap]);
+  }, [products, query, brandMap, catMap]);
 
   const filteredProducts = useMemo(() => {
     const q = query.trim().toLowerCase();
     return products.filter((p) => {
       if (q) {
         const b = p.brandId ? brandMap.get(p.brandId) : null;
-        const matchedQuery =
-          p.name.toLowerCase().includes(q) ||
-          p.nameBn.toLowerCase().includes(q) ||
-          p.sku.toLowerCase().includes(q) ||
-          (p.barcode || '').toLowerCase().includes(q) ||
-          (p.variant || '').toLowerCase().includes(q) ||
-          (b?.name || '').toLowerCase().includes(q) ||
-          (b?.nameBn || '').toLowerCase().includes(q);
-        if (!matchedQuery) return false;
+        const c = catMap.get(p.categoryId);
+        const corpus = `${p.name} ${p.nameBn} ${p.sku} ${p.barcode || ''} ${p.variant || ''} ${b?.name || ''} ${b?.nameBn || ''} ${c?.name || ''} ${c?.nameBn || ''}`.toLowerCase();
+        if (!matchesBanglishQuery(corpus, q)) return false;
+      } else {
+        if (selectedCatId === 'FREQUENT' && !p.isFrequent) return false;
+        if (typeof selectedCatId === 'number' && p.categoryId !== selectedCatId) return false;
+        if (selectedBrandId !== 'ALL' && p.brandId !== selectedBrandId) return false;
       }
-      if (selectedCatId === 'FREQUENT' && !p.isFrequent) return false;
-      if (typeof selectedCatId === 'number' && p.categoryId !== selectedCatId) return false;
-      if (selectedBrandId !== 'ALL' && p.brandId !== selectedBrandId) return false;
 
       const stock = Number(p.currentStock);
       const min = Number(p.minStock);
@@ -200,7 +206,7 @@ export const PosPage: React.FC = () => {
 
       return true;
     });
-  }, [products, query, selectedCatId, selectedBrandId, stockFilter, variantFilter, priceRange, brandMap]);
+  }, [products, query, selectedCatId, selectedBrandId, stockFilter, variantFilter, priceRange, brandMap, catMap]);
 
   const [displayLimit, setDisplayLimit] = useState(60);
 
@@ -524,17 +530,29 @@ export const PosPage: React.FC = () => {
       clientTransactionUuid: clientUuid,
       saleDate,
       customerId: finalCustomerId,
+      customerName: finalCustName || undefined,
+      customerPhone: finalCustPhone || undefined,
+      subtotal: money(totals.subtotal),
       billDiscount: money(billDiscount),
+      totalAmount: money(totals.grandTotal),
+      paidAmount: money(totals.appliedPaid),
+      dueAmount: money(totals.due),
       expectedPaymentDate: totals.due.gt(0) ? expectedPaymentDate || null : null,
       allowCreditLimitOverride: allowLimitOverride,
-      items: cart.map((i) => ({
-        productId: i.product.id,
-        unitName: i.unitName,
-        conversionFactor: String(i.conversionFactor),
-        enteredQty: i.enteredQty,
-        unitSellingPrice: i.unitSellingPrice,
-        itemDiscount: '0',
-      })),
+      items: cart.map((i) => {
+        const lineTotal = money(D(i.enteredQty).times(D(i.unitSellingPrice)).minus(D(i.itemDiscount || 0)));
+        return {
+          productId: i.product.id,
+          productName: trCompact(i.product.name, i.product.nameBn, lang),
+          variant: i.product.variant,
+          unitName: i.unitName,
+          conversionFactor: String(i.conversionFactor),
+          enteredQty: i.enteredQty,
+          unitSellingPrice: i.unitSellingPrice,
+          itemDiscount: money(i.itemDiscount || 0),
+          lineTotal,
+        };
+      }),
       payments: validPayments,
     };
 
@@ -558,7 +576,10 @@ export const PosPage: React.FC = () => {
             customerName: finalCustName,
             customerPhone: finalCustPhone,
             expectedPaymentDate: res.sale.expectedPaymentDate,
-            items: res.items,
+            items: (res.items || []).map((it: any) => ({
+              ...it,
+              lineTotal: it.lineTotal || money(D(it.enteredQty).times(D(it.unitSellingPrice)).minus(D(it.itemDiscount || 0))),
+            })),
             subtotal: res.sale.subtotal,
             discount: money(D(res.sale.itemDiscountTotal).plus(D(res.sale.billDiscount))),
             totalAmount: res.sale.totalAmount,
@@ -660,9 +681,9 @@ export const PosPage: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:items-start">
+    <div className="grid grid-cols-1 gap-3 xl:gap-4 lg:grid-cols-12 lg:items-start w-full">
       {/* Left: Search with Thumbnails, Sticky Category Chips, Brand Logos, Multi-Filter & Studio Grid */}
-      <div className="lg:col-span-8 xl:col-span-9 space-y-3">
+      <div className="lg:col-span-8 xl:col-span-8 2xl:col-span-9 space-y-3 min-w-0">
         {!isOnline && (
           <div className="flex items-center gap-2 rounded-xl border border-orange-300 bg-orange-50 px-4 py-2.5 text-xs font-semibold text-orange-900 dark:border-orange-700/60 dark:bg-orange-950/40 dark:text-orange-200">
             <WifiOff className="h-4 w-4 shrink-0" />
@@ -833,39 +854,56 @@ export const PosPage: React.FC = () => {
           </div>
         )}
 
-        {/* Sticky Compact Category Row: Fixed when scrolling down, wraps without horizontal scroll */}
-        <div className="sticky top-15 z-20 -mx-1 px-2 py-2 bg-[#F6F8FC]/95 dark:bg-[#0B1120]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-2xs">
-          <div className="flex flex-wrap items-center gap-1.5">
+        {/* Sticky Filter Strip: Freezes categories & brands at top when scrolling down */}
+        <div className="sticky top-0 z-20 -mx-1 px-1 py-1.5 bg-[#F6F8FC]/95 dark:bg-[#0B1120]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-2xs space-y-2">
+          {/* Colorful Category Icon Strip with Left-to-Right Slider */}
+          <div className="pos-horizontal-slider flex items-stretch gap-2 overflow-x-auto pb-1.5">
             <button
               type="button"
               onClick={() => setSelectedCatId('ALL')}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition cursor-pointer ${
+              className={`flex shrink-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition cursor-pointer ${
                 selectedCatId === 'ALL'
-                  ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-xs'
-                  : 'border border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                  ? 'border-indigo-600 bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-sm shadow-indigo-500/20'
+                  : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
               }`}
             >
-              <LayoutGrid className="h-3.5 w-3.5" />
-              <span>{tx(lang, 'All Items', 'সব পণ্য')}</span>
-              <span className={`text-[10px] font-mono ${selectedCatId === 'ALL' ? 'text-white/80' : 'text-slate-400'}`}>
-                ({products.length})
+              <span
+                className={`flex h-7 w-7 items-center justify-center rounded-lg ${
+                  selectedCatId === 'ALL' ? 'bg-white/20 text-white' : 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
+                }`}
+              >
+                <LayoutGrid className="h-4 w-4" />
               </span>
+              <div>
+                <div className="text-xs font-bold whitespace-nowrap">{tx(lang, 'All Items', 'সব পণ্য')}</div>
+                <div className={`text-[10px] font-mono ${selectedCatId === 'ALL' ? 'text-indigo-100' : 'text-slate-400'}`}>
+                  {products.length}
+                </div>
+              </div>
             </button>
 
             <button
               type="button"
               onClick={() => setSelectedCatId('FREQUENT')}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition cursor-pointer ${
+              className={`flex shrink-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition cursor-pointer ${
                 selectedCatId === 'FREQUENT'
-                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-xs'
-                  : 'border border-slate-200 bg-white text-slate-700 hover:border-orange-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                  ? 'border-orange-500 bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm shadow-orange-500/20'
+                  : 'border-slate-200 bg-white text-slate-700 hover:border-orange-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
               }`}
             >
-              <Star className="h-3.5 w-3.5" />
-              <span>{tx(lang, 'Frequent', 'জনপ্রিয়')}</span>
-              <span className={`text-[10px] font-mono ${selectedCatId === 'FREQUENT' ? 'text-white/80' : 'text-slate-400'}`}>
-                ({products.filter((p) => p.isFrequent).length})
+              <span
+                className={`flex h-7 w-7 items-center justify-center rounded-lg ${
+                  selectedCatId === 'FREQUENT' ? 'bg-white/20 text-white' : 'bg-orange-50 text-orange-600 dark:bg-orange-950/60 dark:text-orange-400'
+                }`}
+              >
+                <Star className="h-4 w-4" />
               </span>
+              <div>
+                <div className="text-xs font-bold whitespace-nowrap">{tx(lang, 'Frequent', 'জনপ্রিয়')}</div>
+                <div className={`text-[10px] font-mono ${selectedCatId === 'FREQUENT' ? 'text-orange-100' : 'text-slate-400'}`}>
+                  {products.filter((p) => p.isFrequent).length}
+                </div>
+              </div>
             </button>
 
             {activeCategories.map((cat, idx) => {
@@ -876,58 +914,66 @@ export const PosPage: React.FC = () => {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCatId(cat.id)}
-                  className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition cursor-pointer ${
+                  className={`flex shrink-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition cursor-pointer ${
                     active
-                      ? `bg-gradient-to-r ${theme.gradient} text-white shadow-xs`
-                      : 'border border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                      ? `border-transparent bg-gradient-to-r ${theme.gradient} text-white shadow-sm`
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
                   }`}
                 >
-                  <CategoryIcon iconName={cat.iconName} className="h-3.5 w-3.5" />
-                  <span>{trCompact(cat.name, cat.nameBn, lang)}</span>
-                  <span className={`text-[10px] font-mono ${active ? 'text-white/80' : 'text-slate-400'}`}>
-                    ({categoryCounts.get(cat.id) || 0})
+                  <span
+                    className={`flex h-7 w-7 items-center justify-center rounded-lg ${
+                      active ? 'bg-white/20 text-white' : `${theme.bgSoft} ${theme.text}`
+                    }`}
+                  >
+                    <CategoryIcon iconName={cat.iconName} className="h-4 w-4" />
                   </span>
+                  <div>
+                    <div className="text-xs font-bold whitespace-nowrap">{trCompact(cat.name, cat.nameBn, lang)}</div>
+                    <div className={`text-[10px] font-mono ${active ? 'text-white/80' : 'text-slate-400'}`}>
+                      {categoryCounts.get(cat.id) || 0}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Visual Brand Logo Filter Strip with Left-to-Right Slider */}
+          <div className="pos-horizontal-slider flex items-center gap-2 overflow-x-auto pb-1">
+            <button
+              type="button"
+              onClick={() => setSelectedBrandId('ALL')}
+              className={`shrink-0 rounded-xl border px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+                selectedBrandId === 'ALL'
+                  ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-950/60 dark:text-indigo-300'
+                  : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
+              }`}
+            >
+              {tx(lang, 'All Brands', 'সব ব্র্যান্ড')}
+            </button>
+            {brandsWithProducts.map((b) => {
+              const active = selectedBrandId === b.id;
+              return (
+                <button
+                  key={b.id}
+                  type="button"
+                  onClick={() => setSelectedBrandId(active ? 'ALL' : b.id)}
+                  className={`inline-flex shrink-0 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition cursor-pointer ${
+                    active
+                      ? 'border-indigo-600 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-500/20 dark:border-indigo-400 dark:bg-indigo-950/70 dark:text-indigo-200'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
+                  }`}
+                >
+                  <BrandLogo logoUrl={b.logoUrl} name={b.name} brandColor={b.brandColor} size="xs" />
+                  <span className="whitespace-nowrap">{trCompact(b.name, b.nameBn, lang)}</span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Visual Brand Logo Filter Strip */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1">
-          <button
-            type="button"
-            onClick={() => setSelectedBrandId('ALL')}
-            className={`shrink-0 rounded-xl border px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
-              selectedBrandId === 'ALL'
-                ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-950/60 dark:text-indigo-300'
-                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
-            }`}
-          >
-            {tx(lang, 'All Brands', 'সব ব্র্যান্ড')}
-          </button>
-          {brandsWithProducts.map((b) => {
-            const active = selectedBrandId === b.id;
-            return (
-              <button
-                key={b.id}
-                type="button"
-                onClick={() => setSelectedBrandId(active ? 'ALL' : b.id)}
-                className={`inline-flex shrink-0 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition cursor-pointer ${
-                  active
-                    ? 'border-indigo-600 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-500/20 dark:border-indigo-400 dark:bg-indigo-950/70 dark:text-indigo-200'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
-                }`}
-              >
-                <BrandLogo logoUrl={b.logoUrl} name={b.name} brandColor={b.brandColor} size="xs" />
-                <span className="whitespace-nowrap">{trCompact(b.name, b.nameBn, lang)}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Visually Rich Product Selection Grid */}
-        <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 xl:grid-cols-4">
+        {/* Visually Rich Product Selection Grid (Fluid auto-fill columns: automatically adds columns when sidebar is closed) */}
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-2.5">
           {visibleProducts.map((prod) => {
             const stock = Number(prod.currentStock);
             const isOut = stock <= 0;
@@ -1092,8 +1138,8 @@ export const PosPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Right: Sticky Live Billing Cart (Thinner, compact, commercial SaaS layout) */}
-      <div className="lg:col-span-4 xl:col-span-3 rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-700/80 dark:bg-slate-900 lg:sticky lg:top-20 flex flex-col overflow-hidden">
+      {/* Right: Sticky Live Billing Cart (Positioned at far right corner, compact SaaS layout) */}
+      <div className="lg:col-span-4 xl:col-span-4 2xl:col-span-3 min-w-[310px] w-full rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-700/80 dark:bg-slate-900 lg:sticky lg:top-3 flex flex-col overflow-hidden">
         {/* Vibrant Clean Cart Header */}
         <div className="flex items-center justify-between bg-gradient-to-r from-emerald-600 to-teal-700 px-3.5 py-2.5 text-white">
           <div className="flex items-center gap-1.5">
@@ -1373,35 +1419,81 @@ export const PosPage: React.FC = () => {
 
               {dueCustomerMode === 'EXISTING' ? (
                 <div className="space-y-2">
-                  <select
-                    value={selectedCustomerId ?? ''}
-                    onChange={(e) => setSelectedCustomerId(e.target.value ? Number(e.target.value) : null)}
-                    className="w-full rounded-xl border border-rose-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:border-rose-900/60 dark:bg-slate-900 dark:text-white"
-                  >
-                    <option value="">{tx(lang, '-- Select Existing Customer --', '-- ক্রেতা নির্বাচন করুন --')}</option>
-                    {customers.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name} ({c.phone}) · {tx(lang, 'Current Due:', 'বর্তমান বাকি:')} {formatBDT(c.currentDue)}
-                      </option>
-                    ))}
-                  </select>
+                  {/* Searchable input box at the top */}
+                  <div className="relative">
+                    <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                    <input
+                      type="text"
+                      placeholder={tx(lang, 'Search customer by name...', 'নাম লিখে ক্রেতা খুঁজুন...')}
+                      value={selectedCustomer ? selectedCustomer.name : existingCustQuery}
+                      onChange={(e) => {
+                        if (selectedCustomer) setSelectedCustomerId(null);
+                        setExistingCustQuery(e.target.value);
+                        setShowCustDropdown(true);
+                      }}
+                      onFocus={() => setShowCustDropdown(true)}
+                      className="w-full rounded-xl border border-rose-300 bg-white py-2 pl-8 pr-8 text-xs font-bold text-slate-900 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30 focus:outline-hidden dark:border-rose-900/60 dark:bg-slate-900 dark:text-white"
+                    />
+                    {(selectedCustomer || existingCustQuery) && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCustomerId(null);
+                          setExistingCustQuery('');
+                          setShowCustDropdown(true);
+                        }}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Customer list: only shows Name and Due amount */}
+                  {showCustDropdown && !selectedCustomer && (
+                    <div className="max-h-48 overflow-y-auto rounded-xl border border-rose-200 bg-white shadow-lg dark:border-rose-900/60 dark:bg-slate-900 divide-y divide-slate-100 dark:divide-slate-800">
+                      {filteredExistingCustomers.length === 0 ? (
+                        <div className="px-3 py-3 text-center text-xs text-slate-400">
+                          {tx(lang, 'No customer found matching name.', 'এই নামে কোনো ক্রেতা পাওয়া যায়নি।')}
+                        </div>
+                      ) : (
+                        filteredExistingCustomers.map((c) => (
+                          <button
+                            key={c.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedCustomerId(c.id);
+                              setExistingCustQuery('');
+                              setShowCustDropdown(false);
+                            }}
+                            className="flex w-full items-center justify-between px-3 py-2 text-left hover:bg-rose-50 dark:hover:bg-rose-950/50 transition cursor-pointer"
+                          >
+                            <span className="font-bold text-xs text-slate-900 dark:text-white">
+                              {c.name}
+                            </span>
+                            <span className="font-mono text-xs font-extrabold text-rose-600 dark:text-rose-400">
+                              {tx(lang, 'Due:', 'বাকি:')} {formatBDT(c.currentDue)}
+                            </span>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
 
                   {selectedCustomer && (
-                    <div className="rounded-xl bg-white/90 p-2.5 text-xs space-y-1 dark:bg-slate-900">
-                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                        <span>{tx(lang, 'Customer Code:', 'ক্রেতা কোড:')}</span>
-                        <span className="font-mono font-bold text-slate-900 dark:text-white">
-                          {selectedCustomer.customerCode}
-                        </span>
+                    <div className="rounded-xl bg-white/95 p-2.5 text-xs space-y-1.5 border border-rose-100 dark:border-rose-900/50 dark:bg-slate-900 shadow-2xs">
+                      <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+                        <span className="font-bold text-xs text-slate-900 dark:text-white">{selectedCustomer.name}</span>
+                        <span className="text-[11px] text-slate-500 font-mono">{selectedCustomer.phone}</span>
                       </div>
-                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                      <div className="flex justify-between text-slate-600 dark:text-slate-400 text-[11px]">
                         <span>{tx(lang, 'Previous Due:', 'পূর্বের বাকি:')}</span>
                         <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
                           {formatBDT(selectedCustomer.currentDue)}
                         </span>
                       </div>
                       <div className="flex justify-between font-bold text-rose-700 dark:text-rose-400 border-t border-slate-100 pt-1 dark:border-slate-800">
-                        <span>{tx(lang, 'New Total Due:', 'বিক্রয়ের পর মোট বকেয়া:')}</span>
+                        <span>{tx(lang, 'Total Due After Sale:', 'বিক্রয়ের পর মোট বকেয়া:')}</span>
                         <span className="font-mono text-sm font-black">
                           {formatBDT(D(selectedCustomer.currentDue).plus(totals.due))}
                         </span>
