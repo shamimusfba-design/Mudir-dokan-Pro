@@ -48,6 +48,8 @@ import { CashManagementPage } from './pages/CashManagementPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { CustomerPortalPage } from './pages/CustomerPortalPage';
 import { LoginPage } from './pages/LoginPage';
+import { ShowcaseLandingPage } from './pages/ShowcaseLandingPage';
+import { BuyProModal } from './components/BuyProModal';
 
 type TabId =
   | 'dashboard'
@@ -237,6 +239,8 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
   const [sidebarFolded, setSidebarFolded] = useState<boolean>(() => {
     return localStorage.getItem('mudirdokan_sidebar_folded') === 'true';
   });
+  const [unauthView, setUnauthView] = useState<'login' | 'showcase'>('login');
+  const [isBuyProModalOpen, setIsBuyProModalOpen] = useState(false);
 
   const toggleSidebarFold = () => {
     setSidebarFolded((prev) => {
@@ -272,7 +276,20 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
   }
 
   if (!firebaseUser) {
-    return <LoginPage onOpenPortal={onOpenPortal} />;
+    if (unauthView === 'showcase') {
+      return (
+        <ShowcaseLandingPage
+          onBackToLogin={() => setUnauthView('login')}
+          onOpenPortal={onOpenPortal}
+        />
+      );
+    }
+    return (
+      <LoginPage
+        onOpenPortal={onOpenPortal}
+        onOpenShowcase={() => setUnauthView('showcase')}
+      />
+    );
   }
 
   const renderGroup = (title: string, group: NavItem['group']) => {
@@ -405,7 +422,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
 
       {/* Main Content Area */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="no-print sticky top-0 z-30 flex h-15 shrink-0 items-center justify-between gap-3 border-b border-slate-200/80 bg-white/95 px-4 backdrop-blur dark:border-slate-800 dark:bg-[#0F172A]/95">
+        <header className="no-print relative z-20 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-slate-200/80 bg-white/95 px-4 backdrop-blur dark:border-slate-800 dark:bg-[#0F172A]/95">
           <div className="flex min-w-0 items-center gap-2">
             <button
               type="button"
@@ -485,19 +502,13 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
                   {tx(lang, '⚡ Demo Mode', '⚡ ডেমো মোড')}
                 </span>
                 <span className="text-emerald-300 dark:text-emerald-700">|</span>
-                <a
-                  href={`https://wa.me/8801884700631?text=${encodeURIComponent(
-                    lang === 'BN'
-                      ? 'হ্যালো মুদির দোকান প্রো, আমি ফুল প্রো ভার্সন কিনতে/আপগ্রেড করতে আগ্রহী।'
-                      : 'Hello Mudi Dokan Pro, I am interested in purchasing/upgrading to the Full Pro Version.'
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-extrabold text-emerald-700 hover:text-emerald-900 hover:underline dark:text-emerald-400 dark:hover:text-emerald-200"
-                  title="WhatsApp: 01884700631"
+                <button
+                  type="button"
+                  onClick={() => setIsBuyProModalOpen(true)}
+                  className="inline-flex items-center gap-1 font-extrabold text-emerald-700 hover:text-emerald-900 hover:underline dark:text-emerald-400 dark:hover:text-emerald-200 cursor-pointer"
                 >
-                  <span>{tx(lang, 'Upgrade to Pro 💬', 'আপগ্রেড প্রো 💬')}</span>
-                </a>
+                  <span>{tx(lang, 'Buy Pro Version 🛒', 'প্রো কিনুন 🛒')}</span>
+                </button>
               </div>
             )}
 
@@ -535,6 +546,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
           {activeTab === 'cash' && <CashManagementPage />}
           {activeTab === 'settings' && <SettingsPage />}
         </main>
+        <BuyProModal isOpen={isBuyProModalOpen} onClose={() => setIsBuyProModalOpen(false)} />
       </div>
     </div>
   );
