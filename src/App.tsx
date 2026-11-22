@@ -27,6 +27,8 @@ import {
   Loader2,
   ArrowRight,
   Sparkles,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 import { AppProvider, useApp } from './context/AppContext';
 import { tr, trCompact, tx, formatStatusLabel, type LanguageMode } from './lib/i18n';
@@ -232,6 +234,17 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
 
   const [activeTab, setActiveTab] = useState<TabId>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarFolded, setSidebarFolded] = useState<boolean>(() => {
+    return localStorage.getItem('mudirdokan_sidebar_folded') === 'true';
+  });
+
+  const toggleSidebarFold = () => {
+    setSidebarFolded((prev) => {
+      const next = !prev;
+      localStorage.setItem('mudirdokan_sidebar_folded', String(next));
+      return next;
+    });
+  };
 
   const activeNav = useMemo(
     () => NAV_ITEMS.find((item) => item.id === activeTab) || NAV_ITEMS[0],
@@ -266,9 +279,11 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
     const items = NAV_ITEMS.filter((i) => i.group === group);
     return (
       <div className="space-y-1">
-        <p className="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-          {title}
-        </p>
+        {!sidebarFolded && (
+          <p className="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            {title}
+          </p>
+        )}
         {items.map((item) => {
           const Icon = item.icon;
           const active = activeTab === item.id;
@@ -276,15 +291,18 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
             <button
               key={item.id}
               type="button"
+              title={tr(item.labelKey, lang)}
               onClick={() => handleNavigate(item.id)}
-              className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm font-medium transition cursor-pointer ${
+              className={`flex w-full items-center rounded-xl text-sm font-medium transition cursor-pointer ${
+                sidebarFolded ? 'justify-center p-2.5' : 'gap-2.5 px-3 py-2 text-left'
+              } ${
                 active
                   ? item.activeBg
                   : 'text-slate-600 hover:bg-indigo-50/70 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100'
               }`}
             >
               <Icon className={`h-4 w-4 shrink-0 ${active ? 'text-white' : item.iconColor}`} />
-              <span className="truncate">{tr(item.labelKey, lang)}</span>
+              {!sidebarFolded && <span className="truncate">{tr(item.labelKey, lang)}</span>}
             </button>
           );
         })}
@@ -305,27 +323,32 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
         />
       )}
 
-      {/* Sidebar */}
+      {/* Foldable Sidebar */}
       <aside
-        className={`no-print fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-slate-200/80 bg-white transition-transform duration-200 dark:border-slate-800/90 dark:bg-[#0F172A] lg:static lg:translate-x-0 ${
+        className={`no-print fixed inset-y-0 left-0 z-50 flex flex-col border-r border-slate-200/80 bg-white transition-all duration-200 dark:border-slate-800 dark:bg-[#0F172A] lg:static lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        } ${sidebarFolded ? 'lg:w-16' : 'lg:w-64'}`}
       >
-        <div className="flex h-15 shrink-0 items-center justify-between border-b border-slate-200/80 px-4 dark:border-slate-800">
+        <div className={`flex h-15 shrink-0 items-center border-b border-slate-200/80 dark:border-slate-800 ${
+          sidebarFolded ? 'justify-center px-2' : 'justify-between px-4'
+        }`}>
           <button
             type="button"
             onClick={() => handleNavigate('dashboard')}
-            className="flex min-w-0 items-center gap-2.5 text-left cursor-pointer"
+            className={`flex min-w-0 items-center text-left cursor-pointer ${sidebarFolded ? 'justify-center' : 'gap-2.5'}`}
+            title={tr('appName', lang)}
           >
             <StoreLogoBadge logoUrl={store?.logoUrl} storeName={displayStoreName} size="sm" />
-            <div className="min-w-0">
-              <span className="block truncate text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">
-                {tr('appName', lang)}
-              </span>
-              <span className="block truncate text-[10px] font-medium text-indigo-600 dark:text-indigo-400">
-                {displayStoreName}
-              </span>
-            </div>
+            {!sidebarFolded && (
+              <div className="min-w-0">
+                <span className="block truncate text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">
+                  {tr('appName', lang)}
+                </span>
+                <span className="block truncate text-[10px] font-medium text-indigo-600 dark:text-indigo-400">
+                  {displayStoreName}
+                </span>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -337,31 +360,36 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
           </button>
         </div>
 
-        <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
+        <nav className={`flex-1 space-y-4 overflow-y-auto ${sidebarFolded ? 'px-2 py-4' : 'px-3 py-4'}`}>
           {renderGroup(tx(lang, 'Counter & Stock', 'কাউন্টার ও স্টক'), 'operations')}
           {renderGroup(tx(lang, 'Khata & Dues', 'খাতা ও বাকি'), 'credit')}
           {renderGroup(tx(lang, 'Finance & Admin', 'হিসাব ও সেটিংস'), 'finance')}
         </nav>
 
-        <div className="shrink-0 space-y-2 border-t border-slate-200/80 p-3 dark:border-slate-800">
+        <div className={`shrink-0 space-y-2 border-t border-slate-200/80 dark:border-slate-800 ${sidebarFolded ? 'p-2 text-center' : 'p-3'}`}>
           <button
             type="button"
             onClick={onOpenPortal}
-            className="flex w-full items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/70 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/70 cursor-pointer"
+            title={tr('customerPortal', lang)}
+            className={`flex w-full items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50/70 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/70 cursor-pointer ${
+              sidebarFolded ? 'p-2' : 'gap-2 px-3 py-2'
+            }`}
           >
             <Smartphone className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">{tr('customerPortal', lang)}</span>
+            {!sidebarFolded && <span className="truncate">{tr('customerPortal', lang)}</span>}
           </button>
 
-          <div className="flex items-center justify-between gap-2 px-1 pt-1">
-            <div className="min-w-0">
-              <p className="truncate text-xs font-semibold text-slate-800 dark:text-slate-200">
-                {displayStoreName}
-              </p>
-              <p className="truncate text-[11px] text-slate-500 dark:text-slate-400">
-                {formatStatusLabel(staff?.role || 'OWNER', lang)} · {firebaseUser.email}
-              </p>
-            </div>
+          <div className={`flex items-center gap-2 pt-1 ${sidebarFolded ? 'justify-center' : 'justify-between px-1'}`}>
+            {!sidebarFolded && (
+              <div className="min-w-0">
+                <p className="truncate text-xs font-semibold text-slate-800 dark:text-slate-200">
+                  {displayStoreName}
+                </p>
+                <p className="truncate text-[11px] text-slate-500 dark:text-slate-400">
+                  {formatStatusLabel(staff?.role || 'OWNER', lang)}
+                </p>
+              </div>
+            )}
             <button
               type="button"
               onClick={logout}
@@ -378,15 +406,26 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
       {/* Main Content Area */}
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="no-print sticky top-0 z-30 flex h-15 shrink-0 items-center justify-between gap-3 border-b border-slate-200/80 bg-white/95 px-4 backdrop-blur dark:border-slate-800 dark:bg-[#0F172A]/95">
-          <div className="flex min-w-0 items-center gap-3">
+          <div className="flex min-w-0 items-center gap-2">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
               aria-label={tx(lang, 'Open navigation menu', 'মেনু খুলুন')}
-              className="rounded-lg p-1.5 text-slate-600 hover:bg-slate-100 lg:hidden dark:text-slate-300 dark:hover:bg-slate-800"
+              className="rounded-lg p-1.5 text-slate-600 hover:bg-slate-100 lg:hidden dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer"
             >
               <Menu className="h-5 w-5" />
             </button>
+
+            {/* Desktop Fold/Unfold Sidebar Toggle */}
+            <button
+              type="button"
+              onClick={toggleSidebarFold}
+              title={sidebarFolded ? tx(lang, 'Expand Sidebar', 'মেনু খুলুন') : tx(lang, 'Fold Sidebar (Full Width Workspace)', 'মেনু বন্ধ করুন (ফুল স্ক্রিন মোড)')}
+              className="hidden lg:inline-flex items-center justify-center rounded-lg border border-slate-200 p-1.5 text-slate-600 hover:bg-slate-100 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer"
+            >
+              {sidebarFolded ? <PanelLeftOpen className="h-4 w-4 text-indigo-600 dark:text-indigo-400" /> : <PanelLeftClose className="h-4 w-4" />}
+            </button>
+
             <div className="flex min-w-0 items-center gap-2">
               <h1 className="truncate text-sm font-bold text-slate-900 sm:text-base dark:text-white">
                 {tr(activeNav.labelKey, lang)}

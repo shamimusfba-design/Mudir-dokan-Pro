@@ -32,6 +32,7 @@ import { formatBDT, formatDateDDMMYYYY, dhakaTodayISO, formatQty } from '../lib/
 import { tr, trCompact, tx, formatMethodLabel, formatStatusLabel, formatUnitLabel } from '../lib/i18n';
 import { useApp } from '../context/AppContext';
 import { ProductImage } from '../components/ProductMedia';
+import { AnimatedCounter } from '../components/AnimatedCounter';
 
 type RangePreset = 'today' | 'yesterday' | 'week' | 'month' | '6m' | 'custom';
 
@@ -309,7 +310,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             {loading ? (
               <span className="inline-block h-7 w-24 animate-pulse rounded bg-white/25" />
             ) : (
-              formatBDT(preset === 'today' ? kpis?.todaySales ?? 0 : kpis?.sales ?? 0)
+              <AnimatedCounter value={preset === 'today' ? kpis?.todaySales ?? 0 : kpis?.sales ?? 0} type="bdt" />
             )}
           </div>
           <div className="mt-1 text-[11px] text-indigo-100/90">
@@ -338,7 +339,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             {loading ? (
               <span className="inline-block h-7 w-24 animate-pulse rounded bg-white/25" />
             ) : kpis?.grossProfit !== null && kpis?.grossProfit !== undefined ? (
-              formatBDT(kpis.grossProfit)
+              <AnimatedCounter value={kpis.grossProfit} type="bdt" />
             ) : (
               restrictedText
             )}
@@ -360,7 +361,11 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             </span>
           </div>
           <div className="mt-2 font-mono text-xl font-extrabold tabular-nums text-purple-700 dark:text-purple-400">
-            {loading ? <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : formatBDT(kpis?.cashReceived ?? 0)}
+            {loading ? (
+              <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+            ) : (
+              <AnimatedCounter value={kpis?.cashReceived ?? 0} type="bdt" />
+            )}
           </div>
           <div className="mt-1 text-[11px] text-slate-500">
             {tx(lang, 'Due Collected:', 'বাকি আদায়:')}{' '}
@@ -380,7 +385,11 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             </span>
           </div>
           <div className="mt-2 font-mono text-xl font-extrabold tabular-nums text-cyan-700 dark:text-cyan-400">
-            {loading ? <span className="inline-block h-6 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : (kpis?.totalProducts || products.length)}
+            {loading ? (
+              <span className="inline-block h-6 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+            ) : (
+              <AnimatedCounter value={kpis?.totalProducts || products.length} type="number" />
+            )}
           </div>
           <div className="mt-1 flex items-center justify-between text-[11px] text-slate-500">
             <span>{tx(lang, 'Active SKUs', 'সক্রিয় পণ্য')}</span>
@@ -403,7 +412,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             {loading ? (
               <span className="inline-block h-6 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
             ) : (
-              (kpis?.lowStockCount ?? 0) + (kpis?.outOfStockCount ?? 0)
+              <AnimatedCounter value={(kpis?.lowStockCount ?? 0) + (kpis?.outOfStockCount ?? 0)} type="number" />
             )}
           </div>
           <div className="mt-1 text-[11px] text-slate-500">
@@ -423,7 +432,11 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             </span>
           </div>
           <div className="mt-2 font-mono text-xl font-extrabold tabular-nums text-rose-600 dark:text-rose-400">
-            {loading ? <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : formatBDT(kpis?.customerOutstanding ?? 0)}
+            {loading ? (
+              <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+            ) : (
+              <AnimatedCounter value={kpis?.customerOutstanding ?? 0} type="bdt" />
+            )}
           </div>
           <div className="mt-1 flex items-center justify-between text-[11px] text-slate-500">
             <span>{tx(lang, 'Digital Khata', 'ডিজিটাল খাতা')}</span>
@@ -443,7 +456,11 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             </span>
           </div>
           <div className="mt-2 font-mono text-xl font-extrabold tabular-nums text-amber-700 dark:text-amber-400">
-            {loading ? <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : formatBDT(kpis?.supplierOutstanding ?? 0)}
+            {loading ? (
+              <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+            ) : (
+              <AnimatedCounter value={kpis?.supplierOutstanding ?? 0} type="bdt" />
+            )}
           </div>
           <div className="mt-1 text-[11px] text-slate-500">
             {tx(lang, 'Expenses:', 'খরচ:')} <span className="font-mono font-semibold">{kpis ? formatBDT(kpis.expenses) : '—'}</span>
@@ -465,7 +482,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             {loading ? (
               <span className="inline-block h-6 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
             ) : kpis?.inventoryValue !== null && kpis?.inventoryValue !== undefined ? (
-              formatBDT(kpis.inventoryValue)
+              <AnimatedCounter value={kpis.inventoryValue} type="bdt" />
             ) : (
               restrictedText
             )}
@@ -517,8 +534,8 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                   <XAxis dataKey="date" tick={{ fontSize: 11 }} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip
-                    contentStyle={{ borderRadius: '12px', borderColor: '#e2e8f0', fontSize: '12px' }}
-                    formatter={(val: any) => formatBDT(val)}
+                    contentStyle={{ borderRadius: '12px', borderColor: '#475569', backgroundColor: '#0f172a', color: '#f8fafc', fontSize: '12px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)' }}
+                    formatter={(val: any) => [formatBDT(val)]}
                   />
                   <Area
                     type="monotone"
@@ -527,6 +544,9 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                     stroke="#4F46E5"
                     strokeWidth={2.5}
                     fill="url(#salesGrad)"
+                    isAnimationActive={true}
+                    animationDuration={1100}
+                    animationEasing="ease-out"
                   />
                   {data.canViewProfit && (
                     <Area
@@ -536,6 +556,9 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                       stroke="#10B981"
                       strokeWidth={2.5}
                       fill="url(#profitGrad)"
+                      isAnimationActive={true}
+                      animationDuration={1100}
+                      animationEasing="ease-out"
                     />
                   )}
                 </AreaChart>

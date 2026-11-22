@@ -13,6 +13,49 @@
   .font-mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
   }
+
+  /* High Standard Dark Mode Native Controls & Crisp Form Elements */
+  .dark {
+    color-scheme: dark;
+  }
+
+  .dark ::-webkit-calendar-picker-indicator {
+    filter: invert(0.9) brightness(1.2);
+    cursor: pointer;
+  }
+
+  /* Smooth crisp borders in dark mode */
+  .dark hr,
+  .dark .border-slate-800 {
+    border-color: #334155 !important;
+  }
+}
+
+/* Custom Scrollbar for Smooth POS Browsing */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
 
 @media print {

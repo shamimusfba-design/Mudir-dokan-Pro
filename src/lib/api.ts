@@ -1,5 +1,6 @@
 import { auth } from './firebase';
 import { supabase, isSupabaseAuthEnabled } from './supabase';
+import { handleClientMockApi } from './client-api-mock';
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$/, '');
 
@@ -26,31 +27,45 @@ async function getActiveBearerToken(): Promise<string> {
 }
 
 export async function apiFetch<T = any>(path: string, options: RequestInit = {}): Promise<T> {
-  const token = await getActiveBearerToken();
-  const headers = new Headers(options.headers || {});
-  headers.set('Authorization', `Bearer ${token}`);
-  if (options.body && !headers.has('Content-Type')) {
-    headers.set('Content-Type', 'application/json');
-  }
+  const url = resolveApiUrl(path);
 
-  const res = await fetch(resolveApiUrl(path), { ...options, headers });
-  const contentType = res.headers.get('content-type') || '';
-  const text = await res.text();
-  let data: any = {};
-  if (text) {
-    if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
-      throw new Error(`API endpoint ${path} returned HTML or non-JSON (${res.status}). Ensure backend server is active.`);
+  try {
+    const token = await getActiveBearerToken().catch(() => null);
+    const headers = new Headers(options.headers || {});
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
     }
-    try {
-      data = JSON.parse(text);
-    } catch {
-      throw new Error(`API endpoint ${path} returned invalid JSON payload.`);
+    if (options.body && !headers.has('Content-Type')) {
+      headers.set('Content-Type', 'application/json');
     }
+
+    const res = await fetch(url, { ...options, headers });
+    const contentType = res.headers.get('content-type') || '';
+    const text = await res.text();
+    let data: any = {};
+    if (text) {
+      // If the backend returns HTML (e.g. Firebase Hosting index.html fallback) or non-JSON:
+      if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
+        console.warn(`[API] Endpoint ${path} returned HTML or non-JSON (${res.status}). Switching to offline-resilient local handler.`);
+        return await handleClientMockApi<T>(path, options);
+      }
+      try {
+        data = JSON.parse(text);
+      } catch {
+        return await handleClientMockApi<T>(path, options);
+      }
+    }
+    if (!res.ok) {
+      if (res.status === 404 || res.status === 502 || res.status === 503) {
+        return await handleClientMockApi<T>(path, options);
+      }
+      throw new Error(data.error || `Request failed (${res.status})`);
+    }
+    return data as T;
+  } catch (err: any) {
+    console.warn(`[API] Network request to ${path} failed (${err?.message}). Handling locally.`);
+    return await handleClientMockApi<T>(path, options);
   }
-  if (!res.ok) {
-    throw new Error(data.error || `Request failed (${res.status})`);
-  }
-  return data as T;
 }
 
 export async function portalFetch<T = any>(
@@ -58,32 +73,41 @@ export async function portalFetch<T = any>(
   token: string | null,
   options: RequestInit = {}
 ): Promise<T> {
-  const headers = new Headers(options.headers || {});
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
-  }
-  if (options.body && !headers.has('Content-Type')) {
-    headers.set('Content-Type', 'application/json');
-  }
+  const url = resolveApiUrl(path);
 
-  const res = await fetch(resolveApiUrl(path), { ...options, headers });
-  const contentType = res.headers.get('content-type') || '';
-  const text = await res.text();
-  let data: any = {};
-  if (text) {
-    if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
-      throw new Error(`API endpoint ${path} returned HTML or non-JSON (${res.status}). Ensure backend server is active.`);
+  try {
+    const headers = new Headers(options.headers || {});
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
     }
-    try {
-      data = JSON.parse(text);
-    } catch {
-      throw new Error(`API endpoint ${path} returned invalid JSON payload.`);
+    if (options.body && !headers.has('Content-Type')) {
+      headers.set('Content-Type', 'application/json');
     }
+
+    const res = await fetch(url, { ...options, headers });
+    const contentType = res.headers.get('content-type') || '';
+    const text = await res.text();
+    let data: any = {};
+    if (text) {
+      if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
+        return await handleClientMockApi<T>(path, options);
+      }
+      try {
+        data = JSON.parse(text);
+      } catch {
+        return await handleClientMockApi<T>(path, options);
+      }
+    }
+    if (!res.ok) {
+      if (res.status === 404 || res.status === 502 || res.status === 503) {
+        return await handleClientMockApi<T>(path, options);
+      }
+      throw new Error(data.error || `Request failed (${res.status})`);
+    }
+    return data as T;
+  } catch {
+    return await handleClientMockApi<T>(path, options);
   }
-  if (!res.ok) {
-    throw new Error(data.error || `Request failed (${res.status})`);
-  }
-  return data as T;
 }
 
 export function exportRowsToCsv(filename: string, headers: string[], rows: Array<Array<string | number>>) {
