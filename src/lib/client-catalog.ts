@@ -154,9 +154,9 @@ export function getClientDemoCatalog() {
   });
 
   const customers: CachedCustomer[] = [
-    { id: 1, name: 'আলমগীর হোসেন', phone: '01711000001', address: 'দোকান রোড, মিরপুর-১০', currentDue: '1500.00', totalPurchase: '18500.00', creditLimit: '5000.00', isBlacklisted: false },
-    { id: 2, name: 'মো. রফিকুল ইসলাম', phone: '01812000002', address: 'রোড ২, ধানমন্ডি', currentDue: '2350.00', totalPurchase: '32000.00', creditLimit: '8000.00', isBlacklisted: false },
-    { id: 3, name: 'আব্দুল করিম', phone: '01913000003', address: 'বাজার গলি, উত্তরা সেক্টর ৩', currentDue: '0.00', totalPurchase: '12400.00', creditLimit: '3000.00', isBlacklisted: false },
+    { id: 1, customerCode: 'CUST-0001', name: 'আলমগীর হোসেন', phone: '01711000001', customerType: 'RETAIL', currentDue: '1500.00', creditLimit: '5000.00' },
+    { id: 2, customerCode: 'CUST-0002', name: 'মো. রফিকুল ইসলাম', phone: '01812000002', customerType: 'RETAIL', currentDue: '2350.00', creditLimit: '8000.00' },
+    { id: 3, customerCode: 'CUST-0003', name: 'আব্দুল করিম', phone: '01913000003', customerType: 'RETAIL', currentDue: '0.00', creditLimit: '3000.00' },
   ];
 
   return { categories, brands, products, customers };

@@ -34,8 +34,15 @@ export async function apiFetch<T = any>(path: string, options: RequestInit = {})
   }
 
   const res = await fetch(resolveApiUrl(path), { ...options, headers });
+  const contentType = res.headers.get('content-type') || '';
   const text = await res.text();
-  const data = text ? JSON.parse(text) : {};
+  let data: any = {};
+  if (text) {
+    if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
+      throw new Error(`API endpoint ${path} returned HTML or non-JSON (${res.status}). Ensure backend server is active.`);
+    }
+    data = JSON.parse(text);
+  }
   if (!res.ok) {
     throw new Error(data.error || `Request failed (${res.status})`);
   }
@@ -56,8 +63,15 @@ export async function portalFetch<T = any>(
   }
 
   const res = await fetch(resolveApiUrl(path), { ...options, headers });
+  const contentType = res.headers.get('content-type') || '';
   const text = await res.text();
-  const data = text ? JSON.parse(text) : {};
+  let data: any = {};
+  if (text) {
+    if (text.trim().startsWith('<') || !contentType.includes('application/json')) {
+      throw new Error(`API endpoint ${path} returned HTML or non-JSON (${res.status}). Ensure backend server is active.`);
+    }
+    data = JSON.parse(text);
+  }
   if (!res.ok) {
     throw new Error(data.error || `Request failed (${res.status})`);
   }

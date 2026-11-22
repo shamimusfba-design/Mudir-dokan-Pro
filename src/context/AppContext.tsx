@@ -107,10 +107,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [staff, setStaff] = useState<StaffProfile | null>(null);
   const [store, setStore] = useState<StoreInfo | null>(null);
   const [settings, setSettings] = useState<StoreSettingsInfo | null>(null);
-  const [categories, setCategories] = useState<CachedCategory[]>([]);
-  const [brands, setBrands] = useState<CachedBrand[]>([]);
-  const [products, setProducts] = useState<CachedProduct[]>([]);
-  const [customers, setCustomers] = useState<CachedCustomer[]>([]);
+  const [categories, setCategories] = useState<CachedCategory[]>(() => getClientDemoCatalog().categories);
+  const [brands, setBrands] = useState<CachedBrand[]>(() => getClientDemoCatalog().brands);
+  const [products, setProducts] = useState<CachedProduct[]>(() => getClientDemoCatalog().products);
+  const [customers, setCustomers] = useState<CachedCustomer[]>(() => getClientDemoCatalog().customers);
   const [pendingOfflineSales, setPendingOfflineSales] = useState<QueuedOfflineSale[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
 
@@ -202,24 +202,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     } catch (_err) {
       // Fallback to IndexedDB cache or instant Client Demo Catalog if server unreachable
-      let [p, c, b, cust] = await Promise.all([
-        offlineDb.products.toArray(),
-        offlineDb.categories.toArray(),
-        offlineDb.brands.toArray(),
-        offlineDb.customers.toArray(),
-      ]);
-      if (p.length === 0) {
+      try {
+        let [p, c, b, cust] = await Promise.all([
+          offlineDb.products.toArray(),
+          offlineDb.categories.toArray(),
+          offlineDb.brands.toArray(),
+          offlineDb.customers.toArray(),
+        ]);
+        if (p.length === 0) {
+          const demoData = getClientDemoCatalog();
+          p = demoData.products;
+          c = demoData.categories;
+          b = demoData.brands;
+          cust = demoData.customers;
+          cacheStoreCatalog(demoData).catch(() => {});
+        }
+        setProducts(p);
+        setCategories(c);
+        setBrands(b);
+        setCustomers(cust);
+      } catch {
         const demoData = getClientDemoCatalog();
-        await cacheStoreCatalog(demoData);
-        p = demoData.products;
-        c = demoData.categories;
-        b = demoData.brands;
-        cust = demoData.customers;
+        setProducts(demoData.products);
+        setCategories(demoData.categories);
+        setBrands(demoData.brands);
+        setCustomers(demoData.customers);
       }
-      setProducts(p);
-      setCategories(c);
-      setBrands(b);
-      setCustomers(cust);
       setStaff((prev) => prev || {
         uid: 'demo-shopkeeper-uid',
         email: 'shopkeeper@mudirdokan.local',

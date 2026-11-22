@@ -858,29 +858,28 @@ export const PosPage: React.FC = () => {
 
                 {/* Product Metadata */}
                 <div className="mt-2.5 flex-1">
-                  <div className="flex items-center justify-between gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-                    <span className="truncate font-medium">
-                      {brand ? trCompact(brand.name, brand.nameBn, lang) : prod.sku}
-                    </span>
-                    <span className="shrink-0 font-mono text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">
-                      {prod.variant}
-                    </span>
+                  <div className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 truncate">
+                    <span>{brand ? trCompact(brand.name, brand.nameBn, lang) : prod.sku}</span>
+                    {cat && <span>·</span>}
+                    {cat && <span className="text-slate-400">{trCompact(cat.name, cat.nameBn, lang)}</span>}
                   </div>
                   <button
                     type="button"
                     onClick={() => addToCart(prod)}
-                    className="mt-0.5 block w-full text-left text-sm font-bold leading-snug text-slate-900 line-clamp-2 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-300 cursor-pointer"
+                    className="mt-1 block w-full text-left text-[15px] sm:text-base font-extrabold leading-snug text-slate-900 line-clamp-2 hover:text-emerald-600 dark:text-white dark:hover:text-emerald-400 transition-colors cursor-pointer"
                   >
                     {trCompact(prod.name, prod.nameBn, lang)}
                   </button>
+                  <div className="mt-1 inline-flex items-center rounded-md bg-slate-100 px-1.5 py-0.5 text-[11px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                    {prod.variant}
+                  </div>
                 </div>
 
-                {/* Price & Stock Row + Add to Cart Button */}
-                <div className="mt-2.5 space-y-2 border-t border-slate-100 pt-2 dark:border-slate-800">
+                {/* Eye-Catching Price & Stock Row */}
+                <div className="mt-3 space-y-2 border-t border-slate-100 pt-2 dark:border-slate-800">
                   <div className="flex items-baseline justify-between gap-1">
-                    <div className="font-mono text-base font-extrabold text-indigo-700 dark:text-indigo-400">
+                    <div className="font-mono text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400">
                       {formatBDT(prod.sellingPrice)}
-                      <span className="text-[10px] font-normal text-slate-400">/{formatUnitLabel(prod.baseUnit, lang)}</span>
                     </div>
                     <div
                       className={`font-mono text-[11px] font-bold ${
@@ -888,7 +887,7 @@ export const PosPage: React.FC = () => {
                           ? 'text-rose-600 dark:text-rose-400'
                           : isLow
                             ? 'text-orange-600 dark:text-orange-400'
-                            : 'text-emerald-600 dark:text-emerald-400'
+                            : 'text-slate-400'
                       }`}
                     >
                       {isOut

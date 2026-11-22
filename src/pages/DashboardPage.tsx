@@ -67,7 +67,7 @@ function defaultSixMonthWindow(todayISO: string): { start: string; end: string }
 }
 
 export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({ onNavigate }) => {
-  const { lang, staff, settings, categories, refreshCatalog } = useApp();
+  const { lang, staff, settings, categories, products, refreshCatalog } = useApp();
   const today = dhakaTodayISO();
   const fallback6m = useMemo(() => defaultSixMonthWindow(today), [today]);
   const sixMonthStart = settings?.demoPeriodStart || fallback6m.start;
@@ -380,7 +380,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             </span>
           </div>
           <div className="mt-2 font-mono text-xl font-extrabold tabular-nums text-cyan-700 dark:text-cyan-400">
-            {loading ? <span className="inline-block h-6 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : kpis?.totalProducts ?? 0}
+            {loading ? <span className="inline-block h-6 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /> : (kpis?.totalProducts || products.length)}
           </div>
           <div className="mt-1 flex items-center justify-between text-[11px] text-slate-500">
             <span>{tx(lang, 'Active SKUs', 'সক্রিয় পণ্য')}</span>
