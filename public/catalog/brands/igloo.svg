@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" width="100%" height="100%">
+  <rect width="300" height="120" rx="20" fill="#0891B2"/>
+  <path d="M 40 75 A 35 35 0 0 1 110 75 Z" fill="#E0F2FE" stroke="#0E7490" stroke-width="2"/>
+  <path d="M 65 75 A 10 10 0 0 1 85 75 Z" fill="#0891B2"/>
+  <text x="195" y="74" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="38" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">igloo</text>
+</svg>

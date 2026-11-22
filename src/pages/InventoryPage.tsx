@@ -178,6 +178,7 @@ export const InventoryPage: React.FC = () => {
                         <div className="flex items-center gap-2.5">
                           <ProductImage
                             src={p.imageUrl}
+                            sku={p.sku}
                             alt={p.name}
                             iconName={cat?.iconName}
                             accentColor={cat?.accentColor}

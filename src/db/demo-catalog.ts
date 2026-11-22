@@ -12,17 +12,17 @@ export interface DemoBrandDef {
 }
 
 export const EXTRA_DEMO_BRANDS: DemoBrandDef[] = [
-  { name: 'Ruchi', nameBn: 'রুচি', company: 'Square Food & Beverage', logoUrl: '/catalog/brands/square.svg', logoSource: 'Square Food & Beverage Brand Family', logoStatus: 'VERIFIED', brandColor: '#B91C1C' },
-  { name: 'Savlon', nameBn: 'স্যাভলন', company: 'ACI Consumer Brands', logoUrl: '/catalog/brands/aci.svg', logoSource: 'ACI Consumer Brands Family', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
-  { name: 'Meril', nameBn: 'মেরিল', company: 'Square Toiletries Ltd.', logoUrl: '/catalog/brands/square.svg', logoSource: 'Square Toiletries Brand Family', logoStatus: 'VERIFIED', brandColor: '#DB2777' },
-  { name: 'Mojo', nameBn: 'মোজো', company: 'Akij Food & Beverage', logoUrl: '/catalog/brands/akij.svg', logoSource: 'Akij Food & Beverage Brand Family', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'Frutika', nameBn: 'ফ্রুটিকা', company: 'Akij Food & Beverage', logoUrl: '/catalog/brands/akij.svg', logoSource: 'Akij Food & Beverage Brand Family', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
-  { name: 'Wheel', nameBn: 'হুইল', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/unilever.svg', logoSource: 'Unilever Bangladesh Brand Family', logoStatus: 'VERIFIED', brandColor: '#16A34A' },
-  { name: 'Surf Excel', nameBn: 'সার্ফ এক্সেল', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/unilever.svg', logoSource: 'Unilever Bangladesh Brand Family', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
-  { name: 'Vim', nameBn: 'ভিম', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/unilever.svg', logoSource: 'Unilever Bangladesh Brand Family', logoStatus: 'VERIFIED', brandColor: '#CA8A04' },
-  { name: 'Parachute', nameBn: 'প্যারাসুট', company: 'Marico Bangladesh', logoUrl: '/catalog/brands/marico.svg', logoSource: 'Marico Bangladesh Brand Family', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
+  { name: 'Ruchi', nameBn: 'রুচি', company: 'Square Food & Beverage', logoUrl: '/catalog/brands/ruchi.svg', logoSource: 'Official Ruchi Brand Logo', logoStatus: 'VERIFIED', brandColor: '#B91C1C' },
+  { name: 'Savlon', nameBn: 'স্যাভলন', company: 'ACI Consumer Brands', logoUrl: '/catalog/brands/savlon.svg', logoSource: 'Official Savlon Brand Logo', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
+  { name: 'Meril', nameBn: 'মেরিল', company: 'Square Toiletries Ltd.', logoUrl: '/catalog/brands/meril.svg', logoSource: 'Official Meril Brand Logo', logoStatus: 'VERIFIED', brandColor: '#DB2777' },
+  { name: 'Mojo', nameBn: 'মোজো', company: 'Akij Food & Beverage', logoUrl: '/catalog/brands/mojo.svg', logoSource: 'Official Mojo Brand Logo', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
+  { name: 'Frutika', nameBn: 'ফ্রুটিকা', company: 'Akij Food & Beverage', logoUrl: '/catalog/brands/frutika.svg', logoSource: 'Official Frutika Brand Logo', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
+  { name: 'Wheel', nameBn: 'হুইল', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/wheel.svg', logoSource: 'Official Wheel Brand Logo', logoStatus: 'VERIFIED', brandColor: '#16A34A' },
+  { name: 'Surf Excel', nameBn: 'সার্ফ এক্সেল', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/surf-excel.svg', logoSource: 'Official Surf Excel Brand Logo', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
+  { name: 'Vim', nameBn: 'ভিম', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/vim.svg', logoSource: 'Official Vim Brand Logo', logoStatus: 'VERIFIED', brandColor: '#CA8A04' },
+  { name: 'Parachute', nameBn: 'প্যারাসুট', company: 'Marico Bangladesh', logoUrl: '/catalog/brands/parachute.svg', logoSource: 'Official Parachute Brand Logo', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
   { name: 'Pepsi', nameBn: 'পেপসি', company: 'Transcom Beverages', logoUrl: '/catalog/brands/pepsi.svg', logoSource: 'Official Pepsi Brand Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
-  { name: 'ACI Pure', nameBn: 'এসিআই পিওর', company: 'ACI Consumer Brands', logoUrl: '/catalog/brands/aci.svg', logoSource: 'Official ACI Limited Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
+  { name: 'ACI Pure', nameBn: 'এসিআই পিওর', company: 'ACI Consumer Brands', logoUrl: '/catalog/brands/aci-pure.svg', logoSource: 'Official ACI Pure Brand Logo', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
 ];
 
 export interface DemoSkuDef {

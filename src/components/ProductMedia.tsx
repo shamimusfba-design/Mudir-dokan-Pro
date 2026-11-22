@@ -34,6 +34,7 @@ import {
 import { toast } from 'sonner';
 import { apiFetch } from '../lib/api';
 import { tx, type LanguageMode } from '../lib/i18n';
+import { getManifestImageForSku, getManifestImageByTitle } from '../lib/catalog-manifest';
 
 export interface CategoryAccentTheme {
   key: string;
@@ -204,8 +205,12 @@ export const ProductImage: React.FC<{
   showUnavailableLabel = false,
   lang = 'EN',
 }) => {
-  // Auto-resolve known verified SKU media if src is null/empty
-  const resolvedSrc = (src && src.trim()) || (sku ? KNOWN_VERIFIED_SKUS[sku.toUpperCase()] : null);
+  // Auto-resolve known verified SKU or title media if src is null/empty
+  const resolvedSrc =
+    (src && src.trim()) ||
+    (sku ? getManifestImageForSku(sku) : null) ||
+    (sku ? KNOWN_VERIFIED_SKUS[sku.toUpperCase()] : null) ||
+    getManifestImageByTitle(alt);
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
   const theme = getCategoryTheme(accentColor, fallbackIndex);

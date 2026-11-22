@@ -539,6 +539,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                     <div className="flex min-w-0 items-center gap-2.5">
                       <ProductImage
                         src={p.imageUrl}
+                        sku={p.sku}
                         alt={p.name}
                         iconName={cat?.iconName}
                         accentColor={cat?.accentColor}
@@ -605,6 +606,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                     <div className="flex min-w-0 items-center gap-2.5">
                       <ProductImage
                         src={p.imageUrl}
+                        sku={p.sku}
                         alt={p.name}
                         iconName={cat?.iconName}
                         accentColor={cat?.accentColor}

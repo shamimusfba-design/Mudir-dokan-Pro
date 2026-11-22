@@ -571,6 +571,7 @@ export const PosPage: React.FC = () => {
                         <div className="flex min-w-0 items-center gap-3">
                           <ProductImage
                             src={p.imageUrl}
+                            sku={p.sku}
                             alt={p.name}
                             iconName={cat?.iconName}
                             accentColor={cat?.accentColor}
@@ -822,6 +823,7 @@ export const PosPage: React.FC = () => {
                 >
                   <ProductImage
                     src={prod.imageUrl}
+                    sku={prod.sku}
                     alt={trCompact(prod.name, prod.nameBn, lang)}
                     iconName={cat?.iconName}
                     accentColor={cat?.accentColor}
@@ -1018,6 +1020,7 @@ export const PosPage: React.FC = () => {
                     <div className="flex min-w-0 items-center gap-2.5">
                       <ProductImage
                         src={item.product.imageUrl}
+                        sku={item.product.sku}
                         alt={item.product.name}
                         iconName={cat?.iconName}
                         accentColor={cat?.accentColor}

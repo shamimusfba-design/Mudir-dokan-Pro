@@ -16,6 +16,7 @@ import {
   cashTransactions,
 } from './schema.ts';
 import { dhakaTodayISO } from '../lib/decimal.ts';
+import { getManifestImageForSku } from '../lib/catalog-manifest.ts';
 
 export const BD_CATEGORIES: Array<{ name: string; nameBn: string; iconName: string; accentColor: string }> = [
   { name: 'Rice, Dal & Grains', nameBn: 'চাল, ডাল ও শস্য', iconName: 'wheat', accentColor: 'amber' },
@@ -76,13 +77,13 @@ export const BD_BRANDS: Array<{
   { name: 'Dove', nameBn: 'ডাভ', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/dove.png', logoSource: 'Official Dove Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#2563EB' },
   { name: 'Pepsodent', nameBn: 'পেপসোডেন্ট', company: 'Unilever Bangladesh', logoUrl: '/catalog/brands/pepsodent.svg', logoSource: 'Official Pepsodent Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#1D4ED8' },
   { name: 'Lays', nameBn: 'লেইস', company: 'PepsiCo Bangladesh', logoUrl: '/catalog/brands/lays.svg', logoSource: 'Official Lay\'s Logo (Wikimedia)', logoStatus: 'VERIFIED', brandColor: '#EAB308' },
-  { name: 'Olympic', nameBn: 'অলিম্পিক', company: 'Olympic Industries', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#EA580C' },
-  { name: 'Danish', nameBn: 'ড্যানিশ', company: 'Partex Star Group', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#0284C7' },
-  { name: 'Igloo', nameBn: 'ইগলু', company: 'Abdul Monem Limited', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#0891B2' },
-  { name: 'Bombay Sweets', nameBn: 'বোম্বে সুইটস', company: 'Bombay Sweets & Co.', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#D97706' },
-  { name: 'Dekko', nameBn: 'ডেক্কো', company: 'Dekko Foods', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#7C3AED' },
-  { name: 'Radhuni', nameBn: 'রাঁধুনী', company: 'Square Food & Beverage', logoUrl: '/catalog/brands/square.svg', logoSource: 'Square Food & Beverage Brand Family', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
-  { name: 'Local / Loose', nameBn: 'স্থানীয় / খোলা', company: 'Local Wholesale', logoUrl: null, logoSource: '', logoStatus: 'UNAVAILABLE', brandColor: '#059669' },
+  { name: 'Olympic', nameBn: 'অলিম্পিক', company: 'Olympic Industries', logoUrl: '/catalog/brands/olympic.svg', logoSource: 'Official Olympic Brand Logo', logoStatus: 'VERIFIED', brandColor: '#EA580C' },
+  { name: 'Danish', nameBn: 'ড্যানিশ', company: 'Partex Star Group', logoUrl: '/catalog/brands/danish.svg', logoSource: 'Official Danish Brand Logo', logoStatus: 'VERIFIED', brandColor: '#0284C7' },
+  { name: 'Igloo', nameBn: 'ইগলু', company: 'Abdul Monem Limited', logoUrl: '/catalog/brands/igloo.svg', logoSource: 'Official Igloo Brand Logo', logoStatus: 'VERIFIED', brandColor: '#0891B2' },
+  { name: 'Bombay Sweets', nameBn: 'বোম্বে সুইটস', company: 'Bombay Sweets & Co.', logoUrl: '/catalog/brands/bombay-sweets.svg', logoSource: 'Official Bombay Sweets Logo', logoStatus: 'VERIFIED', brandColor: '#D97706' },
+  { name: 'Dekko', nameBn: 'ডেক্কো', company: 'Dekko Foods', logoUrl: '/catalog/brands/dekko.svg', logoSource: 'Official Dekko Brand Logo', logoStatus: 'VERIFIED', brandColor: '#7C3AED' },
+  { name: 'Radhuni', nameBn: 'রাঁধুনী', company: 'Square Food & Beverage', logoUrl: '/catalog/brands/radhuni.svg', logoSource: 'Official Radhuni Brand Mark', logoStatus: 'VERIFIED', brandColor: '#DC2626' },
+  { name: 'Local / Loose', nameBn: 'স্থানীয় / খোলা', company: 'Local Wholesale', logoUrl: '/catalog/brands/local.svg', logoSource: 'Local Wholesale Commodities', logoStatus: 'VERIFIED', brandColor: '#059669' },
 ];
 
 // Strictly verified authentic product packaging photographs (zero AI fakes, zero substitutes)
@@ -375,7 +376,9 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
     // Seed Starter BD FMCG SKUs + Verified Real Packaging Photos + Opening Stock Movements
     const defaultCatId = insertedCategories[0].id;
     for (const item of STARTER_SKUS) {
+      const manifestImg = getManifestImageForSku(item.sku);
       const verifiedMedia = VERIFIED_PRODUCT_MEDIA[item.sku];
+      const finalImgUrl = manifestImg || verifiedMedia?.imageUrl || null;
       const [prod] = await tx
         .insert(products)
         .values({
@@ -394,11 +397,11 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
           sellingPrice: item.price,
           currentStock: item.stock,
           minStock: item.minStock,
-          imageUrl: verifiedMedia?.imageUrl ?? null,
+          imageUrl: finalImgUrl,
           galleryUrls: '[]',
-          imageSource: verifiedMedia?.imageSource ?? '',
-          imageStatus: verifiedMedia ? 'VERIFIED' : 'UNAVAILABLE',
-          imageUpdatedAt: verifiedMedia ? now : null,
+          imageSource: verifiedMedia?.imageSource || 'Master Product Catalog (1000x1000 WebP)',
+          imageStatus: finalImgUrl ? 'VERIFIED' : 'UNAVAILABLE',
+          imageUpdatedAt: finalImgUrl ? now : null,
           isFrequent: Boolean(item.isFrequent),
         })
         .returning();

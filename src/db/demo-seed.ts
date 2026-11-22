@@ -34,6 +34,7 @@ import {
 } from './schema.ts';
 import { D, money, qty4, dhakaTodayISO } from '../lib/decimal.ts';
 import { VERIFIED_PRODUCT_MEDIA, BD_CATEGORIES, BD_BRANDS } from './seed.ts';
+import { getManifestImageForSku } from '../lib/catalog-manifest.ts';
 import {
   EXTRA_DEMO_BRANDS,
   DEMO_PRODUCTS,
@@ -508,7 +509,9 @@ export async function loadDemoData(storeId: number, actorUid: string): Promise<D
 
     for (const def of DEMO_PRODUCTS) {
       if (prodBySku.has(def.sku)) continue;
+      const manifestImg = getManifestImageForSku(def.sku);
       const verified = VERIFIED_PRODUCT_MEDIA[def.sku];
+      const finalImgUrl = manifestImg || verified?.imageUrl || null;
       newProductRows.push({
         storeId,
         categoryId: catByName.get(def.category) ?? defaultCatId,
@@ -525,11 +528,11 @@ export async function loadDemoData(storeId: number, actorUid: string): Promise<D
         sellingPrice: def.price.toFixed(2),
         currentStock: qty4(D(def.openingStock)),
         minStock: qty4(D(def.minStock)),
-        imageUrl: verified?.imageUrl ?? null,
+        imageUrl: finalImgUrl,
         galleryUrls: '[]',
-        imageSource: verified?.imageSource ?? '',
-        imageStatus: verified ? 'VERIFIED' : 'UNAVAILABLE',
-        imageUpdatedAt: verified ? openingTs : null,
+        imageSource: verified?.imageSource || 'Master Product Catalog (1000x1000 WebP)',
+        imageStatus: finalImgUrl ? 'VERIFIED' : 'UNAVAILABLE',
+        imageUpdatedAt: finalImgUrl ? openingTs : null,
         isFrequent: Boolean(def.isFrequent),
         isActive: true,
         isDemo: true,

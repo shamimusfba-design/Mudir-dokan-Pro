@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" width="100%" height="100%">
+  <rect width="300" height="120" rx="20" fill="#EA580C"/>
+  <circle cx="60" cy="60" r="28" fill="#FBBF24"/>
+  <path d="M 60 32 Q 75 25 82 32 Q 72 40 60 32 Z" fill="#16A34A"/>
+  <text x="175" y="74" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="38" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Frutika</text>
+</svg>
