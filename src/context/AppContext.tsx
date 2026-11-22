@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { getRedirectResult, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
 import { toast } from 'sonner';
 import { auth, googleAuthProvider } from '../lib/firebase';
 import { supabase, isSupabaseAuthEnabled } from '../lib/supabase';
@@ -406,39 +406,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     toast.success('ডেমো স্টোর ও ১,৩৫৯টি পণ্য সফলভাবে লোড হয়েছে');
   }, []);
 
-  // Subscribe to Supabase Auth or Firebase Auth fallback
+  // Subscribe to Firebase Auth (Primary Google Sign-In)
   useEffect(() => {
-    if (isSupabaseAuthEnabled && supabase) {
-      const toSessionUser = (u: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null): AuthSessionUser | null => {
-        if (!u) return null;
-        const meta = u.user_metadata || {};
-        return {
-          uid: u.id,
-          email: u.email || null,
-          displayName:
-            (typeof meta.full_name === 'string' && meta.full_name) ||
-            (typeof meta.name === 'string' && meta.name) ||
-            u.email ||
-            null,
-          photoURL: typeof meta.avatar_url === 'string' ? meta.avatar_url : null,
-          provider: 'supabase',
-        };
-      };
-
-      supabase.auth.getSession().then(({ data }) => {
-        setAuthUser(toSessionUser(data.session?.user ?? null));
-        setAuthLoading(false);
-      });
-
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setAuthUser(toSessionUser(session?.user ?? null));
-        setAuthLoading(false);
-      });
-
-      return () => subscription.unsubscribe();
-    }
+    // Process redirect result if browser redirected
+    getRedirectResult(auth).catch(() => {});
 
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -477,19 +448,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const signInWithGoogle = async () => {
     try {
-      if (isSupabaseAuthEnabled && supabase) {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: window.location.origin,
-            queryParams: { prompt: 'select_account' },
-          },
-        });
-        if (error) throw error;
-        return;
-      }
       await signInWithPopup(auth, googleAuthProvider);
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.code === 'auth/popup-blocked' || err?.code === 'auth/cancelled-popup-request') {
+        try {
+          await signInWithRedirect(auth, googleAuthProvider);
+          return;
+        } catch (redirectErr) {
+          console.error('Redirect sign-in error:', redirectErr);
+        }
+      }
       toast.error(err instanceof Error ? err.message : 'Google sign-in failed');
     }
   };
@@ -499,10 +467,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setAuthUser(null);
     setStaff(null);
     setStore(null);
-    if (isSupabaseAuthEnabled && supabase) {
-      await supabase.auth.signOut();
-      return;
-    }
     await signOut(auth);
   };
 

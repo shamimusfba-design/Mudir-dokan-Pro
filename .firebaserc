@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "mudipro-2c4b2"
+  },
+  "targets": {
+    "mudipro-2c4b2": {
+      "hosting": {
+        "mudidokanpro": [
+          "mudidokanpro"
+        ]
+      }
+    }
+  }
+}
