@@ -195,15 +195,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal }) => {
                   alt="Mudi Dokan Pro - Happy Shopkeeper & Dashboard"
                   className="w-full h-auto object-cover object-left select-none pointer-events-none"
                 />
-
-                {/* Subtle top-left logo replacement overlay to ensure 100% crispness */}
-                <div className="absolute top-4 left-4 sm:top-5 sm:left-5 pointer-events-auto">
-                  <img
-                    src="/mudi-dokan-pro-logo.png"
-                    alt="Mudi Dokan Pro Logo"
-                    className="h-10 sm:h-12 md:h-14 w-auto object-contain filter drop-shadow-md"
-                  />
-                </div>
               </div>
 
               {/* Interactive Smart Family Bazar Package banner at bottom of card */}
