@@ -183,6 +183,7 @@ export const CategoryIcon: React.FC<{ iconName?: string | null; className?: stri
 
 export const ProductImage: React.FC<{
   src?: string | null;
+  sku?: string | null;
   alt: string;
   iconName?: string | null;
   accentColor?: string | null;
@@ -193,6 +194,7 @@ export const ProductImage: React.FC<{
   lang?: LanguageMode;
 }> = ({
   src,
+  sku,
   alt,
   iconName,
   accentColor,
@@ -202,6 +204,8 @@ export const ProductImage: React.FC<{
   showUnavailableLabel = false,
   lang = 'EN',
 }) => {
+  // Auto-resolve known verified SKU media if src is null/empty
+  const resolvedSrc = (src && src.trim()) || (sku ? KNOWN_VERIFIED_SKUS[sku.toUpperCase()] : null);
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
   const theme = getCategoryTheme(accentColor, fallbackIndex);
@@ -209,7 +213,7 @@ export const ProductImage: React.FC<{
   useEffect(() => {
     setLoaded(false);
     setErrored(false);
-  }, [src]);
+  }, [resolvedSrc]);
 
   const sizeClass =
     size === 'xs'
@@ -233,19 +237,38 @@ export const ProductImage: React.FC<{
             ? 'h-8 w-8'
             : 'h-9 w-9';
 
-  const hasValidSrc = Boolean(src && src.trim() && !errored);
+  const hasValidSrc = Boolean(resolvedSrc && !errored);
 
   if (!hasValidSrc) {
+    // Elegant graceful product-image fallback
+    const initials = (alt || '')
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0]?.toUpperCase())
+      .join('');
+
     return (
       <div
-        className={`relative flex flex-col items-center justify-center overflow-hidden border ${theme.bgSoft} ${theme.border} ${sizeClass} ${className}`}
-        title={alt}
+        className={`relative flex flex-col items-center justify-center overflow-hidden border transition-all duration-200 select-none ${theme.bgSoft} ${theme.border} ${sizeClass} ${className}`}
+        title={`${alt} (No photo uploaded)`}
       >
-        <CategoryIcon iconName={iconName} className={`${iconSizeClass} ${theme.text} opacity-85`} />
-        {showUnavailableLabel && size === 'card' && (
-          <span className="mt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-            {tx(lang, 'Add Photo', 'ছবি যোগ করুন')}
-          </span>
+        <div className="flex items-center justify-center rounded-full bg-white/70 p-1.5 shadow-xs dark:bg-slate-900/40">
+          <CategoryIcon iconName={iconName} className={`${iconSizeClass} ${theme.text} opacity-90`} />
+        </div>
+        {size === 'card' && (
+          <div className="mt-1 flex flex-col items-center px-1 text-center">
+            {initials && (
+              <span className="text-[11px] font-semibold tracking-wider text-slate-700 dark:text-slate-300">
+                {initials}
+              </span>
+            )}
+            {showUnavailableLabel && (
+              <span className="text-[9px] font-medium text-slate-400 dark:text-slate-500">
+                {tx(lang, 'Standard Packaging', 'স্ট্যান্ডার্ড মোড়ক')}
+              </span>
+            )}
+          </div>
         )}
       </div>
     );
@@ -259,7 +282,7 @@ export const ProductImage: React.FC<{
         <div className="absolute inset-0 animate-pulse bg-slate-100 dark:bg-slate-200" />
       )}
       <img
-        src={src!}
+        src={resolvedSrc!}
         alt={alt}
         loading="lazy"
         decoding="async"
@@ -272,6 +295,25 @@ export const ProductImage: React.FC<{
       />
     </div>
   );
+};
+
+export const KNOWN_VERIFIED_SKUS: Record<string, string> = {
+  'PR-FRT-250M': '/catalog/products/pr-frt-250m.jpg',
+  'PR-POT-100G': '/catalog/products/pr-pot-100g.jpg',
+  'NES-CLAS-50G': '/catalog/products/nes-clas-50g.jpg',
+  'UNI-LB-100G': '/catalog/products/uni-lb-100g.jpg',
+  'UNI-SURF-500G': '/catalog/products/uni-surf-500g.jpg',
+  'UNI-VIM-500M': '/catalog/products/uni-vim-500m.jpg',
+  'MAR-PAR-200M': '/catalog/products/mar-par-200m.jpg',
+  'MDK-0022': '/images/products/MDK-0022_loose_local_lentil_masoor_dal_500_g.webp',
+  'MDK-0098': '/images/products/MDK-0098_pran_potato_crackers_100_g.webp',
+  'MDK-0119': '/images/products/MDK-0119_pran_mango_juice_250_ml.webp',
+  'MDK-0140': '/images/products/MDK-0140_nescafe_classic_coffee_50_g.webp',
+  'MDK-0161': '/images/products/MDK-0161_local_eggs_1_piece.webp',
+  'MDK-0176': '/images/products/MDK-0176_unilever_surf_excel_detergent_500_g.webp',
+  'MDK-0184': '/images/products/MDK-0184_unilever_vim_liquid_500_ml.webp',
+  'MDK-0187': '/images/products/MDK-0187_unilever_lifebuoy_soap_100_g.webp',
+  'MDK-0208': '/images/products/MDK-0208_parachute_coconut_oil_200_ml.webp',
 };
 
 export const BrandLogo: React.FC<{

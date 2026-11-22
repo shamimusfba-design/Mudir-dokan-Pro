@@ -87,22 +87,25 @@ export const BD_BRANDS: Array<{
 
 // Strictly verified authentic product packaging photographs (zero AI fakes, zero substitutes)
 export const VERIFIED_PRODUCT_MEDIA: Record<string, { imageUrl: string; imageSource: string }> = {
+  // Verified starter SKUs
   'PR-FRT-250M': { imageUrl: '/catalog/products/pr-frt-250m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Frooto)' },
-  'PR-FRT-500M': { imageUrl: '/catalog/products/pr-frt-500m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Frooto)' },
-  'PR-FRT-1L': { imageUrl: '/catalog/products/pr-frt-1l.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Frooto)' },
   'PR-POT-100G': { imageUrl: '/catalog/products/pr-pot-100g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Potata)' },
-  'PR-CHICK-50G': { imageUrl: '/catalog/products/pr-chick-50g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Masala)' },
-  'PR-MRN-8PK': { imageUrl: '/catalog/products/pr-mrn-8pk.jpg', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Mr. Noodles)' },
-  'CC-COKE-125L': { imageUrl: '/catalog/products/cc-coke-125l.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Coca-Cola)' },
-  'NES-MAG-8PK': { imageUrl: '/catalog/products/nes-mag-8pk.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Maggi 2-Minute Noodles)' },
   'NES-CLAS-50G': { imageUrl: '/catalog/products/nes-clas-50g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Nescafé Classic)' },
-  'NES-CER-350G': { imageUrl: '/catalog/products/nes-cer-350g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Nestlé Cerelac)' },
-  'PEP-LAYS-45G': { imageUrl: '/catalog/products/pep-lays-45g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Lay\'s Classic)' },
   'UNI-LB-100G': { imageUrl: '/catalog/products/uni-lb-100g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Lifebuoy Soap)' },
   'UNI-SURF-500G': { imageUrl: '/catalog/products/uni-surf-500g.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Surf Excel)' },
   'UNI-VIM-500M': { imageUrl: '/catalog/products/uni-vim-500m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Vim Dishwash)' },
-  'UNI-SUN-180M': { imageUrl: '/catalog/products/uni-sun-180m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Sunsilk Shampoo)' },
   'MAR-PAR-200M': { imageUrl: '/catalog/products/mar-par-200m.jpg', imageSource: 'OpenFoodFacts Verified Packaging (Parachute Coconut Oil)' },
+
+  // Mudir Dokan Pro Master Manifest Verified SKU Mappings (1000x1000 square WebP, pure white #FFFFFF background)
+  'MDK-0022': { imageUrl: '/images/products/MDK-0022_loose_local_lentil_masoor_dal_500_g.webp', imageSource: 'Wikimedia Commons CC Verified (Split Red Lentil)' },
+  'MDK-0098': { imageUrl: '/images/products/MDK-0098_pran_potato_crackers_100_g.webp', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Potata 100g)' },
+  'MDK-0119': { imageUrl: '/images/products/MDK-0119_pran_mango_juice_250_ml.webp', imageSource: 'OpenFoodFacts Verified Packaging (PRAN Frooto 250ml)' },
+  'MDK-0140': { imageUrl: '/images/products/MDK-0140_nescafe_classic_coffee_50_g.webp', imageSource: 'OpenFoodFacts Verified Packaging (Nescafé Classic 50g)' },
+  'MDK-0161': { imageUrl: '/images/products/MDK-0161_local_eggs_1_piece.webp', imageSource: 'Wikimedia Commons CC Verified (Egg on white background)' },
+  'MDK-0176': { imageUrl: '/images/products/MDK-0176_unilever_surf_excel_detergent_500_g.webp', imageSource: 'OpenFoodFacts Verified Packaging (Surf Excel 500g)' },
+  'MDK-0184': { imageUrl: '/images/products/MDK-0184_unilever_vim_liquid_500_ml.webp', imageSource: 'OpenFoodFacts Verified Packaging (Vim Liquid 500ml)' },
+  'MDK-0187': { imageUrl: '/images/products/MDK-0187_unilever_lifebuoy_soap_100_g.webp', imageSource: 'OpenFoodFacts Verified Packaging (Lifebuoy Soap 100g)' },
+  'MDK-0208': { imageUrl: '/images/products/MDK-0208_parachute_coconut_oil_200_ml.webp', imageSource: 'OpenFoodFacts Verified Packaging (Parachute Coconut Oil 200ml)' },
 };
 
 const BD_EXPENSE_CATEGORIES: Array<{ name: string; nameBn: string }> = [

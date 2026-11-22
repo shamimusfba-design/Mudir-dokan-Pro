@@ -67,12 +67,15 @@ async function startServer() {
   // Ensure disk storage directories exist for optimized product/brand/store images
   const uploadsDir = path.resolve(__dirname, 'public/uploads');
   const catalogDir = path.resolve(__dirname, 'public/catalog');
+  const imagesDir = path.resolve(__dirname, 'public/images');
   fs.mkdirSync(path.join(uploadsDir, 'products'), { recursive: true });
   fs.mkdirSync(path.join(uploadsDir, 'brands'), { recursive: true });
   fs.mkdirSync(path.join(uploadsDir, 'stores'), { recursive: true });
+  fs.mkdirSync(path.join(imagesDir, 'products'), { recursive: true });
 
   app.use('/uploads', express.static(uploadsDir, { maxAge: '7d' }));
   app.use('/catalog', express.static(catalogDir, { maxAge: '30d' }));
+  app.use('/images', express.static(imagesDir, { maxAge: '30d' }));
 
   app.get('/api/health', (_req, res) => {
     res.json({ ok: true, service: 'MudirDokan Pro API' });

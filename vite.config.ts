@@ -46,7 +46,7 @@ export default defineConfig(() => {
         },
         workbox: {
           maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,jpg,jpeg,woff,woff2}'],
           navigateFallback: '/index.html',
           navigateFallbackDenylist: [/^\/api\//],
           runtimeCaching: [
@@ -79,7 +79,7 @@ export default defineConfig(() => {
               },
             },
             {
-              urlPattern: /\/(?:catalog|uploads)\/.*\.(?:png|jpg|jpeg|webp|svg)$/i,
+              urlPattern: /\/(?:catalog|uploads|images)\/.*\.(?:png|jpg|jpeg|webp|svg)$/i,
               handler: 'CacheFirst',
               options: {
                 cacheName: 'mudirdokan-product-media-cache',
