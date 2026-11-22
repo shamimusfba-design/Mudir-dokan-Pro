@@ -1,97 +1,80 @@
-# Mudir Dokan Pro — 100% Complete Product, Category & Brand Media Audit Report
-
-**Audit Date**: November 22, 2026  
-**Catalog Scope**: Complete Bangladesh Grocery Store (FMCG, Commodities, Toiletries, Beverages, Dairy)  
-**Status**: **100% COMPLETE & VERIFIED**
+# Mudir Dokan Pro — Genuine Product Image Audit Report
+**Date:** 2026-11-22  
+**Source of Truth:** `mudir_dokan_pro_image_mapping_manifest.csv`  
+**Image Standard:** Pure `#FFFFFF` studio white background, 1000×1000 square WebP, product centered 85–90% of frame.  
+**Sourcing:** Direct commercial physical packshot photographs harvested from Chaldal CDN (`eggyolk.chaldal.com` / `i.chaldn.com`) and authorized catalog sources. Zero procedural/AI illustrations.
 
 ---
 
 ## 1. Executive Summary
 
-| Metric | Target | Result | Compliance Rate |
-| :--- | :---: | :---: | :---: |
-| **Master Manifest Product SKUs (`MDK-0001` - `MDK-0220`)** | 220 | **220** | **100.0%** |
-| **Active Store Catalog SKUs (`DEMO-` & `STARTER-`)** | 270 | **270** | **100.0%** |
-| **Total Mapped Media Entries** | — | **490** | **100.0%** |
-| **1000×1000 Square WebP Specification** | 220 | **220** | **100.0%** |
-| **Pure White Background (`#FFFFFF`) Verification** | 220 | **220** | **100.0%** |
-| **Standard Category Visual Banners (`/images/categories/`)** | 28 | **28** | **100.0%** |
-| **Official Brand Vector Logos (`/catalog/brands/`)** | 37 | **37** | **100.0%** |
-| **Missing Images / Placeholders in Production** | 0 | **0** | **0.0%** |
-| **Offline PWA Precached Assets** | — | **316 entries (13.4 MB)** | **100.0%** |
+| Metric | Count | Percentage | Status |
+| :--- | :--- | :--- | :--- |
+| **Total Catalog SKUs** | **220** | 100.0% | Complete Manifest |
+| **Verified Physical Photos** | **117** | **53.2%** | ✅ Authentic Studio Packshots |
+| **Missing Images (Pending Genuine Sourcing)** | **103** | **46.8%** | ⚠️ Graceful Fallback in UI |
+| **Review Required / Rights Unclear** | **0** | 0.0% | Clean |
+| **Broken / Corrupted Files** | **0** | 0.0% | ✅ 100% Valid 1000×1000 WebP |
+| **Duplicate Files / Collisions** | **0** | 0.0% | ✅ Unique SKU Paths |
+| **False Substitutions / Cross-SKU Collisions** | **0** | 0.0% | ✅ Zero Mismatches |
 
 ---
 
-## 2. Category Visual Coverage (28 Categories)
+## 2. Category Coverage Breakdown
 
-Every category now features a dedicated high-standard visual thumbnail banner in `public/images/categories/` combined with its accent theme and Lucide icon badge:
-
-1. **চাল, ডাল ও শস্য** (`Rice, Dal & Grains`) — `/images/categories/rice_grains.webp`
-2. **আটা, ময়দা ও সুজি** (`Flour, Atta, Maida & Suji`) — `/images/categories/flour_atta.webp`
-3. **ভোজ্য তেল ও ঘি** (`Cooking Oil & Ghee`) — `/images/categories/cooking_oil.webp`
-4. **লবণ ও চিনি** (`Salt & Sugar`) — `/images/categories/salt_sugar.webp`
-5. **মসলা ও গুঁড়া মসলা** (`Spices & Masala`) — `/images/categories/spices_masala.webp`
-6. **চা ও কফি** (`Tea & Coffee`) — `/images/categories/tea_coffee.webp`
-7. **বিস্কুট ও বেকারি** (`Biscuits & Bakery`) — `/images/categories/biscuits_bakery.webp`
-8. **স্ন্যাকস ও চিপস** (`Snacks & Chips`) — `/images/categories/snacks_chips.webp`
-9. **চকলেট ও ক্যান্ডি** (`Chocolate & Candy`) — `/images/categories/chocolate_candy.webp`
-10. **কোমল পানীয়** (`Soft Drinks & Beverages`) — `/images/categories/soft_drinks.webp`
-11. **জুস ও প্যাকেট পানীয়** (`Juice & Packaged Drinks`) — `/images/categories/juice_drinks.webp`
-12. **দুধ ও দুগ্ধজাত পণ্য** (`Dairy & Milk Products`) — `/images/categories/dairy_milk.webp`
-13. **ডিম** (`Eggs`) — `/images/categories/eggs.webp`
-14. **নুডুলস ও পাস্তা** (`Noodles & Pasta`) — `/images/categories/noodles_pasta.webp`
-15. **সস ও আচার** (`Sauces & Condiments`) — `/images/categories/sauces_condiments.webp`
-16. **ফ্রোজেন ও প্যাকেট খাবার** (`Frozen & Packaged Food`) — `/images/categories/frozen_packaged.webp`
-17. **শিশু খাদ্য ও যত্ন** (`Baby Food & Baby Care`) — `/images/categories/baby_food.webp`
-18. **সাবান ও ব্যক্তিগত যত্ন** (`Soap & Personal Care`) — `/images/categories/soap_personal.webp`
-19. **শ্যাম্পু ও চুলের যত্ন** (`Shampoo & Hair Care`) — `/images/categories/shampoo_hair.webp`
-20. **টুথপেস্ট ও মুখের যত্ন** (`Toothpaste & Oral Care`) — `/images/categories/toothpaste_oral.webp`
-21. **ডিটারজেন্ট ও ডিশওয়াশ** (`Detergent & Dishwashing`) — `/images/categories/detergent_dishwashing.webp`
-22. **গৃহস্থালি পরিষ্কারক** (`Household Cleaning`) — `/images/categories/household_cleaning.webp`
-23. **টিস্যু ও পেপার পণ্য** (`Tissue & Paper Products`) — `/images/categories/tissue_paper.webp`
-24. **মশা তাড়ানোর পণ্য** (`Mosquito Repellent`) — `/images/categories/mosquito_repellent.webp`
-25. **বোতলজাত পানি** (`Water & Bottled Drinks`) — `/images/categories/water_bottled.webp`
-26. **টিনজাত ও প্যাকেট খাবার** (`Canned & Packaged Food`) — `/images/categories/canned_packaged.webp`
-27. **স্টেশনারি ও নিত্যপ্রয়োজনীয়** (`Stationery & Daily Essentials`) — `/images/categories/stationery_daily.webp`
-28. **অন্যান্য** (`Miscellaneous`) — `/images/categories/miscellaneous.webp`
+| Category | Total SKUs | Verified Real Photos | Missing (UI Fallback) | Verified Coverage |
+| :--- | :--- | :--- | :--- | :--- |
+| **Beverages** | 36 | 26 | 10 | 72.2% |
+| **Cooking Oil** | 15 | 9 | 6 | 60.0% |
+| **Dairy, Eggs & Bakery** | 17 | 12 | 5 | 70.6% |
+| **Home & Cleaning** | 5 | 0 | 5 | 0.0% |
+| **Household & Personal Care** | 44 | 18 | 26 | 40.9% |
+| **Rice & Grains** | 37 | 22 | 15 | 59.5% |
+| **Snacks & Biscuits** | 31 | 7 | 24 | 22.6% |
+| **Spices** | 26 | 18 | 8 | 69.2% |
+| **Sugar & Salt** | 9 | 5 | 4 | 55.6% |
 
 ---
 
-## 3. Brand Identity Coverage (37 Brands)
+## 3. Strict Compliance Verification
 
-All 37 FMCG and wholesale brands now have verified vector SVG / high-res logos in `public/catalog/brands/`:
+1. **Zero Fake Packaging Policy**:
+   - All procedural/generated SVG placeholder graphics have been completely removed from unverified items.
+   - Branded goods are mapped only to authenticated manufacturer packshot photographs.
 
-- **PRAN-RFL Group**: PRAN (`pran.jpg`)
-- **City Group**: Teer (`teer.png`)
-- **Meghna Group**: Fresh (`fresh.svg`)
-- **Square Group**: Radhuni (`radhuni.svg`), Ruchi (`ruchi.svg`), Meril (`meril.svg`), Square (`square.svg`)
-- **ACI Group**: ACI (`aci.svg`), ACI Pure (`aci-pure.svg`), Savlon (`savlon.svg`)
-- **Akij Group**: Mojo (`mojo.svg`), Frutika (`frutika.svg`), Akij (`akij.svg`)
-- **Unilever Bangladesh**: Surf Excel (`surf-excel.svg`), Wheel (`wheel.svg`), Vim (`vim.svg`), Lux (`lux.png`), Lifebuoy (`lifebuoy.png`), Sunsilk (`sunsilk.png`), Dove (`dove.png`), Pepsodent (`pepsodent.svg`), Unilever (`unilever.svg`)
-- **Marico Bangladesh**: Parachute (`parachute.svg`), Marico (`marico.svg`)
-- **Partex / Danish**: Danish (`danish.svg`)
-- **Dekko Group**: Dekko (`dekko.svg`)
-- **Olympic Industries**: Olympic (`olympic.svg`)
-- **Bombay Sweets**: Bombay Sweets (`bombay-sweets.svg`)
-- **Abdul Monem**: Igloo (`igloo.svg`)
-- **Global Beverage & Foods**: Coca-Cola (`coca-cola.svg`), Pepsi (`pepsi.svg`), Lay's (`lays.svg`), Maggi (`maggi.svg`), Nestlé (`nestle.svg`)
-- **Local / Commodities**: Local Wholesale (`local.svg`)
+2. **White Background (#FFFFFF)**:
+   - All 117 verified images have pure `#FFFFFF` background with corners tested at RGB `(255, 255, 255)`.
+
+3. **Aspect Ratio & Framing**:
+   - Formatted to 1000×1000 square WebP at quality 90 with products centered ~86% of the frame.
+
+4. **Graceful UI Fallback**:
+   - Missing items gracefully fallback to official brand logos and category icons via `ProductMedia.tsx`. No broken image icons or unauthorized substitutions are rendered.
+
+5. **Offline PWA & Local Storage Ready**:
+   - All 117 verified image assets are stored locally under `public/images/products/` and are bundled by Vite into the offline service worker cache.
 
 ---
 
-## 4. Product Image Resolution Hierarchy
+## 4. Sample Verified Commercial Packshots
 
-The frontend `<ProductImage />` and backend database layers now follow a multi-tier resolution fallback:
-
-1. **Direct `src` prop**: If provided in `product.imageUrl`, renders the verified WebP asset immediately.
-2. **SKU Manifest Resolver**: Automatically queries `KNOWN_CATALOG_IMAGES` via `getManifestImageForSku(sku)` covering all 490 app & manifest SKUs.
-3. **Product Name / Title Resolver**: Queries `TITLE_IMAGE_MAP` via `getManifestImageByTitle(alt)` to ensure any custom SKU or name variant matches its correct visual asset.
-4. **Category Themed Fallback**: Graceful SVG icon card with theme-tinted pill badge and monogram initials if network fails or asset is loading.
+| SKU | Brand | Product Name | Variant | Sourced From | Local Asset |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `MDK-0002` | **Loose / Local** | Miniket Rice | 5 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=177234) | `MDK-0002_loose_local_miniket_rice_5_kg.webp` |
+| `MDK-0005` | **Loose / Local** | Nazirshail Rice | 5 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=177233) | `MDK-0005_loose_local_nazirshail_rice_5_kg.webp` |
+| `MDK-0012` | **Loose / Local** | Chinigura Rice | 1 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=126657) | `MDK-0012_loose_local_chinigura_rice_1_kg.webp` |
+| `MDK-0013` | **Loose / Local** | Chinigura Rice | 5 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=122763) | `MDK-0013_loose_local_chinigura_rice_5_kg.webp` |
+| `MDK-0016` | **Loose / Local** | Wheat | 1 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=185269) | `MDK-0016_loose_local_wheat_1_kg.webp` |
+| `MDK-0017` | **Loose / Local** | Wheat | 5 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=135116) | `MDK-0017_loose_local_wheat_5_kg.webp` |
+| `MDK-0018` | **Loose / Local** | Flattened Rice (Chira) | 500 g | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=186706) | `MDK-0018_loose_local_flattened_rice_chira_500_g.webp` |
+| `MDK-0020` | **Loose / Local** | Puffed Rice (Muri) | 500 g | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=132327) | `MDK-0020_loose_local_puffed_rice_muri_500_g.webp` |
+| `MDK-0022` | **Loose / Local** | Lentil (Masoor Dal) | 500 g | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=182353) | `MDK-0022_loose_local_lentil_masoor_dal_500_g.webp` |
+| `MDK-0023` | **Loose / Local** | Lentil (Masoor Dal) | 1 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=127721) | `MDK-0023_loose_local_lentil_masoor_dal_1_kg.webp` |
+| `MDK-0024` | **Loose / Local** | Chickpea (Boot) | 500 g | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=182387) | `MDK-0024_loose_local_chickpea_boot_500_g.webp` |
+| `MDK-0025` | **Loose / Local** | Chickpea (Boot) | 1 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=126716) | `MDK-0025_loose_local_chickpea_boot_1_kg.webp` |
+| `MDK-0026` | **Loose / Local** | Moong Dal | 500 g | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=186705) | `MDK-0026_loose_local_moong_dal_500_g.webp` |
+| `MDK-0027` | **Loose / Local** | Moong Dal | 1 kg | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=113349) | `MDK-0027_loose_local_moong_dal_1_kg.webp` |
+| `MDK-0028` | **Loose / Local** | Motor Dal | 500 g | [Chaldal CDN](https://eggyolk.chaldal.com/api/Picture/Raw?pictureId=47054) | `MDK-0028_loose_local_motor_dal_500_g.webp` |
 
 ---
-
-## 5. Offline PWA & Build Verification
-
-- **Vite Build**: Passed in 919ms with zero errors.
-- **Service Worker Precaching**: 316 assets (13,442 KiB) cached in Cache Storage.
-- **Offline Reliability**: All product, brand, and category images render without an active internet connection.
+*Report automatically audited and generated by Mudir Dokan Pro Quality System.*
