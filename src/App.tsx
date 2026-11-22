@@ -45,6 +45,7 @@ import { ReportsPage } from './pages/ReportsPage';
 import { CashManagementPage } from './pages/CashManagementPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { CustomerPortalPage } from './pages/CustomerPortalPage';
+import { LoginPage } from './pages/LoginPage';
 
 type TabId =
   | 'dashboard'
@@ -258,144 +259,7 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
   }
 
   if (!firebaseUser) {
-    return (
-      <div className="flex min-h-screen flex-col justify-between bg-gradient-to-br from-indigo-50/60 via-white to-emerald-50/50 px-4 py-8 dark:from-[#0B1120] dark:via-[#0F172A] dark:to-[#0B1120]">
-        <header className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <StoreLogoBadge storeName={tr('appName', lang)} size="md" />
-            <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white whitespace-nowrap">
-              {tr('appName', lang)}
-            </span>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <LanguageSwitcher lang={lang} setLang={setLang} />
-            <PWAInstallButton compact />
-            <button
-              type="button"
-              onClick={toggleDarkMode}
-              aria-label={tx(lang, 'Toggle color theme', 'থিম পরিবর্তন করুন')}
-              className="rounded-lg border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer"
-            >
-              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
-          </div>
-        </header>
-
-        <main className="mx-auto my-auto flex w-full max-w-5xl flex-col items-center py-10">
-          <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-12 md:items-center">
-            <div className="md:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
-                <Sparkles className="h-3.5 w-3.5 text-orange-500" />
-                <span>{tx(lang, 'Bangladesh Grocery POS & Digital Khata', 'বাংলাদেশ মুদির দোকান পস ও ডিজিটাল খাতা')}</span>
-              </div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-                {tx(
-                  lang,
-                  'Visual Counter Billing, Smart Stock & Digital Khata.',
-                  'ভিজ্যুয়াল কাউন্টার বিলিং, স্মার্ট স্টক ও ডিজিটাল খাতা।'
-                )}
-              </h1>
-              <p className="text-base leading-relaxed text-slate-600 dark:text-slate-400">
-                {tx(
-                  lang,
-                  'Built for Bangladeshi grocery stores and mini-supermarkets. Real FMCG product visuals, official brand logos, weighted-average profit engine, offline-first POS, and customer self-service Khata.',
-                  'বাংলাদেশের মুদির দোকান, জেনারেল স্টোর ও মিনি সুপারমার্কেটের জন্য তৈরি। আসল পণ্যের ছবি, অফিসিয়াল ব্র্যান্ড লোগো, প্রকৃত লাভের হিসাব, অফলাইন পস এবং ক্রেতার ডিজিটাল খাতা একসাথে।'
-                )}
-              </p>
-
-              <div className="grid grid-cols-2 gap-4 pt-2 text-sm">
-                <div className="rounded-2xl border border-indigo-100 bg-white p-4 shadow-xs dark:border-indigo-900/50 dark:bg-slate-900/90">
-                  <p className="font-bold text-indigo-700 dark:text-indigo-400">
-                    {tx(lang, 'Visual Offline Counter', 'ভিজ্যুয়াল অফলাইন কাউন্টার')}
-                  </p>
-                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                    {tx(
-                      lang,
-                      'Instant barcode scan, product photos, brand filters & auto cloud sync.',
-                      'দ্রুত বারকোড স্ক্যান, পণ্যের ছবি, ব্র্যান্ড ফিল্টার এবং স্বয়ংক্রিয় সিঙ্ক।'
-                    )}
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-emerald-100 bg-white p-4 shadow-xs dark:border-emerald-900/50 dark:bg-slate-900/90">
-                  <p className="font-bold text-emerald-700 dark:text-emerald-400">
-                    {tx(lang, 'Digital Khata & Portal', 'ডিজিটাল খাতা ও পোর্টাল')}
-                  </p>
-                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                    {tx(
-                      lang,
-                      'Credit aging, multi-invoice collection, and mobile OTP customer portal.',
-                      'বাকির মেয়াদ বিশ্লেষণ, একাধিক বিলে বাকি আদায় এবং ওটিপি ক্রেতা পোর্টাল।'
-                    )}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="md:col-span-5">
-              <div className="rounded-2xl border border-indigo-100 bg-white p-6 shadow-lg shadow-indigo-500/5 dark:border-slate-800 dark:bg-slate-900">
-                <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
-                  <ShieldCheck className="h-5 w-5" />
-                  <span className="text-xs font-bold uppercase tracking-wider">
-                    {tx(lang, 'Shopkeeper Access', 'দোকানদার লগইন')}
-                  </span>
-                </div>
-                <h2 className="mt-2 text-xl font-bold text-slate-900 dark:text-white">
-                  {tx(lang, 'Sign in to your store', 'আপনার দোকানে প্রবেশ করুন')}
-                </h2>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                  {tx(
-                    lang,
-                    'First sign-in automatically sets up your shop with 50 Bangladeshi FMCG starter items & official brand logos.',
-                    'প্রথমবার লগইনেই ৫০টি জনপ্রিয় বাংলাদেশি পণ্য ও অফিসিয়াল ব্র্যান্ড লোগোসহ আপনার দোকান প্রস্তুত হয়ে যাবে।'
-                  )}
-                </p>
-
-                <button
-                  type="button"
-                  onClick={signInWithGoogle}
-                  className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-3 text-sm font-bold text-white shadow-md shadow-indigo-500/25 hover:from-indigo-700 hover:to-blue-700 transition cursor-pointer"
-                >
-                  <span>{tx(lang, 'Continue with Google', 'গুগল দিয়ে লগইন করুন')}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={enterDemoMode}
-                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50/80 px-4 py-2.5 text-sm font-bold text-indigo-700 hover:bg-indigo-100 dark:border-indigo-800 dark:bg-indigo-950/50 dark:text-indigo-300 dark:hover:bg-indigo-900/50 transition cursor-pointer"
-                >
-                  <Sparkles className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                  <span>{tx(lang, 'Explore Demo Store (1,359 Products & Images)', 'ডেমো স্টোরে সরাসরি প্রবেশ করুন (১,৩৫৯টি পণ্য ও ছবি)')}</span>
-                </button>
-
-                <div className="my-5 flex items-center gap-3">
-                  <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-                  <span className="text-xs text-slate-400">{tx(lang, 'Customer?', 'ক্রেতা?')}</span>
-                  <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-                </div>
-
-                <button
-                  type="button"
-                  onClick={onOpenPortal}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/70 transition cursor-pointer"
-                >
-                  <Smartphone className="h-4 w-4" />
-                  <span>{tx(lang, 'Open Customer Self-Service Portal', 'ক্রেতা সেলফ-সার্ভিস পোর্টাল খুলুন')}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <footer className="mx-auto w-full max-w-5xl text-center text-xs text-slate-500 dark:text-slate-500">
-          {tx(
-            lang,
-            'MudirDokan Pro · Currency BDT (৳) · Asia/Dhaka',
-            'মুদির দোকান প্রো · মুদ্রা টাকা (৳) · ঢাকা সময়'
-          )}
-        </footer>
-      </div>
-    );
+    return <LoginPage onOpenPortal={onOpenPortal} />;
   }
 
   const renderGroup = (title: string, group: NavItem['group']) => {
