@@ -88,6 +88,7 @@ interface AppContextValue {
   toggleDarkMode: () => void;
   signInWithGoogle: () => Promise<void>;
   enterDemoMode: () => Promise<void>;
+  loginAsOwner: (options?: { name?: string; phone?: string; storeName?: string; subdomain?: string; customDomain?: string }) => void;
   logout: () => Promise<void>;
   refreshCatalog: () => Promise<void>;
   syncOfflineQueue: () => Promise<void>;
@@ -196,8 +197,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           offlineDb.customers.toArray(),
         ]);
         const demoData = getClientDemoCatalog();
-        if (!p || p.length < demoData.products.length) {
+        const CURRENT_CATALOG_REV = 'rev_2026_11_22_dairy_images_fix';
+        const cachedRev = localStorage.getItem('mudir_catalog_rev');
+        if (!p || p.length < demoData.products.length || cachedRev !== CURRENT_CATALOG_REV) {
           await cacheStoreCatalog(demoData);
+          localStorage.setItem('mudir_catalog_rev', CURRENT_CATALOG_REV);
           p = demoData.products;
           c = demoData.categories;
           b = demoData.brands;
@@ -218,8 +222,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           offlineDb.customers.toArray(),
         ]);
         const demoData = getClientDemoCatalog();
-        if (!p || p.length < demoData.products.length) {
+        const CURRENT_CATALOG_REV = 'rev_2026_11_22_dairy_images_fix';
+        const cachedRev = localStorage.getItem('mudir_catalog_rev');
+        if (!p || p.length < demoData.products.length || cachedRev !== CURRENT_CATALOG_REV) {
           await cacheStoreCatalog(demoData);
+          localStorage.setItem('mudir_catalog_rev', CURRENT_CATALOG_REV);
           p = demoData.products;
           c = demoData.categories;
           b = demoData.brands;
@@ -402,13 +409,73 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       demoPeriodEnd: '2026-10-31',
       smsProvider: 'WHATSAPP_LINK',
     });
-    localStorage.setItem('mudirdokan_demo_session', 'true');
+    sessionStorage.setItem('mudirdokan_demo_session', 'true');
+    localStorage.removeItem('mudirdokan_demo_session');
     toast.success('ডেমো স্টোর ও ১,৩৫৯টি পণ্য সফলভাবে লোড হয়েছে');
   }, []);
 
-  // Subscribe to Firebase Auth (Primary Google Sign-In)
+  const loginAsOwner = useCallback((options?: { name?: string; phone?: string; storeName?: string; subdomain?: string; customDomain?: string }) => {
+    const ownerName = options?.name || 'শামীম (দোকান মালিক)';
+    const phone = options?.phone || '01884700631';
+    const storeName = options?.storeName || 'শামীম গ্রোসারি';
+    const subdomain = options?.subdomain || 'shamimgrocery';
+    const customDomain = options?.customDomain || '';
+
+    const mockUser: AuthSessionUser = {
+      uid: 'owner-' + phone.replace(/\D/g, ''),
+      email: `${subdomain}@mudirdokanpro.com`,
+      displayName: ownerName,
+      photoURL: null,
+      provider: 'owner',
+    };
+    setAuthUser(mockUser);
+    setStaff({
+      uid: mockUser.uid,
+      email: mockUser.email,
+      name: ownerName,
+      role: 'OWNER',
+    });
+    setStore({
+      id: 1,
+      name: storeName,
+      nameBn: storeName,
+      phone,
+      address: 'মিরপুর-১০, ঢাকা',
+      addressBn: 'মিরপুর-১০, ঢাকা',
+      currency: 'BDT',
+      currencySymbol: '৳',
+      timezone: 'Asia/Dhaka',
+      dateFormat: 'YYYY-MM-DD',
+      logoUrl: null,
+      subdomain,
+      customDomain,
+    } as any);
+    setSettings({
+      languageMode: 'BN',
+      receiptFormat: '58MM',
+      receiptHeader: storeName,
+      receiptFooter: 'ধন্যবাদ, আবার আসবেন',
+      allowNegativeStock: false,
+      allowCashierPriceEdit: false,
+      allowCashierDiscount: true,
+      allowCashierReports: true,
+      invoicePrefix: 'INV',
+      purchasePrefix: 'PUR',
+      customerPrefix: 'CUST',
+      smsWebhookUrl: '',
+      smsSenderId: 'MudirDokan',
+      demoModeActive: false,
+      demoPeriodStart: '2026-05-01',
+      demoPeriodEnd: '2026-10-31',
+      smsProvider: 'WHATSAPP_LINK',
+    });
+    localStorage.setItem('mudirdokan_owner_session', JSON.stringify({ name: ownerName, phone, storeName, subdomain, customDomain }));
+    localStorage.removeItem('mudirdokan_demo_session');
+    toast.success(`${storeName}-এ স্বাগতম! আপনি সফলভাবে প্রবেশ করেছেন।`);
+  }, []);
+
+  // Subscribe to Firebase Auth
   useEffect(() => {
-    // Process redirect result if browser redirected
     getRedirectResult(auth).catch(() => {});
 
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -420,15 +487,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           photoURL: user.photoURL,
           provider: 'firebase',
         });
-      } else if (localStorage.getItem('mudirdokan_demo_session') === 'true') {
-        enterDemoMode();
       } else {
-        setAuthUser(null);
+        const savedOwner = localStorage.getItem('mudirdokan_owner_session');
+        if (savedOwner) {
+          try {
+            const parsed = JSON.parse(savedOwner);
+            loginAsOwner(parsed);
+            setAuthLoading(false);
+            return;
+          } catch {}
+        }
+        if (sessionStorage.getItem('mudirdokan_demo_session') === 'true') {
+          enterDemoMode();
+        } else {
+          setAuthUser(null);
+        }
       }
       setAuthLoading(false);
     });
     return () => unsub();
-  }, [enterDemoMode]);
+  }, [enterDemoMode, loginAsOwner]);
 
   useEffect(() => {
     if (authUser) {
@@ -463,11 +541,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const logout = async () => {
+    sessionStorage.removeItem('mudirdokan_demo_session');
     localStorage.removeItem('mudirdokan_demo_session');
+    localStorage.removeItem('mudirdokan_owner_session');
     setAuthUser(null);
     setStaff(null);
     setStore(null);
-    await signOut(auth);
+    await signOut(auth).catch(() => {});
   };
 
   const switchRole = async (role: 'OWNER' | 'MANAGER' | 'CASHIER') => {
@@ -505,6 +585,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         toggleDarkMode,
         signInWithGoogle,
         enterDemoMode,
+        loginAsOwner,
         logout,
         refreshCatalog,
         syncOfflineQueue,

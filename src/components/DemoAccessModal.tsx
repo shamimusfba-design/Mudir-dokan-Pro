@@ -63,6 +63,16 @@ export const DemoAccessModal: React.FC<DemoAccessModalProps> = ({
       const existing = JSON.parse(localStorage.getItem('mudirdokan_demo_leads') || '[]');
       existing.unshift(lead);
       localStorage.setItem('mudirdokan_demo_leads', JSON.stringify(existing));
+
+      const allLeads = JSON.parse(localStorage.getItem('mudirdokan_all_leads') || '[]');
+      allLeads.unshift({
+        type: 'DEMO_REGISTRATION',
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email.trim(),
+        timestamp: new Date().toISOString(),
+      });
+      localStorage.setItem('mudirdokan_all_leads', JSON.stringify(allLeads));
     } catch {}
 
     try {
