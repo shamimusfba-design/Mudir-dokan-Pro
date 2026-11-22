@@ -438,149 +438,145 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
         </div>
       </section>
 
-      {/* PRICING & BUY PRO SECTION */}
+      {/* PRICING & BUY PRO SECTION: EXACTLY 2 PACKAGES (MONTHLY 499 & YEARLY 4999) */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-emerald-50/30 to-white dark:from-slate-900 dark:via-slate-900/80 dark:to-slate-900">
-        <div className="mx-auto max-w-5xl text-center">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 mb-3">
-            <Zap className="h-3.5 w-3.5 text-emerald-600" />
-            <span>{tx(lang, 'Affordable Plans for Every Grocery Size', 'দোকানের সাইজ অনুযায়ী সাশ্রয়ী প্যাকেজ')}</span>
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-100 px-3.5 py-1 text-xs font-black text-rose-800 dark:bg-rose-950 dark:text-rose-300 mb-3 animate-pulse">
+            <Zap className="h-3.5 w-3.5 text-rose-600" />
+            <span>{tx(lang, 'Limited Time 50% Mega Discount Offer', 'সীমিত সময়ের ৫০% মেগা ডিসকাউন্ট অফার')}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
-            {tx(lang, 'Choose Your Pro Package & Start Today', 'আপনার সুবিধাজনক প্যাকেজ বেছে নিন')}
+            {tx(lang, 'Simple, Transparent & Discounted Pricing', 'সহজ, সাশ্রয়ী ও ডিসকাউন্ট প্যাকেজ')}
           </h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
             {tx(
               lang,
-              'Pay easily via bKash / Nagad to 01884700631 • Instant activation • Free remote training',
-              'বিকাশ বা নগদ-এ পেমেন্ট করুন 01884700631 নম্বরে • সাথে সাথে এক্টিভেশন • ফ্রি ট্রেনিং'
+              'Pay securely via bKash / Nagad to 01884700631 • Instant store activation • No hidden charges',
+              'বিকাশ বা নগদ-এ পেমেন্ট করুন 01884700631 নম্বরে • সাথে সাথে এক্টিভেশন • কোনো লুকানো চার্জ নেই'
             )}
           </p>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            {/* Starter */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">
+            
+            {/* Package 1: Monthly (50% Off: 1000 -> 499) */}
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between hover:shadow-md transition">
               <div>
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-extrabold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                  ছোট দোকান
-                </span>
-                <h3 className="mt-3 text-lg font-bold text-slate-900 dark:text-white">স্টার্টার প্যাক</h3>
-                <div className="mt-2 flex items-baseline gap-1">
-                  <span className="font-mono text-3xl font-black text-slate-900 dark:text-white">৳৪৯৯</span>
-                  <span className="text-xs text-slate-500">/মাস</span>
+                <div className="flex items-center justify-between">
+                  <span className="rounded-full bg-rose-100 px-3 py-1 text-[11px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+                    ৫০% মেগা ডিসকাউন্ট 🔥
+                  </span>
+                  <span className="text-[11px] font-semibold text-slate-500">১ মাসের জন্য</span>
                 </div>
-                <ul className="mt-5 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+
+                <h3 className="mt-3 text-xl font-black text-slate-900 dark:text-white">মাসিক সাবস্ক্রিপশন</h3>
+                
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className="font-mono text-4xl font-black text-emerald-700 dark:text-emerald-400">৳৪৯৯</span>
+                  <span className="text-xs text-slate-500">/মাস</span>
+                  <span className="font-mono text-sm line-through text-slate-400 dark:text-slate-500">রেগুলার ৳১,০০০</span>
+                </div>
+
+                <p className="mt-2 text-xs font-bold text-amber-700 dark:text-amber-400">
+                  রেগুলার ১,০০০ টাকার প্যাকেজ মাত্র ৪৯৯ টাকায়!
+                </p>
+
+                <ul className="mt-6 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>১টি ডিভাইস এক্সেস</span>
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>ডিজিটাল বাকি ও ক্যাশ খাতা</span>
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>ফাস্ট ভিজ্যুয়াল বারকোড পিওএস</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>ক্যাশ ড্রয়ার হিসাব</span>
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>ডিজিটাল বাকি খাতা ও এসএমএস তাগাদা</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>অফলাইন ব্যাকআপ</span>
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>দৈনিক খরচ ও ক্যাশ ড্রয়ার হিসাব</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>অফলাইন-ফার্স্ট ক্যাশ কাউন্টার</span>
                   </li>
                 </ul>
               </div>
+
               <button
                 type="button"
                 onClick={() => setIsBuyModalOpen(true)}
-                className="mt-6 w-full rounded-2xl border border-slate-300 bg-slate-50 py-2.5 text-xs font-bold text-slate-800 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-white transition cursor-pointer"
+                className="mt-8 w-full rounded-2xl border-2 border-emerald-600 bg-emerald-50/80 py-3 text-xs sm:text-sm font-black text-emerald-900 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 transition cursor-pointer"
               >
-                স্টার্টার কিনুন
+                ১ মাসের প্যাকেজ কিনুন (৳৪৯৯) ⚡
               </button>
             </div>
 
-            {/* Pro - Best Value */}
-            <div className="relative rounded-3xl border-2 border-emerald-500 bg-white p-6 shadow-xl dark:border-emerald-500 dark:bg-slate-900 flex flex-col justify-between ring-4 ring-emerald-500/10">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-1 text-[11px] font-black text-white shadow-sm">
-                সেরা ও জনপ্রিয় পছন্দ ⭐
+            {/* Package 2: Yearly (Mega Saver: 12000 -> 4999) */}
+            <div className="relative rounded-3xl border-2 border-emerald-500 bg-white p-6 sm:p-7 shadow-xl dark:border-emerald-500 dark:bg-slate-900 flex flex-col justify-between ring-4 ring-emerald-500/10">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-1 text-[11px] font-black text-white shadow-md">
+                সেরা সাশ্রয়ী পছন্দ ⭐
               </div>
+
               <div>
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-extrabold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                  মাঝারি ও বড় মুদি দোকান
-                </span>
-                <h3 className="mt-3 text-lg font-bold text-slate-900 dark:text-white">প্রো মুদি দোকান</h3>
-                <div className="mt-2 flex items-baseline gap-1">
-                  <span className="font-mono text-3xl font-black text-emerald-700 dark:text-emerald-400">৳৯৯৯</span>
-                  <span className="text-xs text-slate-500">/মাস</span>
+                <div className="flex items-center justify-between">
+                  <span className="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                    ৫৮% মেগা সেভিংস 🎉
+                  </span>
+                  <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">পূর্ণ ১ বছর</span>
                 </div>
-                <ul className="mt-5 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+
+                <h3 className="mt-3 text-xl font-black text-slate-900 dark:text-white">বাৎসরিক মেগা অফার</h3>
+                
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className="font-mono text-4xl font-black text-emerald-700 dark:text-emerald-400">৳৪,৯৯৯</span>
+                  <span className="text-xs text-slate-500">/বছর</span>
+                  <span className="font-mono text-sm line-through text-slate-400 dark:text-slate-500">রেগুলার ৳১২,০০০</span>
+                </div>
+
+                <p className="mt-2 text-xs font-black text-rose-600 dark:text-rose-400">
+                  ১ বছরের জন্য ১২,০০০ টাকারটা মাত্র ৫,০০০ টাকা (৳৪,৯৯৯)!
+                </p>
+
+                <ul className="mt-6 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
                   <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>১,৩৫৯টি পণ্যের ফটো ডাটাবেজ</span>
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>পূর্ণ ১ বছরের আনলিমিটেড লাইসেন্স</span>
+                  </li>
+                  <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>সব প্রো ফিচার ও আপডেট সম্পূর্ণ ফ্রি</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>বারকোড স্ক্যানার ও ফাস্ট পিওএস</span>
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>১,৩৫৯টি আসল পণ্যের ফটো ডাটাবেজ</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>কাস্টমার অটো এসএমএস খাতা</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
                     <span>দোকানের ফ্রি অনলাইন সাবডোমেন</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>লাইফটাইম সিকিউর ক্লাউড ব্যাকআপ</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
                     <span>২৪/৭ ভিআইপি হোয়াটসঅ্যাপ সাপোর্ট</span>
                   </li>
                 </ul>
               </div>
+
               <button
                 type="button"
                 onClick={() => setIsBuyModalOpen(true)}
-                className="mt-6 w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3 text-xs sm:text-sm font-black text-white hover:from-emerald-700 hover:to-teal-800 shadow-md shadow-emerald-600/30 transition cursor-pointer"
+                className="mt-8 w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3.5 text-xs sm:text-sm font-black text-white hover:from-emerald-700 hover:to-teal-800 shadow-lg shadow-emerald-600/30 transition cursor-pointer"
               >
-                প্রো প্যাকেজ কিনুন ⚡
+                বাৎসরিক মেগা অফার কিনুন (৳৪,৯৯৯) ⚡
               </button>
             </div>
 
-            {/* Annual VIP */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between">
-              <div>
-                <span className="rounded-full bg-amber-100 px-3 py-1 text-[10px] font-extrabold text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                  ২ মাস সম্পূর্ণ ফ্রি! 🎉
-                </span>
-                <h3 className="mt-3 text-lg font-bold text-slate-900 dark:text-white">বাৎসরিক ভিআইপি</h3>
-                <div className="mt-2 flex items-baseline gap-1">
-                  <span className="font-mono text-3xl font-black text-slate-900 dark:text-white">৳৭,৯৯৯</span>
-                  <span className="text-xs text-slate-500">/বছর</span>
-                </div>
-                <ul className="mt-5 space-y-2 text-xs text-slate-600 dark:text-slate-400">
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>প্রো প্যাকেজের সব ফিচার</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>কাস্টম .com ডোমেন ইন্টিগ্রেশন</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>লাইফটাইম সিকিউর ক্লাউড ব্যাকআপ</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>দোকানে সেটআপ ও ব্যক্তিগত ট্রেনিং</span>
-                  </li>
-                </ul>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsBuyModalOpen(true)}
-                className="mt-6 w-full rounded-2xl border border-amber-400 bg-amber-50 py-2.5 text-xs font-bold text-amber-900 hover:bg-amber-100 dark:bg-amber-950/60 dark:text-amber-300 transition cursor-pointer"
-              >
-                বাৎসরিক ভিআইপি কিনুন
-              </button>
-            </div>
           </div>
         </div>
       </section>

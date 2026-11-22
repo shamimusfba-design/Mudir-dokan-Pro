@@ -33,7 +33,7 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
   const [customSubdomain, setCustomSubdomain] = useState('');
   const [enableCustomDomain, setEnableCustomDomain] = useState(false);
   const [customDomainName, setCustomDomainName] = useState('');
-  const [selectedPlan, setSelectedPlan] = useState<'starter' | 'pro' | 'annual'>('pro');
+  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('monthly');
   const [trxId, setTrxId] = useState('');
 
   // Auto-generate subdomain slug from store name
@@ -151,37 +151,51 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
           </p>
         </div>
 
-        {/* Pricing Plan Selector */}
+        {/* Pricing Plan Selector: Exactly 2 Discount Packages (Monthly 499 & Yearly 4999) */}
         <div className="mt-4 space-y-2">
-          <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
-            {tx(lang, '1. Choose Subscription Plan:', '১. আপনার সুবিধাজনক প্যাকেজ নির্বাচন করুন:')}
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div className="flex items-center justify-between">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
+              {tx(lang, '1. Select Subscription Plan (Limited Time Offer):', '১. প্যাকেজ নির্বাচন করুন (সীমিত সময়ের ৫০% অফার):')}
+            </label>
+            <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300 animate-pulse">
+              🔥 {tx(lang, 'Limited Time Offer', 'সীমিত সময়ের অফার')}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               {
-                id: 'starter',
-                name: 'স্টার্টার',
+                id: 'monthly',
+                name: '১ মাস সাবস্ক্রিপশন',
+                nameEn: '1 Month Access',
+                regularPrice: '৳১,০০০',
                 price: '৳৪৯৯',
                 period: '/মাস',
-                badge: 'ছোট দোকান',
-                features: ['১টি ইউজার', 'ডিজিটাল বাকি খাতা', 'ক্যাশ ড্রয়ার'],
+                badge: '৫০% ডিসকাউন্ট 🔥',
+                note: 'রেগুলার ১,০০০৳ — ৫০% ছাড়ে মাত্র ৪৯৯৳',
+                features: [
+                  '১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ',
+                  'ফাস্ট ভিজ্যুয়াল বারকোড পিওএস',
+                  'ডিজিটাল বাকি খাতা ও এসএমএস তাগাদা',
+                  'অফলাইন ক্যাশ কাউন্টার ও ড্রয়ার মেলানো',
+                ],
               },
               {
-                id: 'pro',
-                name: 'প্রো মুদি দোকান',
-                price: '৳৯৯৯',
-                period: '/মাস',
-                badge: 'সেরা পছন্দ ⭐',
-                popular: true,
-                features: ['১,৩৫৯টি আসল পণ্যের ছবি', 'বারকোড পিওএস', 'এসএমএস তাগাদা', 'অনলাইন সাবডোমেন'],
-              },
-              {
-                id: 'annual',
-                name: 'বাৎসরিক ভিআইপি',
-                price: '৳৭,৯৯৯',
+                id: 'yearly',
+                name: '১ বছর (বাৎসরিক মেগা অফার)',
+                nameEn: '1 Year Mega Saver',
+                regularPrice: '৳১২,০০০',
+                price: '৳৪,৯৯৯',
                 period: '/বছর',
-                badge: '২ মাস ফ্রি!',
-                features: ['কাস্টম ডোমেন সাপোর্ট', 'ভিআইপি ব্যাকআপ', 'লাইফটাইম সাপোর্ট', 'ফ্রি ট্রেনিং'],
+                badge: '৫৮% মেগা সেভিংস ⭐',
+                popular: true,
+                note: '১২,০০০ টাকারটা মাত্র ৫,০০০ টাকায়!',
+                features: [
+                  'পূর্ণ ১ বছরের আনলিমিটেড লাইসেন্স',
+                  'সব প্রো ফিচার ও আপডেট সম্পূর্ণ ফ্রি',
+                  'দোকানের নিজস্ব অনলাইন সাবডোমেন',
+                  '২৪/৭ ভিআইপি হোয়াটসঅ্যাপ সাপোর্ট ও ব্যাকআপ',
+                ],
               },
             ].map((p) => {
               const isSelected = selectedPlan === p.id;
@@ -190,26 +204,34 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                   key={p.id}
                   type="button"
                   onClick={() => setSelectedPlan(p.id as any)}
-                  className={`relative flex flex-col justify-between rounded-2xl border p-3 text-left transition cursor-pointer ${
+                  className={`relative flex flex-col justify-between rounded-2xl border p-4 text-left transition cursor-pointer ${
                     isSelected
-                      ? 'border-emerald-600 bg-emerald-50/70 shadow-md ring-2 ring-emerald-600/30 dark:border-emerald-500 dark:bg-emerald-950/40'
+                      ? 'border-emerald-600 bg-emerald-50/80 shadow-lg ring-2 ring-emerald-600/30 dark:border-emerald-500 dark:bg-emerald-950/40'
                       : 'border-slate-200 bg-white hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900'
                   }`}
                 >
                   <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-extrabold text-emerald-700 dark:text-emerald-400">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
                         {p.badge}
                       </span>
                       {isSelected && <Check className="h-4 w-4 text-emerald-600" />}
                     </div>
-                    <div className="text-sm font-bold mt-1 text-slate-900 dark:text-white">{p.name}</div>
-                    <div className="mt-1 flex items-baseline gap-0.5">
-                      <span className="font-mono text-lg font-black text-slate-900 dark:text-white">{p.price}</span>
-                      <span className="text-[10px] text-slate-500">{p.period}</span>
+
+                    <div className="text-sm font-black mt-2 text-slate-900 dark:text-white">{p.name}</div>
+                    
+                    <div className="mt-1.5 flex items-baseline gap-2">
+                      <span className="font-mono text-xl font-black text-emerald-700 dark:text-emerald-400">{p.price}</span>
+                      <span className="text-xs text-slate-500">{p.period}</span>
+                      <span className="font-mono text-xs line-through text-slate-400 dark:text-slate-500">{p.regularPrice}</span>
                     </div>
+
+                    <p className="mt-1 text-[11px] font-bold text-amber-700 dark:text-amber-400">
+                      {p.note}
+                    </p>
                   </div>
-                  <ul className="mt-2.5 space-y-1 text-[11px] text-slate-600 dark:text-slate-400 border-t border-slate-200/60 dark:border-slate-800 pt-2">
+
+                  <ul className="mt-3 space-y-1.5 text-[11px] text-slate-600 dark:text-slate-400 border-t border-slate-200/60 dark:border-slate-800 pt-2.5">
                     {p.features.map((f, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
                         <Check className="h-3 w-3 text-emerald-600 shrink-0" />
