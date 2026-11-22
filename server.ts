@@ -64,8 +64,10 @@ async function startServer() {
 
   app.use(express.json({ limit: '6mb' }));
 
-  // Allow cross-origin API access from Firebase Hosting (mudipro.web.app / vaulted-path-r91ww.web.app) and configured origins
+  // Allow cross-origin API access from Firebase Hosting (mudidokanpro.web.app / mudipro.web.app) and configured origins
   const defaultAllowedOrigins = [
+    'https://mudidokanpro.web.app',
+    'https://mudidokanpro.firebaseapp.com',
     'https://mudipro-2c4b2.web.app',
     'https://mudipro-2c4b2.firebaseapp.com',
     'https://mudipro.web.app',

@@ -7,8 +7,9 @@ export function normalizeLang(val?: string | null): LanguageMode {
 }
 
 export function getSavedLang(): LanguageMode {
-  if (typeof window === 'undefined') return 'EN';
-  return normalizeLang(localStorage.getItem('mudirdokan_lang'));
+  if (typeof window === 'undefined') return 'BN';
+  const saved = localStorage.getItem('mudirdokan_lang');
+  return saved === 'EN' ? 'EN' : 'BN';
 }
 
 export function saveLang(mode: LanguageMode) {

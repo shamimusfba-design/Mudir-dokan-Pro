@@ -26,6 +26,7 @@ export interface PrintableSaleReceipt {
   totalAmount: string | number;
   paidAmount: string | number;
   dueAmount: string | number;
+  customerTotalDue?: string | number;
   payments: Array<{ method: string; amount: string | number }>;
 }
 
@@ -253,13 +254,19 @@ export const ReceiptModal: React.FC<{
                     <span>{formatBDT(receipt.totalAmount)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>{tx(lang, 'Paid:', 'পরিশোধ:')}</span>
+                    <span>{tx(lang, 'Paid Amount:', 'পরিশোধিত:')}</span>
                     <span>{formatBDT(receipt.paidAmount)}</span>
                   </div>
                   {Number(receipt.dueAmount) > 0 && (
                     <div className="flex justify-between font-bold text-red-700">
-                      <span>{tx(lang, 'Due:', 'বাকি:')}</span>
+                      <span>{tx(lang, 'Current Due:', 'চলতি বাকি:')}</span>
                       <span>{formatBDT(receipt.dueAmount)}</span>
+                    </div>
+                  )}
+                  {receipt.customerTotalDue !== undefined && Number(receipt.customerTotalDue) > 0 && (
+                    <div className="flex justify-between font-black text-rose-800 border-t border-slate-300 pt-0.5">
+                      <span>{tx(lang, 'Total Outstanding Due:', 'মোট সর্বমোট বকেয়া:')}</span>
+                      <span>{formatBDT(receipt.customerTotalDue)}</span>
                     </div>
                   )}
                   {receipt.expectedPaymentDate && (

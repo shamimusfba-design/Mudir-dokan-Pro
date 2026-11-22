@@ -19,6 +19,6 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: CORS_ORIGIN
-        value: https://mudipro-2c4b2.web.app,https://mudipro.web.app,https://vaulted-path-r91ww.web.app
+        value: https://mudipro-2c4b2.web.app,https://mudipro.web.app,https://vaulted-path-r91ww.web.app,https://mudidokanpro.web.app
       - key: PORTAL_SESSION_SECRET
         generateValue: true

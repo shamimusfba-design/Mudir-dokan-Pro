@@ -440,6 +440,28 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
               {darkMode ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-indigo-600" />}
             </button>
 
+            {settings?.demoModeActive && (
+              <div className="flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50/90 py-1 px-3 text-xs shadow-xs dark:border-emerald-800 dark:bg-emerald-950/60">
+                <span className="font-bold text-emerald-800 dark:text-emerald-300 text-[11px]">
+                  {tx(lang, '⚡ Demo Mode', '⚡ ডেমো মোড')}
+                </span>
+                <span className="text-emerald-300 dark:text-emerald-700">|</span>
+                <a
+                  href={`https://wa.me/8801884700631?text=${encodeURIComponent(
+                    lang === 'BN'
+                      ? 'হ্যালো মুদির দোকান প্রো, আমি ফুল প্রো ভার্সন কিনতে/আপগ্রেড করতে আগ্রহী।'
+                      : 'Hello Mudi Dokan Pro, I am interested in purchasing/upgrading to the Full Pro Version.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-extrabold text-emerald-700 hover:text-emerald-900 hover:underline dark:text-emerald-400 dark:hover:text-emerald-200"
+                  title="WhatsApp: 01884700631"
+                >
+                  <span>{tx(lang, 'Upgrade to Pro 💬', 'আপগ্রেড প্রো 💬')}</span>
+                </a>
+              </div>
+            )}
+
             {activeTab !== 'pos' && (
               <button
                 type="button"
@@ -452,43 +474,6 @@ const ShopkeeperShell: React.FC<{ onOpenPortal: () => void }> = ({ onOpenPortal 
             )}
           </div>
         </header>
-
-        {settings?.demoModeActive && (
-          <div className="no-print flex flex-wrap items-center justify-between gap-2 border-b border-amber-200 bg-gradient-to-r from-amber-50 via-orange-50/70 to-indigo-50/60 px-4 py-2 text-xs dark:border-amber-900/60 dark:from-amber-950/50 dark:via-slate-900 dark:to-indigo-950/40">
-            <div className="flex flex-wrap items-center gap-2 text-amber-950 dark:text-amber-200">
-              <span className="inline-flex items-center gap-1 rounded-md bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-                {tx(lang, 'DEMO MODE', 'ডেমো মোড')}
-              </span>
-              <span className="font-semibold">
-                {tx(
-                  lang,
-                  `6-Month Bangladesh Store Dataset Active (${settings.demoPeriodStart || ''} to ${settings.demoPeriodEnd || ''})`,
-                  `৬ মাসের বাংলাদেশি মুদির দোকান ডেমো ডেটা সক্রিয় (${settings.demoPeriodStart || ''} থেকে ${settings.demoPeriodEnd || ''})`
-                )}
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              {activeTab !== 'reports' && (
-                <button
-                  type="button"
-                  onClick={() => handleNavigate('reports')}
-                  className="font-bold text-indigo-700 hover:underline dark:text-indigo-300 cursor-pointer"
-                >
-                  {tx(lang, 'View 6-Month P&L', '৬ মাসের লাভ-ক্ষতি দেখুন')}
-                </button>
-              )}
-              {activeTab !== 'settings' && (
-                <button
-                  type="button"
-                  onClick={() => handleNavigate('settings')}
-                  className="font-bold text-amber-800 hover:underline dark:text-amber-300 cursor-pointer"
-                >
-                  {tx(lang, 'Manage / Reset Demo', 'ডেমো পরিচালনা / রিসেট')}
-                </button>
-              )}
-            </div>
-          </div>
-        )}
 
         {!isOnline && (
           <div className="no-print border-b border-orange-200 bg-orange-50 px-4 py-2 text-xs font-medium text-orange-800 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300">

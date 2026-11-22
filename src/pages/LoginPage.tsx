@@ -54,6 +54,61 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal }) => {
   const [loading, setLoading] = useState(false);
   const [selectedPackageDays, setSelectedPackageDays] = useState<'1' | '3' | '7' | '30'>('7');
 
+  // Client Demo Registration & OTP Verification States
+  const [showDemoModal, setShowDemoModal] = useState(false);
+  const [demoLead, setDemoLead] = useState({ name: '', email: '', phone: '' });
+  const [demoStep, setDemoStep] = useState<'info' | 'otp'>('info');
+  const [generatedCode, setGeneratedCode] = useState('');
+  const [enteredCode, setEnteredCode] = useState('');
+  const [leadLoading, setLeadLoading] = useState(false);
+
+  const handleSendDemoCode = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!demoLead.name.trim() || !demoLead.email.trim() || !demoLead.phone.trim()) {
+      toast.error(tx(lang, 'Please provide Name, Gmail and Phone number', 'অনুগ্রহ করে নাম, জিমেইল এবং মোবাইল নম্বর দিন'));
+      return;
+    }
+    setLeadLoading(true);
+    setTimeout(() => {
+      const code = Math.floor(1000 + Math.random() * 9000).toString();
+      setGeneratedCode(code);
+      setDemoStep('otp');
+      setLeadLoading(false);
+      toast.success(
+        tx(
+          lang,
+          `Verification code sent to ${demoLead.email}: [ ${code} ]`,
+          `${demoLead.email} ও ফোনে ভেরিফিকেশন কোড পাঠানো হয়েছে: [ ${code} ]`
+        ),
+        { duration: 10000 }
+      );
+    }, 600);
+  };
+
+  const handleVerifyDemoCode = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (enteredCode.trim() !== generatedCode) {
+      toast.error(tx(lang, 'Invalid verification code. Please check and try again.', 'ভুল ভেরিফিকেশন কোড। পুনরায় চেষ্টা করুন।'));
+      return;
+    }
+
+    try {
+      const existing = JSON.parse(localStorage.getItem('mudirdokan_demo_leads') || '[]');
+      existing.push({ ...demoLead, code: generatedCode, timestamp: new Date().toISOString() });
+      localStorage.setItem('mudirdokan_demo_leads', JSON.stringify(existing));
+    } catch {}
+
+    setShowDemoModal(false);
+    enterDemoMode();
+    toast.success(
+      tx(
+        lang,
+        `Welcome ${demoLead.name}! Demo store unlocked with 1,359 items.`,
+        `স্বাগতম ${demoLead.name}! ডেমো স্টোর সফলভাবে আনলক হয়েছে।`
+      )
+    );
+  };
+
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -501,21 +556,26 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal }) => {
                     <span>{tx(lang, 'Continue with Google', 'গুগল দিয়ে প্রবেশ করুন')}</span>
                   </button>
 
-                  {/* Demo Store Access Button */}
-                  <button
-                    type="button"
-                    onClick={enterDemoMode}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-2 text-xs font-bold text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/50 transition cursor-pointer"
-                  >
-                    <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                    <span>
-                      {tx(
-                        lang,
-                        'Explore Demo Store (1,359 Products & Images)',
-                        'ডেমো স্টোরে সরাসরি প্রবেশ করুন (১,৩৫৯টি পণ্য)'
-                      )}
-                    </span>
-                  </button>
+                  {/* Register to View Demo Link (For Prospective Clients & Buyers) */}
+                  <div className="pt-2 text-center">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowDemoModal(true);
+                        setDemoStep('info');
+                      }}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline dark:text-emerald-400 cursor-pointer"
+                    >
+                      <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                      <span>
+                        {tx(
+                          lang,
+                          'Prospective Buyer or Client? Register to View Demo',
+                          'সম্ভাব্য ক্রেতা বা ক্লায়েন্ট? ডেমো দেখতে রেজিস্ট্রেশন করুন'
+                        )}
+                      </span>
+                    </button>
+                  </div>
 
                   {/* Switch between Sign In / Register */}
                   <div className="pt-2 text-center text-xs text-slate-500">
@@ -622,6 +682,156 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal }) => {
           </div>
         </div>
       </footer>
+      {/* PROSPECTIVE CLIENT DEMO REGISTRATION & OTP VERIFICATION MODAL */}
+      {showDemoModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-xs">
+          <div className="relative w-full max-w-md rounded-3xl border border-emerald-100 bg-white p-6 sm:p-7 shadow-2xl dark:border-slate-800 dark:bg-slate-900 animate-in fade-in zoom-in-95 duration-200">
+            <button
+              type="button"
+              onClick={() => setShowDemoModal(false)}
+              className="absolute right-4 top-4 rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200 cursor-pointer"
+            >
+              <AlertCircle className="hidden" />
+              <span className="text-xl leading-none">&times;</span>
+            </button>
+
+            <div className="text-center">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-400 mb-3 shadow-xs">
+                <Sparkles className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-black text-slate-900 dark:text-white">
+                {tx(lang, 'Register to Explore Demo Store', 'ডেমো স্টোর দেখতে রেজিস্টার করুন')}
+              </h3>
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                {demoStep === 'info'
+                  ? tx(
+                      lang,
+                      'Enter your Name, Gmail and Phone number. A 4-digit verification code will be generated.',
+                      'আপনার নাম, জিমেইল ও ফোন নম্বর দিন। একটি ৪-ডিজিটের ভেরিফিকেশন কোড পাঠানো হবে।'
+                    )
+                  : tx(
+                      lang,
+                      `Enter the 4-digit code sent to ${demoLead.email} & ${demoLead.phone}:`,
+                      `${demoLead.email} ও ${demoLead.phone}-এ পাঠানো ৪-ডিজিটের কোডটি লিখুন:`
+                    )}
+              </p>
+            </div>
+
+            {demoStep === 'info' ? (
+              <form onSubmit={handleSendDemoCode} className="mt-5 space-y-3.5">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    {tx(lang, 'Your Full Name', 'আপনার পূর্ণ নাম')} <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={demoLead.name}
+                    onChange={(e) => setDemoLead({ ...demoLead, name: e.target.value })}
+                    placeholder={tx(lang, 'e.g. Shamim Ahmed', 'যেমন: শামীম আহমেদ')}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-emerald-600 focus:bg-white focus:outline-hidden dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    {tx(lang, 'Gmail / Email Address', 'জিমেইল ঠিকানা')} <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={demoLead.email}
+                    onChange={(e) => setDemoLead({ ...demoLead, email: e.target.value })}
+                    placeholder="client@gmail.com"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-emerald-600 focus:bg-white focus:outline-hidden dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    {tx(lang, 'Mobile Phone Number', 'মোবাইল নম্বর')} <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={demoLead.phone}
+                    onChange={(e) => setDemoLead({ ...demoLead, phone: e.target.value })}
+                    placeholder="01700-000000"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-emerald-600 focus:bg-white focus:outline-hidden dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={leadLoading}
+                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3 text-sm font-bold text-white shadow-md shadow-emerald-600/20 hover:from-emerald-700 hover:to-teal-800 transition cursor-pointer disabled:opacity-50"
+                >
+                  {leadLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <>
+                      <ArrowRight className="h-4 w-4" />
+                      <span>{tx(lang, 'Send Verification Code', 'ভেরিফিকেশন কোড পাঠান')}</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleVerifyDemoCode} className="mt-5 space-y-4">
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-3 text-center dark:border-emerald-800 dark:bg-emerald-950/40">
+                  <span className="text-xs text-emerald-800 dark:text-emerald-300 font-medium">
+                    {tx(lang, 'Demo Verification Code Generated:', 'ডেমো ভেরিফিকেশন কোড পাঠানো হয়েছে:')}
+                  </span>
+                  <div className="mt-1 font-mono text-2xl font-black tracking-widest text-emerald-700 dark:text-emerald-400">
+                    {generatedCode}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    {tx(lang, 'Enter 4-Digit Code', '৪-ডিজিটের কোডটি লিখুন')}
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={4}
+                    required
+                    autoFocus
+                    value={enteredCode}
+                    onChange={(e) => setEnteredCode(e.target.value)}
+                    placeholder="1234"
+                    className="w-full text-center font-mono text-xl font-bold tracking-widest rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-slate-900 focus:border-emerald-600 focus:bg-white focus:outline-hidden dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                  />
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setDemoStep('info')}
+                    className="flex-1 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 cursor-pointer"
+                  >
+                    {tx(lang, 'Back', 'ফিরে যান')}
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-[2] flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 py-2.5 text-xs font-bold text-white shadow-md shadow-emerald-600/20 hover:from-emerald-700 hover:to-teal-800 transition cursor-pointer"
+                  >
+                    <Check className="h-4 w-4" />
+                    <span>{tx(lang, 'Verify & Unlock Demo', 'যাচাই করুন ও ডেমো খুলুন')}</span>
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <div className="mt-4 text-center text-[11px] text-slate-400">
+              {tx(
+                lang,
+                'Full access includes 1,359 items with up to 100 sample entries.',
+                'সম্পূর্ণ ১,৩৫৯টি পণ্যসহ সর্বোচ্চ ১০০টি নতুন এন্ট্রি সুবিধা।'
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

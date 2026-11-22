@@ -15,13 +15,16 @@ import {
   SlidersHorizontal,
   ShoppingBag,
   AlertTriangle,
+  AlertCircle,
+  MessageSquare,
+  Sparkles,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch } from '../lib/api';
 import { D, money, formatBDT, formatQty, dhakaTodayISO, PAYMENT_METHODS } from '../lib/decimal';
 import { tr, trCompact, tx, formatStatusLabel, formatUnitLabel } from '../lib/i18n';
-import { enqueueOfflineSale, type CachedProduct } from '../lib/offline-db';
+import { enqueueOfflineSale, offlineDb, type CachedProduct } from '../lib/offline-db';
 import { ReceiptModal, type PrintableReceipt } from '../components/ReceiptModal';
 import { ProductImage, BrandLogo, CategoryIcon, getCategoryTheme } from '../components/ProductMedia';
 
@@ -61,6 +64,19 @@ export const PosPage: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [receipt, setReceipt] = useState<PrintableReceipt | null>(null);
   const [allowLimitOverride, setAllowLimitOverride] = useState(false);
+
+  // Modern Fast Billing & Due Management States
+  const [activePaymentMethod, setActivePaymentMethod] = useState<'CASH' | 'BKASH' | 'NAGAD' | 'ROCKET' | 'CARD'>('CASH');
+  const [splitPaymentMode, setSplitPaymentMode] = useState<boolean>(false);
+  const [paidInput, setPaidInput] = useState<string>('');
+  const [paidInputTouched, setPaidInputTouched] = useState<boolean>(false);
+
+  // Due customer assignment: 'EXISTING' or 'NEW'
+  const [dueCustomerMode, setDueCustomerMode] = useState<'EXISTING' | 'NEW'>('EXISTING');
+  const [dueCustName, setDueCustName] = useState<string>('');
+  const [dueCustPhone, setDueCustPhone] = useState<string>('');
+  const [dueCustArea, setDueCustArea] = useState<string>('');
+  const [showProUpgradeModal, setShowProUpgradeModal] = useState<boolean>(false);
 
   const [showQuickCustomer, setShowQuickCustomer] = useState(false);
   const [newCust, setNewCust] = useState({
@@ -320,19 +336,37 @@ export const PosPage: React.FC = () => {
     const bDisc = D(billDiscount);
     const totalDiscount = itemDiscounts.plus(bDisc);
     const grandTotal = DecimalMaxZero(subtotal.minus(totalDiscount));
-    const enteredPaid = paymentRows.reduce((acc, r) => acc.plus(D(r.amount)), D(0));
+
+    let enteredPaid = D(0);
+    if (splitPaymentMode) {
+      enteredPaid = paymentRows.reduce((acc, r) => acc.plus(D(r.amount)), D(0));
+    } else {
+      if (paidInputTouched) {
+        enteredPaid = paidInput.trim() === '' ? D(0) : D(paidInput);
+      } else {
+        enteredPaid = grandTotal;
+      }
+    }
+
     const appliedPaid = enteredPaid.gt(grandTotal) ? grandTotal : enteredPaid;
     const due = grandTotal.minus(appliedPaid);
     const changeReturn = enteredPaid.gt(grandTotal) ? enteredPaid.minus(grandTotal) : D(0);
-    return { subtotal, itemDiscounts, totalDiscount, grandTotal, enteredPaid, appliedPaid, due, changeReturn };
-  }, [cart, billDiscount, paymentRows]);
+    const isDueSale = due.gt(0);
+
+    return { subtotal, itemDiscounts, totalDiscount, grandTotal, enteredPaid, appliedPaid, due, changeReturn, isDueSale };
+  }, [cart, billDiscount, splitPaymentMode, paymentRows, paidInput, paidInputTouched]);
 
   const setFullCashPayment = () => {
-    setPaymentRows([{ method: 'CASH', amount: money(totals.grandTotal), referenceNo: '' }]);
+    setSplitPaymentMode(false);
+    setPaidInput(money(totals.grandTotal));
+    setPaidInputTouched(true);
+    setActivePaymentMethod('CASH');
   };
 
   const setFullCreditSale = () => {
-    setPaymentRows([{ method: 'CASH', amount: '0', referenceNo: '' }]);
+    setSplitPaymentMode(false);
+    setPaidInput('0');
+    setPaidInputTouched(true);
   };
 
   const canEditPrice = staff?.role !== 'CASHIER' || Boolean(settings?.allowCashierPriceEdit);
@@ -352,10 +386,34 @@ export const PosPage: React.FC = () => {
       return;
     }
     try {
-      const created = await apiFetch<{ id: number; name: string; customerCode: string }>('/api/customers', {
-        method: 'POST',
-        body: JSON.stringify(newCust),
-      });
+      let created: { id: number; name: string; customerCode: string } | null = null;
+      if (isOnline) {
+        try {
+          created = await apiFetch<{ id: number; name: string; customerCode: string }>('/api/customers', {
+            method: 'POST',
+            body: JSON.stringify(newCust),
+          });
+        } catch (apiErr) {
+          console.warn('Online customer API failed, creating locally:', apiErr);
+        }
+      }
+
+      if (!created) {
+        const localId = Date.now();
+        const code = `CUST-${localId.toString().slice(-4)}`;
+        const localRecord = {
+          id: localId,
+          customerCode: code,
+          name: newCust.name.trim(),
+          phone: newCust.phone.trim(),
+          customerType: newCust.customerType || 'REGULAR',
+          creditLimit: newCust.creditLimit || '5000',
+          currentDue: '0.00',
+        };
+        await offlineDb.customers.put(localRecord);
+        created = { id: localId, name: localRecord.name, customerCode: code };
+      }
+
       await refreshCatalog();
       setSelectedCustomerId(created.id);
       setShowQuickCustomer(false);
@@ -373,38 +431,127 @@ export const PosPage: React.FC = () => {
       toast.error(tx(lang, 'Add at least one product to the cart', 'কার্টে অন্তত একটি পণ্য যোগ করুন'));
       return;
     }
-    if (totals.due.gt(0) && !selectedCustomerId) {
-      toast.error(
-        tx(
-          lang,
-          'Anonymous credit sale is not allowed. Select or create a customer for due/baki.',
-          'নাম ছাড়া বাকিতে বিক্রি করা যাবে না। বাকির জন্য ক্রেতা নির্বাচন বা যোগ করুন।'
-        )
-      );
-      return;
+
+    // Demo mode restriction: max 100 entries
+    if (settings?.demoModeActive) {
+      const demoCount = Number(localStorage.getItem('mudirdokan_demo_entry_count') || '0');
+      if (demoCount >= 100) {
+        setShowProUpgradeModal(true);
+        return;
+      }
     }
-    if (creditLimitExceeded && !allowLimitOverride) {
-      toast.error(
-        tx(
-          lang,
-          'Credit limit exceeded! Enable Manager override or collect a larger upfront payment.',
-          'ক্রেডিট লিমিট অতিক্রম করেছে! ম্যানেজার অনুমোদন দিন বা বেশি নগদ গ্রহণ করুন।'
-        )
-      );
-      return;
+
+    let finalCustomerId: number | null = null;
+    let finalCustName: string | null = null;
+    let finalCustPhone: string | null = null;
+    let finalTotalDue: string | undefined = undefined;
+
+    // Due sale customer validation
+    if (totals.isDueSale) {
+      if (dueCustomerMode === 'NEW') {
+        if (!dueCustName.trim() || !dueCustPhone.trim()) {
+          toast.error(
+            tx(
+              lang,
+              'Customer Name and Mobile Number are required for credit/due sales.',
+              'বাকি বিক্রয়ের জন্য ক্রেতার নাম ও মোবাইল নম্বর আবশ্যক।'
+            )
+          );
+          return;
+        }
+
+        // Auto create new customer record
+        try {
+          let created: { id: number; name: string; customerCode: string } | null = null;
+          if (isOnline) {
+            try {
+              created = await apiFetch<{ id: number; name: string; customerCode: string }>('/api/customers', {
+                method: 'POST',
+                body: JSON.stringify({
+                  name: dueCustName.trim(),
+                  phone: dueCustPhone.trim(),
+                  area: dueCustArea.trim(),
+                  customerType: 'REGULAR',
+                  creditLimit: '5000',
+                }),
+              });
+            } catch (apiErr) {
+              console.warn('Online customer creation failed, using offline DB:', apiErr);
+            }
+          }
+          if (!created) {
+            const localId = Date.now();
+            const code = `CUST-${localId.toString().slice(-4)}`;
+            const localRecord = {
+              id: localId,
+              customerCode: code,
+              name: dueCustName.trim(),
+              phone: dueCustPhone.trim(),
+              customerType: 'REGULAR' as const,
+              creditLimit: '5000',
+              currentDue: money(totals.due),
+            };
+            await offlineDb.customers.put(localRecord);
+            created = { id: localId, name: localRecord.name, customerCode: code };
+          }
+          finalCustomerId = created.id;
+          finalCustName = dueCustName.trim();
+          finalCustPhone = dueCustPhone.trim();
+          finalTotalDue = money(totals.due);
+          await refreshCatalog();
+        } catch (err) {
+          toast.error(tx(lang, 'Failed to save customer for credit sale', 'বাকির জন্য ক্রেতা সংরক্ষণ ব্যর্থ হয়েছে'));
+          return;
+        }
+      } else {
+        // Existing customer selected
+        if (!selectedCustomerId || !selectedCustomer) {
+          toast.error(
+            tx(
+              lang,
+              'Select an existing customer or enter new customer details for due sale.',
+              'বাকির জন্য বিদ্যমান ক্রেতা নির্বাচন করুন বা নতুন ক্রেতার তথ্য দিন।'
+            )
+          );
+          return;
+        }
+        finalCustomerId = selectedCustomer.id;
+        finalCustName = selectedCustomer.name;
+        finalCustPhone = selectedCustomer.phone;
+        finalTotalDue = money(D(selectedCustomer.currentDue || 0).plus(totals.due));
+      }
+
+      if (creditLimitExceeded && !allowLimitOverride) {
+        toast.error(
+          tx(
+            lang,
+            'Credit limit exceeded! Enable Manager override or collect a larger upfront payment.',
+            'ক্রেডিট লিমিট অতিক্রম করেছে! ম্যানেজার অনুমোদন দিন বা বেশি নগদ গ্রহণ করুন।'
+          )
+        );
+        return;
+      }
     }
 
     setSubmitting(true);
     const clientUuid = crypto.randomUUID();
     const saleDate = dhakaTodayISO();
-    const validPayments = paymentRows
-      .filter((p) => D(p.amount).gt(0))
-      .map((p) => ({ method: p.method, amount: money(p.amount), referenceNo: p.referenceNo }));
+
+    let validPayments: Array<{ method: string; amount: string; referenceNo: string }> = [];
+    if (splitPaymentMode) {
+      validPayments = paymentRows
+        .filter((p) => D(p.amount).gt(0))
+        .map((p) => ({ method: p.method, amount: money(p.amount), referenceNo: p.referenceNo }));
+    } else {
+      if (totals.appliedPaid.gt(0)) {
+        validPayments = [{ method: activePaymentMethod, amount: money(totals.appliedPaid), referenceNo: '' }];
+      }
+    }
 
     const payload = {
       clientTransactionUuid: clientUuid,
       saleDate,
-      customerId: selectedCustomerId,
+      customerId: finalCustomerId,
       billDiscount: money(billDiscount),
       expectedPaymentDate: totals.due.gt(0) ? expectedPaymentDate || null : null,
       allowCreditLimitOverride: allowLimitOverride,
@@ -420,36 +567,48 @@ export const PosPage: React.FC = () => {
     };
 
     try {
+      let saleCompleted = false;
+
+      // 1. Attempt online API submission if connected
       if (isOnline) {
-        const res = await apiFetch<{ sale: any; items: any[]; payments: any[] }>('/api/sales', {
-          method: 'POST',
-          body: JSON.stringify(payload),
-        });
-        toast.success(
-          tx(lang, `Sale ${res.sale.invoiceNumber} completed`, `বিক্রয় ${res.sale.invoiceNumber} সম্পন্ন হয়েছে`)
-        );
-        setReceipt({
-          type: 'SALE',
-          invoiceNumber: res.sale.invoiceNumber,
-          saleDate: res.sale.saleDate,
-          customerName: selectedCustomer?.name || null,
-          customerPhone: selectedCustomer?.phone || null,
-          expectedPaymentDate: res.sale.expectedPaymentDate,
-          items: res.items,
-          subtotal: res.sale.subtotal,
-          discount: money(D(res.sale.itemDiscountTotal).plus(D(res.sale.billDiscount))),
-          totalAmount: res.sale.totalAmount,
-          paidAmount: res.sale.paidAmount,
-          dueAmount: res.sale.dueAmount,
-          payments: res.payments,
-        });
-        await refreshCatalog();
-      } else {
+        try {
+          const res = await apiFetch<{ sale: any; items: any[]; payments: any[] }>('/api/sales', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+          });
+          toast.success(
+            tx(lang, `Sale ${res.sale.invoiceNumber} completed`, `বিক্রয় ${res.sale.invoiceNumber} সম্পন্ন হয়েছে`)
+          );
+          setReceipt({
+            type: 'SALE',
+            invoiceNumber: res.sale.invoiceNumber,
+            saleDate: res.sale.saleDate,
+            customerName: finalCustName,
+            customerPhone: finalCustPhone,
+            expectedPaymentDate: res.sale.expectedPaymentDate,
+            items: res.items,
+            subtotal: res.sale.subtotal,
+            discount: money(D(res.sale.itemDiscountTotal).plus(D(res.sale.billDiscount))),
+            totalAmount: res.sale.totalAmount,
+            paidAmount: res.sale.paidAmount,
+            dueAmount: res.sale.dueAmount,
+            customerTotalDue: finalTotalDue,
+            payments: res.payments,
+          });
+          saleCompleted = true;
+          await refreshCatalog();
+        } catch (apiErr) {
+          console.warn('Online sale API unreachable or inactive, automatically falling back to offline queue:', apiErr);
+        }
+      }
+
+      // 2. Offline-First Resilience: If offline or backend server is inactive / HTML-responding, save locally to IndexedDB
+      if (!saleCompleted) {
         const queued = await enqueueOfflineSale({
           clientTransactionUuid: clientUuid,
           saleDate,
-          customerId: selectedCustomerId,
-          customerName: selectedCustomer?.name,
+          customerId: finalCustomerId,
+          customerName: finalCustName || undefined,
           billDiscount: money(billDiscount),
           expectedPaymentDate: totals.due.gt(0) ? expectedPaymentDate || null : null,
           items: cart.map((i) => ({
@@ -468,19 +627,19 @@ export const PosPage: React.FC = () => {
           computedPaid: money(totals.appliedPaid),
           computedDue: money(totals.due),
         });
-        toast.warning(
+        toast.success(
           tx(
             lang,
-            `Offline Sale ${queued.localInvoiceNumber} saved locally. Will auto-sync when online.`,
-            `অফলাইন বিক্রয় ${queued.localInvoiceNumber} স্থানীয়ভাবে সংরক্ষিত হয়েছে। অনলাইনে এলেই সিঙ্ক হবে।`
+            `Sale ${queued.localInvoiceNumber} completed! (Offline cache - will auto-sync to cloud)`,
+            `বিক্রয় ${queued.localInvoiceNumber} সম্পন্ন হয়েছে! (ক্যাশে সংরক্ষিত - অনলাইন সিঙ্ক হবে)`
           )
         );
         setReceipt({
           type: 'SALE',
           invoiceNumber: queued.localInvoiceNumber,
           saleDate,
-          customerName: selectedCustomer?.name || null,
-          customerPhone: selectedCustomer?.phone || null,
+          customerName: finalCustName,
+          customerPhone: finalCustPhone,
           expectedPaymentDate: totals.due.gt(0) ? expectedPaymentDate || null : null,
           isOffline: true,
           items: cart.map((i) => ({
@@ -496,14 +655,29 @@ export const PosPage: React.FC = () => {
           totalAmount: money(totals.grandTotal),
           paidAmount: money(totals.appliedPaid),
           dueAmount: money(totals.due),
+          customerTotalDue: finalTotalDue,
           payments: validPayments,
         });
         await refreshCatalog();
       }
 
+      // Track demo entries
+      if (settings?.demoModeActive) {
+        try {
+          const next = Number(localStorage.getItem('mudirdokan_demo_entry_count') || '0') + 1;
+          localStorage.setItem('mudirdokan_demo_entry_count', String(next));
+        } catch {}
+      }
+
       setCart([]);
       setBillDiscount('0');
       setSelectedCustomerId(null);
+      setDueCustName('');
+      setDueCustPhone('');
+      setDueCustArea('');
+      setPaidInput('');
+      setPaidInputTouched(false);
+      setSplitPaymentMode(false);
       setExpectedPaymentDate('');
       setAllowLimitOverride(false);
       setPaymentRows([{ method: 'CASH', amount: '', referenceNo: '' }]);
@@ -972,8 +1146,8 @@ export const PosPage: React.FC = () => {
 
       {/* Right: Sticky Live Billing Cart, Customer Credit & Split Payment Panel */}
       <div className="lg:col-span-5 xl:col-span-4 rounded-2xl border border-indigo-100 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:sticky lg:top-20 flex flex-col overflow-hidden">
-        {/* Vibrant Cart Header */}
-        <div className="flex items-center justify-between bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-3 text-white">
+        {/* Vibrant Clean Cart Header (No customer dropdown clutter) */}
+        <div className="flex items-center justify-between bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-3 text-white">
           <div className="flex items-center gap-2">
             <ShoppingBag className="h-4 w-4" />
             <span className="text-sm font-bold">{tx(lang, 'Billing Counter', 'বিলিং কার্ট')}</span>
@@ -985,7 +1159,11 @@ export const PosPage: React.FC = () => {
             {cart.length > 0 && (
               <button
                 type="button"
-                onClick={() => setCart([])}
+                onClick={() => {
+                  setCart([]);
+                  setPaidInput('');
+                  setPaidInputTouched(false);
+                }}
                 className="rounded-md bg-white/15 px-2 py-0.5 text-[11px] font-semibold hover:bg-white/25 cursor-pointer"
               >
                 {tx(lang, 'Clear', 'মুছুন')}
@@ -994,59 +1172,18 @@ export const PosPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Customer Selector Bar */}
-        <div className="border-b border-slate-200 p-4 dark:border-slate-800">
-          <div className="flex items-center justify-between gap-2">
-            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
-              {trCompact('Customer / Digital Khata', 'ক্রেতা নির্বাচন', lang)}
-            </label>
-            <button
-              type="button"
-              onClick={() => setShowQuickCustomer(true)}
-              className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400 cursor-pointer"
-            >
-              <UserPlus className="h-3.5 w-3.5" />
-              {tx(lang, 'Quick Add', 'দ্রুত যোগ')}
-            </button>
-          </div>
-          <select
-            value={selectedCustomerId ?? ''}
-            onChange={(e) => setSelectedCustomerId(e.target.value ? Number(e.target.value) : null)}
-            className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-          >
-            <option value="">{tr('walkInCustomer', lang)}</option>
-            {customers.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name} ({c.phone}) · {tx(lang, 'Due:', 'বাকি:')} {formatBDT(c.currentDue)}
-              </option>
-            ))}
-          </select>
-          {selectedCustomer && (
-            <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-              <span>
-                {selectedCustomer.customerCode} · {formatStatusLabel(selectedCustomer.customerType, lang)}
-              </span>
-              <span className="font-mono">
-                {tx(lang, 'Due:', 'বাকি:')}{' '}
-                <strong className="text-rose-600">{formatBDT(selectedCustomer.currentDue)}</strong> /{' '}
-                {tx(lang, 'Limit', 'লিমিট')} {formatBDT(selectedCustomer.creditLimit)}
-              </span>
-            </div>
-          )}
-        </div>
-
         {/* Cart Items List with Real Product Thumbnails */}
-        <div className="max-h-[320px] overflow-y-auto divide-y divide-slate-100 px-4 dark:divide-slate-800">
+        <div className="max-h-[300px] overflow-y-auto divide-y divide-slate-100 px-4 dark:divide-slate-800">
           {cart.length === 0 ? (
             <div className="py-12 text-center text-xs text-slate-400">
-              {tx(lang, 'Click products or scan a barcode to start billing.', 'বিল শুরু করতে পণ্যে ক্লিক করুন বা বারকোড স্ক্যান করুন।')}
+              {tx(lang, 'Click products or scan a barcode to start billing.', 'বিল শুরু করতে পণ্য ক্লিক করুন বা বারকোড স্ক্যান করুন।')}
             </div>
           ) : (
             cart.map((item, idx) => {
               const lineTotal = D(item.enteredQty).times(D(item.unitSellingPrice)).minus(D(item.itemDiscount));
               const cat = catMap.get(item.product.categoryId);
               return (
-                <div key={`${item.product.id}-${item.unitName}-${idx}`} className="py-3 space-y-2">
+                <div key={`${item.product.id}-${item.unitName}-${idx}`} className="py-2.5 space-y-2">
                   <div className="flex items-start justify-between gap-2.5">
                     <div className="flex min-w-0 items-center gap-2.5">
                       <ProductImage
@@ -1163,8 +1300,9 @@ export const PosPage: React.FC = () => {
           )}
         </div>
 
-        {/* Totals & Payment Splits */}
+        {/* Totals & Modern Payment Interface */}
         <div className="border-t border-slate-200 p-4 space-y-3 dark:border-slate-800">
+          {/* Bill Summary */}
           <div className="space-y-1.5 text-xs">
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>{tr('subtotal', lang)}</span>
@@ -1182,123 +1320,326 @@ export const PosPage: React.FC = () => {
                 />
               </div>
             )}
-            <div className="flex justify-between border-t border-slate-200 pt-2 text-base font-extrabold text-slate-900 dark:border-slate-800 dark:text-white">
+            <div className="flex justify-between border-t border-slate-200 pt-2 text-base font-black text-slate-900 dark:border-slate-800 dark:text-white">
               <span>{tr('grandTotal', lang)}</span>
-              <span className="font-mono text-indigo-700 dark:text-indigo-400">{formatBDT(totals.grandTotal)}</span>
+              <span className="font-mono text-lg text-emerald-700 dark:text-emerald-400">{formatBDT(totals.grandTotal)}</span>
             </div>
           </div>
 
+          {/* Payment Method Pills */}
+          <div>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1.5">
+              {tx(lang, 'Payment Method', 'পরিশোধ মাধ্যম')}
+            </label>
+            <div className="grid grid-cols-5 gap-1">
+              {[
+                { code: 'CASH', label: tx(lang, 'Cash', 'নগদ'), icon: '💵' },
+                { code: 'BKASH', label: tx(lang, 'bKash', 'বিকাশ'), icon: '📱' },
+                { code: 'NAGAD', label: tx(lang, 'Nagad', 'নগদ'), icon: '📱' },
+                { code: 'ROCKET', label: tx(lang, 'Rocket', 'রকেট'), icon: '📱' },
+                { code: 'CARD', label: tx(lang, 'Card', 'কার্ড'), icon: '💳' },
+              ].map((m) => (
+                <button
+                  key={m.code}
+                  type="button"
+                  onClick={() => {
+                    setActivePaymentMethod(m.code as any);
+                    if (splitPaymentMode) setSplitPaymentMode(false);
+                  }}
+                  className={`flex flex-col items-center justify-center rounded-xl py-1.5 px-1 text-[11px] font-bold transition cursor-pointer ${
+                    !splitPaymentMode && activePaymentMethod === m.code
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                  }`}
+                >
+                  <span>{m.icon}</span>
+                  <span className="truncate">{m.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Fast Quick Buttons: Full Cash, Full Due, Split */}
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
               onClick={setFullCashPayment}
-              className="rounded-xl border border-emerald-200 bg-emerald-50 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/50 dark:text-emerald-300 cursor-pointer"
+              className={`rounded-xl border py-1.5 text-xs font-bold transition cursor-pointer ${
+                !totals.isDueSale && !splitPaymentMode
+                  ? 'border-emerald-600 bg-emerald-600 text-white shadow-xs'
+                  : 'border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-950/50 dark:text-emerald-300'
+              }`}
             >
-              {tx(lang, 'Full Cash', 'পূর্ণ নগদ')}
+              {tx(lang, '⚡ Full Cash', '⚡ পূর্ণ নগদ')}
             </button>
             <button
               type="button"
               onClick={setFullCreditSale}
-              className="rounded-xl border border-orange-200 bg-orange-50 py-1.5 text-xs font-bold text-orange-700 hover:bg-orange-100 dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300 cursor-pointer"
+              className={`rounded-xl border py-1.5 text-xs font-bold transition cursor-pointer ${
+                totals.isDueSale && totals.appliedPaid.isZero()
+                  ? 'border-rose-600 bg-rose-600 text-white shadow-xs'
+                  : 'border-rose-200 bg-rose-50 text-rose-800 hover:bg-rose-100 dark:border-rose-900/60 dark:bg-rose-950/50 dark:text-rose-300'
+              }`}
             >
-              {tx(lang, 'Full Credit', 'সম্পূর্ণ বাকি')}
+              {tx(lang, '📝 Full Credit', '📝 সম্পূর্ণ বাকি')}
             </button>
             <button
               type="button"
-              onClick={() => setPaymentRows((prev) => [...prev, { method: 'BKASH', amount: '', referenceNo: '' }])}
-              className="inline-flex items-center justify-center gap-1 rounded-xl border border-indigo-200 bg-indigo-50/70 py-1.5 text-xs font-bold text-indigo-700 hover:bg-indigo-100 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-300 cursor-pointer"
+              onClick={() => {
+                setSplitPaymentMode(!splitPaymentMode);
+                if (!splitPaymentMode && paymentRows.length === 1 && !paymentRows[0].amount) {
+                  setPaymentRows([{ method: activePaymentMethod, amount: money(totals.grandTotal), referenceNo: '' }]);
+                }
+              }}
+              className={`inline-flex items-center justify-center gap-1 rounded-xl border py-1.5 text-xs font-bold transition cursor-pointer ${
+                splitPaymentMode
+                  ? 'border-indigo-600 bg-indigo-600 text-white shadow-xs'
+                  : 'border-indigo-200 bg-indigo-50/70 text-indigo-700 hover:bg-indigo-100 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-300'
+              }`}
             >
               <Split className="h-3.5 w-3.5" />
               {tx(lang, 'Split', 'ভাগ করুন')}
             </button>
           </div>
 
-          <div className="space-y-2">
-            {paymentRows.map((row, idx) => (
-              <div key={idx} className="flex items-center gap-2">
-                <select
-                  value={row.method}
-                  onChange={(e) =>
-                    setPaymentRows((prev) =>
-                      prev.map((r, i) => (i === idx ? { ...r, method: e.target.value as PaymentRow['method'] } : r))
-                    )
-                  }
-                  className="w-28 rounded-xl border border-slate-200 bg-white px-2 py-2 text-xs font-semibold dark:border-slate-700 dark:bg-slate-950"
-                >
-                  {PAYMENT_METHODS.map((m) => (
-                    <option key={m.code} value={m.code}>
-                      {trCompact(m.en, m.bn, lang)}
-                    </option>
-                  ))}
-                </select>
+          {/* Paid Amount Input or Split Rows */}
+          {!splitPaymentMode ? (
+            <div className="space-y-1">
+              <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300">
+                {tx(lang, 'Paid Amount (৳)', 'পরিশোধিত টাকা (৳)')}
+              </label>
+              <div className="relative">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-bold text-slate-400">
+                  ৳
+                </span>
                 <input
                   type="number"
                   min="0"
-                  placeholder={tx(lang, 'Paid ৳', 'জমা ৳')}
-                  value={row.amount}
-                  onChange={(e) =>
-                    setPaymentRows((prev) => prev.map((r, i) => (i === idx ? { ...r, amount: e.target.value } : r)))
-                  }
-                  className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-right font-mono text-sm font-bold dark:border-slate-700 dark:bg-slate-950"
+                  step="any"
+                  placeholder={money(totals.grandTotal)}
+                  value={paidInputTouched ? paidInput : money(totals.grandTotal)}
+                  onChange={(e) => {
+                    setPaidInputTouched(true);
+                    setPaidInput(e.target.value);
+                  }}
+                  className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-8 pr-3 text-right font-mono text-base font-black text-slate-900 focus:border-emerald-600 focus:outline-hidden dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 />
-                {paymentRows.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => setPaymentRows((prev) => prev.filter((_, i) => i !== idx))}
-                    className="p-1 text-slate-400 hover:text-rose-600 cursor-pointer"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
               </div>
-            ))}
-          </div>
-
-          <div className="rounded-xl bg-slate-50 p-3 text-xs space-y-1 dark:bg-slate-950">
-            <div className="flex justify-between">
-              <span className="text-slate-600 dark:text-slate-400">{tr('paidAmount', lang)}</span>
-              <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">
-                {formatBDT(totals.appliedPaid)}
-              </span>
             </div>
-            {totals.changeReturn.gt(0) && (
-              <div className="flex justify-between">
-                <span className="text-slate-600 dark:text-slate-400">{tr('changeReturn', lang)}</span>
-                <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400">
-                  {formatBDT(totals.changeReturn)}
+          ) : (
+            <div className="space-y-2 rounded-xl border border-indigo-100 bg-indigo-50/40 p-2.5 dark:border-indigo-950 dark:bg-indigo-950/20">
+              <div className="flex items-center justify-between text-xs font-bold text-indigo-900 dark:text-indigo-300">
+                <span>{tx(lang, 'Split Payments', 'একাধিক মাধ্যমে পরিশোধ')}</span>
+                <button
+                  type="button"
+                  onClick={() => setPaymentRows((prev) => [...prev, { method: 'BKASH', amount: '', referenceNo: '' }])}
+                  className="text-[11px] font-bold text-indigo-600 hover:underline cursor-pointer"
+                >
+                  + {tx(lang, 'Add Row', 'লাইন যোগ')}
+                </button>
+              </div>
+              {paymentRows.map((row, idx) => (
+                <div key={idx} className="flex items-center gap-1.5">
+                  <select
+                    value={row.method}
+                    onChange={(e) =>
+                      setPaymentRows((prev) =>
+                        prev.map((r, i) => (i === idx ? { ...r, method: e.target.value as PaymentRow['method'] } : r))
+                      )
+                    }
+                    className="w-28 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold dark:border-slate-700 dark:bg-slate-950"
+                  >
+                    {PAYMENT_METHODS.map((m) => (
+                      <option key={m.code} value={m.code}>
+                        {trCompact(m.en, m.bn, lang)}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="0.00"
+                    value={row.amount}
+                    onChange={(e) =>
+                      setPaymentRows((prev) => prev.map((r, i) => (i === idx ? { ...r, amount: e.target.value } : r)))
+                    }
+                    className="flex-1 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-right font-mono text-xs font-bold dark:border-slate-700 dark:bg-slate-950"
+                  />
+                  {paymentRows.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentRows((prev) => prev.filter((_, i) => i !== idx))}
+                      className="p-1 text-slate-400 hover:text-rose-600 cursor-pointer"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Change return banner if customer paid more than bill */}
+          {totals.changeReturn.gt(0) && (
+            <div className="flex items-center justify-between rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300">
+              <span>{tx(lang, 'Change to Return:', 'কাস্টমারকে ফেরত দিন:')}</span>
+              <span className="font-mono text-sm font-black">{formatBDT(totals.changeReturn)}</span>
+            </div>
+          )}
+
+          {/* CONDITIONAL DUE SECTION: RENDERED ONLY WHEN DUE > 0 */}
+          {totals.isDueSale && (
+            <div className="space-y-3 rounded-2xl border-2 border-rose-300 bg-rose-50/70 p-3.5 dark:border-rose-900/60 dark:bg-rose-950/40">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <AlertCircle className="h-4 w-4 text-rose-600 dark:text-rose-400" />
+                  <span className="text-xs font-extrabold text-rose-800 dark:text-rose-300">
+                    {tx(lang, 'Due Amount (বাকি বিক্রয়):', 'বাকি পরিমাণ:')}
+                  </span>
+                </div>
+                <span className="font-mono text-sm font-black text-rose-700 dark:text-rose-300">
+                  {formatBDT(totals.due)}
                 </span>
               </div>
-            )}
-            {totals.due.gt(0) && (
-              <div className="flex justify-between font-extrabold text-rose-600 dark:text-rose-400">
-                <span>{tr('dueAmount', lang)}</span>
-                <span className="font-mono">{formatBDT(totals.due)}</span>
-              </div>
-            )}
-          </div>
 
-          {totals.due.gt(0) && (
-            <div className="space-y-2 rounded-xl border border-orange-200 bg-orange-50/70 p-3 dark:border-orange-900/50 dark:bg-orange-950/30">
-              {!selectedCustomerId && (
-                <p className="text-xs font-bold text-rose-600 dark:text-rose-400">
-                  {tx(
-                    lang,
-                    'Select or Quick-Add a customer above to record a credit/baki sale.',
-                    'বাকিতে বিক্রয় করতে উপরে একজন ক্রেতা নির্বাচন বা যোগ করুন।'
+              <p className="text-[11px] font-medium text-rose-700 dark:text-rose-300">
+                {tx(
+                  lang,
+                  'Customer Name & Mobile Number are required to record a due sale.',
+                  'বাকিতে বিক্রয়ের জন্য ক্রেতার নাম ও মোবাইল নম্বর আবশ্যক।'
+                )}
+              </p>
+
+              {/* Segmented Mode: Existing vs New Customer */}
+              <div className="flex rounded-xl bg-white/80 p-0.5 border border-rose-200 dark:bg-slate-900 dark:border-rose-900/50">
+                <button
+                  type="button"
+                  onClick={() => setDueCustomerMode('EXISTING')}
+                  className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition cursor-pointer ${
+                    dueCustomerMode === 'EXISTING'
+                      ? 'bg-rose-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-rose-700 dark:text-slate-300'
+                  }`}
+                >
+                  {tx(lang, 'Existing Customer', 'বিদ্যমান ক্রেতা')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDueCustomerMode('NEW')}
+                  className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition cursor-pointer ${
+                    dueCustomerMode === 'NEW'
+                      ? 'bg-rose-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-rose-700 dark:text-slate-300'
+                  }`}
+                >
+                  {tx(lang, 'New Customer', 'নতুন ক্রেতা')}
+                </button>
+              </div>
+
+              {dueCustomerMode === 'EXISTING' ? (
+                <div className="space-y-2">
+                  <select
+                    value={selectedCustomerId ?? ''}
+                    onChange={(e) => setSelectedCustomerId(e.target.value ? Number(e.target.value) : null)}
+                    className="w-full rounded-xl border border-rose-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:border-rose-900/60 dark:bg-slate-900 dark:text-white"
+                  >
+                    <option value="">{tx(lang, '-- Select Existing Customer --', '-- ক্রেতা নির্বাচন করুন --')}</option>
+                    {customers.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name} ({c.phone}) · {tx(lang, 'Current Due:', 'বর্তমান বাকি:')} {formatBDT(c.currentDue)}
+                      </option>
+                    ))}
+                  </select>
+
+                  {selectedCustomer && (
+                    <div className="rounded-xl bg-white/90 p-2.5 text-xs space-y-1 dark:bg-slate-900">
+                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                        <span>{tx(lang, 'Customer Code:', 'ক্রেতা কোড:')}</span>
+                        <span className="font-mono font-bold text-slate-900 dark:text-white">
+                          {selectedCustomer.customerCode}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                        <span>{tx(lang, 'Previous Due:', 'পূর্বের বাকি:')}</span>
+                        <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
+                          {formatBDT(selectedCustomer.currentDue)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between font-bold text-rose-700 dark:text-rose-400 border-t border-slate-100 pt-1 dark:border-slate-800">
+                        <span>{tx(lang, 'New Total Due:', 'বিক্রয়ের পর মোট বকেয়া:')}</span>
+                        <span className="font-mono text-sm font-black">
+                          {formatBDT(D(selectedCustomer.currentDue).plus(totals.due))}
+                        </span>
+                      </div>
+                    </div>
                   )}
-                </p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-0.5">
+                      {tx(lang, 'Customer Full Name', 'ক্রেতার নাম')} <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder={tx(lang, 'e.g. Rahim Mia', 'যেমন: রহিম মিয়া')}
+                      value={dueCustName}
+                      onChange={(e) => setDueCustName(e.target.value)}
+                      className="w-full rounded-xl border border-rose-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-900 dark:border-rose-900/60 dark:bg-slate-900 dark:text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-0.5">
+                      {tx(lang, 'Mobile Phone Number', 'মোবাইল নম্বর')} <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="01700-000000"
+                      value={dueCustPhone}
+                      onChange={(e) => setDueCustPhone(e.target.value)}
+                      className="w-full rounded-xl border border-rose-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-900 dark:border-rose-900/60 dark:bg-slate-900 dark:text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-0.5">
+                      {tx(lang, 'Area / Village (Optional)', 'ঠিকানা বা গ্রাম (ঐচ্ছিক)')}
+                    </label>
+                    <input
+                      type="text"
+                      placeholder={tx(lang, 'e.g. Purba Para, Ward 4', 'যেমন: পূর্বপাড়া')}
+                      value={dueCustArea}
+                      onChange={(e) => setDueCustArea(e.target.value)}
+                      className="w-full rounded-xl border border-rose-200 bg-white px-3 py-1.5 text-xs text-slate-900 dark:border-rose-900/60 dark:bg-slate-900 dark:text-white"
+                    />
+                  </div>
+
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 italic">
+                    {tx(
+                      lang,
+                      '✓ Customer will be auto-saved and linked to digital khata immediately.',
+                      '✓ বিক্রয় সম্পন্ন হলেই এই ক্রেতার নামে স্বয়ংক্রিয়ভাবে ডিজিটাল খাতা খোলা হবে।'
+                    )}
+                  </p>
+                </div>
               )}
+
+              {/* Expected Payment Date */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-                  {tr('expectedPayDate', lang)}
+                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-0.5">
+                  {tr('expectedPayDate', lang)} ({tx(lang, 'Optional', 'ঐচ্ছিক')})
                 </label>
                 <input
                   type="date"
                   value={expectedPaymentDate}
                   onChange={(e) => setExpectedPaymentDate(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 font-mono text-xs dark:border-slate-700 dark:bg-slate-900"
+                  className="w-full rounded-lg border border-rose-200 bg-white px-2.5 py-1.5 font-mono text-xs dark:border-rose-900/60 dark:bg-slate-900"
                 />
               </div>
+
               {creditLimitExceeded && (
                 <div className="space-y-1.5 text-xs text-rose-700 dark:text-rose-400">
                   <p className="font-semibold">
@@ -1329,19 +1670,75 @@ export const PosPage: React.FC = () => {
             </div>
           )}
 
+          {/* Action Button: Single Click Cash vs Due Sale */}
           <button
             type="button"
             disabled={submitting || cart.length === 0}
             onClick={handleCheckout}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 py-3.5 text-sm font-extrabold text-white shadow-md shadow-emerald-500/25 hover:from-emerald-700 hover:to-teal-700 disabled:opacity-50 transition cursor-pointer"
+            className={`flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-extrabold text-white shadow-md disabled:opacity-50 transition cursor-pointer ${
+              totals.isDueSale
+                ? 'bg-gradient-to-r from-rose-600 to-amber-600 shadow-rose-600/25 hover:from-rose-700 hover:to-amber-700'
+                : 'bg-gradient-to-r from-emerald-600 to-teal-700 shadow-emerald-600/25 hover:from-emerald-700 hover:to-teal-800'
+            }`}
           >
             <CheckCircle2 className="h-4 w-4" />
             {submitting
               ? tx(lang, 'Processing...', 'প্রক্রিয়া চলছে...')
-              : `${tr('completeSale', lang)} (F9) · ${formatBDT(totals.grandTotal)}`}
+              : totals.isDueSale
+                ? `${tx(lang, 'Complete Due Sale (বাকি বিক্রয়)', 'বাকি বিক্রয় সম্পন্ন করুন')} · ${formatBDT(totals.grandTotal)}`
+                : `${tr('completeSale', lang)} (F9) · ${formatBDT(totals.grandTotal)}`}
           </button>
         </div>
       </div>
+
+      {/* Pro WhatsApp Upgrade Modal (Demo Entry Limit Reached) */}
+      {showProUpgradeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-xs">
+          <div className="w-full max-w-md rounded-2xl border border-emerald-300 bg-white p-6 shadow-2xl dark:border-emerald-800 dark:bg-slate-900 space-y-4 text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-400">
+              <Sparkles className="h-7 w-7" />
+            </div>
+            <div>
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                {tx(lang, '⚡ Demo Trial Limit Reached', '⚡ ডেমো ট্রায়াল সীমা পূর্ণ')}
+              </span>
+              <h3 className="mt-2 text-lg font-black text-slate-900 dark:text-white">
+                {tx(lang, '100 Sample Entries Completed!', '১০০টি পরীক্ষামূলক এন্ট্রি সম্পন্ন হয়েছে!')}
+              </h3>
+              <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                {tx(
+                  lang,
+                  'You have completed 100 sample trial entries in Mudi Dokan Pro. To unlock unlimited billing, multi-device cloud sync, digital khata SMS, and full store management, upgrade to the Pro edition today.',
+                  'আপনি মুদির দোকান প্রো ডেমো স্টোরে ১০০টি সফল ট্রায়াল এন্ট্রি সম্পন্ন করেছেন। আনলিমিটেড লাইভ বিক্রয়, ক্লাউড অটো-সিঙ্ক, ডিজিটাল খাতা এসএমএস ও ফুল ফিচারের জন্য আজই সম্পূর্ণ প্রো ভার্সনে আপগ্রেড করুন।'
+                )}
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-col gap-2">
+              <a
+                href={`https://wa.me/8801884700631?text=${encodeURIComponent(
+                  lang === 'BN'
+                    ? 'হ্যালো মুদির দোকান প্রো, আমি ডেমো ট্রায়াল সম্পন্ন করেছি এবং এখন ফুল প্রো ভার্সন কিনতে/লাইসেন্স নিতে আগ্রহী।'
+                    : 'Hello Mudi Dokan Pro, I have completed the demo trial and would like to purchase/upgrade to the Full Pro Version.'
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3 text-sm font-extrabold text-white shadow-md shadow-emerald-600/25 hover:from-emerald-700 hover:to-teal-800 transition"
+              >
+                <MessageSquare className="h-4 w-4" />
+                <span>{tx(lang, 'Upgrade on WhatsApp (01884700631)', 'হোয়াটসঅ্যাপে আপগ্রেড করুন (০১৮৮৪ ৭০০ ৬৩১)')}</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setShowProUpgradeModal(false)}
+                className="rounded-xl border border-slate-200 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                {tx(lang, 'Close', 'বন্ধ করুন')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Quick-Create Customer Modal */}
       {showQuickCustomer && (
