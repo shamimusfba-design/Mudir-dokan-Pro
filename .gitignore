@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+Mudidokanpro marketing/
+_edit_work/
+scratch/

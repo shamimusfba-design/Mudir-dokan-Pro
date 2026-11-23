@@ -15,7 +15,7 @@ export const stores = pgTable('stores', {
   id: serial('id').primaryKey(),
   ownerUid: text('owner_uid').notNull(),
   name: text('name').notNull(),
-  nameBn: text('name_bn').notNull().default('মুদির দোকান প্রো'),
+  nameBn: text('name_bn').notNull().default('মুদি দোকান প্রো'),
   phone: text('phone').notNull().default(''),
   address: text('address').notNull().default('Dhaka, Bangladesh'),
   addressBn: text('address_bn').notNull().default('ঢাকা, বাংলাদেশ'),

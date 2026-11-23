@@ -14,6 +14,7 @@ import {
   Phone,
   MessageCircle,
   UserCheck,
+  Truck,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
@@ -40,7 +41,7 @@ export const SettingsPage: React.FC = () => {
 
   const [storeForm, setStoreForm] = useState({
     name: store?.name || 'MudirDokan Pro',
-    nameBn: store?.nameBn || 'মুদির দোকান প্রো',
+    nameBn: store?.nameBn || 'মুদি দোকান প্রো',
     phone: store?.phone || '',
     address: store?.address || '',
     addressBn: store?.addressBn || '',
@@ -60,6 +61,8 @@ export const SettingsPage: React.FC = () => {
     smsProvider: settings?.smsProvider || 'WHATSAPP_LINK',
     smsWebhookUrl: settings?.smsWebhookUrl || '',
     smsSenderId: settings?.smsSenderId || 'MudirDokan',
+    deliveryFeeInsideDhaka: settings?.deliveryFeeInsideDhaka ?? 80,
+    deliveryFeeOutsideDhaka: settings?.deliveryFeeOutsideDhaka ?? 150,
   });
 
   const [syncLogs, setSyncLogs] = useState<any[]>([]);
@@ -225,7 +228,7 @@ export const SettingsPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Database className="h-4 w-4 text-amber-600" />
                 <h2 className="text-sm font-extrabold text-slate-900 dark:text-white">
-                  {tx(lang, '6-Month Bangladesh Grocery Demo Dataset', '৬ মাসের বাংলাদেশি মুদির দোকান ডেমো ডেটাসেট')}
+                  {tx(lang, '6-Month Bangladesh Grocery Demo Dataset', '৬ মাসের বাংলাদেশি মুদি দোকান ডেমো ডেটাসেট')}
                 </h2>
                 {settings?.demoModeActive && (
                   <span className="rounded-md bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-white">
@@ -243,7 +246,7 @@ export const SettingsPage: React.FC = () => {
                   : tx(
                       lang,
                       'Load 6 completed calendar months of realistic, fully reconciled Bangladeshi grocery store transactions. All demo records are safely tagged so Reset never deletes your real business data.',
-                      '৬ মাসের বাস্তবসম্মত বাংলাদেশি মুদির দোকানের লেনদেন লোড করুন। সব ডেমো ডেটা আলাদাভাবে ট্যাগ করা থাকে, তাই রিসেট করলে আপনার প্রকৃত ডেটা কখনোই মুছবে না।'
+                      '৬ মাসের বাস্তবসম্মত বাংলাদেশি মুদি দোকানের লেনদেন লোড করুন। সব ডেমো ডেটা আলাদাভাবে ট্যাগ করা থাকে, তাই রিসেট করলে আপনার প্রকৃত ডেটা কখনোই মুছবে না।'
                     )}
               </p>
             </div>
@@ -557,6 +560,47 @@ export const SettingsPage: React.FC = () => {
           )}
         </div>
 
+        {/* Online Storefront Delivery Charges Section */}
+        <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/50 p-4 dark:border-emerald-900/60 dark:bg-emerald-950/20 space-y-3">
+          <div className="flex items-center gap-2">
+            <Truck className="h-4 w-4 text-emerald-600" />
+            <h3 className="text-xs font-black uppercase text-emerald-900 dark:text-emerald-200">
+              {tx(lang, 'Online Storefront Delivery Charges', 'অনলাইন শপ হোম ডেলিভারি চার্জ সেটিংস')}
+            </h3>
+          </div>
+          <p className="text-[11px] text-slate-500">
+            {tx(
+              lang,
+              'Set home delivery rates for your online storefront customers (*.mudidokanpro.com/store).',
+              'অনলাইন স্টোর থেকে ক্রেতারা অর্ডার করার সময় ঢাকার মধ্যে ও ঢাকার বাইরে কত টাকা ডেলিভারি চার্জ প্রযোজ্য হবে তা নির্ধারণ করুন।'
+            )}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                {tx(lang, 'Inside Dhaka Delivery Charge (BDT)', 'ঢাকার মধ্যে ডেলিভারি চার্জ (টাকা)')}
+              </label>
+              <input
+                type="number"
+                value={settingsForm.deliveryFeeInsideDhaka}
+                onChange={(e) => setSettingsForm({ ...settingsForm, deliveryFeeInsideDhaka: Number(e.target.value) })}
+                className="mt-1 w-full rounded-xl border border-emerald-300 bg-white px-3 py-2 text-xs font-bold text-emerald-900 dark:border-emerald-700 dark:bg-slate-950 dark:text-emerald-300"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                {tx(lang, 'Outside Dhaka Delivery Charge (BDT)', 'ঢাকার বাইরে ডেলিভারি চার্জ (টাকা)')}
+              </label>
+              <input
+                type="number"
+                value={settingsForm.deliveryFeeOutsideDhaka}
+                onChange={(e) => setSettingsForm({ ...settingsForm, deliveryFeeOutsideDhaka: Number(e.target.value) })}
+                className="mt-1 w-full rounded-xl border border-emerald-300 bg-white px-3 py-2 text-xs font-bold text-emerald-900 dark:border-emerald-700 dark:bg-slate-950 dark:text-emerald-300"
+              />
+            </div>
+          </div>
+        </div>
+
         {staff?.role !== 'CASHIER' && (
           <div className="flex justify-end">
             <button
@@ -697,7 +741,7 @@ export const SettingsPage: React.FC = () => {
                         <td className="py-2.5 text-right space-x-1.5">
                           {phone && (
                             <a
-                              href={`https://wa.me/88${phone}?text=${encodeURIComponent(`হ্যালো ${lead.name || ''}, মুদির দোকান প্রো থেকে শামীম বলছিলাম। কেমন আছেন?`)}`}
+                              href={`https://wa.me/88${phone}?text=${encodeURIComponent(`হ্যালো ${lead.name || ''}, মুদি দোকান প্রো থেকে শামীম বলছিলাম। কেমন আছেন?`)}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2 py-1 text-[11px] font-bold text-white hover:bg-emerald-700 transition"

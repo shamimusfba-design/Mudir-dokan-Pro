@@ -109,7 +109,7 @@ export const PWAInstallButton: React.FC<{ compact?: boolean }> = ({ compact = fa
             <div className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900">
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-semibold text-slate-900 dark:text-white">
-                  {tx(lang, 'Install MudirDokan Pro', 'মুদির দোকান প্রো ইনস্টল করুন')}
+                  {tx(lang, 'Install MudirDokan Pro', 'মুদি দোকান প্রো ইনস্টল করুন')}
                 </h3>
                 <button
                   type="button"

@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch } from '../lib/api';
 import { D, money, formatBDT, formatDateTimeDhaka, formatQty } from '../lib/decimal';
-import { tr, trCompact, tx, formatStatusLabel, formatUnitLabel } from '../lib/i18n';
+import { tr, trCompact, tx, formatStatusLabel, formatUnitLabel, formatVariant } from '../lib/i18n';
 import { BrandLogo, ProductImage } from '../components/ProductMedia';
 import { matchesBanglishQuery } from '../lib/search-banglish';
 
@@ -442,7 +442,7 @@ export const InventoryPage: React.FC = () => {
                             <div className="min-w-0">
                               <div className="font-bold text-slate-900 dark:text-white truncate">
                                 {trCompact(p.name, p.nameBn, lang)}{' '}
-                                <span className="font-normal text-slate-500">({p.variant})</span>
+                                <span className="font-normal text-slate-500">({formatVariant(p.variant, lang)})</span>
                               </div>
                               <div className="mt-0.5 flex items-center gap-1.5 text-[10px] text-slate-500">
                                 {br && <span className="font-semibold text-indigo-600 dark:text-indigo-400">{br.name}</span>}
@@ -464,7 +464,7 @@ export const InventoryPage: React.FC = () => {
                                   : 'text-slate-900 dark:text-white'
                             }
                           >
-                            {formatQty(p.currentStock)} {formatUnitLabel(p.baseUnit, lang)}
+                            {formatQty(p.currentStock, lang)} {formatUnitLabel(p.baseUnit, lang)}
                           </span>
                         </td>
 
@@ -473,28 +473,68 @@ export const InventoryPage: React.FC = () => {
                           <>
                             {/* Col 3: Add/Subtract Quantity */}
                             <td className="px-3 py-2.5">
-                              <div className="flex items-center gap-1">
+                              <div className="flex items-center gap-1.5">
+                                {/* Left Side Minus Button */}
                                 <button
                                   type="button"
-                                  onClick={() => handleEditChange(p.id, 'isAdd', !edit.isAdd, p.avgCostPrice)}
-                                  title={edit.isAdd ? 'যোগ হচ্ছে (ক্লিক করে মাইনাস করুন)' : 'বিয়োগ হচ্ছে (ক্লিক করে যোগ করুন)'}
-                                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-bold text-xs transition cursor-pointer ${
-                                    edit.isAdd
-                                      ? 'bg-emerald-600 text-white shadow-2xs hover:bg-emerald-700'
-                                      : 'bg-rose-600 text-white shadow-2xs hover:bg-rose-700'
+                                  onClick={() => {
+                                    const currentVal = Number(edit.qty) || 0;
+                                    if (!edit.isAdd) {
+                                      handleEditChange(p.id, 'qty', String(currentVal + 1), p.avgCostPrice);
+                                    } else {
+                                      handleEditChange(p.id, 'isAdd', false, p.avgCostPrice);
+                                      handleEditChange(p.id, 'qty', String(currentVal > 0 ? currentVal : 1), p.avgCostPrice);
+                                    }
+                                  }}
+                                  title="মজুদ কমান (বিয়োগ করুন)"
+                                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-black text-sm transition cursor-pointer ${
+                                    !edit.isAdd
+                                      ? 'bg-rose-600 text-white shadow-2xs hover:bg-rose-700'
+                                      : 'border border-slate-200 bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-rose-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
                                   }`}
                                 >
-                                  {edit.isAdd ? '+' : '−'}
+                                  −
                                 </button>
-                                <input
-                                  type="number"
-                                  step="any"
-                                  min="0"
-                                  placeholder="0"
-                                  value={edit.qty}
-                                  onChange={(e) => handleEditChange(p.id, 'qty', e.target.value, p.avgCostPrice)}
-                                  className="w-20 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center font-mono text-xs font-black text-slate-900 shadow-2xs focus:border-indigo-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-                                />
+
+                                {/* Number Input with Mode Indicator */}
+                                <div className="relative">
+                                  <input
+                                    type="number"
+                                    step="any"
+                                    min="0"
+                                    placeholder="0"
+                                    value={edit.qty}
+                                    onChange={(e) => handleEditChange(p.id, 'qty', e.target.value, p.avgCostPrice)}
+                                    className={`w-16 rounded-lg border px-2 py-1 text-center font-mono text-xs font-black shadow-2xs focus:outline-hidden transition ${
+                                      edit.isAdd
+                                        ? 'border-emerald-300 bg-emerald-50/50 text-emerald-950 focus:border-emerald-600 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200'
+                                        : 'border-rose-300 bg-rose-50/50 text-rose-950 focus:border-rose-600 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200'
+                                    }`}
+                                  />
+                                </div>
+
+                                {/* Right Side Plus Button */}
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const currentVal = Number(edit.qty) || 0;
+                                    if (edit.isAdd) {
+                                      handleEditChange(p.id, 'qty', String(currentVal + 1), p.avgCostPrice);
+                                    } else {
+                                      handleEditChange(p.id, 'isAdd', true, p.avgCostPrice);
+                                      handleEditChange(p.id, 'qty', String(currentVal > 0 ? currentVal : 1), p.avgCostPrice);
+                                    }
+                                  }}
+                                  title="মজুদ বাড়ান (যোগ করুন)"
+                                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-black text-sm transition cursor-pointer ${
+                                    edit.isAdd
+                                      ? 'bg-emerald-600 text-white shadow-2xs hover:bg-emerald-700'
+                                      : 'border border-slate-200 bg-slate-100 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                                  }`}
+                                >
+                                  +
+                                </button>
+
                                 <span className="text-[10px] text-slate-400 font-medium">
                                   {formatUnitLabel(p.baseUnit, lang)}
                                 </span>
@@ -540,11 +580,11 @@ export const InventoryPage: React.FC = () => {
                                       : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
                                   }`}
                                 >
-                                  {formatQty(newCalculatedStock)} {formatUnitLabel(p.baseUnit, lang)}
+                                  {formatQty(newCalculatedStock, lang)} {formatUnitLabel(p.baseUnit, lang)}
                                 </span>
                               ) : (
                                 <span className="text-slate-400 font-normal">
-                                  {formatQty(p.currentStock)} {formatUnitLabel(p.baseUnit, lang)}
+                                  {formatQty(p.currentStock, lang)} {formatUnitLabel(p.baseUnit, lang)}
                                 </span>
                               )}
                             </td>

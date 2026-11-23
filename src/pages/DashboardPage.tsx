@@ -169,7 +169,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
         tx(
           lang,
           '6-month Bangladesh grocery demo dataset loaded!',
-          '৬ মাসের বাংলাদেশী মুদির দোকানের ডেমো ডেটা লোড হয়েছে!'
+          '৬ মাসের বাংলাদেশী মুদি দোকানের ডেমো ডেটা লোড হয়েছে!'
         )
       );
     } catch (err) {
@@ -198,7 +198,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                {tx(lang, 'Explore with 6 Months of Realistic Grocery Store Data', '৬ মাসের বাস্তবসম্মত মুদির দোকানের ডেমো ডেটা দেখুন')}
+                {tx(lang, 'Explore with 6 Months of Realistic Grocery Store Data', '৬ মাসের বাস্তবসম্মত মুদি দোকানের ডেমো ডেটা দেখুন')}
               </h3>
               <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-300">
                 {tx(

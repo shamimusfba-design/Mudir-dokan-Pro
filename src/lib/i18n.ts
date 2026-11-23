@@ -24,7 +24,7 @@ interface DictionaryEntry {
 }
 
 const DICT: Record<string, DictionaryEntry> = {
-  appName: { en: 'MudirDokan Pro', bn: 'মুদির দোকান প্রো' },
+  appName: { en: 'MudirDokan Pro', bn: 'মুদি দোকান প্রো' },
   dashboard: { en: 'Dashboard', bn: 'ড্যাশবোর্ড' },
   pos: { en: 'POS Billing', bn: 'বিক্রয় কাউন্টার' },
   products: { en: 'Products', bn: 'পণ্য তালিকা' },
@@ -41,6 +41,7 @@ const DICT: Record<string, DictionaryEntry> = {
   customerPortal: { en: 'Customer Portal', bn: 'ক্রেতা পোর্টাল' },
   onlineStore: { en: 'Online Storefront', bn: 'অনলাইন শপ (ই-কমার্স)' },
   adCampaigns: { en: 'Ad Landing Builder', bn: 'অ্যাড ল্যান্ডিং বিল্ডার' },
+  clientManagement: { en: 'Client & SaaS Tracking', bn: 'ক্লায়েন্ট ট্র্যাকিং ও সাবস্ক্রিপশন' },
 
   // Dashboard KPIs
   todaySales: { en: 'Sales Revenue', bn: 'মোট বিক্রয়' },

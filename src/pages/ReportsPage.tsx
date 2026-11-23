@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Download, Lock } from 'lucide-react';
+import { Download, Lock, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch, exportRowsToCsv } from '../lib/api';
 import { formatBDT, formatQty, dhakaTodayISO } from '../lib/decimal';
-import { tr, tx, formatMethodLabel, formatStatusLabel } from '../lib/i18n';
+import { tr, tx, formatMethodLabel, formatStatusLabel, formatVariant, trCompact } from '../lib/i18n';
 import { BrandLogo, ProductImage } from '../components/ProductMedia';
 
 function getCompletedSixMonthRange(todayISO: string): { start: string; end: string } {
@@ -41,12 +41,14 @@ export const ReportsPage: React.FC = () => {
   const [to, setTo] = useState(() => (settings?.demoModeActive ? sixMonthEnd : today));
   const [tab, setTab] = useState<'pnl' | 'product' | 'category' | 'brand' | 'slow'>('pnl');
   const [report, setReport] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [denied, setDenied] = useState(false);
 
   const catMap = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
 
   const loadReports = async () => {
     setDenied(false);
+    setLoading(true);
     try {
       const res = await apiFetch(`/api/finance/reports?from=${from}&to=${to}`);
       setReport(res);
@@ -57,6 +59,8 @@ export const ReportsPage: React.FC = () => {
       } else {
         toast.error(msg);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,7 +86,7 @@ export const ReportsPage: React.FC = () => {
     );
   }
 
-  const p = report?.profitSummary;
+  const p = report?.profitSummary || report?.pnl || {};
 
   const handleExport = () => {
     if (!report) return;
@@ -90,53 +94,53 @@ export const ReportsPage: React.FC = () => {
       exportRowsToCsv(
         `product-profit-${from}-to-${to}.csv`,
         ['SKU', 'Product', 'Variant', 'Qty Sold', 'Revenue (BDT)', 'COGS (BDT)', 'Gross Profit (BDT)'],
-        report.productProfit.map((r: any) => [
+        (report.productProfit || []).map((r: any) => [
           r.sku,
           r.name,
           r.variant,
           r.qtySold,
-          r.revenue.toFixed(2),
-          r.cogs.toFixed(2),
-          r.grossProfit.toFixed(2),
+          Number(r.revenue || 0).toFixed(2),
+          Number(r.cogs || 0).toFixed(2),
+          Number(r.grossProfit || 0).toFixed(2),
         ])
       );
     } else if (tab === 'category') {
       exportRowsToCsv(
         `category-profit-${from}-to-${to}.csv`,
         ['Category', 'Revenue (BDT)', 'COGS (BDT)', 'Gross Profit (BDT)'],
-        report.categoryProfit.map((r: any) => [
+        (report.categoryProfit || []).map((r: any) => [
           r.category,
-          r.revenue.toFixed(2),
-          r.cogs.toFixed(2),
-          r.grossProfit.toFixed(2),
+          Number(r.revenue || 0).toFixed(2),
+          Number(r.cogs || 0).toFixed(2),
+          Number(r.grossProfit || 0).toFixed(2),
         ])
       );
     } else if (tab === 'brand') {
       exportRowsToCsv(
         `brand-sales-${from}-to-${to}.csv`,
         ['Brand', 'Units Sold', 'Revenue (BDT)'],
-        report.brandSales.map((r: any) => [r.brand, r.qtySold, r.revenue.toFixed(2)])
+        (report.brandSales || []).map((r: any) => [r.brand, r.qtySold, Number(r.revenue || 0).toFixed(2)])
       );
     } else if (tab === 'slow') {
       exportRowsToCsv(
         `slow-moving-stock-${to}.csv`,
         ['SKU', 'Product', 'Variant', 'Current Stock', 'Stock Value (BDT)'],
-        report.slowMovingProducts.map((r: any) => [r.sku, r.name, r.variant, r.currentStock, r.stockValue])
+        (report.slowMovingProducts || []).map((r: any) => [r.sku, r.name, r.variant, r.currentStock, r.stockValue])
       );
     } else {
       exportRowsToCsv(
         `profit-loss-${from}-to-${to}.csv`,
         ['Metric', 'Amount (BDT)'],
         [
-          ['Sales Revenue', p.salesRevenue],
-          ['Cost of Goods Sold (WAC)', p.cogs],
-          ['Gross Profit', p.grossProfit],
-          ['Operating Expenses', p.operatingExpenses],
-          ['Operating Net Profit', p.netProfit],
-          ['Inventory Purchases (Asset)', p.totalPurchases],
-          ['Inventory Valuation (Cost)', report.inventoryValuation.totalCostValue],
-          ['Customer Dues Receivable', report.dues.customerDueTotal],
-          ['Supplier Dues Payable', report.dues.supplierDueTotal],
+          ['Sales Revenue', p.salesRevenue || 0],
+          ['Cost of Goods Sold (WAC)', p.cogs || 0],
+          ['Gross Profit', p.grossProfit || 0],
+          ['Operating Expenses', p.operatingExpenses || 0],
+          ['Operating Net Profit', p.netProfit || 0],
+          ['Inventory Purchases (Asset)', p.totalPurchases || 0],
+          ['Inventory Valuation (Cost)', report.inventoryValuation?.totalCostValue || '0'],
+          ['Customer Dues Receivable', report.dues?.customerDueTotal || '0'],
+          ['Supplier Dues Payable', report.dues?.supplierDueTotal || '0'],
         ]
       );
     }
@@ -235,6 +239,15 @@ export const ReportsPage: React.FC = () => {
         ))}
       </div>
 
+      {loading && !report && (
+        <div className="flex h-64 flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+          <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+          <p className="text-xs font-medium text-slate-500">
+            {tx(lang, 'Calculating Profit & Financial Reports...', 'লাভ ও আর্থিক হিসাব গণনা করা হচ্ছে...')}
+          </p>
+        </div>
+      )}
+
       {report && tab === 'pnl' && (
         <div className="space-y-5">
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -295,25 +308,25 @@ export const ReportsPage: React.FC = () => {
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
                   <span>{tx(lang, 'Current Inventory Valuation (Cost)', 'বর্তমান মজুদ পণ্যের মূল্য')}</span>
-                  <span className="font-mono font-bold">{formatBDT(report.inventoryValuation.totalCostValue)}</span>
+                  <span className="font-mono font-bold">{formatBDT(report?.inventoryValuation?.totalCostValue || 0)}</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
                   <span>{tx(lang, 'Customer Dues Receivable', 'ক্রেতার কাছে মোট পাওনা')}</span>
-                  <span className="font-mono font-bold text-rose-600">{formatBDT(report.dues.customerDueTotal)}</span>
+                  <span className="font-mono font-bold text-rose-600">{formatBDT(report?.dues?.customerDueTotal || 0)}</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
                   <span>{tx(lang, 'Supplier Dues Payable', 'সরবরাহকারীর মোট পাওনা')}</span>
-                  <span className="font-mono font-bold text-orange-600">{formatBDT(report.dues.supplierDueTotal)}</span>
+                  <span className="font-mono font-bold text-orange-600">{formatBDT(report?.dues?.supplierDueTotal || 0)}</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
                   <span>{tx(lang, 'Physical Cash In / Out (Period)', 'নগদ জমা / খরচ (এই সময়ে)')}</span>
                   <span className="font-mono">
-                    +{formatBDT(report.cashFlow.totalIn)} / -{formatBDT(report.cashFlow.totalOut)}
+                    +{formatBDT(report?.cashFlow?.totalIn || 0)} / -{formatBDT(report?.cashFlow?.totalOut || 0)}
                   </span>
                 </div>
                 <div className="flex justify-between pt-2 text-sm font-extrabold">
                   <span>{tx(lang, 'Net Physical Cash Flow', 'নিট নগদ প্রবাহ')}</span>
-                  <span className="font-mono text-emerald-600">{formatBDT(report.cashFlow.netCashFlow)}</span>
+                  <span className="font-mono text-emerald-600">{formatBDT(report?.cashFlow?.netCashFlow || 0)}</span>
                 </div>
               </div>
             </div>
@@ -432,7 +445,7 @@ export const ReportsPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {report.productProfit.map((r: any) => {
+                {(report?.productProfit || []).map((r: any) => {
                   const cat = catMap.get(r.categoryId);
                   return (
                     <tr key={r.productId} className="hover:bg-indigo-50/30 dark:hover:bg-slate-800/40">
@@ -447,7 +460,8 @@ export const ReportsPage: React.FC = () => {
                             size="sm"
                           />
                           <span className="font-bold text-slate-900 dark:text-white">
-                            {r.name} <span className="font-normal text-slate-500">({r.variant})</span>
+                            {trCompact(r.name, r.nameBn, lang)}{' '}
+                            <span className="font-normal text-slate-500">({formatVariant(r.variant, lang)})</span>
                           </span>
                         </div>
                       </td>
@@ -461,7 +475,7 @@ export const ReportsPage: React.FC = () => {
                     </tr>
                   );
                 })}
-                {report.productProfit.length === 0 && (
+                {(!report?.productProfit || report.productProfit.length === 0) && (
                   <tr>
                     <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
                       {tx(lang, 'No product sales in selected range.', 'নির্বাচিত সময়ে কোনো পণ্য বিক্রি হয়নি।')}
@@ -486,7 +500,7 @@ export const ReportsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {report.categoryProfit.map((r: any) => (
+              {(report?.categoryProfit || []).map((r: any) => (
                 <tr key={r.category}>
                   <td className="px-4 py-2.5 font-bold">{r.category}</td>
                   <td className="px-4 py-2.5 text-right font-mono">{formatBDT(r.revenue)}</td>
@@ -496,6 +510,13 @@ export const ReportsPage: React.FC = () => {
                   </td>
                 </tr>
               ))}
+              {(!report?.categoryProfit || report.categoryProfit.length === 0) && (
+                <tr>
+                  <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
+                    {tx(lang, 'No category data recorded.', 'কোনো ক্যাটাগরি তথ্য পাওয়া যায়নি।')}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -513,7 +534,7 @@ export const ReportsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {report.brandSales.map((r: any) => (
+              {(report?.brandSales || []).map((r: any) => (
                 <tr key={r.brand} className="hover:bg-indigo-50/30 dark:hover:bg-slate-800/40">
                   <td className="px-4 py-2.5">
                     <div className="flex items-center gap-3">
@@ -527,7 +548,7 @@ export const ReportsPage: React.FC = () => {
                   </td>
                 </tr>
               ))}
-              {report.brandSales.length === 0 && (
+              {(!report?.brandSales || report.brandSales.length === 0) && (
                 <tr>
                   <td colSpan={3} className="px-4 py-8 text-center text-slate-500">
                     {tx(lang, 'No brand sales recorded in selected range.', 'নির্বাচিত সময়ে কোনো ব্র্যান্ড বিক্রয় হয়নি।')}
@@ -554,7 +575,7 @@ export const ReportsPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {report.slowMovingProducts.map((r: any) => {
+                {(report?.slowMovingProducts || []).map((r: any) => {
                   const cat = catMap.get(r.categoryId);
                   return (
                     <tr key={r.id} className="hover:bg-orange-50/30 dark:hover:bg-slate-800/40">
@@ -569,7 +590,8 @@ export const ReportsPage: React.FC = () => {
                             size="sm"
                           />
                           <span className="font-bold text-slate-900 dark:text-white">
-                            {r.name} <span className="font-normal text-slate-500">({r.variant})</span>
+                            {trCompact(r.name, r.nameBn, lang)}{' '}
+                            <span className="font-normal text-slate-500">({formatVariant(r.variant, lang)})</span>
                           </span>
                         </div>
                       </td>
@@ -581,6 +603,13 @@ export const ReportsPage: React.FC = () => {
                     </tr>
                   );
                 })}
+                {(!report?.slowMovingProducts || report.slowMovingProducts.length === 0) && (
+                  <tr>
+                    <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
+                      {tx(lang, 'No slow-moving products found.', 'কোনো অবিক্রিত বা ধীর পণ্য পাওয়া যায়নি।')}
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

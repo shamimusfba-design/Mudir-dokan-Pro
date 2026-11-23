@@ -2253,7 +2253,7 @@ export async function loadDemoData(storeId: number, actorUid: string): Promise<D
         saleIdx: oldestInv?.saleIdx,
         reminderType: i % 3 === 0 ? 'OVERDUE_REMINDER' : 'DUE_REMINDER',
         channel: i % 2 === 0 ? 'WHATSAPP' : 'SMS',
-        message: `আসসালামু আলাইকুম ${c.name}, মুদির দোকান প্রো-তে আপনার বকেয়া ৳${money(c.currentDue)}। অনুগ্রহ করে সুবিধামতো পরিশোধ করুন।`,
+        message: `আসসালামু আলাইকুম ${c.name}, মুদি দোকান প্রো-তে আপনার বকেয়া ৳${money(c.currentDue)}। অনুগ্রহ করে সুবিধামতো পরিশোধ করুন।`,
         status: 'SENT',
         scheduledFor: win.periodEnd,
         isDemo: true,

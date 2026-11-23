@@ -305,7 +305,7 @@ export async function provisionStoreForUser(uid: string, ownerName: string): Pro
       .values({
         ownerUid: uid,
         name: 'MudirDokan Pro',
-        nameBn: 'মুদির দোকান প্রো',
+        nameBn: 'মুদি দোকান প্রো',
         phone: '01700-000000',
         address: 'Mirpur 10, Dhaka-1216, Bangladesh',
         addressBn: 'মিরপুর ১০, ঢাকা-১২১৬, বাংলাদেশ',

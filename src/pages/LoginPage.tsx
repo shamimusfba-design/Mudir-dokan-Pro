@@ -16,6 +16,7 @@ import {
   Phone,
   Sun,
   Moon,
+  ShoppingBag,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
@@ -27,9 +28,14 @@ import { DemoAccessModal } from '../components/DemoAccessModal';
 interface LoginPageProps {
   onOpenPortal: () => void;
   onOpenShowcase?: () => void;
+  onOpenOnlineStore?: () => void;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal, onOpenShowcase }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({
+  onOpenPortal,
+  onOpenShowcase,
+  onOpenOnlineStore,
+}) => {
   const { lang, setLang, darkMode, toggleDarkMode, loginAsOwner } = useApp();
 
   // Active Login Role Tab: 'owner' | 'customer' (Requested by user)
@@ -63,7 +69,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal, onOpenShowca
     loginAsOwner({
       name: loginPhone === '01884700631' ? 'শামীম (দোকান মালিক)' : `দোকানদার (${loginPhone})`,
       phone: loginPhone.trim(),
-      storeName: 'মুদির দোকান প্রো',
+      storeName: 'মুদি দোকান প্রো',
       subdomain: 'shamimgrocery',
     });
   };
@@ -188,7 +194,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal, onOpenShowca
                   </div>
                   <div>
                     <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">
-                      {tx(lang, 'MudirDokan Pro — POS & Khata System', 'মুদির দোকান প্রো — আধুনিক পিওএস ও ডিজিটাল খাতা')}
+                      {tx(lang, 'MudirDokan Pro — POS & Khata System', 'মুদি দোকান প্রো — আধুনিক পিওএস ও ডিজিটাল খাতা')}
                     </h4>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400">
                       {tx(
@@ -421,6 +427,28 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenPortal, onOpenShowca
               {/* PRO FEATURES & DEMO SECTION (Requested by user) */}
               <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
                 
+                {/* Customer Online Store Entry */}
+                {onOpenOnlineStore && (
+                  <button
+                    type="button"
+                    onClick={onOpenOnlineStore}
+                    className="flex w-full items-center justify-between rounded-2xl border border-teal-200 bg-teal-50/80 hover:bg-teal-100 p-3 text-xs font-bold text-teal-950 shadow-xs transition cursor-pointer dark:border-teal-900/60 dark:bg-teal-950/40 dark:text-teal-200"
+                  >
+                    <div className="flex items-center gap-2 text-left">
+                      <ShoppingBag className="h-4 w-4 text-teal-600 shrink-0" />
+                      <div>
+                        <span className="block font-black text-xs text-teal-900 dark:text-teal-200">
+                          {tx(lang, '🛒 Buy Groceries Online (Customer E-Commerce)', '🛒 অনলাইনে মুদি বাজার করুন (ক্রেতা ই-কমার্স)')}
+                        </span>
+                        <span className="text-[10px] text-teal-700/80 dark:text-teal-400 font-normal">
+                          {tx(lang, 'Pick your area & shop to place home delivery orders', 'আপনার এলাকা ও কাছের দোকান নির্বাচন করে পণ্য কিনুন')}
+                        </span>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-teal-600 shrink-0" />
+                  </button>
+                )}
+
                 {/* 1. See Pro Features Landing Page */}
                 {onOpenShowcase && (
                   <button

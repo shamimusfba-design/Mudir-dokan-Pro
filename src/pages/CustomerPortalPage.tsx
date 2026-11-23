@@ -160,7 +160,7 @@ export const CustomerPortalPage: React.FC = () => {
   if (!token || !account) {
     const loginStoreName = inviteInfo
       ? trCompact(inviteInfo.storeName, inviteInfo.storeNameBn, lang)
-      : tx(lang, 'MudirDokan Pro', 'মুদির দোকান প্রো');
+      : tx(lang, 'MudirDokan Pro', 'মুদি দোকান প্রো');
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-emerald-50 px-4 py-10 flex flex-col items-center justify-center dark:from-[#0B1120] dark:via-[#0F172A] dark:to-[#0B1120]">

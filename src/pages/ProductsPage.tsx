@@ -19,8 +19,8 @@ import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch } from '../lib/api';
 import { BD_UNITS, formatBDT, formatQty } from '../lib/decimal';
-import { tr, trCompact, tx, formatUnitLabel } from '../lib/i18n';
-import type { CachedBrand, CachedCategory, CachedProduct } from '../lib/offline-db';
+import { tr, trCompact, tx, formatUnitLabel, formatVariant } from '../lib/i18n';
+import { offlineDb, type CachedBrand, type CachedCategory, type CachedProduct } from '../lib/offline-db';
 import {
   ProductImage,
   BrandLogo,
@@ -139,6 +139,21 @@ export const ProductsPage: React.FC = () => {
   }, [products, search, catFilter, brandFilter, photoFilter, brandMap]);
 
   const [displayLimit, setDisplayLimit] = useState(60);
+
+  const handleToggleProductActive = async (p: CachedProduct) => {
+    const nextStatus = p.isActive === false ? true : false;
+    try {
+      await offlineDb.products.update(p.id, { isActive: nextStatus });
+      await refreshCatalog();
+      toast.success(
+        nextStatus
+          ? `"${p.nameBn || p.name}" পণ্যটি সক্রিয় করা হয়েছে (POS ও অনলাইন স্টোরে দেখাবে)`
+          : `"${p.nameBn || p.name}" পণ্যটি নিষ্ক্রিয় করা হয়েছে (POS ও অনলাইন স্টোরে লুকানো থাকবে)`
+      );
+    } catch {
+      toast.error('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে');
+    }
+  };
 
   useEffect(() => {
     setDisplayLimit(60);
@@ -624,7 +639,7 @@ export const ProductsPage: React.FC = () => {
                   </h3>
                   <div className="mt-1.5 flex items-center gap-2">
                     <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                      {p.variant}
+                      {formatVariant(p.variant, lang)}
                     </span>
                     <span
                       className={`text-[11px] font-semibold ${
@@ -648,7 +663,22 @@ export const ProductsPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
+                    {/* Active / Inactive Toggle Switch */}
+                    <button
+                      type="button"
+                      onClick={() => handleToggleProductActive(p)}
+                      title={p.isActive === false ? 'পণ্যটি নিষ্ক্রিয় (ক্লিক করে সক্রিয় করুন)' : 'পণ্যটি সক্রিয় (ক্লিক করে নিষ্ক্রিয় করুন)'}
+                      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold transition cursor-pointer ${
+                        p.isActive === false
+                          ? 'bg-slate-200 text-slate-700 hover:bg-emerald-100 hover:text-emerald-800 dark:bg-slate-800 dark:text-slate-400'
+                          : 'bg-emerald-100 text-emerald-800 hover:bg-amber-100 hover:text-amber-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                      }`}
+                    >
+                      <span className={`h-1.5 w-1.5 rounded-full ${p.isActive === false ? 'bg-slate-400' : 'bg-emerald-500'}`} />
+                      <span>{p.isActive === false ? 'বন্ধ' : 'সক্রিয়'}</span>
+                    </button>
+
                     <button
                       type="button"
                       onClick={() => openEditProduct(p)}
@@ -735,7 +765,7 @@ export const ProductsPage: React.FC = () => {
                           <div>
                             <div className="font-bold text-slate-900 dark:text-white">
                               {trCompact(p.name, p.nameBn, lang)}{' '}
-                              <span className="font-normal text-slate-500">({p.variant})</span>
+                              <span className="font-normal text-slate-500">({formatVariant(p.variant, lang)})</span>
                             </div>
                             <div className="text-[10px] text-slate-400">
                               {p.imageUrl ? (
@@ -966,6 +996,17 @@ export const ProductsPage: React.FC = () => {
               <button type="button" onClick={() => setShowProdModal(false)} className="text-slate-400 cursor-pointer">
                 <X className="h-4 w-4" />
               </button>
+            </div>
+
+            {/* Recommended Image Resolution Tip */}
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-3 text-xs text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200 flex items-start gap-2.5">
+              <Camera className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold">📸 প্রস্তাবিত ছবি রেজুলেশন: 800 x 800 পিক্সেল</span>
+                <p className="text-[11px] text-emerald-800/80 dark:text-emerald-300 mt-0.5">
+                  ১:১ স্কয়ার ফরম্যাট, স্পষ্ট ও পরিষ্কার সাদা ব্যাকগ্রাউন্ডে ছবি আপলোড করলে ক্যাটালগ ও অনলাইন শপে দেখতে সবচেয়ে সুন্দর ও প্রফেশনাল দেখাবে। সর্বোচ্চ ফাইল সাইজ ২ মেগাবাইট।
+                </p>
+              </div>
             </div>
 
             {/* Product Image & Multi-Angle Gallery Asset Uploader */}

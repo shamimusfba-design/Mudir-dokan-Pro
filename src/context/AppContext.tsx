@@ -55,6 +55,9 @@ export interface StoreSettingsInfo {
   smsProvider: 'NONE' | 'WEBHOOK' | 'WHATSAPP_LINK';
   smsWebhookUrl: string;
   smsSenderId: string;
+  deliveryFeeInsideDhaka?: number;
+  deliveryFeeOutsideDhaka?: number;
+  freeDeliveryThreshold?: number;
   demoModeActive?: boolean;
   demoPeriodStart?: string | null;
   demoPeriodEnd?: string | null;
@@ -87,7 +90,7 @@ interface AppContextValue {
   darkMode: boolean;
   toggleDarkMode: () => void;
   signInWithGoogle: () => Promise<void>;
-  enterDemoMode: () => Promise<void>;
+  enterDemoMode: (options?: { name?: string; phone?: string; email?: string; shopName?: string }) => Promise<void>;
   loginAsOwner: (options?: { name?: string; phone?: string; storeName?: string; subdomain?: string; customDomain?: string }) => void;
   logout: () => Promise<void>;
   refreshCatalog: () => Promise<void>;
@@ -246,13 +249,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setStaff((prev) => prev || {
         uid: 'demo-shopkeeper-uid',
         email: 'shopkeeper@mudirdokan.local',
-        name: 'মুদির দোকান প্রো (শপকিপার)',
+        name: 'মুদি দোকান প্রো (শপকিপার)',
         role: 'OWNER',
       });
       setStore((prev) => prev || {
         id: 1,
-        name: 'মুদির দোকান প্রো',
-        nameBn: 'মুদির দোকান প্রো',
+        name: 'মুদি দোকান প্রো',
+        nameBn: 'মুদি দোকান প্রো',
         phone: '01700000000',
         address: 'মিরপুর-১০, ঢাকা',
         addressBn: 'মিরপুর-১০, ঢাকা',
@@ -265,7 +268,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setSettings((prev) => prev || {
         languageMode: 'BN',
         receiptFormat: '58MM',
-        receiptHeader: 'মুদির দোকান প্রো',
+        receiptHeader: 'মুদি দোকান প্রো',
         receiptFooter: 'ধন্যবাদ, আবার আসবেন',
         allowNegativeStock: false,
         allowCashierPriceEdit: false,
@@ -356,32 +359,47 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [isSyncing, loadOfflineQueue, refreshCatalog]);
 
-  const enterDemoMode = useCallback(async () => {
+  const enterDemoMode = useCallback(async (options?: { name?: string; phone?: string; email?: string; shopName?: string }) => {
     const demoData = getClientDemoCatalog();
     await cacheStoreCatalog(demoData);
     setProducts(demoData.products);
     setCategories(demoData.categories);
     setBrands(demoData.brands);
     setCustomers(demoData.customers);
+
+    const storedShopName = localStorage.getItem('mudidokan_demo_shop_name');
+    const storedUserName = localStorage.getItem('mudidokan_demo_user_name');
+    const storedPhone = localStorage.getItem('mudidokan_demo_user_phone');
+
+    const shopName = options?.shopName?.trim() || storedShopName || 'মুদি দোকান প্রো';
+    const userName = options?.name?.trim() || storedUserName || (options?.phone ? `দোকানদার (${options.phone})` : 'মুদি দোকান প্রো (শপকিপার)');
+    const userPhone = options?.phone?.trim() || storedPhone || '01700000000';
+    const userEmail = options?.email?.trim() || 'demo@mudidokanpro.local';
+
+    if (options?.shopName) localStorage.setItem('mudidokan_demo_shop_name', shopName);
+    if (options?.name) localStorage.setItem('mudidokan_demo_user_name', userName);
+    if (options?.phone) localStorage.setItem('mudidokan_demo_user_phone', userPhone);
+    sessionStorage.setItem('mudidokan_demo_active', 'true');
+
     const mockUser: AuthSessionUser = {
       uid: 'demo-shopkeeper-uid',
-      email: 'demo@mudirdokan.local',
-      displayName: 'মুদির দোকান প্রো (শপকিপার)',
+      email: userEmail,
+      displayName: userName,
       photoURL: null,
       provider: 'firebase',
     };
     setAuthUser(mockUser);
     setStaff({
       uid: 'demo-shopkeeper-uid',
-      email: 'demo@mudirdokan.local',
-      name: 'মুদির দোকান প্রো (শপকিপার)',
+      email: userEmail,
+      name: userName,
       role: 'OWNER',
     });
     setStore({
       id: 1,
-      name: 'মুদির দোকান প্রো',
-      nameBn: 'মুদির দোকান প্রো',
-      phone: '01700000000',
+      name: shopName,
+      nameBn: shopName,
+      phone: userPhone,
       address: 'মিরপুর-১০, ঢাকা',
       addressBn: 'মিরপুর-১০, ঢাকা',
       currency: 'BDT',
@@ -393,7 +411,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setSettings({
       languageMode: 'BN',
       receiptFormat: '58MM',
-      receiptHeader: 'মুদির দোকান প্রো',
+      receiptHeader: 'মুদি দোকান প্রো',
       receiptFooter: 'ধন্যবাদ, আবার আসবেন',
       allowNegativeStock: false,
       allowCashierPriceEdit: false,

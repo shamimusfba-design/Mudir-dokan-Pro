@@ -28,6 +28,10 @@ export const AdLandingPageBuilder: React.FC = () => {
   // Template: 'agro' | 'video_first' | 'combo'
   const [template, setTemplate] = useState<'agro' | 'video_first' | 'combo'>('agro');
 
+  // Store Brand & Logo
+  const [storeLogoUrl, setStoreLogoUrl] = useState('');
+  const [storeBrandName, setStoreBrandName] = useState('মুদি দোকান স্পেশাল');
+
   // Ad Copy & Content
   const [headline, setHeadline] = useState('১০০% খাঁটি প্রাকৃতিক মধু — শতভাগ ভেজালমুক্ত ও প্রাকৃতিক শক্তির উৎস');
   const [subheadline, setSubheadline] = useState('সুন্দরবনের চাকভাঙা কাঁচা মধু। ল্যাব টেস্টে শতভাগ খাঁটি প্রমাণিত। পরিবারকে রাখুন সুস্থ ও সতেজ।');
@@ -37,6 +41,18 @@ export const AdLandingPageBuilder: React.FC = () => {
   const [productUnit, setProductUnit] = useState('১ কেজি জার');
   const [youtubeUrl, setYoutubeUrl] = useState('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
   const [pixelId, setPixelId] = useState('');
+
+  // Bundle Packages for Multi-Item Selection
+  const [selectedPackageIdx, setSelectedPackageIdx] = useState(0);
+  const bundlePackages = [
+    { name: '১ কেজি জার (স্ট্যান্ডার্ড প্যাক)', qty: 1, price: 990, regular: 1450, tag: 'জনপ্রিয়' },
+    { name: '২ কেজি মেগা কম্বো (৳১৩০ সাশ্রয়)', qty: 2, price: 1850, regular: 2900, tag: '⭐ সেরা ডিল' },
+    { name: '৩ কেজি ফ্যামিলি প্যাক (৳২৭০ সাশ্রয়)', qty: 3, price: 2700, regular: 4350, tag: 'মেগা সেভার' },
+  ];
+
+  // Delivery Charge Selection: ঢাকার মধ্যে ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা
+  const [deliveryArea, setDeliveryArea] = useState<'inside_dhaka' | 'outside_dhaka'>('inside_dhaka');
+  const deliveryFee = deliveryArea === 'inside_dhaka' ? 80 : 150;
 
   // Bullet Features
   const [features, setFeatures] = useState<string[]>([
@@ -49,7 +65,7 @@ export const AdLandingPageBuilder: React.FC = () => {
   // Customer Reviews
   const [reviews, setReviews] = useState<Array<{ name: string; comment: string; stars: number }>>([
     { name: 'কামরুল হাসান, উত্তরা', comment: 'মধুর স্বাদ ও সুবাস অসাধারণ! একদম চাকের মধুর মতোই দারুণ।', stars: 5 },
-    { name: 'আরিফুল ইসলাম, মিরপুর', comment: 'খুব দ্রুত ডেলিভারি পেয়েছি। প্যাকেজিং ও কোয়ালিটি সেরা। ধন্যবাদ মুদির দোকান প্রো।', stars: 5 },
+    { name: 'আরিফুল ইসলাম, মিরপুর', comment: 'খুব দ্রুত ডেলিভারি পেয়েছি। প্যাকেজিং ও কোয়ালিটি সেরা। ধন্যবাদ মুদি দোকান প্রো।', stars: 5 },
     { name: 'ফারহানা চৌধুরী, ধানমন্ডি', comment: 'আমার বাচ্চার ঠাণ্ডার জন্য নিয়েছিলাম, খুব উপকার হয়েছে। খাঁটি পণ্য।', stars: 5 },
   ]);
 
@@ -368,7 +384,7 @@ export const AdLandingPageBuilder: React.FC = () => {
           {/* Store Bar */}
           <div className="bg-[#14532D] text-white p-3 text-center text-xs font-bold flex items-center justify-center gap-2">
             <ShieldCheck className="h-4 w-4 text-emerald-300" />
-            <span>{store?.name || 'মুদির দোকান প্রো'} — অফিসিয়াল অনলাইন স্টোর</span>
+            <span>{store?.name || 'মুদি দোকান প্রো'} — অফিসিয়াল অনলাইন স্টোর</span>
           </div>
 
           {/* Ad Hero */}
@@ -455,7 +471,46 @@ export const AdLandingPageBuilder: React.FC = () => {
                 পণ্য হাতে পেয়ে মূল্য পরিশোধ করুন (ক্যাশ অন ডেলিভারি)
               </p>
 
-              <form onSubmit={(e) => { e.preventDefault(); toast.success('অর্ডার প্লেস সফল হয়েছে (প্রিভিউ মোড)!'); }} className="space-y-3 text-left">
+              <form onSubmit={(e) => { e.preventDefault(); toast.success('অর্ডার প্লেস সফল হয়েছে (প্রিভিউ মোড)!'); }} className="space-y-4 text-left">
+                {/* Multi-Item Package Selection */}
+                <div>
+                  <label className="block text-[11px] font-bold mb-1.5 text-slate-800 dark:text-slate-200">
+                    প্যাকেজ নির্বাচন করুন:
+                  </label>
+                  <div className="space-y-2">
+                    {bundlePackages.map((pkg, idx) => (
+                      <label
+                        key={idx}
+                        className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition ${
+                          selectedPackageIdx === idx
+                            ? 'border-emerald-600 bg-emerald-50/80 ring-2 ring-emerald-500/20'
+                            : 'border-slate-200 bg-white hover:border-slate-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name="bundlePkg"
+                            checked={selectedPackageIdx === idx}
+                            onChange={() => setSelectedPackageIdx(idx)}
+                            className="text-emerald-600 focus:ring-emerald-500"
+                          />
+                          <div>
+                            <div className="text-xs font-bold text-slate-900">{pkg.name}</div>
+                            <div className="text-[10px] text-slate-500 font-mono">
+                              <span className="line-through">৳{pkg.regular}</span>{' '}
+                              <span className="text-emerald-700 font-bold">৳{pkg.price}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                          {pkg.tag}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-[11px] font-bold mb-1">আপনার নাম *</label>
                   <input
@@ -475,25 +530,80 @@ export const AdLandingPageBuilder: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold mb-1">সম্পূর্ণ ঠিকানা *</label>
+                  <label className="block text-[11px] font-bold mb-1">সম্পূর্ণ ডেলিভারি ঠিকানা *</label>
                   <input
                     type="text"
                     required
-                    placeholder="বাসা/রোড নম্বর, এলাকা, জেলা"
+                    placeholder="বাসা/রোড নম্বর, এলাকা, থানা, জেলা"
                     className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs"
                   />
                 </div>
 
-                <div className="rounded-xl border border-emerald-200 bg-white p-3 flex items-center justify-between font-black text-xs">
-                  <span>মোট বিল (ক্যাশ অন ডেলিভারি):</span>
-                  <span className="font-mono text-emerald-700 text-sm">৳{offerPrice}</span>
+                {/* Delivery Area Selection: ঢাকার মধ্যে ৮০ টাকা, ঢাকার বাইরে ১৫০ টাকা */}
+                <div>
+                  <label className="block text-[11px] font-bold mb-1.5 text-slate-800 dark:text-slate-200">
+                    ডেলিভারি এরিয়া বেছে নিন:
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <label
+                      className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer text-xs font-bold transition ${
+                        deliveryArea === 'inside_dhaka'
+                          ? 'border-emerald-600 bg-emerald-50/80 text-emerald-900 ring-2 ring-emerald-500/20'
+                          : 'border-slate-200 bg-white text-slate-700'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="delArea"
+                        checked={deliveryArea === 'inside_dhaka'}
+                        onChange={() => setDeliveryArea('inside_dhaka')}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>ঢাকার মধ্যে (৳৮০)</span>
+                    </label>
+
+                    <label
+                      className={`flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer text-xs font-bold transition ${
+                        deliveryArea === 'outside_dhaka'
+                          ? 'border-emerald-600 bg-emerald-50/80 text-emerald-900 ring-2 ring-emerald-500/20'
+                          : 'border-slate-200 bg-white text-slate-700'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="delArea"
+                        checked={deliveryArea === 'outside_dhaka'}
+                        onChange={() => setDeliveryArea('outside_dhaka')}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span>ঢাকার বাইরে (৳১৫০)</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Bill Breakdown */}
+                <div className="rounded-xl border border-emerald-200 bg-white p-3 space-y-1.5 text-xs">
+                  <div className="flex justify-between text-slate-600">
+                    <span>পণ্যের মূল্য ({bundlePackages[selectedPackageIdx].name}):</span>
+                    <span className="font-mono font-bold">৳{bundlePackages[selectedPackageIdx].price}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>ডেলিভারি চার্জ ({deliveryArea === 'inside_dhaka' ? 'ঢাকার মধ্যে' : 'ঢাকার বাইরে'}):</span>
+                    <span className="font-mono font-bold">৳{deliveryFee}</span>
+                  </div>
+                  <div className="flex justify-between font-black text-slate-900 border-t border-slate-100 pt-1.5">
+                    <span>সর্বমোট প্রদেয় বিল:</span>
+                    <span className="font-mono text-emerald-700 text-sm">
+                      ৳{bundlePackages[selectedPackageIdx].price + deliveryFee}
+                    </span>
+                  </div>
                 </div>
 
                 <button
                   type="submit"
                   className="w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3.5 text-sm font-black text-white shadow-xl shadow-emerald-600/30 hover:from-emerald-700 transition cursor-pointer"
                 >
-                  অর্ডার কনফার্ম করুন (৳{offerPrice}) 🚀
+                  ক্যাশ অন ডেলিভারিতে অর্ডার কনফার্ম করুন (৳{bundlePackages[selectedPackageIdx].price + deliveryFee}) 🚀
                 </button>
               </form>
             </div>

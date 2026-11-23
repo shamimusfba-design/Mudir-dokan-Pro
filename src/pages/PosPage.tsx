@@ -23,7 +23,7 @@ import { toast } from 'sonner';
 import { useApp } from '../context/AppContext';
 import { apiFetch } from '../lib/api';
 import { D, money, formatBDT, formatQty, dhakaTodayISO, PAYMENT_METHODS } from '../lib/decimal';
-import { tr, trCompact, tx, formatStatusLabel, formatUnitLabel } from '../lib/i18n';
+import { tr, trCompact, tx, formatStatusLabel, formatUnitLabel, formatVariant } from '../lib/i18n';
 import { enqueueOfflineSale, offlineDb, type CachedProduct } from '../lib/offline-db';
 import { ReceiptModal, type PrintableReceipt } from '../components/ReceiptModal';
 import { ProductImage, BrandLogo, CategoryIcon, getCategoryTheme } from '../components/ProductMedia';
@@ -180,6 +180,7 @@ export const PosPage: React.FC = () => {
   const filteredProducts = useMemo(() => {
     const q = query.trim().toLowerCase();
     return products.filter((p) => {
+      if (p.isActive === false) return false;
       if (q) {
         const b = p.brandId ? brandMap.get(p.brandId) : null;
         const c = catMap.get(p.categoryId);
@@ -768,7 +769,7 @@ export const PosPage: React.FC = () => {
                               </span>
                             </div>
                             <div className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                              {p.variant} · {p.sku} · {tx(lang, 'Stock:', 'স্টক:')} {formatQty(p.currentStock)}{' '}
+                              {formatVariant(p.variant, lang)} · {p.sku} · {tx(lang, 'Stock:', 'স্টক:')} {formatQty(p.currentStock, lang)}{' '}
                               {formatUnitLabel(p.baseUnit, lang)}
                             </div>
                           </div>
@@ -972,8 +973,8 @@ export const PosPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Visually Rich Product Selection Grid (Fluid auto-fill columns: automatically adds columns when sidebar is closed) */}
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-2.5">
+        {/* Visually Rich Product Selection Grid (Responsive Full Width: 2 cols on mobile, scales up to 6 cols) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-2.5 w-full">
           {visibleProducts.map((prod) => {
             const stock = Number(prod.currentStock);
             const isOut = stock <= 0;
@@ -1049,7 +1050,7 @@ export const PosPage: React.FC = () => {
                     {trCompact(prod.name, prod.nameBn, lang)}
                   </button>
                   <div className="mt-1 inline-flex items-center rounded-md bg-slate-100 px-1.5 py-0.5 text-[11px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                    {prod.variant}
+                    {formatVariant(prod.variant, lang)}
                   </div>
                 </div>
 
@@ -1057,7 +1058,7 @@ export const PosPage: React.FC = () => {
                 <div className="mt-3 space-y-2 border-t border-slate-100 pt-2 dark:border-slate-800">
                   <div className="flex items-baseline justify-between gap-1">
                     <div className="font-mono text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400">
-                      {formatBDT(prod.sellingPrice)}
+                      {formatBDT(prod.sellingPrice, lang)}
                     </div>
                     <div
                       className={`font-mono text-[11px] font-bold ${
@@ -1070,7 +1071,7 @@ export const PosPage: React.FC = () => {
                     >
                       {isOut
                         ? tx(lang, 'Out', 'শেষ')
-                        : `${formatQty(prod.currentStock)} ${formatUnitLabel(prod.baseUnit, lang)}`}
+                        : `${formatQty(prod.currentStock, lang)} ${formatUnitLabel(prod.baseUnit, lang)}`}
                     </div>
                   </div>
 
@@ -1084,7 +1085,7 @@ export const PosPage: React.FC = () => {
                         <Minus className="h-3.5 w-3.5" />
                       </button>
                       <span className="font-mono text-xs font-extrabold text-emerald-800 dark:text-emerald-200">
-                        {formatQty(inCartQty)} {formatUnitLabel(prod.baseUnit, lang)}
+                        {formatQty(inCartQty, lang)} {formatUnitLabel(prod.baseUnit, lang)}
                       </span>
                       <button
                         type="button"
@@ -1196,7 +1197,7 @@ export const PosPage: React.FC = () => {
                         <div className="text-xs font-bold text-slate-900 dark:text-white truncate" title={item.product.name}>
                           {trCompact(item.product.name, item.product.nameBn, lang)}
                         </div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{item.product.variant}</div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{formatVariant(item.product.variant, lang)}</div>
                       </div>
                     </div>
                     <button
@@ -1636,7 +1637,7 @@ export const PosPage: React.FC = () => {
                 {tx(
                   lang,
                   'You have completed 100 sample trial entries in Mudi Dokan Pro. To unlock unlimited billing, multi-device cloud sync, digital khata SMS, and full store management, upgrade to the Pro edition today.',
-                  'আপনি মুদির দোকান প্রো ডেমো স্টোরে ১০০টি সফল ট্রায়াল এন্ট্রি সম্পন্ন করেছেন। আনলিমিটেড লাইভ বিক্রয়, ক্লাউড অটো-সিঙ্ক, ডিজিটাল খাতা এসএমএস ও ফুল ফিচারের জন্য আজই সম্পূর্ণ প্রো ভার্সনে আপগ্রেড করুন।'
+                  'আপনি মুদি দোকান প্রো ডেমো স্টোরে ১০০টি সফল ট্রায়াল এন্ট্রি সম্পন্ন করেছেন। আনলিমিটেড লাইভ বিক্রয়, ক্লাউড অটো-সিঙ্ক, ডিজিটাল খাতা এসএমএস ও ফুল ফিচারের জন্য আজই সম্পূর্ণ প্রো ভার্সনে আপগ্রেড করুন।'
                 )}
               </p>
             </div>
@@ -1645,7 +1646,7 @@ export const PosPage: React.FC = () => {
               <a
                 href={`https://wa.me/8801884700631?text=${encodeURIComponent(
                   lang === 'BN'
-                    ? 'হ্যালো মুদির দোকান প্রো, আমি ডেমো ট্রায়াল সম্পন্ন করেছি এবং এখন ফুল প্রো ভার্সন কিনতে/লাইসেন্স নিতে আগ্রহী।'
+                    ? 'হ্যালো মুদি দোকান প্রো, আমি ডেমো ট্রায়াল সম্পন্ন করেছি এবং এখন ফুল প্রো ভার্সন কিনতে/লাইসেন্স নিতে আগ্রহী।'
                     : 'Hello Mudi Dokan Pro, I have completed the demo trial and would like to purchase/upgrade to the Full Pro Version.'
                 )}`}
                 target="_blank"

@@ -407,13 +407,13 @@ export const StoreLogoBadge: React.FC<{
     size === 'sm' ? 'h-8 w-8 rounded-lg' : size === 'lg' ? 'h-14 w-14 rounded-2xl' : 'h-9 w-9 rounded-xl';
   const iconDim = size === 'sm' ? 'h-4 w-4' : size === 'lg' ? 'h-7 w-7' : 'h-5 w-5';
 
-  if (logoUrl && logoUrl.trim() && !errored) {
+  if (!errored) {
     return (
       <div
-        className={`flex shrink-0 items-center justify-center overflow-hidden border border-indigo-200 bg-white p-1 shadow-xs dark:border-indigo-800 ${dim}`}
+        className={`flex shrink-0 items-center justify-center overflow-hidden border border-emerald-200 bg-white p-0.5 shadow-xs dark:border-slate-700 ${dim}`}
       >
         <img
-          src={logoUrl}
+          src={logoUrl && logoUrl.trim() ? logoUrl : '/mudi-dokan-pro-logo.png'}
           alt={storeName}
           onError={() => setErrored(true)}
           className="h-full w-full object-contain"
@@ -424,7 +424,7 @@ export const StoreLogoBadge: React.FC<{
 
   return (
     <div
-      className={`flex shrink-0 items-center justify-center bg-gradient-to-br from-indigo-600 via-blue-600 to-emerald-500 text-white shadow-sm ${dim}`}
+      className={`flex shrink-0 items-center justify-center bg-gradient-to-br from-emerald-600 via-teal-600 to-indigo-600 text-white shadow-sm ${dim}`}
     >
       <Store className={iconDim} />
     </div>

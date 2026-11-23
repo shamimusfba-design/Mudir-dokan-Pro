@@ -71,15 +71,15 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
   if (!isOpen) return null;
 
   const currentPrice =
-    selectedPlan === 'monthly' ? 499 : selectedPlan === 'yearly' ? 3588 : 10000;
+    selectedPlan === 'monthly' ? 499 : selectedPlan === 'yearly' ? 3588 : 5000;
   const regularPrice =
-    selectedPlan === 'monthly' ? 1000 : selectedPlan === 'yearly' ? 10000 : 16000;
+    selectedPlan === 'monthly' ? 1000 : selectedPlan === 'yearly' ? 10000 : 10000;
   const planLabel =
     selectedPlan === 'monthly'
       ? '১ মাস (মাসিক ৳৪৯৯)'
       : selectedPlan === 'yearly'
-        ? '১ বছর (বাৎসরিক মেগা সেভার - মাত্র ৳২৯৯/মাস)'
-        : 'কাস্টম ডোমেন ও হাই-স্পিড ক্লাউড সার্ভার ভিআইপি (১ম বছর ৳১০,০০০)';
+        ? '১ বছর (বাৎসরিক মেগা সেভার - মাসে মাত্র ৳২৯৯ হিসেবে ৳৩,৫৮৮)'
+        : 'কাস্টম ডোমেন ও হাই-স্পিড ক্লাউড সার্ভার ভিআইপি (১ বছর ৳৫,০০০)';
 
   // Copy bKash/Nagad Number
   const handleCopyNumber = () => {
@@ -196,7 +196,7 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
 
     // Auto-open WhatsApp with invoice message for Shamim
     const waText = encodeURIComponent(
-      `আসসালামু আলাইকুম মুদির দোকান প্রো। আমি ${planLabel} প্যাকেজ কিনেছি।\n` +
+      `আসসালামু আলাইকুম মুদি দোকান প্রো। আমি ${planLabel} প্যাকেজ কিনেছি।\n` +
       `দোকান: ${storeName}\n` +
       `মালিক: ${ownerName}\n` +
       `মোবাইল: ${regPhone}\n` +
@@ -244,7 +244,7 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white leading-tight">
-                  {tx(lang, 'Upgrade to Mudir Dokan Pro', 'মুদির দোকান প্রো অ্যাক্টিভেশন')}
+                  {tx(lang, 'Upgrade to Mudir Dokan Pro', 'মুদি দোকান প্রো অ্যাক্টিভেশন')}
                 </h2>
                 <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
                   ৫০% ডিসকাউন্ট 🔥
@@ -318,7 +318,7 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                   </div>
                 </button>
 
-                {/* Package 2: Yearly (Mega Saver: 10,000 -> 499*12=5,988 -> 299/mo = 3,588) */}
+                {/* Package 2: Yearly (Mega Saver: 3,500/yr ~ 290/mo) */}
                 <button
                   type="button"
                   onClick={() => setSelectedPlan('yearly')}
@@ -330,18 +330,17 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                 >
                   <div className="flex items-center justify-between">
                     <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                      ⭐ সেরা সেভার (মাসে ২০০৳ সেভ!)
+                      ⭐ সেরা সেভার (কোনো ডোমেইন বা হোস্টিং ফি নেই!)
                     </span>
                     {selectedPlan === 'yearly' && <Check className="h-4 w-4 text-emerald-600" />}
                   </div>
 
                   <div className="mt-1.5 flex items-baseline justify-between">
                     <div>
-                      <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">১ বছর (বাৎসরিক মেগা সেভার)</h4>
+                      <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">১ বছর মেগা সেভার</h4>
                       <div className="flex items-center gap-1.5 text-[10px] mt-0.5">
                         <span className="font-mono line-through text-slate-400">৳১০,০০০</span>
-                        <span className="font-mono line-through text-rose-500">৳৫,৯৮৮</span>
-                        <span className="font-black text-emerald-700 dark:text-emerald-400">মাত্র ৳২৯৯ / মাস!</span>
+                        <span className="font-black text-emerald-700 dark:text-emerald-400">মাসে মাত্র ৳২৯৯!</span>
                       </div>
                     </div>
                     <div className="text-right">
@@ -354,7 +353,7 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                   </div>
                 </button>
 
-                {/* Package 3: Custom Domain VIP (10,000 first year, 6,000 renewal) */}
+                {/* Package 3: Custom Domain VIP (5,000/yr) */}
                 <button
                   type="button"
                   onClick={() => {
@@ -369,22 +368,22 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                 >
                   <div className="flex items-center justify-between">
                     <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-[10px] font-black text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                      👑 কাস্টম ডোমেন + ক্লাউড সার্ভার
+                      👑 কাস্টম ডোমেন ভিআইপি (.com)
                     </span>
                     {selectedPlan === 'custom_vip' && <Check className="h-4 w-4 text-indigo-600" />}
                   </div>
 
                   <div className="mt-1.5 flex items-baseline justify-between">
                     <div>
-                      <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">হাই-স্পিড ডোমেন + ক্লাউড</h4>
-                      <p className="text-[10px] text-slate-500">.com ডোমেন + হোস্টিং + ডাটা সার্ভার</p>
+                      <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">নিজস্ব .com ডোমেন + ক্লাউড</h4>
+                      <p className="text-[10px] text-slate-500">আপনার ব্র্যান্ডের .com ডোমেন সহ</p>
                     </div>
                     <div className="text-right">
                       <div className="flex items-baseline gap-1">
-                        <span className="font-mono text-lg font-black text-indigo-700 dark:text-indigo-400">৳১০,০০০</span>
-                        <span className="text-[10px] text-slate-500">১ম বছর</span>
+                        <span className="font-mono text-lg font-black text-indigo-700 dark:text-indigo-400">৳৫,০০০</span>
+                        <span className="text-[10px] text-slate-500">/বছর</span>
                       </div>
-                      <span className="text-[10px] font-bold text-slate-500">রিনিউ: ৳৬,০০০/বছর</span>
+                      <span className="text-[10px] font-bold text-slate-500">রিনিউ: ৳৩,৫০০/বছর</span>
                     </div>
                   </div>
                 </button>

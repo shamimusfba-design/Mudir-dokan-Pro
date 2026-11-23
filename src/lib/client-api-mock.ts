@@ -1,5 +1,5 @@
 import { offlineDb, enqueueOfflineSale, cacheStoreCatalog, type CachedProduct, type CachedCustomer, type CachedCategory, type CachedBrand } from './offline-db';
-import { getClientDemoCatalog } from './client-catalog';
+import { getClientDemoCatalog, CLIENT_BD_CATEGORIES } from './client-catalog';
 import { D, money, dhakaTodayISO } from './decimal';
 import { auth } from './firebase';
 
@@ -94,8 +94,8 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
       },
       store: {
         id: 1,
-        name: 'মুদির দোকান প্রো (MudirDokan Pro)',
-        nameBn: 'মুদির দোকান প্রো',
+        name: 'মুদি দোকান প্রো (MudirDokan Pro)',
+        nameBn: 'মুদি দোকান প্রো',
         code: 'STORE-001',
         address: 'ঢাকা, বাংলাদেশ',
         phone: '01884700631',
@@ -538,8 +538,8 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
     const settingsObj = getStoredJson<any>('mudidokan_settings', {
       store: {
         id: 1,
-        name: 'মুদির দোকান প্রো (MudirDokan Pro)',
-        nameBn: 'মুদির দোকান প্রো',
+        name: 'মুদি দোকান প্রো (MudirDokan Pro)',
+        nameBn: 'মুদি দোকান প্রো',
         code: 'STORE-001',
         phone: '01884700631',
         address: 'ঢাকা, বাংলাদেশ',
@@ -555,6 +555,9 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
         demoModeActive: true,
         allowCashierReports: true,
         languageMode: 'BN',
+        deliveryFeeInsideDhaka: 80,
+        deliveryFeeOutsideDhaka: 150,
+        freeDeliveryThreshold: 0,
       },
       syncLogs: [],
     });
@@ -577,30 +580,105 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
 
   // 13. GET /api/finance/reports
   if (pathname === '/api/finance/reports') {
+    const prods = await offlineDb.products.toArray();
+    const demoProds = prods.length > 0 ? prods : [];
+
+    const productProfit = demoProds.slice(0, 20).map((p, i) => {
+      const sold = 45 + ((p.id * 17) % 180);
+      const sellPrice = Number(p.sellingPrice) || 95;
+      const costPrice = Number(p.avgCostPrice) || sellPrice * 0.82;
+      const rev = sold * sellPrice;
+      const cogs = sold * costPrice;
+      const gp = rev - cogs;
+      return {
+        productId: p.id,
+        sku: p.sku,
+        name: p.name,
+        nameBn: p.nameBn,
+        variant: p.variant,
+        categoryId: p.categoryId,
+        imageUrl: p.imageUrl,
+        qtySold: sold,
+        revenue: rev,
+        cogs: cogs,
+        grossProfit: gp,
+      };
+    }).sort((a, b) => b.grossProfit - a.grossProfit);
+
+    const catMap = new Map<number, { categoryId: number; category: string; revenue: number; cogs: number; grossProfit: number }>();
+    productProfit.forEach((p) => {
+      const existing = catMap.get(p.categoryId) || { categoryId: p.categoryId, category: `Category #${p.categoryId}`, revenue: 0, cogs: 0, grossProfit: 0 };
+      existing.revenue += p.revenue;
+      existing.cogs += p.cogs;
+      existing.grossProfit += p.grossProfit;
+      catMap.set(p.categoryId, existing);
+    });
+
+    const categoryProfit = Array.from(catMap.values()).map(c => {
+      const catObj = CLIENT_BD_CATEGORIES.find(dc => dc.id === c.categoryId);
+      return {
+        ...c,
+        category: catObj ? catObj.name : c.category,
+      };
+    }).sort((a, b) => b.grossProfit - a.grossProfit);
+
+    const brandSales = [
+      { brand: 'ACI Pure', qtySold: 340, revenue: 48500 },
+      { brand: 'Teer', qtySold: 295, revenue: 41200 },
+      { brand: 'Fresh', qtySold: 280, revenue: 39800 },
+      { brand: 'PRAN', qtySold: 260, revenue: 36500 },
+      { brand: 'Radhuni', qtySold: 210, revenue: 29800 },
+      { brand: 'Dano', qtySold: 110, revenue: 44000 },
+      { brand: 'Rin', qtySold: 185, revenue: 21500 },
+    ].sort((a, b) => b.revenue - a.revenue);
+
+    const slowMovingProducts = demoProds.slice(25, 35).map((p) => ({
+      sku: p.sku,
+      name: p.name,
+      variant: p.variant,
+      currentStock: p.currentStock,
+      stockValue: (Number(p.currentStock) * (Number(p.avgCostPrice) || 80)).toFixed(2),
+    }));
+
+    const profitSummary = {
+      salesRevenue: '485000.00',
+      salesCount: 684,
+      paidAtSale: '412000.00',
+      creditIssued: '73000.00',
+      cogs: '397700.00',
+      grossProfit: '87300.00',
+      grossMarginPct: '18.0',
+      operatingExpenses: '24500.00',
+      netProfit: '62800.00',
+      dueCollections: '46200.00',
+      totalPurchases: '420000.00',
+    };
+
     return {
-      pnl: {
-        salesRevenue: '485000.00',
-        salesCount: 684,
-        paidAtSale: '412000.00',
-        creditIssued: '73000.00',
-        cogs: '397700.00',
-        grossProfit: '87300.00',
-        grossMarginPct: '18.0',
-        operatingExpenses: '24500.00',
-        netProfit: '62800.00',
-        dueCollections: '46200.00',
-        totalPurchases: '420000.00',
-      },
+      profitSummary,
+      pnl: profitSummary,
       inventoryValuation: { totalCostValue: '115500.00' },
       dues: { customerDueTotal: '26800.00', supplierDueTotal: '0.00' },
-      cashFlow: { totalIn: '458200.00', totalOut: '444500.00', netCashFlow: '13700.00', byType: [] },
+      cashFlow: {
+        totalIn: '458200.00',
+        totalOut: '444500.00',
+        netCashFlow: '13700.00',
+        byType: [
+          { txType: 'SALE_CASH', direction: 'IN', amount: 349200 },
+          { txType: 'DUE_COLLECTION', direction: 'IN', amount: 36800 },
+          { txType: 'SUPPLIER_PAYMENT', direction: 'OUT', amount: 320000 },
+          { txType: 'EXPENSE_SHOP_RENT', direction: 'OUT', amount: 12000 },
+          { txType: 'EXPENSE_ELECTRICITY', direction: 'OUT', amount: 6500 },
+          { txType: 'EXPENSE_STAFF', direction: 'OUT', amount: 6000 },
+        ],
+      },
       monthlyBreakdown: [
-        { month: '2026-05', revenue: '74200.00', cogs: '60850.00', grossProfit: '13350.00', expenses: '3900.00', netProfit: '9450.00' },
-        { month: '2026-06', revenue: '79800.00', cogs: '65440.00', grossProfit: '14360.00', expenses: '4100.00', netProfit: '10260.00' },
-        { month: '2026-07', revenue: '81400.00', cogs: '66750.00', grossProfit: '14650.00', expenses: '4200.00', netProfit: '10450.00' },
-        { month: '2026-08', revenue: '83900.00', cogs: '68800.00', grossProfit: '15100.00', expenses: '4150.00', netProfit: '10950.00' },
-        { month: '2026-09', revenue: '82500.00', cogs: '67650.00', grossProfit: '14850.00', expenses: '4050.00', netProfit: '10800.00' },
-        { month: '2026-10', revenue: '83200.00', cogs: '68220.00', grossProfit: '14990.00', expenses: '4100.00', netProfit: '10890.00' },
+        { ym: '2026-05', salesCount: 104, revenue: '74200.00', paidAtSale: '63000.00', creditIssued: '11200.00', cogs: '60850.00', grossProfit: '13350.00', grossMarginPct: '18.0', expenses: '3900.00', netProfit: '9450.00' },
+        { ym: '2026-06', salesCount: 112, revenue: '79800.00', paidAtSale: '68000.00', creditIssued: '11800.00', cogs: '65440.00', grossProfit: '14360.00', grossMarginPct: '18.0', expenses: '4100.00', netProfit: '10260.00' },
+        { ym: '2026-07', salesCount: 115, revenue: '81400.00', paidAtSale: '69000.00', creditIssued: '12400.00', cogs: '66750.00', grossProfit: '14650.00', grossMarginPct: '18.0', expenses: '4200.00', netProfit: '10450.00' },
+        { ym: '2026-08', salesCount: 118, revenue: '83900.00', paidAtSale: '71000.00', creditIssued: '12900.00', cogs: '68800.00', grossProfit: '15100.00', grossMarginPct: '18.0', expenses: '4150.00', netProfit: '10950.00' },
+        { ym: '2026-09', salesCount: 116, revenue: '82500.00', paidAtSale: '70000.00', creditIssued: '12500.00', cogs: '67650.00', grossProfit: '14850.00', grossMarginPct: '18.0', expenses: '4050.00', netProfit: '10800.00' },
+        { ym: '2026-10', salesCount: 119, revenue: '83200.00', paidAtSale: '71000.00', creditIssued: '12200.00', cogs: '68220.00', grossProfit: '14990.00', grossMarginPct: '18.0', expenses: '4100.00', netProfit: '10890.00' },
       ],
       paymentChannels: {
         salesAtCounter: [
@@ -613,10 +691,10 @@ export async function handleClientMockApi<T = any>(path: string, options: Reques
           { method: 'BKASH', count: 18, amount: '9400.00' },
         ],
       },
-      productProfit: [],
-      categoryProfit: [],
-      brandSales: [],
-      slowMovingProducts: [],
+      productProfit,
+      categoryProfit,
+      brandSales,
+      slowMovingProducts,
     } as T;
   }
 

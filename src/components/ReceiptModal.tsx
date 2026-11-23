@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Printer, X, MessageSquare } from 'lucide-react';
 import { formatBDT, formatDateDDMMYYYY, formatQty } from '../lib/decimal';
 import { useApp, type StoreInfo, type StoreSettingsInfo } from '../context/AppContext';
-import { tx, trCompact, formatMethodLabel, formatUnitLabel } from '../lib/i18n';
+import { tx, trCompact, formatMethodLabel, formatUnitLabel, formatVariant } from '../lib/i18n';
 
 export interface PrintableSaleReceipt {
   type: 'SALE';
@@ -65,7 +65,7 @@ export const ReceiptModal: React.FC<{
 
   const storeTitle = store
     ? trCompact(store.name, store.nameBn, lang)
-    : tx(lang, 'MudirDokan Pro', 'মুদির দোকান প্রো');
+    : tx(lang, 'MudirDokan Pro', 'মুদি দোকান প্রো');
   const storeAddress = store ? trCompact(store.address, store.addressBn, lang) : '';
 
   const whatsappShareUrl = (() => {
@@ -222,16 +222,16 @@ export const ReceiptModal: React.FC<{
                       <tr key={idx}>
                         <td className="py-1 pr-1">
                           <div className="font-medium leading-tight">{item.productName}</div>
-                          {item.variant && <div className="text-[10px] text-slate-500">{item.variant}</div>}
+                          {item.variant && <div className="text-[10px] text-slate-500">{formatVariant(item.variant, lang)}</div>}
                         </td>
                         <td className="py-1 text-right font-mono whitespace-nowrap">
-                          {formatQty(item.enteredQty)} {formatUnitLabel(item.unitName, lang)}
+                          {formatQty(item.enteredQty, lang)} {formatUnitLabel(item.unitName, lang)}
                         </td>
                         <td className="py-1 text-right font-mono whitespace-nowrap">
-                          {formatBDT(item.unitSellingPrice)}
+                          {formatBDT(item.unitSellingPrice, lang)}
                         </td>
                         <td className="py-1 text-right font-mono font-semibold whitespace-nowrap">
-                          {formatBDT(item.lineTotal)}
+                          {formatBDT(item.lineTotal, lang)}
                         </td>
                       </tr>
                     ))}
@@ -241,32 +241,32 @@ export const ReceiptModal: React.FC<{
                 <div className="mt-3 border-t border-dashed border-slate-400 pt-2 space-y-1 font-mono">
                   <div className="flex justify-between">
                     <span>{tx(lang, 'Subtotal:', 'উপমোট:')}</span>
-                    <span>{formatBDT(receipt.subtotal)}</span>
+                    <span>{formatBDT(receipt.subtotal, lang)}</span>
                   </div>
                   {Number(receipt.discount) > 0 && (
                     <div className="flex justify-between">
                       <span>{tx(lang, 'Discount:', 'ছাড়:')}</span>
-                      <span>-{formatBDT(receipt.discount)}</span>
+                      <span>-{formatBDT(receipt.discount, lang)}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-sm font-bold border-t border-slate-300 pt-1">
                     <span>{tx(lang, 'Grand Total:', 'সর্বমোট:')}</span>
-                    <span>{formatBDT(receipt.totalAmount)}</span>
+                    <span>{formatBDT(receipt.totalAmount, lang)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>{tx(lang, 'Paid Amount:', 'পরিশোধিত:')}</span>
-                    <span>{formatBDT(receipt.paidAmount)}</span>
+                    <span>{formatBDT(receipt.paidAmount, lang)}</span>
                   </div>
                   {Number(receipt.dueAmount) > 0 && (
                     <div className="flex justify-between font-bold text-red-700">
                       <span>{tx(lang, 'Current Due:', 'চলতি বাকি:')}</span>
-                      <span>{formatBDT(receipt.dueAmount)}</span>
+                      <span>{formatBDT(receipt.dueAmount, lang)}</span>
                     </div>
                   )}
                   {receipt.customerTotalDue !== undefined && Number(receipt.customerTotalDue) > 0 && (
                     <div className="flex justify-between font-black text-rose-800 border-t border-slate-300 pt-0.5">
                       <span>{tx(lang, 'Total Outstanding Due:', 'মোট সর্বমোট বকেয়া:')}</span>
-                      <span>{formatBDT(receipt.customerTotalDue)}</span>
+                      <span>{formatBDT(receipt.customerTotalDue, lang)}</span>
                     </div>
                   )}
                   {receipt.expectedPaymentDate && (
@@ -335,11 +335,11 @@ export const ReceiptModal: React.FC<{
                 <div className="mt-2 space-y-1 font-mono">
                   <div className="flex justify-between text-sm font-bold">
                     <span>{tx(lang, 'Amount Received:', 'জমা:')}</span>
-                    <span>{formatBDT(receipt.amount)}</span>
+                    <span>{formatBDT(receipt.amount, lang)}</span>
                   </div>
                   <div className="flex justify-between font-semibold">
                     <span>{tx(lang, 'Remaining Due:', 'অবশিষ্ট বাকি:')}</span>
-                    <span>{formatBDT(receipt.remainingDue)}</span>
+                    <span>{formatBDT(receipt.remainingDue, lang)}</span>
                   </div>
                   {receipt.remarks && (
                     <div className="text-[11px] font-sans text-slate-600 pt-1">
