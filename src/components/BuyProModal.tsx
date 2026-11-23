@@ -31,8 +31,8 @@ interface BuyProModalProps {
 export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => {
   const { lang, loginAsOwner } = useApp();
 
-  // 2 Packages (Monthly 499, Yearly 4,999) - As requested by user
-  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('yearly');
+  // 3 Packages (Monthly 499, Yearly 299/mo -> 3,588, Custom Domain & Demand 15,000)
+  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly' | 'custom_vip'>('yearly');
 
   // Store & Owner Details
   const [ownerName, setOwnerName] = useState('');
@@ -70,12 +70,16 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
 
   if (!isOpen) return null;
 
-  const currentPrice = selectedPlan === 'monthly' ? 499 : 4999;
-  const regularPrice = selectedPlan === 'monthly' ? 1000 : 12000;
+  const currentPrice =
+    selectedPlan === 'monthly' ? 499 : selectedPlan === 'yearly' ? 3588 : 15000;
+  const regularPrice =
+    selectedPlan === 'monthly' ? 1000 : selectedPlan === 'yearly' ? 12000 : 25000;
   const planLabel =
     selectedPlan === 'monthly'
       ? '১ মাস সাবস্ক্রিপশন (৳৪৯৯)'
-      : '১ বছর বাৎসরিক মেগা অফার (৳৪,৯৯৯ - ১২,০০০ টাকারটা মাত্র ৫,০০০ টাকায়)';
+      : selectedPlan === 'yearly'
+        ? '১ বছর বাৎসরিক মেগা অফার (মাসে মাত্র ৳২৯৯ হিসেবে ৳৩,৫৮৮ - নো ডোমেন ও হোস্টিং ফি)'
+        : 'কাস্টম ডোমেন ও ক্লায়েন্ট ডিমান্ড ভিআইপি (৳১৫,০০০ - Including All)';
 
   // Copy bKash/Nagad Number
   const handleCopyNumber = () => {
@@ -268,12 +272,12 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
           {/* LEFT COLUMN: PACKAGE SELECTION & IN-APP DOMAIN CHECKER */}
           <div className="lg:col-span-5 flex flex-col space-y-5">
             
-            {/* Step 1: 2 Discount Packages (Monthly 499, Yearly 4,999) */}
+            {/* Step 1: 3 Packages (Monthly 499, Yearly 299/mo, Custom Domain & Demand 15,000) */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <Gift className="h-3.5 w-3.5 text-emerald-600" />
-                  <span>১. প্যাকেজ নির্বাচন করুন (সীমিত সময়ের ৫০% অফার)</span>
+                  <span>১. প্যাকেজ নির্বাচন করুন</span>
                 </span>
                 <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
                   <Clock className="h-3 w-3" />
@@ -286,7 +290,7 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                 <button
                   type="button"
                   onClick={() => setSelectedPlan('monthly')}
-                  className={`w-full rounded-2xl border p-3.5 text-left transition cursor-pointer flex flex-col justify-between ${
+                  className={`w-full rounded-2xl border p-3 text-left transition cursor-pointer flex flex-col justify-between ${
                     selectedPlan === 'monthly'
                       ? 'border-emerald-600 bg-emerald-50/90 shadow-md ring-2 ring-emerald-600/30 dark:border-emerald-500 dark:bg-emerald-950/40'
                       : 'border-slate-200 bg-slate-50/60 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-800/40'
@@ -294,19 +298,19 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                 >
                   <div className="flex items-center justify-between">
                     <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
-                      ৫০% ডিসকাউন্ট 🔥
+                      ৫০% মেগা ছাড় 🔥
                     </span>
                     {selectedPlan === 'monthly' && <Check className="h-4 w-4 text-emerald-600" />}
                   </div>
 
-                  <div className="mt-2 flex items-baseline justify-between">
+                  <div className="mt-1.5 flex items-baseline justify-between">
                     <div>
                       <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">১ মাস সাবস্ক্রিপশন</h4>
-                      <p className="text-[10px] text-slate-500 mt-0.5">রেগুলার ১,০০০ — ৫০% ছাড়ে মাত্র ৪৯৯৳</p>
+                      <p className="text-[10px] text-slate-500">রেগুলার ১,০০০ — ৫০% ছাড়ে মাত্র ৪৯৯৳</p>
                     </div>
                     <div className="text-right">
                       <div className="flex items-baseline gap-1">
-                        <span className="font-mono text-xl font-black text-emerald-700 dark:text-emerald-400">৳৪৯৯</span>
+                        <span className="font-mono text-lg font-black text-emerald-700 dark:text-emerald-400">৳৪৯৯</span>
                         <span className="text-[10px] text-slate-500">/মাস</span>
                       </div>
                       <span className="font-mono text-[10px] line-through text-slate-400">৳১,০০০</span>
@@ -314,11 +318,11 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                   </div>
                 </button>
 
-                {/* Package 2: Yearly (Mega Saver: 12,000 -> 4,999) */}
+                {/* Package 2: Yearly (Mega Saver: 299/mo -> 3,588/yr, No Domain & Hosting Fee) */}
                 <button
                   type="button"
                   onClick={() => setSelectedPlan('yearly')}
-                  className={`relative w-full rounded-2xl border p-3.5 text-left transition cursor-pointer flex flex-col justify-between ${
+                  className={`relative w-full rounded-2xl border p-3 text-left transition cursor-pointer flex flex-col justify-between ${
                     selectedPlan === 'yearly'
                       ? 'border-emerald-600 bg-emerald-50/90 shadow-md ring-2 ring-emerald-600/30 dark:border-emerald-500 dark:bg-emerald-950/40'
                       : 'border-slate-200 bg-slate-50/60 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-800/40'
@@ -326,24 +330,58 @@ export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => 
                 >
                   <div className="flex items-center justify-between">
                     <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                      ⭐ বাৎসরিক মেগা অফার
+                      ⭐ বাৎসরিক মেগা অফার (নো ডোমেন ও হোস্টিং ফি)
                     </span>
                     {selectedPlan === 'yearly' && <Check className="h-4 w-4 text-emerald-600" />}
                   </div>
 
-                  <div className="mt-2 flex items-baseline justify-between">
+                  <div className="mt-1.5 flex items-baseline justify-between">
                     <div>
                       <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">১ বছর (বাৎসরিক মেগা অফার)</h4>
-                      <p className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">
-                        ১২,০০০ টাকারটা মাত্র ৫,০০০ টাকায়!
+                      <p className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
+                        বাৎসরিক নিলে মাসে মাত্র ৳২৯৯! (এককালীন ৳৩,৫৮৮)
                       </p>
                     </div>
                     <div className="text-right">
                       <div className="flex items-baseline gap-1">
-                        <span className="font-mono text-xl font-black text-emerald-700 dark:text-emerald-400">৳৪,৯৯৯</span>
+                        <span className="font-mono text-lg font-black text-emerald-700 dark:text-emerald-400">৳৩,৫৮৮</span>
                         <span className="text-[10px] text-slate-500">/বছর</span>
                       </div>
                       <span className="font-mono text-[10px] line-through text-slate-400">৳১২,০০০</span>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Package 3: Custom Domain & Client's Demand VIP (15,000 Including All) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedPlan('custom_vip');
+                    setEnableCustomDomain(true);
+                  }}
+                  className={`w-full rounded-2xl border p-3 text-left transition cursor-pointer flex flex-col justify-between ${
+                    selectedPlan === 'custom_vip'
+                      ? 'border-indigo-600 bg-indigo-50/90 shadow-md ring-2 ring-indigo-600/30 dark:border-indigo-500 dark:bg-indigo-950/40'
+                      : 'border-slate-200 bg-slate-50/60 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-800/40'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-[10px] font-black text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                      👑 কাস্টম ডোমেন ও ডিমান্ড (VIP)
+                    </span>
+                    {selectedPlan === 'custom_vip' && <Check className="h-4 w-4 text-indigo-600" />}
+                  </div>
+
+                  <div className="mt-1.5 flex items-baseline justify-between">
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">কাস্টম ডোমেন ফুল সেটআপ</h4>
+                      <p className="text-[10px] text-slate-500">ক্লায়েন্টের নিজস্ব চাহিদা অনুযায়ী তৈরি</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-baseline gap-1">
+                        <span className="font-mono text-lg font-black text-indigo-700 dark:text-indigo-400">৳১৫,০০০</span>
+                      </div>
+                      <span className="text-[10px] font-bold text-indigo-600">Including All</span>
                     </div>
                   </div>
                 </button>

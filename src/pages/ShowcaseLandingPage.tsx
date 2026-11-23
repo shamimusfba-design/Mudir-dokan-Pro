@@ -260,6 +260,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
 
   // Video player controls
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoContainerRef = useRef<HTMLDivElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
@@ -287,6 +288,18 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
     if (!videoRef.current) return;
     videoRef.current.muted = !isMuted;
     setIsMuted(!isMuted);
+  };
+
+  const toggleFullscreen = () => {
+    const el = videoContainerRef.current || videoRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      if (el.requestFullscreen) {
+        el.requestFullscreen().catch(() => {});
+      }
+    }
   };
 
   const handleTimeUpdate = () => {
@@ -320,7 +333,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       {/* FLOATING ACTION PILL ON SCROLL */}
       {showStickyPill && (
         <div className="fixed bottom-6 inset-x-0 z-40 flex justify-center px-4 animate-hero-entrance pointer-events-none">
-          <div className="pointer-events-auto flex items-center gap-2 sm:gap-3 rounded-full border border-slate-700/80 bg-slate-950/95 p-1.5 sm:px-4 sm:py-2 backdrop-blur-xl shadow-2xl text-white">
+          <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-3 rounded-full border border-slate-700/80 bg-slate-950/95 p-1.5 sm:px-4 sm:py-2 backdrop-blur-xl shadow-2xl text-white">
             <span className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400">
               <Sparkles className="h-3.5 w-3.5" />
               <span>মুদির দোকান প্রো</span>
@@ -328,14 +341,14 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
             <button
               type="button"
               onClick={() => setIsDemoModalOpen(true)}
-              className="rounded-full bg-amber-500 hover:bg-amber-600 px-3.5 py-1.5 text-xs font-black text-white shadow-md transition cursor-pointer"
+              className="rounded-full bg-amber-500 hover:bg-amber-600 px-3 py-1.5 text-xs font-black text-white shadow-md transition cursor-pointer whitespace-nowrap"
             >
-              ⚡ লাইভ ডেমো
+              ⚡ ডেমো
             </button>
             <button
               type="button"
               onClick={() => setIsBuyModalOpen(true)}
-              className="rounded-full bg-emerald-600 hover:bg-emerald-500 px-3.5 py-1.5 text-xs font-black text-white shadow-md transition cursor-pointer"
+              className="rounded-full bg-emerald-600 hover:bg-emerald-500 px-3.5 py-1.5 text-xs font-black text-white shadow-md transition cursor-pointer whitespace-nowrap"
             >
               প্রো কিনুন (৫০% ছাড়)
             </button>
@@ -343,7 +356,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
               href="https://wa.me/8801884700631"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1 text-xs text-slate-300 hover:text-white transition px-2"
+              className="hidden sm:inline-flex items-center gap-1 text-xs text-slate-300 hover:text-white transition px-2 whitespace-nowrap"
             >
               <Phone className="h-3.5 w-3.5 text-emerald-400" />
               <span>01884700631</span>
@@ -394,7 +407,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                   setLightboxData(null);
                   setIsBuyModalOpen(true);
                 }}
-                className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-1.5 text-xs font-black text-white transition cursor-pointer"
+                className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-1.5 text-xs font-black text-white transition cursor-pointer whitespace-nowrap"
               >
                 প্রো চালু করুন (৳৪৯৯/মাস) ⚡
               </button>
@@ -403,26 +416,26 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
         </div>
       )}
 
-      {/* TOP CLEAN NAVBAR */}
-      <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-white/95 px-4 sm:px-8 py-3.5 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/95">
+      {/* TOP CLEAN NAVBAR — FIXED SINGLE-LINE STANDARD BUTTONS */}
+      <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-white/95 px-3 sm:px-8 py-2.5 sm:py-3.5 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/95">
         {/* Dynamic Top Scroll Progress Bar */}
         <div
           className="absolute top-0 left-0 h-[2.5px] bg-gradient-to-r from-emerald-500 via-teal-500 to-amber-500 transition-all duration-150 z-50"
           style={{ width: `${scrollProgress}%` }}
         />
 
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 sm:gap-4">
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <img
               src="/mudi-dokan-pro-logo.png"
               alt="Mudi Dokan Pro"
-              className="h-10 sm:h-11 w-auto object-contain cursor-pointer"
+              className="h-8 sm:h-11 w-auto object-contain cursor-pointer"
               onClick={() => {
                 window.location.href = '/';
               }}
             />
-            <span className="hidden sm:inline-block font-black text-slate-800 dark:text-white text-sm tracking-tight">
+            <span className="hidden md:inline-block font-black text-slate-800 dark:text-white text-sm tracking-tight whitespace-nowrap">
               মুদি দোকান প্রো
             </span>
           </div>
@@ -432,28 +445,29 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
             <a href="#screens" className="hover:text-emerald-600 transition">স্ক্রিন গ্যালারি</a>
             <a href="#benefits" className="hover:text-emerald-600 transition">সুবিধাসমূহ</a>
             <a href="#pricing" className="hover:text-emerald-600 transition">প্যাকেজ ও মূল্য</a>
-            <a href="tel:01884700631" className="text-emerald-600 hover:underline">হেল্পলাইন: 01884700631</a>
+            <a href="tel:01884700631" className="text-emerald-600 hover:underline whitespace-nowrap">হেল্পলাইন: 01884700631</a>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Action buttons: ALWAYS SINGLE LINE, CLEAN & STANDARD */}
+          <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
             {/* Live Demo Link */}
             <button
               type="button"
               onClick={() => setIsDemoModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 hover:bg-amber-100 px-3.5 py-1.5 text-xs font-black text-amber-900 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-300 transition cursor-pointer"
+              className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 hover:bg-amber-100 px-2 sm:px-3.5 py-1.5 text-xs font-black text-amber-900 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-300 transition cursor-pointer whitespace-nowrap"
             >
-              <Sparkles className="h-3.5 w-3.5 text-amber-600" />
-              <span>⚡ লাইভ ডেমো</span>
+              <Sparkles className="h-3.5 w-3.5 text-amber-600 shrink-0" />
+              <span className="hidden xs:inline">লাইভ </span><span>ডেমো</span>
             </button>
 
             {/* Login */}
             <button
               type="button"
               onClick={onBackToLogin}
-              className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 transition cursor-pointer"
+              className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-2 sm:px-3 py-1.5 text-xs font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 transition cursor-pointer whitespace-nowrap"
             >
-              <Store className="h-3.5 w-3.5 text-slate-500" />
-              <span>লগইন</span>
+              <Store className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+              <span className="hidden sm:inline">লগইন</span>
             </button>
 
             {/* Dark Mode */}
@@ -461,19 +475,20 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
               type="button"
               onClick={toggleDarkMode}
               aria-label="Toggle theme"
-              className="rounded-full border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 transition cursor-pointer"
+              className="rounded-full border border-slate-200 bg-white p-1.5 sm:p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 transition cursor-pointer shrink-0"
             >
-              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              {darkMode ? <Sun className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
             </button>
 
             {/* Buy Pro Button */}
             <button
               type="button"
               onClick={() => setIsBuyModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white px-4 py-1.5 text-xs sm:text-sm font-black shadow-md shadow-emerald-600/20 transition cursor-pointer"
+              className="inline-flex items-center gap-1 sm:gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white px-2.5 sm:px-4 py-1.5 text-xs sm:text-sm font-black shadow-md shadow-emerald-600/20 transition cursor-pointer whitespace-nowrap"
             >
-              <Zap className="h-4 w-4" />
-              <span>প্রো কিনুন (৫০% ছাড়)</span>
+              <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+              <span className="hidden sm:inline">প্রো কিনুন (৫০% ছাড়)</span>
+              <span className="sm:hidden">প্রো কিনুন</span>
             </button>
           </div>
 
@@ -537,8 +552,10 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
         <ScrollReveal animation="scale" delay={150} className="mx-auto max-w-4xl mt-8">
           <div className="rounded-3xl border border-slate-200/90 bg-slate-950 p-2 sm:p-3 shadow-2xl relative overflow-hidden text-left dark:border-slate-800 animate-glow-pulse">
             
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center">
-              
+            <div
+              ref={videoContainerRef}
+              className="relative aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center group"
+            >
               <video
                 ref={videoRef}
                 src="/marketing/mudidokan-pro-promo.mp4"
@@ -551,10 +568,10 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                 onClick={togglePlay}
               />
 
-              {/* Glowing Center Play Overlay */}
+              {/* Glowing Center Play Button ONLY (NO TEXT BLOCKING VIDEO) */}
               {!isPlaying && (
                 <div
-                  className="absolute inset-0 flex flex-col items-center justify-center bg-black/45 backdrop-blur-[2px] transition-all cursor-pointer p-4 text-center"
+                  className="absolute inset-0 flex items-center justify-center bg-black/35 backdrop-blur-[1px] transition-all cursor-pointer"
                   onClick={togglePlay}
                 >
                   <div className="relative flex items-center justify-center">
@@ -562,24 +579,15 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                     <button
                       type="button"
                       aria-label="ভিডিও চালু করুন"
-                      className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 hover:scale-105 text-white flex items-center justify-center shadow-2xl shadow-emerald-500/50 transition-transform cursor-pointer"
+                      className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 hover:scale-110 text-white flex items-center justify-center shadow-2xl shadow-emerald-500/50 transition-transform cursor-pointer"
                     >
                       <Play className="h-8 w-8 ml-1 fill-white" />
                     </button>
                   </div>
-
-                  <div className="mt-4">
-                    <span className="rounded-full bg-emerald-500/30 border border-emerald-400 px-3.5 py-1 text-xs font-bold text-emerald-200">
-                      ▶️ ২ মিনিট ১৪ সেকেন্ডের লাইভ ভিডিও ওয়াকথ্রু
-                    </span>
-                    <h3 className="text-base sm:text-xl font-black text-white mt-1.5 drop-shadow-md">
-                      কীভাবে মুদির দোকান প্রো আপনার ব্যবসাকে পাল্টে দেবে?
-                    </h3>
-                  </div>
                 </div>
               )}
 
-              {/* Clean Video Controls Bottom Bar */}
+              {/* Clean Video Controls Bottom Bar with Fullscreen Toggle */}
               <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-3 sm:p-4 flex flex-col gap-2 text-white">
                 <input
                   type="range"
@@ -596,6 +604,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                       type="button"
                       onClick={togglePlay}
                       className="hover:text-emerald-400 transition cursor-pointer"
+                      title={isPlaying ? 'Pause' : 'Play'}
                     >
                       {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 fill-white" />}
                     </button>
@@ -604,6 +613,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                       type="button"
                       onClick={toggleMute}
                       className="hover:text-emerald-400 transition cursor-pointer"
+                      title={isMuted ? 'Unmute' : 'Mute'}
                     >
                       {isMuted ? <VolumeX className="h-5 w-5 text-rose-400" /> : <Volume2 className="h-5 w-5" />}
                     </button>
@@ -613,10 +623,21 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 sm:gap-3">
                     <span className="rounded-md bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
                       HD 1080p বাংলা
                     </span>
+
+                    {/* Fullscreen Button */}
+                    <button
+                      type="button"
+                      onClick={toggleFullscreen}
+                      className="inline-flex items-center gap-1 rounded-md bg-white/10 hover:bg-white/20 px-2.5 py-1 text-[11px] font-bold text-white transition cursor-pointer"
+                      title="ফুলস্ক্রিনে দেখুন"
+                    >
+                      <Maximize2 className="h-3.5 w-3.5" />
+                      <span className="hidden xs:inline">ফুলস্ক্রিন</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -624,8 +645,110 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
             </div>
 
           </div>
+
+          {/* VIDEO DETAILS & DESCRIPTION (PLACED CLEANLY BELOW VIDEO AS REQUESTED) */}
+          <div className="mt-3.5 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 px-2.5 py-0.5 text-[11px] font-black">
+                  ▶️ ২ মিনিট ১৪ সেকেন্ড ওয়াকথ্রু
+                </span>
+                <span className="text-xs text-slate-500 font-bold">অফিশিয়াল বাংলা ডেমো</span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1.5">
+                কীভাবে মুদির দোকান প্রো আপনার ব্যবসাকে পাল্টে দেবে?
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+                বারকোড পিওএস, ডিজিটাল বাকি খাতা, থার্মাল প্রিন্ট এবং অনলাইন স্টোরের পূর্ণাঙ্গ বাস্তব ডেমো দেখুন।
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 px-3.5 py-2 text-xs font-black text-slate-700 dark:text-slate-200 transition cursor-pointer shrink-0 self-start sm:self-auto"
+            >
+              <Maximize2 className="h-4 w-4 text-emerald-600" />
+              <span>ফুলস্ক্রিনে দেখুন</span>
+            </button>
+          </div>
+
         </ScrollReveal>
 
+      </section>
+
+      {/* ======================================================== */}
+      {/* 3 CORE PILLARS: ONLINE+OFFLINE, AUTO SYNC, RESPONSIVE UI */}
+      {/* ======================================================== */}
+      <section className="px-4 py-8 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/40 border-t border-slate-200/70 dark:border-slate-800/80">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+            
+            {/* Pillar 1: Online + Offline 2-in-1 */}
+            <ScrollReveal animation="fade-up" delay={0}>
+              <div className="h-full rounded-2xl border border-emerald-200/90 bg-white p-5 shadow-xs dark:border-emerald-900/60 dark:bg-slate-900 flex flex-col justify-between">
+                <div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-md shadow-emerald-600/30 mb-3.5">
+                    <Store className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-base font-black text-slate-900 dark:text-white leading-snug">
+                    অনলাইন ও অফলাইন ২টিই ১টি অ্যাপে
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                    দোকানের কাউন্টারে বসে অফলাইন বারকোড পিওএস বিলিং এবং ইন্টারনেটে এলাকার কাস্টমারদের জন্য অনলাইন গ্রোসারি ডেলিভারি—দুটোই চলবে একটি মাত্র শক্তিশালী অ্যাপে।
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                  <Check className="h-4 w-4 shrink-0" />
+                  <span>কাউন্টার ও অনলাইন স্টোর একসঙ্গে ম্যানেজ</span>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Pillar 2: No Current / Net? No Problem! Auto Update */}
+            <ScrollReveal animation="fade-up" delay={100}>
+              <div className="h-full rounded-2xl border border-teal-200/90 bg-white p-5 shadow-xs dark:border-teal-900/60 dark:bg-slate-900 flex flex-col justify-between">
+                <div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-600 text-white shadow-md shadow-teal-600/30 mb-3.5">
+                    <Zap className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-base font-black text-slate-900 dark:text-white leading-snug">
+                    কারেন্ট বা নেট নেই? কোনো সমস্যা নেই!
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                    বিদ্যুৎ চলে গেলে বা নেট বন্ধ থাকলেও অফলাইনে বিলিং ও বেচাবিক্রি সেকেন্ডের জন্য থামবে না। যখনই কারেন্ট বা নেট আসবে, সাথে সাথে ডাটা ক্লাউডে অটো-আপডেট হয়ে যাবে।
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-teal-700 dark:text-teal-400 flex items-center gap-1.5">
+                  <Check className="h-4 w-4 shrink-0" />
+                  <span>অটো সিঙ্ক • ১ পয়সার হিসাবও হারাবে না</span>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Pillar 3: Both Mobile & Desktop Friendly UI */}
+            <ScrollReveal animation="fade-up" delay={200}>
+              <div className="h-full rounded-2xl border border-indigo-200/90 bg-white p-5 shadow-xs dark:border-indigo-900/60 dark:bg-slate-900 flex flex-col justify-between">
+                <div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/30 mb-3.5">
+                    <Smartphone className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-base font-black text-slate-900 dark:text-white leading-snug">
+                    মোবাইল ও ডেস্কটপ ফ্রেন্ডলি আধুনিক ইউআই
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                    মোবাইল ফোন, ট্যাবলেট, ল্যাপটপ, কম্পিউটার বা টাচস্ক্রিন পিওএস—যেকোনো ডিভাইসে সুপার-স্মুথ চলবে। কোনো জটিলতা নেই, একদম সহজে সবাই চালাতে পারবে।
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
+                  <Check className="h-4 w-4 shrink-0" />
+                  <span>১০০% রেসপন্সিভ ও ইনস্টলযোগ্য পিডব্লিউএ</span>
+                </div>
+              </div>
+            </ScrollReveal>
+
+          </div>
+        </div>
       </section>
 
       {/* ======================================================== */}
@@ -868,10 +991,10 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 5. CLEAN PRICING SECTION — 2 HIGH-VALUE PACKAGES */}
+      {/* 5. PRICING SECTION — 3 PACKAGES (AS REQUESTED) */}
       {/* ======================================================== */}
       <section id="pricing" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-emerald-50/20 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-6xl text-center">
           
           <ScrollReveal animation="fade-up">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-100 px-3.5 py-1 text-xs font-black text-rose-800 dark:bg-rose-950 dark:text-rose-300 mb-3 animate-pulse">
@@ -880,27 +1003,84 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
-              আপনার সুবিধাজনক প্যাকেজ বেছে নিন
+              আপনার সুবিধার জন্য ৩টি আকর্ষণীয় প্যাকেজ
             </h2>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
               বিকাশ বা নগদ সেন্ড মানি করুন <strong className="text-emerald-600 font-mono">01884700631</strong> নম্বরে • সাথে সাথে অ্যাক্টিভেশন
             </p>
           </ScrollReveal>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 text-left max-w-3xl mx-auto">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-6xl mx-auto">
             
-            {/* Package 1: Monthly (50% Off: 1000 -> 499) */}
+            {/* Package 1: 1 Month Free Demo */}
             <ScrollReveal animation="fade-up" delay={0}>
-              <div className="h-full rounded-3xl border border-slate-200 bg-white p-7 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-slate-800 dark:bg-slate-900">
+              <div className="h-full rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-slate-800 dark:bg-slate-900">
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
-                      ৫০% মেগা ছাড় 🔥
+                    <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                      সম্পূর্ণ বিনামূল্যে ⚡
                     </span>
                     <span className="text-[11px] font-bold text-slate-400">১ মাসের জন্য</span>
                   </div>
 
-                  <h3 className="mt-3 text-xl font-black text-slate-900 dark:text-white">১ মাস সাবস্ক্রিপশন</h3>
+                  <h3 className="mt-3 text-lg sm:text-xl font-black text-slate-900 dark:text-white">১ মাস ফ্রি ডেমো</h3>
+                  
+                  <div className="mt-2.5 flex items-baseline gap-2">
+                    <span className="font-mono text-3xl sm:text-4xl font-black text-amber-600 dark:text-amber-400">৳০</span>
+                    <span className="text-xs text-slate-500 font-bold">/১ মাস</span>
+                    <span className="text-xs font-bold text-emerald-600">ফ্রি ট্রায়াল</span>
+                  </div>
+
+                  <p className="mt-1 text-xs font-bold text-amber-700 dark:text-amber-400">
+                    টেস্ট করে দেখুন সম্পূর্ণ ফ্রিতে!
+                  </p>
+
+                  <ul className="mt-5 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
+                    <li className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                      <span>১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ টেস্ট</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                      <span>সুপারফাস্ট অফলাইন বারকোড পিওএস</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                      <span>ডিজিটাল বাকি খাতা ও এসএমএস তাগাদা</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                      <span>ক্যাশ কাউন্টার ও শিফট ক্লোজিং</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsDemoModalOpen(true)}
+                  className="mt-7 w-full rounded-2xl border-2 border-amber-500 bg-amber-50 py-3 text-xs sm:text-sm font-black text-amber-900 hover:bg-amber-100 transition cursor-pointer dark:bg-amber-950/40 dark:text-amber-300 whitespace-nowrap"
+                >
+                  ১ মাস ফ্রি ডেমো শুরু করুন ⚡
+                </button>
+              </div>
+            </ScrollReveal>
+
+            {/* Package 2: Pro Subscription (Monthly 499 / Yearly 299/mo, No Domain & Hosting Fee) */}
+            <ScrollReveal animation="scale" delay={100}>
+              <div className="relative h-full rounded-3xl border-2 border-emerald-500 bg-white p-6 sm:p-7 shadow-xl flex flex-col justify-between ring-4 ring-emerald-500/10 dark:border-emerald-500 dark:bg-slate-900 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-1 text-[11px] font-black text-white shadow-md whitespace-nowrap">
+                  ⭐ সেরা সেভার (সবচেয়ে জনপ্রিয়)
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+                      নো ডোমেন ও হোস্টিং ফি 🔥
+                    </span>
+                    <span className="text-[11px] font-bold text-emerald-600">সবচেয়ে জনপ্রিয়</span>
+                  </div>
+
+                  <h3 className="mt-3 text-lg sm:text-xl font-black text-slate-900 dark:text-white">প্রো সাবস্ক্রিপশন</h3>
                   
                   <div className="mt-2.5 flex items-baseline gap-2">
                     <span className="font-mono text-3xl sm:text-4xl font-black text-emerald-700 dark:text-emerald-400">৳৪৯৯</span>
@@ -908,68 +1088,16 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                     <span className="font-mono text-xs line-through text-slate-400">৳১,০০০</span>
                   </div>
 
-                  <p className="mt-1 text-xs font-bold text-emerald-700 dark:text-emerald-400">
-                    ৫০% ছাড়ে মাত্র ৪৯৯৳
-                  </p>
-
-                  <ul className="mt-5 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>ফাস্ট বারকোড পিওএস ও মেমো প্রিন্টিং</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>ডিজিটাল বাকি খাতা ও এসএমএস তাগাদা</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>অফলাইন ক্যাশ কাউন্টার ও ড্রয়ার মেলানো</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setIsBuyModalOpen(true)}
-                  className="mt-7 w-full rounded-2xl border-2 border-emerald-600 bg-emerald-50 py-3 text-xs sm:text-sm font-black text-emerald-900 hover:bg-emerald-100 transition cursor-pointer dark:bg-emerald-950/40 dark:text-emerald-300"
-                >
-                  ১ মাসের প্যাকেজ কিনুন (৳৪৯৯) ⚡
-                </button>
-              </div>
-            </ScrollReveal>
-
-            {/* Package 2: Yearly Super Saver (Highlighted) */}
-            <ScrollReveal animation="scale" delay={150}>
-              <div className="relative h-full rounded-3xl border-2 border-emerald-500 bg-white p-7 shadow-xl flex flex-col justify-between ring-4 ring-emerald-500/10 dark:border-emerald-500 dark:bg-slate-900 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-1 text-[11px] font-black text-white shadow-md">
-                  ⭐ সেরা মেগা অফার (১২,০০০ টাকারটা মাত্র ৫,০০০ টাকায়!)
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                      বাৎসরিক অফার 🎉
-                    </span>
-                    <span className="text-[11px] font-bold text-emerald-600">সবচেয়ে জনপ্রিয়</span>
+                  <div className="mt-2 p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60">
+                    <p className="text-xs font-black text-emerald-800 dark:text-emerald-300">
+                      বাৎসরিক নিলে মাসে মাত্র ৳২৯৯! (এককালীন ৳৩,৫৮৮/বছর)
+                    </p>
+                    <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-0.5">
+                      ✓ কোনো ডোমেন ও হোস্টিং চার্জ নেই • সম্পূর্ণ ফ্রি
+                    </p>
                   </div>
 
-                  <h3 className="mt-3 text-xl font-black text-slate-900 dark:text-white">১ বছর সাবস্ক্রিপশন</h3>
-                  
-                  <div className="mt-2.5 flex items-baseline gap-2">
-                    <span className="font-mono text-3xl sm:text-4xl font-black text-emerald-700 dark:text-emerald-400">৳৪,৯৯৯</span>
-                    <span className="text-xs text-slate-500 font-bold">/বছর</span>
-                    <span className="font-mono text-xs line-through text-slate-400">৳১২,০০০</span>
-                  </div>
-
-                  <p className="mt-1 text-xs font-bold text-rose-600 dark:text-rose-400">
-                    এক বছরের জন্য নিলে ১২,০০০ টাকারটা মাত্র ৫,০০০ টাকা!
-                  </p>
-
-                  <ul className="mt-5 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
+                  <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
                     <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                       <Check className="h-4 w-4 text-emerald-600 shrink-0" />
                       <span>পূর্ণ ১ বছরের আনলিমিটেড লাইসেন্স</span>
@@ -980,11 +1108,11 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                     </li>
                     <li className="flex items-center gap-2">
                       <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>কাস্টম .com ডোমেন ও ক্লাউড অটো ব্যাকআপ</span>
+                      <span>নো ডোমেন ও হোস্টিং ফি (ক্লাউড ব্যাকআপ ফ্রি)</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>২৪/৭ ভিআইপি হোয়াটসঅ্যাপ সাপোর্ট ও ফ্রি আপডেট</span>
+                      <span>২৪/৭ ভিআইপি হোয়াটসঅ্যাপ সাপোর্ট ও অটো আপডেট</span>
                     </li>
                   </ul>
                 </div>
@@ -992,9 +1120,61 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsBuyModalOpen(true)}
-                  className="mt-7 w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3 text-xs sm:text-sm font-black text-white hover:from-emerald-700 shadow-md shadow-emerald-600/30 transition cursor-pointer"
+                  className="mt-6 w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3 text-xs sm:text-sm font-black text-white hover:from-emerald-700 shadow-md shadow-emerald-600/30 transition cursor-pointer whitespace-nowrap"
                 >
-                  বাৎসরিক প্যাকেজ কিনুন (৳৪,৯৯৯) ⚡
+                  প্রো প্যাকেজ কিনুন (৳৪৯৯/মাস) ⚡
+                </button>
+              </div>
+            </ScrollReveal>
+
+            {/* Package 3: Custom Domain & Client's Demand VIP (15,000 tk Including All) */}
+            <ScrollReveal animation="fade-up" delay={200}>
+              <div className="h-full rounded-3xl border border-indigo-200 bg-white p-6 sm:p-7 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-indigo-900/60 dark:bg-slate-900">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-black text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                      👑 কাস্টম ডোমেন ও ডিমান্ড
+                    </span>
+                    <span className="text-[11px] font-bold text-indigo-600">VIP সলিউশন</span>
+                  </div>
+
+                  <h3 className="mt-3 text-lg sm:text-xl font-black text-slate-900 dark:text-white">কাস্টম ডোমেন ফুল সেটআপ</h3>
+                  
+                  <div className="mt-2.5 flex items-baseline gap-2">
+                    <span className="font-mono text-3xl sm:text-4xl font-black text-indigo-700 dark:text-indigo-400">৳১৫,০০০</span>
+                    <span className="text-xs text-slate-500 font-bold">Including All</span>
+                  </div>
+
+                  <p className="mt-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
+                    ক্লায়েন্টের চাহিদা ও ডিমান্ড অনুযায়ী তৈরি
+                  </p>
+
+                  <ul className="mt-5 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
+                    <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                      <span>ক্লায়েন্টের চাহিদা অনুযায়ী কাস্টমাইজড সফটওয়্যার</span>
+                    </li>
+                    <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                      <span>নিজস্ব .com ডোমেন সহ (যেমন: yourshop.com)</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                      <span>ডেডিকেটেড হাই-স্পিড ক্লাউড হোস্টিং ও সার্ভার</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                      <span>সম্পূর্ণ এককালীন খরচ অন্তর্ভুক্ত (No Hidden Fees)</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsBuyModalOpen(true)}
+                  className="mt-6 w-full rounded-2xl bg-indigo-600 hover:bg-indigo-700 py-3 text-xs sm:text-sm font-black text-white shadow-md shadow-indigo-600/30 transition cursor-pointer whitespace-nowrap"
+                >
+                  ভিআইপি প্যাকেজ অর্ডার করুন (৳১৫,০০০) 👑
                 </button>
               </div>
             </ScrollReveal>
