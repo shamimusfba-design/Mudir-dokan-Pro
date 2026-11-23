@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   ShoppingBag,
   ShoppingCart,
@@ -171,6 +171,67 @@ export const OnlineStorePage: React.FC<OnlineStorePageProps> = ({
       toast.success(`"${chosen.name}" স্টোরে আপনাকে স্বাগতম! 🏪`);
     }
   };
+
+  // Rotating Client Banners (Shows different registered clients & promotions)
+  const CLIENT_BANNERS = useMemo(
+    () => [
+      {
+        id: 1,
+        storeId: 1,
+        storeName: 'মুদি দোকান প্রো',
+        branch: 'প্রধান আউটলেট',
+        badge: 'স্পেশাল অফার ও মেগা গ্রোসারি ডিসকাউন্ট',
+        title: 'মুদি দোকান প্রো — খাঁটি ও ফ্রেশ বাজার',
+        subtitle: 'মিনিকেট চাল, সরিষার তেল ও নিত্যপ্রয়োজনীয় মুদি সামগ্রীতে সেরা মূল্য!',
+        offerTag: 'মেগা অফার',
+        image: '/grocery-hero-banner.jpg',
+      },
+      {
+        id: 2,
+        storeId: 4,
+        storeName: 'বিসমিল্লাহ ট্রেডার্স & মুদি মার্ট',
+        branch: 'চট্টগ্রাম শাখা',
+        badge: 'পাইকারি ও খুচরা মূল্যের সেরা ডিল',
+        title: 'বিসমিল্লাহ ট্রেডার্স — নিত্যপণ্যের বাজার',
+        subtitle: 'আটা, ময়দা, ডাল, চিনি ও লবণ সেরা পাইকারি মূল্যে ঘরে বসেই নিন!',
+        offerTag: 'ফ্রি হোম ডেলিভারি',
+        image: '/banner-spices-grains.jpg',
+      },
+      {
+        id: 3,
+        storeId: 3,
+        storeName: 'আল-মদিনা জেনারেল স্টোর',
+        branch: 'উত্তরা শাখা',
+        badge: '১০০% খাঁটি ও প্রাকৃতিক খাদ্য',
+        title: 'আল-মদিনা স্টোর — খাঁটি মধু ও গাওয়া ঘি',
+        subtitle: 'সুন্দরবনের প্রাকৃতিক মধু ও খাঁটি মসলায় নিশ্চিত বিশুদ্ধতা!',
+        offerTag: '১০০% খাঁটি পণ্য',
+        image: '/banner-honey-pure.jpg',
+      },
+      {
+        id: 4,
+        storeId: 5,
+        storeName: 'নিউ ঢাকা গ্রোসারি মার্ট',
+        branch: 'সিলেট শাখা',
+        badge: 'ফ্রেশ মুদি ও দ্রুত ডেলিভারি',
+        title: 'নিউ ঢাকা মার্ট — টাটকা মুদি ও ডেইরি',
+        subtitle: 'প্রতিদিনের প্রয়োজনীয় চাল, তেল, চা ও স্ন্যাকসে বিশেষ ছাড়!',
+        offerTag: '২০% পর্যন্ত ছাড়',
+        image: '/grocery-hero-banner.jpg',
+      },
+    ],
+    []
+  );
+
+  const [activeBannerIdx, setActiveBannerIdx] = useState(0);
+
+  // Auto-rotate client banners every 4.5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveBannerIdx((prev) => (prev + 1) % CLIENT_BANNERS.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [CLIENT_BANNERS.length]);
 
   // Filtered Stores for dropdown
   const filteredStoresList = useMemo(() => {
@@ -428,22 +489,22 @@ export const OnlineStorePage: React.FC<OnlineStorePageProps> = ({
               <Search className="h-4 w-4" />
             </button>
 
-            {/* Language Switcher */}
+            {/* Language Switcher (Desktop only; on mobile it is in the drawer) */}
             <button
               type="button"
               onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
-              className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 px-2 sm:px-2.5 py-1.5 text-[11px] font-bold text-slate-700 dark:text-slate-200 transition cursor-pointer shadow-2xs"
+              className="hidden md:flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 px-2.5 py-1.5 text-[11px] font-bold text-slate-700 dark:text-slate-200 transition cursor-pointer shadow-2xs"
               title={lang === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
             >
               <Globe className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
               <span className="font-mono font-bold uppercase">{lang === 'bn' ? 'EN' : 'বাং'}</span>
             </button>
 
-            {/* Dark / Light Mode Toggle */}
+            {/* Dark / Light Mode Toggle (Desktop only; on mobile it is in the drawer) */}
             <button
               type="button"
               onClick={toggleDarkMode}
-              className="flex items-center justify-center h-8 w-8 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-amber-500 dark:border-slate-700 dark:bg-slate-800 dark:text-amber-400 dark:hover:bg-slate-700 transition cursor-pointer shadow-2xs"
+              className="hidden md:flex items-center justify-center h-8 w-8 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-amber-500 dark:border-slate-700 dark:bg-slate-800 dark:text-amber-400 dark:hover:bg-slate-700 transition cursor-pointer shadow-2xs"
               title={darkMode ? 'লাইট মোড চালু করুন' : 'ডার্ক মোড চালু করুন'}
             >
               {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -536,64 +597,100 @@ export const OnlineStorePage: React.FC<OnlineStorePageProps> = ({
         </div>
       </div>
 
-      {/* 2. PROMOTIONAL GROCERY HERO COVER BANNER (GHORER BAZAR STYLE WITH REAL GROCERY PHOTO) */}
-      <div className="mx-auto w-full max-w-[1700px] px-3 sm:px-6 lg:px-8 pt-4">
-        <div
-          className="rounded-3xl border border-emerald-300/40 shadow-xl relative overflow-hidden bg-cover bg-center min-h-[230px] sm:min-h-[280px] flex items-center"
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(4, 30, 20, 0.95) 0%, rgba(4, 30, 20, 0.88) 45%, rgba(6, 44, 28, 0.45) 80%, rgba(0, 0, 0, 0.25) 100%), url('/grocery-hero-banner.jpg')`,
-          }}
-        >
-          {/* Subtle warm amber glow */}
-          <div className="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-amber-400/20 blur-3xl pointer-events-none" />
+      {/* 2. ROTATING CLIENT BANNER (SIMPLE ON PHONE, CLIENT CAROUSEL) */}
+      <div className="mx-auto w-full max-w-[1700px] px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4">
+        {(() => {
+          const curBanner = CLIENT_BANNERS[activeBannerIdx] || CLIENT_BANNERS[0];
+          return (
+            <div
+              className="rounded-2xl sm:rounded-3xl border border-emerald-300/40 shadow-md relative overflow-hidden bg-cover bg-center min-h-[145px] sm:min-h-[220px] md:min-h-[260px] flex items-center transition-all duration-700"
+              style={{
+                backgroundImage: `linear-gradient(to right, rgba(4, 30, 20, 0.94) 0%, rgba(4, 30, 20, 0.82) 55%, rgba(6, 44, 28, 0.35) 85%, rgba(0, 0, 0, 0.2) 100%), url('${curBanner.image}')`,
+              }}
+            >
+              {/* Content Container */}
+              <div className="relative z-10 w-full p-3.5 sm:p-6 md:p-8 text-white flex flex-col justify-between h-full">
+                <div className="space-y-1 sm:space-y-2 max-w-2xl">
+                  {/* Top Badge */}
+                  <div className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full bg-amber-400 text-slate-950 px-2 sm:px-3 py-0.5 text-[9px] sm:text-[11px] font-black shadow-xs">
+                    <Sparkles className="h-3 w-3 text-slate-950" />
+                    <span className="truncate">{curBanner.badge}</span>
+                  </div>
 
-          <div className="relative z-10 w-full p-5 sm:p-8 text-white flex flex-col lg:flex-row lg:items-center justify-between gap-5">
-            <div className="space-y-2.5 max-w-2xl">
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-400 text-slate-950 px-3 py-1 text-[11px] font-black shadow-xs">
-                <Sparkles className="h-3.5 w-3.5 text-slate-950" />
-                <span>স্পেশাল অফার ও মেগা গ্রোসারি ডিসকাউন্ট</span>
-              </div>
+                  {/* Client / Shop Title */}
+                  <h1 className="text-base sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white drop-shadow-sm line-clamp-1 sm:line-clamp-2">
+                    {curBanner.title}
+                  </h1>
 
-              <h1 className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white drop-shadow-sm">
-                {activeStore.name}
-              </h1>
+                  {/* Subtitle - hidden on very small phones to keep it super simple, visible sm+ */}
+                  <p className="hidden sm:block text-xs sm:text-sm text-emerald-100 font-semibold drop-shadow-xs max-w-xl">
+                    {curBanner.subtitle}
+                  </p>
 
-              <p className="text-xs sm:text-sm text-emerald-100 font-semibold drop-shadow-xs max-w-xl">
-                ১০০% খাঁটি ও টাটকা মুদি সামগ্রী — মিনিকেট চাল, সরিষার তেল, খাঁটি ঘি, মধু ও সুগন্ধি মসলা সরাসরি আপনার ঘরে!
-              </p>
+                  {/* Client Switcher Pill & Offer Tag */}
+                  <div className="pt-1 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleSelectStore(curBanner.storeId)}
+                      className="inline-flex items-center gap-1 rounded-full bg-emerald-500/90 hover:bg-emerald-400 text-white hover:text-slate-950 px-2.5 sm:px-3.5 py-1 text-[10px] sm:text-xs font-black shadow-xs transition cursor-pointer"
+                    >
+                      <Store className="h-3 w-3" />
+                      <span>{curBanner.storeName}</span>
+                      <span className="bg-amber-400 text-slate-950 px-1.5 py-0.2 rounded-md font-extrabold text-[9px]">
+                        {curBanner.offerTag}
+                      </span>
+                    </button>
 
-              <div className="pt-1 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs">
-                <span className="inline-flex items-center gap-1 rounded-xl bg-slate-900/60 backdrop-blur-md px-3 py-1 text-emerald-200 border border-emerald-400/30 font-bold">
-                  <MapPin className="h-3.5 w-3.5 text-amber-300" />
-                  <span>{activeStore.address}</span>
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-xl bg-slate-900/60 backdrop-blur-md px-3 py-1 text-emerald-200 border border-emerald-400/30 font-bold">
-                  <Phone className="h-3.5 w-3.5 text-amber-300" />
-                  <span>{activeStore.phone}</span>
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-xl bg-amber-400 text-slate-950 px-3 py-1 font-black shadow-xs">
-                  <Truck className="h-3.5 w-3.5" />
-                  <span>হোম ডেলিভারি: ঢাকা {deliveryFeeInside}৳ · ঢাকার বাইরে {deliveryFeeOutside}৳</span>
-                </span>
+                    <button
+                      type="button"
+                      onClick={() => setIsShopSelectorModalOpen(true)}
+                      className="hidden sm:inline-flex items-center gap-1 rounded-full bg-white/20 hover:bg-white/30 text-white px-2.5 py-1 text-[10px] font-bold cursor-pointer"
+                    >
+                      <MapPin className="h-3 w-3 text-amber-300" />
+                      <span>সব শপ দেখুন</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Carousel Navigation Dots & Arrows */}
+                <div className="flex items-center justify-between pt-2">
+                  <div className="flex items-center gap-1.5">
+                    {CLIENT_BANNERS.map((b, idx) => (
+                      <button
+                        key={b.id}
+                        type="button"
+                        onClick={() => setActiveBannerIdx(idx)}
+                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                          activeBannerIdx === idx ? 'w-5 sm:w-6 bg-amber-400' : 'w-1.5 bg-white/40 hover:bg-white/70'
+                        }`}
+                        title={b.storeName}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setActiveBannerIdx((prev) => (prev - 1 + CLIENT_BANNERS.length) % CLIENT_BANNERS.length)}
+                      className="h-6 w-6 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center cursor-pointer text-xs"
+                      title="পূর্ববর্তী ব্যানার"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveBannerIdx((prev) => (prev + 1) % CLIENT_BANNERS.length)}
+                      className="h-6 w-6 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center cursor-pointer text-xs"
+                      title="পরবর্তী ব্যানার"
+                    >
+                      ›
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div className="flex flex-wrap lg:flex-col items-stretch sm:items-end gap-2.5 shrink-0">
-              <div className="flex items-center gap-2 rounded-2xl bg-emerald-950/80 border border-emerald-400/40 px-3.5 py-2 text-xs font-black backdrop-blur-md text-emerald-200">
-                <ShieldCheck className="h-4 w-4 text-emerald-300" />
-                <span>ক্যাশ অন ডেলিভারি (পণ্য দেখে মূল্য পরিশোধ)</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsShopSelectorModalOpen(true)}
-                className="inline-flex items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 px-4 py-2.5 text-xs font-black shadow-lg transition cursor-pointer"
-              >
-                <Store className="h-4 w-4" />
-                <span>অন্য শপ / ব্রাঞ্চ পরিবর্তন করুন</span>
-              </button>
-            </div>
-          </div>
-        </div>
+          );
+        })()}
       </div>
 
       {/* 2.5. FEATURED CATEGORIES (GHORER BAZAR STYLE WITH CATEGORY IMAGES) */}
@@ -1409,6 +1506,137 @@ export const OnlineStorePage: React.FC<OnlineStorePageProps> = ({
           <span>কল করুন</span>
         </a>
       </nav>
+
+      {/* 10. MOBILE CATEGORY & CONTROLS DRAWER */}
+      {isCategoryDrawerOpen && (
+        <div className="fixed inset-0 z-50 flex justify-start bg-slate-950/70 backdrop-blur-xs animate-fade-in md:hidden">
+          <div className="w-[85%] max-w-xs bg-white dark:bg-slate-900 h-[100dvh] flex flex-col shadow-2xl border-r border-slate-200 dark:border-slate-800 animate-slide-left">
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between border-b border-slate-100 p-4 dark:border-slate-800 shrink-0">
+              <img
+                src="/mudi-dokan-pro-logo.png"
+                alt="Mudi Dokan Pro"
+                className="h-8 w-auto object-contain"
+              />
+              <button
+                type="button"
+                onClick={() => setIsCategoryDrawerOpen(false)}
+                className="rounded-full p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Language & Theme Controls Strip */}
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 space-y-2.5 shrink-0">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  <Globe className="h-3.5 w-3.5 text-emerald-600" />
+                  <span>ভাষা (Language):</span>
+                </span>
+                <div className="flex items-center gap-1 bg-white dark:bg-slate-900 p-0.5 rounded-full border border-slate-200 dark:border-slate-700">
+                  <button
+                    type="button"
+                    onClick={() => setLang('bn')}
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer ${
+                      lang === 'bn' ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400'
+                    }`}
+                  >
+                    বাংলা
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLang('en')}
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer ${
+                      lang === 'en' ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400'
+                    }`}
+                  >
+                    English
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                  {darkMode ? <Moon className="h-3.5 w-3.5 text-amber-400" /> : <Sun className="h-3.5 w-3.5 text-amber-500" />}
+                  <span>থিম (Mode):</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={toggleDarkMode}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 cursor-pointer"
+                >
+                  {darkMode ? <Sun className="h-3.5 w-3.5 text-amber-400" /> : <Moon className="h-3.5 w-3.5 text-slate-600" />}
+                  <span>{darkMode ? 'লাইট মোড' : 'ডার্ক মোড'}</span>
+                </button>
+              </div>
+
+              {onGoToShopkeeperApp && (
+                <button
+                  type="button"
+                  onClick={onGoToShopkeeperApp}
+                  className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-indigo-200 bg-indigo-50/90 py-1.5 text-xs font-bold text-indigo-900 hover:bg-indigo-100 dark:border-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 transition cursor-pointer"
+                >
+                  <Store className="h-3.5 w-3.5 text-indigo-600" />
+                  <span>দোকানদার ড্যাশবোর্ড</span>
+                </button>
+              )}
+            </div>
+
+            {/* Categories List */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-1">
+              <div className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-2 py-1">
+                সকল ক্যাটাগরি
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setIsCategoryDrawerOpen(false);
+                }}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  selectedCategory === 'all'
+                    ? 'bg-emerald-600 text-white'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <ShoppingBag className="h-4 w-4" />
+                  <span>সব পণ্য</span>
+                </div>
+                <span className="text-[10px] opacity-80">{products.length}</span>
+              </button>
+
+              {categories.map((c) => {
+                const isSelected = selectedCategory === c.name || selectedCategory === c.nameBn;
+                const catImg = getCategoryVisualImage(c.name || c.nameBn);
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(c.name);
+                      setIsCategoryDrawerOpen(false);
+                      const el = document.getElementById('product-catalog-grid');
+                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                    className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                      isSelected
+                        ? 'bg-emerald-600 text-white'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <img src={catImg} alt="" className="h-5 w-5 object-contain" />
+                      <span className="truncate">{c.nameBn || c.name}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

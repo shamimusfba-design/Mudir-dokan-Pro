@@ -1,9 +1,5 @@
 import React, { useState, useRef } from 'react';
 import {
-  TrendingUp,
-  Package,
-  Users,
-  ShieldCheck,
   Zap,
   Store,
   Phone,
@@ -11,25 +7,6 @@ import {
   Sparkles,
   ArrowRight,
   ExternalLink,
-  DollarSign,
-  Truck,
-  CreditCard,
-  BarChart3,
-  HelpCircle,
-  MessageCircle,
-  Globe,
-  Headphones,
-  Check,
-  Sun,
-  Moon,
-  ArrowLeft,
-  Printer,
-  Play,
-  Pause,
-  Volume2,
-  VolumeX,
-  Maximize2,
-  Smartphone,
   ShoppingBag,
   Clock,
   Gift,
@@ -37,9 +14,23 @@ import {
   Search,
   Eye,
   Layers,
-  FileText,
-  BadgePercent,
-  CheckCircle,
+  Check,
+  Sun,
+  Moon,
+  Printer,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  Smartphone,
+  ShieldCheck,
+  TrendingUp,
+  Package,
+  Users,
+  DollarSign,
+  ChevronRight,
+  Sparkle,
 } from 'lucide-react';
 import { tx } from '../lib/i18n';
 import { useApp } from '../context/AppContext';
@@ -54,330 +45,227 @@ interface ShowcaseLandingPageProps {
   onOpenDemo?: () => void;
 }
 
-interface FeatureItem {
+interface ShowcaseTab {
   id: string;
-  category: 'pos' | 'catalog' | 'khata' | 'profit' | 'suppliers' | 'ecommerce';
-  badge: string;
-  badgeColor: string;
-  title: string;
-  description: string;
-  bullets: string[];
-  image: string;
-  alt: string;
-  highlightText?: string;
+  tabLabel: string;
+  icon: React.ComponentType<{ className?: string }>;
+  tag: string;
+  tagColor: string;
+  hookTitle: string;
+  punchline: string;
+  highlights: { title: string; desc: string }[];
+  screenshots: {
+    title: string;
+    caption: string;
+    image: string;
+    alt: string;
+  }[];
 }
 
-const ALL_FEATURES: FeatureItem[] = [
+const SHOWCASE_TABS: ShowcaseTab[] = [
   {
-    id: 'pos-billing',
-    category: 'pos',
-    badge: 'ফিচার ১ · কাউন্টার পিওএস',
-    badgeColor: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
-    title: '১ সেকেন্ডে ভিজ্যুয়াল বারকোড স্ক্যান ও দ্রুততম বিলিং কাউন্টার',
-    description:
-      'দোকানে কাস্টমারের ভিড় থাকলেও কোনো চাপ নেই! বারকোড স্ক্যান করুন অথবা পণ্যের ছবিতে স্পর্শ করলেই তাৎক্ষণিক কার্টে যোগ হবে। ইন্টারনেট সংযোগ চলে গেলেও কাউন্টার বন্ধ হবে না—১০০% অফলাইনে ফুল স্পিডে বিল করা যায়।',
-    bullets: [
-      '১ সেকেন্ডে বারকোড স্ক্যান ও ইনস্ট্যান্ট বিলিং',
-      'প্রতিটি আইটেমের আলাদা রঙ ও স্পষ্ট বর্ডার',
-      'ইন্টারনেট ছাড়াই ১০০% অফলাইন ক্যাশ কাউন্টার',
-      'ক্যাশ, বিকাশ, নগদ বা আংশিক পরিশোধ সাপোর্ট',
+    id: 'pos',
+    tabLabel: 'সুপারফাস্ট পিওএস ও মেমো',
+    icon: Zap,
+    tag: 'কাউন্টার স্পিড',
+    tagColor: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800',
+    hookTitle: 'কাস্টমারের দীর্ঘ লাইন? মাত্র ১ সেকেন্ডে বারকোড স্ক্যানে মেমো প্রিন্ট!',
+    punchline: 'ইন্টারনেট চলে গেলেও ১ সেকেন্ডের জন্য বিল থামবে না। ক্যাশ, বিকাশ বা বাকিতে বিক্রি—সব চলবে ১০০% অফলাইনে।',
+    highlights: [
+      { title: '১ সেকেন্ডে বারকোড বিলিং', desc: 'আইটেমের ছবিতে স্পর্শ বা স্ক্যান করলেই তাৎক্ষণিক কার্টে অ্যাড।' },
+      { title: 'বাকিতে বিক্রি (Due Sale)', desc: 'কাস্টমার সিলেক্ট করলেই আগের বাকি ও নতুন বাকি স্বয়ংক্রিয় যোগ।' },
+      { title: 'থার্মাল মেমো প্রিন্ট', desc: 'কালির খরচ ছাড়া ব্লুটুথ প্রিন্টারে ৫৮মিমি/৮০মিমি প্রফেশনাল ভাউচার।' },
     ],
-    image: '/marketing/02-pos-billing-counter.png',
-    alt: 'Visual POS Billing Counter Screen',
-    highlightText: 'ভিড় সামলানোর জন্য দ্রুততম পিওএস কাউন্টার',
+    screenshots: [
+      {
+        title: 'ভিজ্যুয়াল বারকোড পিওএস কাউন্টার',
+        caption: 'পণ্য ও ব্র্যান্ড ফিল্টার সহ সুপারফাস্ট বিলিং স্ক্রিন',
+        image: '/marketing/02-pos-billing-counter.png',
+        alt: 'POS Billing Counter',
+      },
+      {
+        title: 'বাকি বিক্রি ও কাস্টমার খাতা পপআপ',
+        caption: 'আগের বাকি ও নতুন মেমোর মোট বকেয়া নিখুঁত ক্যালকুলেশন',
+        image: '/marketing/03-pos-due-sale-khata.png',
+        alt: 'POS Due Sale Modal',
+      },
+      {
+        title: 'থার্মাল প্রিন্টার মেমো রসিদ',
+        caption: 'দোকানের নাম, মেমো নম্বর ও আইটেমাইজড রসিদ প্রিন্ট প্রিভিউ',
+        image: '/marketing/04-receipt-thermal-print.png',
+        alt: 'Thermal Receipt Preview',
+      },
+    ],
   },
   {
-    id: 'pos-due-sale',
-    category: 'pos',
-    badge: 'ফিচার ২ · বাকিতে বিক্রি',
-    badgeColor: 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300',
-    title: 'বাকিতে বিক্রি (Due Sale) — পূর্বের বাকি ও নতুন বাকি এক ক্লিকে',
-    description:
-      'কাউন্টারেই কাস্টমারের নাম সার্চ করে বাকিতে বিক্রির বোতাম চাপুন। কাস্টমারের আগের বাকি কত ছিল, এই কেনাকাটায় কত হলো এবং মোট বকেয়া কত দাঁড়াল—সফটওয়্যার স্বয়ংক্রিয়ভাবে হিসাব করে মেমোতে প্রিন্ট করে দেবে।',
-    bullets: [
-      'কাস্টমার সার্চ করলেই তাৎক্ষণিক পূর্বের বকেয়া প্রদর্শন',
-      'আংশিক নগদ জমা ও বাকি টাকা পৃথকভাবে ট্র্যাকিং',
-      'গ্রাহকের ক্রেডিট লিমিট পার হলে সতর্কবার্তা',
-      'প্রতিটি বিক্রির তারিখ ও ইনভয়েস নম্বরসহ স্বয়ংক্রিয় লেজার এন্ট্রি',
+    id: 'catalog',
+    tabLabel: '১,৩৫৯টি আসল পণ্যের ছবি রেডি',
+    icon: Package,
+    tag: 'জিরো টাইপিং',
+    tagColor: 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-950/60 dark:text-teal-300 dark:border-teal-800',
+    hookTitle: 'হাজার পণ্যের নাম আর ছবি কে তুলবে? ১,৩৫৯টি আসল পণ্যের ছবি আমরাই রেডি রেখেছি!',
+    punchline: 'কোনো ডাটা এন্ট্রির ঝামেলা নেই। তীর, রূপচাঁদা, প্রাণ, স্কয়ার থেকে লাক্স, ডানো পর্যন্ত—সব পণ্য ছবিসহ আজই রেডি।',
+    highlights: [
+      { title: '১,৩৫৯টি ফটো ক্যাটালগ', desc: 'হোয়াইট ব্যাকগ্রাউন্ড আসল পণ্যের ছবি ও ওজন/সাইজ প্রি-সেট।' },
+      { title: '৭৫টি অফিশিয়াল ব্র্যান্ড লোগো', desc: 'শীর্ষস্থানীয় ব্র্যান্ডের লোগো দেখে সেকেন্ডে আইটেম ফিল্টার।' },
+      { title: '২৮টি সাজানো ক্যাটাগরি', desc: 'চাল-ডাল, তেল-ঘি, মশলা, বিস্কুটসহ সুসজ্জিত খাদ্যপণ্য বিভাগ।' },
     ],
-    image: '/marketing/03-pos-due-sale-khata.png',
-    alt: 'POS Due Sale Workflow Modal',
-    highlightText: 'বাকির হিসাবে কোনো ভুল বা খাতার পাতা ওল্টানো লাগবে না',
+    screenshots: [
+      {
+        title: '১,৩৫৯টি মুদি পণ্যের ভিজ্যুয়াল গ্রিড',
+        caption: 'আসল ছবি, সাইজ, স্টক ও বিক্রয়মূল্য সহ ক্যাটালগ',
+        image: '/marketing/05-product-catalog-grid.png',
+        alt: 'Grocery Product Catalog',
+      },
+      {
+        title: '৭৫টি শীর্ষস্থানীয় ব্র্যান্ডের লোগো',
+        caption: 'প্রাণ, ফ্রেশ, এসিআই, স্কয়ার, বসুন্ধরা ইত্যাদি অফিশিয়াল লোগো',
+        image: '/marketing/06-brands-logos-showcase.png',
+        alt: 'FMCG Brand Logos',
+      },
+      {
+        title: '২৮টি ক্যাটাগরি ভিত্তিক ভিজ্যুয়াল ভিউ',
+        caption: 'খাদ্যপণ্যের ছবিসহ সুসজ্জিত ক্যাটাগরি বিভাগ',
+        image: '/marketing/07-categories-grid.png',
+        alt: 'Visual Categories Grid',
+      },
+    ],
   },
   {
-    id: 'thermal-receipt',
-    category: 'pos',
-    badge: 'ফিচার ৩ · মেমো প্রিন্ট',
-    badgeColor: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-    title: 'থার্মাল প্রিন্টারে প্রফেশনাল মেমো প্রিন্ট (58mm, 80mm ও A4)',
-    description:
-      'কালি বা রিবনের বাড়তি খরচ ছাড়াই ব্লুটুথ বা ইউএসবি থার্মাল প্রিন্টারে মাত্র ১ সেকেন্ডে দোকানের নিজস্ব নাম, মোবাইল নম্বর, ঠিকানা ও পণ্যের আইটেমাইজড তালিকা সহ সুন্দর মেমো প্রিন্ট করুন।',
-    bullets: [
-      '58mm ও 80mm পকেট ও ডেস্কটপ থার্মাল প্রিন্টার সাপোর্ট',
-      'দোকানের নাম, ঠিকানা ও কাস্টমার মেমো নম্বর অটো-জেনারেটেড',
-      'পূর্বের বাকি ও বর্তমান মেমো বকেয়ার স্পষ্ট বিবরণ',
-      'এক ক্লিকে রসিদ রিপ্রিন্ট করার সুবিধা',
+    id: 'khata',
+    tabLabel: 'ডিজিটাল বাকি খাতা ও এসএমএস',
+    icon: Smartphone,
+    tag: 'বাকি আদায়',
+    tagColor: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800',
+    hookTitle: 'বাকি চাইতে মুখে লজ্জা? ১ ক্লিকে হোয়াটসঅ্যাপ ও এসএমএস তাগাদা পাঠান!',
+    punchline: 'সম্পর্ক নষ্ট না করে সম্মানজনক ভাষায় অটো তাগাদা মেসেজ। কাস্টমার নিজে ঘরে বসেই মোবাইল দিয়ে তার বাকি ও মেমো দেখতে পারবে।',
+    highlights: [
+      { title: 'ডিজিটাল বাকি খাতা লেজার', desc: 'কাগজের খাতা হারানোর ভয় নেই—কার কত বাকি ও লেনদেন ইতিহাস এক ক্লিকে।' },
+      { title: '০ থেকে ৬০+ দিন বাকি এজিং', desc: 'কোন বাকি কতদিন আটকে আছে তা চিহ্নিত করে দ্রুত টাকা আদায়ের ব্যবস্থা।' },
+      { title: 'কাস্টমার সেলফ-সার্ভিস পোর্টাল', desc: 'কাস্টমার তার ফোনে ওটিপি দিয়ে নিজের রসিদ ও বাকি সরাসরি চেক করতে পারে।' },
     ],
-    image: '/marketing/04-receipt-thermal-print.png',
-    alt: 'POS Thermal Receipt Preview 58mm 80mm',
-    highlightText: 'দোকানের ব্র্যান্ডিং সহ প্রফেশনাল মেমো',
+    screenshots: [
+      {
+        title: 'কাস্টমার ডিজিটাল বাকি খাতা',
+        caption: 'ব্যালেন্স লেজার, মোট ক্রয়, ক্রেডিট লিমিট ও কিউআর পোর্টাল',
+        image: '/marketing/13-customers-digital-khata.png',
+        alt: 'Customer Khata Ledger',
+      },
+      {
+        title: 'বাকি এজিং এনালাইসিস রিপোর্ট',
+        caption: '০-৭, ৮-১৫, ১৬-৩০, ৩১-৬০ ও ৬০+ দিন অনুযায়ী বকেয়া ট্র্যাকিং',
+        image: '/marketing/14-due-aging-reports.png',
+        alt: 'Due Aging Analysis',
+      },
+    ],
   },
   {
-    id: 'catalog-skus',
-    category: 'catalog',
-    badge: 'ফিচার ৪ · প্রাক-কনফিগার ক্যাটালগ',
-    badgeColor: 'bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300',
-    title: '১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ (সব আগে থেকেই লোড করা!)',
-    description:
-      'বাজারে অন্য কোনো সফটওয়্যার নিলে আপনাকে নিজে বসে বসে শত শত পণ্যের নাম, সাইজ ও ছবি তুলতে হয়। মুদির দোকান প্রো-তে তীর, রূপচাঁদা, প্রাণ, স্কয়ার, এসিআই, ডানো, মিল্কভিটাসহ বাংলাদেশের ১,৩৫৯টি আসল মুদি পণ্যের ছবি আগে থেকেই দেওয়া আছে!',
-    bullets: [
-      '১,৩৫৯টি আসল পণ্যের হোয়াইট ব্যাকগ্রাউন্ড ফটো ডাটাবেজ',
-      'আসল সাইজ (১ কেজি, ৫ কেজি, ৫০০ গ্রাম, ১ লিটার ইত্যাদি)',
-      'প্রোডাক্ট কোড ও অফিশিয়াল বারকোড ইন্টিগ্রেটেড',
-      'এক ক্লিকে নিজস্ব বিক্রয়মূল্য ও কেনা দাম সেটআপ',
+    id: 'profit',
+    tabLabel: 'আসল লাভ-লোকসান ও ক্যাশ ড্রয়ার',
+    icon: TrendingUp,
+    tag: 'নিখুঁত লাভ',
+    tagColor: 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800',
+    hookTitle: 'সারাদিন লাখ টাকার বিক্রি করলেন, কিন্তু আসল লাভ কত? দিনশেষে ১ পয়সাও অমিল হবে না!',
+    punchline: 'ওয়েটেড এভারেজ কস্টিংয়ে পাইকারি কেনা দাম ও দোকান খরচ বাদ দিয়ে আসল নিট প্রফিট। ক্যাশ ড্রয়ারের নগদ টাকার সাথে সফটওয়্যার হুবহু মিলে যাবে।',
+    highlights: [
+      { title: 'আসল লাভ-লোকসান চার্ট', desc: 'প্রতিটি পণ্যের ক্রয়মূল্যের নিখুঁত গড়ের ভিত্তিতে গ্রস ও নিট প্রফিট।' },
+      { title: 'দোকান খরচ ও পরিচালনা খাতা', desc: 'দোকান ভাড়া, কারেন্ট বিল, নাস্তা খরচ বাদ দিয়ে প্রকৃত লাভ।' },
+      { title: 'ক্যাশ ড্রয়ার শিফট ক্লোজিং', desc: 'সকালের ওপেনিং ক্যাশ ও সারাদিনের লেনদেন মিলিয়ে রাতের ক্লোজিং।' },
     ],
-    image: '/marketing/05-product-catalog-grid.png',
-    alt: '1359 FMCG Grocery SKUs Database',
-    highlightText: 'কোনো ডাটা এন্ট্রির ঝামেলা নেই—আজই শুরু করুন',
+    screenshots: [
+      {
+        title: 'রিয়েল-টাইম ড্যাশবোর্ড ও লাভ-ক্ষতির ট্রেন্ড',
+        caption: 'পিরিয়ড সেলস, গ্রস প্রফিট (৳৮৭,৬৫৯.১০) ও ক্যাটাগরি সেলস চার্ট',
+        image: '/marketing/01-dashboard-analytics.png',
+        alt: 'Profit Loss Dashboard',
+      },
+      {
+        title: 'ইনভেন্টরি স্টক ও সম্পদ মূল্যায়ন',
+        caption: 'দোকানে বর্তমান কেনা দামে মোট কত টাকার মালামাল স্টক আছে',
+        image: '/marketing/08-inventory-valuation.png',
+        alt: 'Inventory Valuation',
+      },
+      {
+        title: 'দৈনিক ক্যাশ ড্রয়ার শিফট ক্লোজিং',
+        caption: 'ক্যাশ ইন/আউট এন্ট্রি ও ড্রয়ারের নগদ টাকার সাথে সফটওয়্যার মেলানো',
+        image: '/marketing/16-cash-register-closing.png',
+        alt: 'Cash Register Closing',
+      },
+      {
+        title: 'দোকান ভাড়া ও পরিচালন খরচ খাতা',
+        caption: 'ভাড়া, বিদ্যুৎ ও নাস্তা খরচ বাদ দিয়ে নিখুঁত অপারেটিং নিট লাভ',
+        image: '/marketing/15-shop-expenses.png',
+        alt: 'Shop Expenses Ledger',
+      },
+    ],
   },
   {
-    id: 'brands-catalog',
-    category: 'catalog',
-    badge: 'ফিচার ৫ · ব্র্যান্ড ফিল্টার',
-    badgeColor: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300',
-    title: '৭৫টি শীর্ষস্থানীয় এফএমসিজি ব্র্যান্ডের অফিশিয়াল লোগো ক্যাটালগ',
-    description:
-      'প্রাণ, ফ্রেশ, এসিআই, স্কয়ার, বসুন্ধরা, আকিজ, তীর, ইউনিলিভার, ম্যারিকো, নেসলে, কোকা-কোলা সহ বাংলাদেশের ৭৫টি জনপ্রিয় কোম্পানির লোগো দেওয়া আছে। ব্র্যান্ড অনুযায়ী যেকোনো পণ্য এক ক্লিকে খুঁজে পাওয়া যায়।',
-    bullets: [
-      '৭৫টি শীর্ষস্থানীয় খাদ্য ও প্রসাধন ব্র্যান্ড লোগো',
-      'ব্র্যান্ড ফিল্টার দিয়ে সেকেন্ডে পণ্য সার্চিং',
-      'নতুন স্থানীয় ব্র্যান্ড বা নিজস্ব খোলা আইটেম যুক্ত করার সুবিধা',
+    id: 'suppliers',
+    tabLabel: 'কোম্পানি চালান ও মহাজন দেনা',
+    icon: Store,
+    tag: 'মহাজন খাতা',
+    tagColor: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800',
+    hookTitle: 'কার্টনে মাল কিনে খুচরা বিক্রি করেন? কোম্পানির চালানে ১ টাকারও গরমিল হবে না!',
+    punchline: 'গাড়ি ভাড়া বা পরিবহন খরচ স্বয়ংক্রিয়ভাবে প্রতিটি পিসের আসল কেনা দামে যুক্ত হয়। কোম্পানি ও মহাজনের চালান দেনা-পাওনা সম্পূর্ণ স্বচ্ছ।',
+    highlights: [
+      { title: 'কার্টন-টু-পিস কনভার্সন', desc: 'কার্টন বা বস্তায় কিনে খুচরা পিস বা কেজিতে রূপান্তরের অটোমেটিক কস্টিং।' },
+      { title: 'কোম্পানি চালান ট্র্যাকিং', desc: 'ইউনিলিভার, স্কয়ার, প্রাণ বা মহাজনের ইনভয়েস নম্বরসহ চালান সংরক্ষণ।' },
+      { title: 'মহাজন দেনা লেজার খাতা', desc: 'কোম্পানির দেনা-পাওনা নিয়ে আর কোনো ভুল বোঝাবুঝি বা অমিল থাকবে না।' },
     ],
-    image: '/marketing/06-brands-logos-showcase.png',
-    alt: '75 FMCG Official Brand Logos',
-    highlightText: 'ব্র্যান্ডের লোগো দেখে সহজে পণ্য চেনার নিশ্চয়তা',
+    screenshots: [
+      {
+        title: 'ডিস্ট্রিবিউটর চালান এন্ট্রি ও ইউনিট কনভার্সন',
+        caption: 'কার্টন টু বেস পিস কনভার্সন, গাড়ি ভাড়া ও কেনা দাম হিসাব',
+        image: '/marketing/09-distributor-purchase.png',
+        alt: 'Distributor Purchase Challan',
+      },
+      {
+        title: 'সাপ্লায়ার ও মহাজন ডিরেক্টরি',
+        caption: 'মোট ক্রয়, মোট পরিশোধ ও বকেয়া দেনা (Payable) লেজার',
+        image: '/marketing/10-suppliers-directory.png',
+        alt: 'Suppliers Directory Ledger',
+      },
+    ],
   },
   {
-    id: 'categories-grid',
-    category: 'catalog',
-    badge: 'ফিচার ৬ · ক্যাটাগরি ভিউ',
-    badgeColor: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
-    title: '২৮টি সুসজ্জিত ক্যাটাগরি ও হাই-রেজুলেশন খাদ্যপণ্যের ফটো',
-    description:
-      'চাল-ডাল, আটা-ময়দা, ভোজ্যতেল ও ঘি, লবণ-চিনি, মশলা, চা-কফি, বিস্কুট ও বেকারি, স্ন্যাকস, দুগ্ধজাত পণ্য সহ ২৮টি সাজানো বিভাগে পণ্যগুলো সাজানো থাকে। যেকোনো কর্মচারীও খুব সহজে পণ্য চিনতে পারে।',
-    bullets: [
-      '২৮টি সাজানো মুদি ও সুপারশপ ক্যাটাগরি',
-      'সুন্দর ভিজ্যুয়াল আইকন ও কালার থিম',
-      'ক্যাটাগরি ভিত্তিক স্টক এবং বিক্রির হিসাব ট্র্যাকিং',
+    id: 'ecommerce',
+    tabLabel: 'অনলাইন বাজার ও ফেসবুক অ্যাড',
+    icon: ShoppingBag,
+    tag: 'ডিজিটাল সেলস',
+    tagColor: 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800',
+    hookTitle: 'এলাকার কাস্টমাররা ঘরে বসে অর্ডার করতে চায়? চালডাল ও ঘরেরবাজার স্টাইলে অনলাইন স্টোর চালান!',
+    punchline: 'কাস্টমারদের জন্য তৈরি ১-পেজ ফাস্ট চেকআউট এবং ফেসবুক ও টিকটক বিজ্ঞাপনের জন্য প্রিমিয়াম অ্যাড ল্যান্ডিং পেজ বিল্ডার।',
+    highlights: [
+      { title: 'অনলাইন গ্রোসারি শপ', desc: 'জেলা ও দোকান সিলেক্ট করে কাস্টমাররা ঘরে বসেই মোবাইল দিয়ে অর্ডার করতে পারবে।' },
+      { title: '১-পেজ ফাস্ট চেকআউট', desc: 'কোনো লগইন ছাড়াই নাম ও ঠিকানায় ক্যাশ অন ডেলিভারিতে অর্ডার গ্রহণ।' },
+      { title: 'অ্যাড ল্যান্ডিং বিল্ডার', desc: 'ইউটিউব ভিডিও ও ফেসবুক পিক্সেল বসিয়ে ২ মিনিটে বিজ্ঞাপনের ল্যান্ডিং পেজ তৈরি।' },
     ],
-    image: '/marketing/07-categories-grid.png',
-    alt: '28 Visual Category Grid',
-    highlightText: 'নতুন কর্মচারীও কোনো ভুল ছাড়াই বিক্রি করতে পারবে',
-  },
-  {
-    id: 'customer-khata',
-    category: 'khata',
-    badge: 'ফিচার ৭ · ডিজিটাল বাকি খাতা',
-    badgeColor: 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300',
-    title: 'ডিজিটাল বাকি খাতা লেজার — কার কত বাকি রিয়েল-টাইমে দেখুন',
-    description:
-      'কোন কাস্টমারের কাছে কত টাকা বকেয়া আছে, শেষ কবে কত টাকা পরিশোধ করেছে এবং তার বাকি নেওয়ার সীমা (Credit Limit) কত—সব এক জায়গায়। কাগজের খাতা হারিয়ে যাওয়া বা পানিতে ভেজার ভয় চিরতরে শেষ।',
-    bullets: [
-      'কাস্টমার প্রোফাইল, ফোন নম্বর ও ঠিকানাসহ সম্পূর্ণ রেকর্ড',
-      'লাইফটাইম ক্রয়, মোট জমা ও বর্তমান বকেয়া ব্যালেন্স',
-      'এক ক্লিকে কাস্টমারের ডিজিটাল স্টেটমেন্ট প্রিন্ট বা ডাউনলোড',
-      'কাস্টমার পোর্টাল কিউআর ও ওটিপি এক্সেস',
+    screenshots: [
+      {
+        title: 'অনলাইন বাজার স্টোরফ্রন্ট',
+        caption: 'জেলা ও দোকান নির্বাচন সহ আসল পণ্যের অনলাইন অর্ডার পেজ',
+        image: '/marketing/11-online-storefront.png',
+        alt: 'Online Storefront',
+      },
+      {
+        title: 'স্লাইড-ইন কার্ট ও ১-পেজ চেকআউট',
+        caption: 'ক্যাশ অন ডেলিভারি ও বিকাশ অগ্রিম পেমেন্টে ঝামেলাহীন অর্ডার',
+        image: '/marketing/12-online-cart-checkout.png',
+        alt: 'Online Cart Checkout',
+      },
+      {
+        title: 'ফেসবুক ও টিকটক অ্যাড ল্যান্ডিং পেজ',
+        caption: 'ভিডিও রিভিউ ও সরাসরি অর্ডার ফর্ম সহ হাই-কনভার্টিং ল্যান্ডিং পেজ',
+        image: '/marketing/17-ad-landing-live-preview.png',
+        alt: 'Ad Landing Page Preview',
+      },
+      {
+        title: 'অ্যাড ল্যান্ডিং পেজ বিল্ডার ও পিক্সেল',
+        caption: 'টেমপ্লেট নির্বাচন, অফার প্রাইজ ও পিক্সেল ট্র্যাকিং সেটআপ',
+        image: '/marketing/18-ad-landing-builder.png',
+        alt: 'Ad Landing Builder',
+      },
     ],
-    image: '/marketing/13-customers-digital-khata.png',
-    alt: 'Customer Khata Digital Ledger',
-    highlightText: 'বাকি খাতা থাকবে নিরাপদ ও সম্পূর্ণ ডিজিটাল',
-  },
-  {
-    id: 'due-aging-reports',
-    category: 'khata',
-    badge: 'ফিচার ৮ · বাকি এজিং এনালাইসিস',
-    badgeColor: 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
-    title: '৫-ধাপের বাকি এজিং রিপোর্ট (০-৭, ৮-১৫, ১৬-৩০, ৩১-৬০, ৬০+ দিন)',
-    description:
-      'কোন কাস্টমারের বাকি কতদিন পুরনো হয়ে গেছে তা দিন অনুযায়ী ভাগ করে দেখায়। ফলে যে বাকিগুলো আটকে যাওয়ার ঝুঁকি আছে, সেগুলো আগে থেকেই চিহ্নিত করে দ্রুত তাগাদা দিয়ে টাকা আদায় করা যায়।',
-    bullets: [
-      '০-৭ দিন, ৮-১৫ দিন, ১৬-৩০ দিন, ৩১-৬০ দিন ও ৬০+ দিন বাকি ট্র্যাকিং',
-      'এক নজরে ওভারডিউ (Overdue) কাস্টমার ও মোট বকেয়া টাকার পরিমাণ',
-      'ইনভয়েস অনুযায়ী সরাসরি "বাকি আদায় করুন (Collect Due)" বাটন',
-    ],
-    image: '/marketing/14-due-aging-reports.png',
-    alt: 'Receivable Due Aging Analysis Dashboard',
-    highlightText: 'কোনো বাকি আর বছরের পর বছর আটকে থাকবে না',
-  },
-  {
-    id: 'dashboard-profit',
-    category: 'profit',
-    badge: 'ফিচার ৯ · আসল লাভ-লোকসান',
-    badgeColor: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
-    title: 'রিয়েল-টাইম আসল লাভ-লোকসান ও ৬ মাসের সেলস ট্রেন্ড চার্ট',
-    description:
-      'শুধু বিক্রি নয়, নিট লাভ কত হলো তা জানা সবচেয়ে জরুরি। ওয়েটেড এভারেজ কস্টিং (Weighted Average Cost) ফর্মুলায় প্রতিটি আইটেমের কেনা দাম ধরে গ্রস প্রফিট, নেট প্রফিট ও ক্যাশ ইনহ্যান্ড রিয়েল-টাইমে ক্যালকুলেট হয়।',
-    bullets: [
-      'দৈনিক, ৭ দিন, চলতি মাস ও ৬ মাসের বিক্রয় ও গ্রস প্রফিট ট্রেন্ড',
-      'ক্যাটাগরি অনুযায়ী সবচেয়ে বেশি লাভজনক পণ্যের চার্ট',
-      'নগদ আদায় ও বাকি বিক্রির আলাদা নির্ভুল বিভাজন',
-    ],
-    image: '/marketing/01-dashboard-analytics.png',
-    alt: 'Real-time Profit Loss and Sales Trend Dashboard',
-    highlightText: 'দোকানের প্রতিটি টাকার লাভ-ক্ষতির স্পষ্ট ছবি',
-  },
-  {
-    id: 'inventory-valuation',
-    category: 'profit',
-    badge: 'ফিচার ১০ · স্টক ও সম্পদ মূল্য',
-    badgeColor: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
-    title: 'দোকানে কত টাকার মাল আছে? (স্টক লেজার ও ক্রয়মূল্য মূল্যায়ন)',
-    description:
-      'মুহূর্তেই জানতে পারবেন আপনার দোকানে বর্তমান কেনা দামে মোট কত টাকার মালামাল স্টক আছে এবং তা বিক্রি করলে মোট কত টাকা ক্যাশ হবে। স্টক কমে গেলে স্বয়ংক্রিয় লো-স্টক অ্যালার্ট পাবেন।',
-    bullets: [
-      'ইনভেন্টরি অ্যাসেট ভ্যালু (কেনা দামে মোট স্টক মূল্য)',
-      'আনুমানিক বিক্রয়মূল্য (Estimated Retail Value) ও প্রত্যাশিত লাভ',
-      'বাংলা ও ইংরেজি ভাষায় স্টক সার্চ ও ইনস্ট্যান্ট স্টক অ্যাড/সাবট্র্যাক্ট',
-    ],
-    image: '/marketing/08-inventory-valuation.png',
-    alt: 'Inventory Stock Valuation and Asset Ledger',
-    highlightText: 'স্টক চুরি বা ঘাটতি হওয়ার আর কোনো সুযোগ নেই',
-  },
-  {
-    id: 'shop-expenses',
-    category: 'profit',
-    badge: 'ফিচার ১১ · দোকান খরচ খাতা',
-    badgeColor: 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300',
-    title: 'দোকান ভাড়া, বিদ্যুৎ বিল, কর্মচারীর বেতন ও দৈনন্দিন খরচ খাতা',
-    description:
-      'দোকানের দোকান ভাড়া, বিদ্যুৎ বিল, কর্মচারীর নাস্তা ও অন্যান্য খরচ এন্ট্রি করলেই তা সরাসরি গ্রস প্রফিট থেকে বাদ গিয়ে দিন শেষে প্রকৃত নিট লাভ (Operating Net Profit) বের করে দেবে।',
-    bullets: [
-      'ভাড়া, কারেন্ট বিল, চা-নাস্তা ও ডেলিভারি খরচের ক্যাটাগরি',
-      'ক্যাশ নাকি বিকাশ/নগদে পরিশোধ করা হয়েছে তার রেকর্ড',
-      'মাস শেষে মোট পরিচালন ব্যয়ের স্বয়ংক্রিয় হিসাব',
-    ],
-    image: '/marketing/15-shop-expenses.png',
-    alt: 'Shop Operating Expenses Ledger',
-    highlightText: 'অপ্রয়োজনীয় খরচ কমবে এবং নিট লাভ নিশ্চিত হবে',
-  },
-  {
-    id: 'cash-register',
-    category: 'profit',
-    badge: 'ফিচার ১২ · ক্যাশ ড্রয়ার হিসাব',
-    badgeColor: 'bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300',
-    title: 'দৈনিক ক্যাশ ড্রয়ার ব্যালেন্স ও শিফট ক্লোজিং মেলানো',
-    description:
-      'সকালে ড্রয়ারে কত ক্যাশ নিয়ে শুরু করলেন, সারাদিনের নগদ বিক্রি কত হলো, কত ক্যাশ বাইরে গেল এবং রাতে ড্রয়ার বন্ধ করার সময় ড্রয়ারের টাকার সাথে সফটওয়্যারের হিসাব হুবহু মিলে যাবে।',
-    bullets: [
-      'কারেন্ট ক্যাশ ড্রয়ার ব্যালেন্স ও শিফট স্ট্যাটাস ট্র্যাকিং',
-      'ম্যানুয়াল ক্যাশ-ইন (জমা) ও ক্যাশ-আউট (উত্তোলন) এন্ট্রি',
-      'প্রতি রাতে ক্যাশ ড্রয়ার লেনদেন লেজার ও শিফট ক্লোজিং',
-    ],
-    image: '/marketing/16-cash-register-closing.png',
-    alt: 'Daily Cash Register Shift Closing and Drawer Reconciliation',
-    highlightText: 'ক্যাশের ১টি পয়সাও অমিল থাকবে না',
-  },
-  {
-    id: 'distributor-purchase',
-    category: 'suppliers',
-    badge: 'ফিচার ১৩ · কোম্পানি চালান',
-    badgeColor: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
-    title: 'ডিস্ট্রিবিউটর চালান ও কার্টন-টু-পিস কনভার্সন (কার্টনে কিনে খুচরা বিক্রি)',
-    description:
-      'কোম্পানি থেকে কার্টন বা বস্তায় মাল কিনে খুচরা পিস বা কেজিতে বিক্রি করার সম্পূর্ণ অটোমেটিক হিসাব। গাড়ি ভাড়া বা পরিবহন খরচ যোগ হয়ে প্রতিটি পিসের আসল কেনা দাম নিখুঁতভাবে নির্ধারিত হয়।',
-    bullets: [
-      'কার্টন/বস্তা থেকে খুচরা পিস বা কেজিতে রূপান্তর',
-      'পরিবহন ও অন্যান্য খরচ যোগ করে গড় ক্রয়মূল্য নির্ণয়',
-      'কোম্পানি ইনভয়েস নম্বর ও তারিখ সহ চালান সংরক্ষণ',
-    ],
-    image: '/marketing/09-distributor-purchase.png',
-    alt: 'Record Distributor Purchase and Carton Conversion',
-    highlightText: 'পাইকারি কেনার পর খুচরা বিক্রির নিখুঁত হিসাব',
-  },
-  {
-    id: 'suppliers-directory',
-    category: 'suppliers',
-    badge: 'ফিচার ১৪ · মহাজন দেনা খাতা',
-    badgeColor: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300',
-    title: 'সাপ্লায়ার ও মহাজন খাতা — কোম্পানি দেনা ও চালান লেজার',
-    description:
-      'ইউনিলিভার, স্কয়ার, ফ্রেশ, তীর কিংবা স্থানীয় পাইকারি মহাজনের কাছে মোট কত টাকার মালামাল এলো, কত টাকা পরিশোধ করলেন এবং কত টাকা দেনা আছে তার পৃথক লেজার।',
-    bullets: [
-      'সাপ্লায়ার ও ডিলার ডিরেক্টরি ও যোগাযোগ নম্বর',
-      'মোট ক্রয়, মোট পরিশোধ ও বকেয়া দেনা (Payable) হিসাব',
-      'এক ক্লিকে মহাজন লেজার খাতা ও দেনা পরিশোধ রসিদ',
-    ],
-    image: '/marketing/10-suppliers-directory.png',
-    alt: 'Suppliers and Distributor Dues Directory',
-    highlightText: 'কোম্পানি বা মহাজনের সাথে দেনা-পাওনা নিয়ে তর্কাতর্কি মুক্ত',
-  },
-  {
-    id: 'online-storefront',
-    category: 'ecommerce',
-    badge: 'ফিচার ১৫ · অনলাইন বাজার',
-    badgeColor: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
-    title: 'অনলাইন অর্ডার স্টোরফ্রন্ট — ঠিক যেমন ঘরেরবাজার ও চালডাল',
-    description:
-      'আপনার এলাকার কাস্টমারদের জন্য তৈরি নিজস্ব অনলাইন গ্রোসারি স্টোর! সারা বাংলাদেশের জেলা ও দোকান নির্বাচন করে কাস্টমাররা ঘরে বসেই মোবাইল দিয়ে পণ্য কার্টে অ্যাড করে অর্ডার দিতে পারবে।',
-    bullets: [
-      'জেলা ও স্টোরভিত্তিক স্মার্ট ক্যাটালগ ফিল্টার',
-      '১,৩৫৯টি খাদ্যপণ্যের ছবি ও সাইজ সহ সুন্দর অনলাইন ডিসপ্লে',
-      'হোম ডেলিভারি ও ক্যাশ অন ডেলিভারি (COD) সুবিধা',
-    ],
-    image: '/marketing/11-online-storefront.png',
-    alt: 'Online Grocery Storefront with District Store Switcher',
-    highlightText: 'এলাকার কাস্টমারদের অনলাইনে সার্ভিস দিয়ে বিক্রি বাড়ান',
-  },
-  {
-    id: 'online-cart-checkout',
-    category: 'ecommerce',
-    badge: 'ফিচার ১৬ · ১-পেজ এক্সপ্রেস চেকআউট',
-    badgeColor: 'bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300',
-    title: 'স্লাইড-ইন শপিং কার্ট ও ১-পেজ ফাস্ট চেকআউট (বিকাশ বা ক্যাশ অন ডেলিভারি)',
-    description:
-      'কাস্টমারকে কোনো দীর্ঘ অ্যাকাউন্ট খুলতে হবে না। নাম, মোবাইল নম্বর ও ঠিকানা দিয়ে ১ ক্লিকেই অর্ডার কনফার্ম করতে পারবে। ফলে বেশি বেশি কাস্টমার কোনো ঝামেলা ছাড়াই অর্ডার সম্পন্ন করে।',
-    bullets: [
-      'ইনস্ট্যান্ট স্লাইড-ইন শপিং কার্ট ড্রয়ার',
-      'ডেলিভারি চার্জ ও সর্বমোট প্রদেয় টাকার স্বচ্ছ হিসাব',
-      'ক্যাশ অন ডেলিভারি এবং বিকাশ/নগদ অগ্রিম পেমেন্ট মেথড',
-    ],
-    image: '/marketing/12-online-cart-checkout.png',
-    alt: 'Express 1-Page Shopping Cart Drawer Checkout',
-    highlightText: 'সহজ চেকআউট মানেই সর্বোচ্চ অনলাইন অর্ডার কনভার্সন',
-  },
-  {
-    id: 'ad-landing-preview',
-    category: 'ecommerce',
-    badge: 'ফিচার ১৭ · হাই-কনভার্শন অ্যাড ল্যান্ডিং',
-    badgeColor: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
-    title: 'ফেসবুক ও টিকটক বিজ্ঞাপনের জন্য প্রিমিয়াম অ্যাড ল্যান্ডিং পেজ',
-    description:
-      'মধু, ঘি, তেল, চালের কম্বো প্যাকেজ বিক্রির জন্য ফেসবুক বা টিকটকে বিজ্ঞাপন দেওয়ার জন্য তৈরি আকর্ষণীয় ল্যান্ডিং পেজ। ভিডিও রিভিউ, কাস্টমার টেস্টমোনিয়াল ও সরাসরি অর্ডার ফর্ম সহ রেডি।',
-    bullets: [
-      'মোবাইলে চোখের পলকে লোড হওয়া সুপারফাস্ট ল্যান্ডিং ডিজাইন',
-      'ইউটিউব আনবক্সিং/রিভিউ ভিডিও প্লেয়ার এমবেড সুবিধা',
-      'সীমিত সময়ের মেগা অফার ব্যাজ ও সরাসরি অর্ডার ফর্ম',
-    ],
-    image: '/marketing/17-ad-landing-live-preview.png',
-    alt: 'High Converting Facebook TikTok Ad Landing Page Preview',
-    highlightText: 'ফেসবুক বিজ্ঞাপনে পণ্য বিক্রির সর্বোচ্চ রিটার্ন',
-  },
-  {
-    id: 'ad-landing-builder',
-    category: 'ecommerce',
-    badge: 'ফিচার ১৮ · অ্যাড বিল্ডার ও পিক্সেল',
-    badgeColor: 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300',
-    title: 'সহজ অ্যাড ল্যান্ডিং পেজ বিল্ডার ও ফেসবুক/টিকটক পিক্সেল ট্র্যাকিং',
-    description:
-      'কোনো কোডিং ছাড়া মাত্র ২ মিনিটে বিজ্ঞাপনের হেডলাইন, অফার প্রাইজ, ইউটিউব ভিডিও লিঙ্ক ও ফেসবুক পিক্সেল আইডি বসিয়ে নিজের ক্যাম্পেইন পেজ তৈরি করুন। ১ ক্লিকে শেয়ারেবল লিঙ্ক কপি করুন।',
-    bullets: [
-      '৩টি হাই-কনভার্টিং টেমপ্লেট (এগ্রো/গ্রোসারি, ভিডিও-ফার্স্ট ও কম্বো অফার)',
-      'ফেসবুক ও টিকটক পিক্সেল আইডি ইন্টিগ্রেশন ট্র্যাকিং',
-      '১ ক্লিকে নিজস্ব ইউনিক বিজ্ঞাপনী লিঙ্ক কপি ও লাইভ প্রিভিউ',
-    ],
-    image: '/marketing/18-ad-landing-builder.png',
-    alt: 'Visual Ad Landing Page Builder and Pixel Setup',
-    highlightText: 'বিজ্ঞাপনের ট্র্যাকিং ও কনভার্সন অপ্টিমাইজেশন এক ছাতার নিচে',
   },
 ];
 
@@ -388,22 +276,35 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
   onOpenAdBuilder,
   onOpenDemo,
 }) => {
-  const { lang, setLang, darkMode, toggleDarkMode } = useApp();
+  const { lang, darkMode, toggleDarkMode } = useApp();
 
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<'all' | 'pos' | 'catalog' | 'khata' | 'profit' | 'suppliers' | 'ecommerce'>('all');
-  
-  // Video player controls state
+  const [activeTabId, setActiveTabId] = useState<string>('pos');
+  const [activeScreenshotIdx, setActiveScreenshotIdx] = useState<number>(0);
+
+  // Video player controls
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
-  const [videoDuration, setVideoDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [videoDuration, setVideoDuration] = useState(134);
 
-  // Lightbox Modal state for full-screen screenshot preview
-  const [lightboxImage, setLightboxImage] = useState<{ url: string; title: string; desc: string; badge: string } | null>(null);
+  // Lightbox Modal state
+  const [lightboxData, setLightboxData] = useState<{
+    url: string;
+    title: string;
+    caption: string;
+  } | null>(null);
+
+  const activeTab = SHOWCASE_TABS.find((t) => t.id === activeTabId) || SHOWCASE_TABS[0];
+  const activeScreenshot = activeTab.screenshots[activeScreenshotIdx] || activeTab.screenshots[0];
+
+  const handleTabChange = (tabId: string) => {
+    setActiveTabId(tabId);
+    setActiveScreenshotIdx(0);
+  };
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -429,23 +330,11 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
     setVideoProgress((curr / dur) * 100);
   };
 
-  const handleLoadedMetadata = () => {
-    if (!videoRef.current) return;
-    setVideoDuration(videoRef.current.duration);
-  };
-
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!videoRef.current) return;
-    const targetTime = (parseFloat(e.target.value) / 100) * (videoRef.current.duration || 1);
-    videoRef.current.currentTime = targetTime;
+    const target = (parseFloat(e.target.value) / 100) * (videoRef.current.duration || 1);
+    videoRef.current.currentTime = target;
     setVideoProgress(parseFloat(e.target.value));
-  };
-
-  const handleFullscreen = () => {
-    if (!videoRef.current) return;
-    if (videoRef.current.requestFullscreen) {
-      videoRef.current.requestFullscreen();
-    }
   };
 
   const formatSec = (sec: number) => {
@@ -454,69 +343,56 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
-  const filteredFeatures = ALL_FEATURES.filter((f) => {
-    if (activeCategory === 'all') return true;
-    return f.category === activeCategory;
-  });
-
   return (
-    <div className="min-h-screen bg-[#F8FAF7] text-slate-900 selection:bg-emerald-500 selection:text-white dark:bg-[#0B1120] dark:text-slate-100 font-sans">
+    <div className="min-h-screen bg-[#FAFCF8] text-slate-900 selection:bg-emerald-500 selection:text-white dark:bg-[#090D16] dark:text-slate-100 font-sans antialiased">
       
       {/* Modals */}
       <BuyProModal isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} />
       <DemoAccessModal isOpen={isDemoModalOpen} onClose={() => setIsDemoModalOpen(false)} />
 
-      {/* LIGHTBOX MODAL FOR HIGH-RES FULLSCREEN SCREENSHOT PREVIEW */}
-      {lightboxImage && (
+      {/* LIGHTBOX MODAL */}
+      {lightboxData && (
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-950/90 backdrop-blur-md animate-fade-in"
-          onClick={() => setLightboxImage(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-md animate-fade-in"
+          onClick={() => setLightboxData(null)}
         >
           <div
-            className="relative w-full max-w-5xl rounded-3xl border border-emerald-500/30 bg-slate-900 shadow-2xl overflow-hidden flex flex-col max-h-[95vh]"
+            className="relative w-full max-w-5xl rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden flex flex-col max-h-[95vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-5 py-3 text-white">
-              <div className="flex items-center gap-2">
-                <span className="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-2.5 py-0.5 text-xs font-bold text-emerald-400">
-                  {lightboxImage.badge}
-                </span>
-                <h3 className="text-sm sm:text-base font-black truncate max-w-xl">
-                  {lightboxImage.title}
-                </h3>
+            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-6 py-3.5 text-white">
+              <div>
+                <h3 className="text-sm sm:text-base font-black truncate">{lightboxData.title}</h3>
+                <p className="text-xs text-slate-400">{lightboxData.caption}</p>
               </div>
               <button
                 type="button"
-                onClick={() => setLightboxImage(null)}
+                onClick={() => setLightboxData(null)}
                 className="rounded-full p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition cursor-pointer"
-                title="বন্ধ করুন"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* High-res Image View */}
             <div className="flex-1 overflow-auto bg-slate-950 p-2 sm:p-4 flex items-center justify-center">
               <img
-                src={lightboxImage.url}
-                alt={lightboxImage.title}
+                src={lightboxData.url}
+                alt={lightboxData.title}
                 className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl"
               />
             </div>
 
-            {/* Footer with Details */}
-            <div className="border-t border-slate-800 bg-slate-900 px-5 py-3 text-xs sm:text-sm text-slate-300 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="line-clamp-2 text-slate-400 max-w-2xl">{lightboxImage.desc}</p>
+            <div className="border-t border-slate-800 bg-slate-900 px-6 py-3 flex items-center justify-between">
+              <span className="text-xs text-emerald-400 font-bold">Mudir Dokan Pro · অফিশিয়াল ইন্টারফেস</span>
               <button
                 type="button"
                 onClick={() => {
-                  setLightboxImage(null);
+                  setLightboxData(null);
                   setIsBuyModalOpen(true);
                 }}
-                className="shrink-0 rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-2 font-black text-white shadow-md shadow-emerald-600/30 transition cursor-pointer"
+                className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-1.5 text-xs font-black text-white transition cursor-pointer"
               >
                 প্রো চালু করুন (৳৪৯৯/মাস) ⚡
               </button>
@@ -525,30 +401,30 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
         </div>
       )}
 
-      {/* TOP STICKY NAVBAR */}
-      <header className="sticky top-0 z-40 border-b border-emerald-100/80 bg-white/95 px-3 sm:px-6 lg:px-8 py-3 backdrop-blur-md shadow-xs dark:border-slate-800 dark:bg-slate-900/95">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2">
+      {/* TOP CLEAN NAVBAR */}
+      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 px-4 sm:px-8 py-3.5 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/90">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
           
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-3">
             <img
               src="/mudi-dokan-pro-logo.png"
               alt="Mudi Dokan Pro"
-              className="h-9 sm:h-11 w-auto object-contain cursor-pointer"
+              className="h-10 sm:h-11 w-auto object-contain cursor-pointer"
               onClick={() => {
                 window.location.href = '/';
               }}
             />
-            <span className="hidden sm:inline-block font-extrabold text-sm text-slate-800 dark:text-white">
+            <span className="hidden sm:inline-block font-black text-slate-800 dark:text-white text-sm">
               মুদি দোকান প্রো
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Live Demo Link */}
             <button
               type="button"
               onClick={() => setIsDemoModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 text-xs font-black text-amber-900 dark:border-amber-700 dark:bg-amber-950/60 dark:text-amber-300 transition cursor-pointer shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 hover:bg-amber-100 px-3.5 py-1.5 text-xs font-black text-amber-900 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-300 transition cursor-pointer"
             >
               <Sparkles className="h-3.5 w-3.5 text-amber-600" />
               <span>⚡ লাইভ ডেমো</span>
@@ -559,41 +435,29 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
               <button
                 type="button"
                 onClick={onOpenOnlineStore}
-                className="hidden md:inline-flex items-center gap-1.5 rounded-xl border border-teal-200 bg-teal-50 hover:bg-teal-100 px-3 py-1.5 text-xs font-bold text-teal-900 dark:border-teal-800 dark:bg-teal-950/60 dark:text-teal-300 transition cursor-pointer"
+                className="hidden md:inline-flex items-center gap-1.5 rounded-xl border border-teal-200 bg-teal-50 hover:bg-teal-100 px-3 py-1.5 text-xs font-bold text-teal-900 dark:border-teal-800 dark:bg-teal-950/50 dark:text-teal-300 transition cursor-pointer"
               >
                 <ShoppingBag className="h-3.5 w-3.5 text-teal-600" />
                 <span>অনলাইন শপ</span>
               </button>
             )}
 
-            {/* Ad Builder link */}
-            {onOpenAdBuilder && (
-              <button
-                type="button"
-                onClick={onOpenAdBuilder}
-                className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-purple-200 bg-purple-50 hover:bg-purple-100 px-3 py-1.5 text-xs font-bold text-purple-900 dark:border-purple-800 dark:bg-purple-950/60 dark:text-purple-300 transition cursor-pointer"
-              >
-                <Layers className="h-3.5 w-3.5 text-purple-600" />
-                <span>অ্যাড বিল্ডার</span>
-              </button>
-            )}
-
-            {/* Back to Login */}
+            {/* Login */}
             <button
               type="button"
               onClick={onBackToLogin}
-              className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 transition cursor-pointer"
+              className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 transition cursor-pointer"
             >
               <Store className="h-3.5 w-3.5 text-slate-500" />
               <span>লগইন</span>
             </button>
 
-            {/* Dark Mode Toggle */}
+            {/* Dark Mode */}
             <button
               type="button"
               onClick={toggleDarkMode}
               aria-label="Toggle theme"
-              className="rounded-full border border-slate-200 bg-white p-2 text-slate-600 shadow-xs hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 transition cursor-pointer"
+              className="rounded-full border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 transition cursor-pointer"
             >
               {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
@@ -602,7 +466,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
             <button
               type="button"
               onClick={() => setIsBuyModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white px-3.5 py-1.5 text-xs sm:text-sm font-black shadow-md shadow-emerald-600/20 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white px-4 py-1.5 text-xs sm:text-sm font-black shadow-md shadow-emerald-600/20 transition cursor-pointer"
             >
               <Zap className="h-4 w-4" />
               <span>প্রো কিনুন (৫০% ছাড়)</span>
@@ -612,108 +476,106 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
         </div>
       </header>
 
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden px-4 pt-8 pb-10 sm:px-6 lg:px-8 text-center">
-        <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-96 w-full max-w-5xl rounded-full bg-emerald-400/15 blur-3xl dark:bg-emerald-900/10" />
+      {/* ======================================================== */}
+      {/* HERO SECTION — CLEAN, HOOK-DRIVEN & UNCLUTTERED */}
+      {/* ======================================================== */}
+      <section className="relative overflow-hidden px-4 pt-10 pb-12 sm:px-6 lg:px-8 text-center">
+        {/* Subtle Ambient Radial Glow */}
+        <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-96 w-full max-w-4xl rounded-full bg-emerald-500/10 blur-3xl dark:bg-emerald-600/10" />
 
-        <div className="mx-auto max-w-5xl relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1 text-xs font-black text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 shadow-xs mb-4">
-            <Store className="h-4 w-4 text-emerald-600" />
-            <span>মুদি দোকান ও গ্রোসারি ব্যবসার পূর্ণাঙ্গ ১০০% নির্ভরযোগ্য ডিজিটাল সলিউশন</span>
+        <div className="mx-auto max-w-4xl relative z-10">
+          
+          {/* Status Badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200/90 bg-emerald-50/80 px-4 py-1.5 text-xs font-black text-emerald-800 dark:border-emerald-800/80 dark:bg-emerald-950/60 dark:text-emerald-300 mb-5 shadow-xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>মুদি দোকান ও গ্রোসারি ব্যবসার স্মার্ট পিওএস ও ডিজিটাল খাতা</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.15]">
-            কাগজের খাতার দিন শেষ—দোকানের প্রতিটি টাকার হিসাব এখন ১০০% নির্ভুল
+          {/* Sharp, Punchy Hook Headline */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.18]">
+            দোকান চালান নিশ্চিন্তে, <br className="hidden sm:inline" />
+            <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 bg-clip-text text-transparent">
+              হিসাবের দুশ্চিন্তা চিরতরে শেষ!
+            </span>
           </h1>
 
-          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-medium">
-            আসল লাভ-লোকসান, ১,৩৫৯টি আসল পণ্যের ছবিসহ দ্রুততম বারকোড বিলিং, কাস্টমার বাকি ও অটো এসএমএস তাগাদা, সাপ্লায়ার চালান এবং ক্যাশ ড্রয়ার—সবকিছু চলবে একটি মাত্র শক্তিশালী সিস্টেমে।
+          {/* Clean 1-Sentence Subtitle */}
+          <p className="mt-4 text-sm sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
+            ১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ, বিদ্যুৎ বা নেট ছাড়াই দ্রুততম বারকোড বিলিং এবং কাস্টমার বাকি আদায়ে ১-ক্লিক অটোমেটিক এসএমএস তাগাদা।
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          {/* Clean 2-CTA Action Buttons */}
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => setIsDemoModalOpen(true)}
-              className="flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-600 px-6 py-3.5 text-sm sm:text-base font-black text-white shadow-xl shadow-amber-500/25 transition cursor-pointer"
+              className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 px-6 py-3.5 text-sm sm:text-base font-black text-white shadow-xl shadow-amber-500/25 transition cursor-pointer"
             >
               <Sparkles className="h-5 w-5" />
-              <span>⚡ সরাসরি লাইভ ডেমো টেস্ট (ফ্রি ট্রায়াল)</span>
+              <span>⚡ সরাসরি ফ্রি ডেমো টেস্ট করুন</span>
             </button>
-
-            {onOpenOnlineStore && (
-              <button
-                type="button"
-                onClick={onOpenOnlineStore}
-                className="flex items-center gap-2 rounded-2xl bg-teal-600 hover:bg-teal-700 px-5 py-3.5 text-sm sm:text-base font-black text-white shadow-xl shadow-teal-600/25 transition cursor-pointer"
-              >
-                <ShoppingBag className="h-5 w-5" />
-                <span>🛒 অনলাইন গ্রোসারি স্টোর</span>
-              </button>
-            )}
 
             <button
               type="button"
               onClick={() => setIsBuyModalOpen(true)}
-              className="flex items-center gap-2 rounded-2xl bg-emerald-700 hover:bg-emerald-800 px-5 py-3.5 text-sm sm:text-base font-black text-white shadow-xl shadow-emerald-700/25 transition cursor-pointer"
+              className="flex items-center gap-2 rounded-2xl bg-emerald-700 hover:bg-emerald-800 px-6 py-3.5 text-sm sm:text-base font-black text-white shadow-xl shadow-emerald-700/25 transition cursor-pointer"
             >
               <Zap className="h-5 w-5" />
               <span>প্রো প্যাকেজ কিনুন (৫০% ছাড়)</span>
             </button>
           </div>
+
         </div>
 
         {/* ======================================================== */}
-        {/* REAL HD VIDEO PLAYER (MudiDokanPro_Promo_v1.mp4) */}
+        {/* FLOATING PROMO VIDEO PLAYER (2m 14s HD 1080p) */}
         {/* ======================================================== */}
-        <div className="mx-auto max-w-4xl mt-10 rounded-3xl border-2 border-emerald-500/40 bg-slate-950 p-2 sm:p-4 shadow-2xl relative overflow-hidden group text-left">
+        <div className="mx-auto max-w-4xl mt-10 rounded-3xl border border-slate-200/80 bg-slate-950 p-2 sm:p-3 shadow-2xl relative overflow-hidden text-left dark:border-slate-800">
           
-          <div className="relative aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center shadow-inner">
+          <div className="relative aspect-video rounded-2xl overflow-hidden bg-black flex items-center justify-center">
             
-            {/* Real Video Element */}
             <video
               ref={videoRef}
               src="/marketing/mudidokan-pro-promo.mp4"
               poster="/marketing/video-poster.jpg"
               playsInline
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain cursor-pointer"
               onTimeUpdate={handleTimeUpdate}
-              onLoadedMetadata={handleLoadedMetadata}
+              onLoadedMetadata={() => setVideoDuration(videoRef.current?.duration || 134)}
               onEnded={() => setIsPlaying(false)}
               onClick={togglePlay}
             />
 
-            {/* Play/Pause Center Overlay Button (Visible when paused) */}
+            {/* Glowing Center Play Overlay */}
             {!isPlaying && (
               <div
-                className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] transition-all cursor-pointer p-4 text-center"
+                className="absolute inset-0 flex flex-col items-center justify-center bg-black/45 backdrop-blur-[2px] transition-all cursor-pointer p-4 text-center"
                 onClick={togglePlay}
               >
                 <div className="relative flex items-center justify-center">
-                  <span className="absolute h-24 w-24 sm:h-28 sm:w-28 rounded-full bg-emerald-500/30 animate-ping" />
+                  <span className="absolute h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-emerald-500/30 animate-ping" />
                   <button
                     type="button"
                     aria-label="ভিডিও চালু করুন"
-                    className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 hover:scale-110 text-white flex items-center justify-center shadow-2xl shadow-emerald-500/60 transition-transform cursor-pointer"
+                    className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 hover:scale-105 text-white flex items-center justify-center shadow-2xl shadow-emerald-500/50 transition-transform cursor-pointer"
                   >
                     <Play className="h-8 w-8 ml-1 fill-white" />
                   </button>
                 </div>
 
-                <div className="mt-4 max-w-md">
+                <div className="mt-4">
                   <span className="rounded-full bg-emerald-500/30 border border-emerald-400 px-3.5 py-1 text-xs font-bold text-emerald-200">
-                    ▶️ ২ মিনিট ১৪ সেকেন্ডের লাইভ ভিডিও ওয়াকথ্রু
+                    ▶️ ২ মিনিট ১৪ সেকেন্ডের লাইভ প্রেজেন্টেশন
                   </span>
-                  <h3 className="text-base sm:text-xl font-black text-white mt-2 drop-shadow-md">
+                  <h3 className="text-base sm:text-xl font-black text-white mt-1.5 drop-shadow-md">
                     কীভাবে মুদির দোকান প্রো আপনার ব্যবসাকে পাল্টে দেবে?
                   </h3>
-                  <p className="text-xs text-slate-300 mt-1">ক্লিক করুন ভিডিও দেখতে</p>
                 </div>
               </div>
             )}
 
-            {/* Video Controls Bottom Bar */}
+            {/* Clean Video Controls Bottom Bar */}
             <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-3 sm:p-4 flex flex-col gap-2 text-white">
-              {/* Progress Slider */}
               <input
                 type="range"
                 min="0"
@@ -729,7 +591,6 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                     type="button"
                     onClick={togglePlay}
                     className="hover:text-emerald-400 transition cursor-pointer"
-                    title={isPlaying ? 'বিরতি দিন' : 'চালু করুন'}
                   >
                     {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 fill-white" />}
                   </button>
@@ -738,51 +599,42 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                     type="button"
                     onClick={toggleMute}
                     className="hover:text-emerald-400 transition cursor-pointer"
-                    title={isMuted ? 'সাউন্ড চালু করুন' : 'সাউন্ড বন্ধ করুন'}
                   >
                     {isMuted ? <VolumeX className="h-5 w-5 text-rose-400" /> : <Volume2 className="h-5 w-5" />}
                   </button>
 
                   <span className="font-mono text-[11px] text-slate-300">
-                    {formatSec(currentTime)} / {formatSec(videoDuration || 134)}
+                    {formatSec(currentTime)} / {formatSec(videoDuration)}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <span className="rounded-md bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
-                    HD 1080p · বাংলা অডিও
+                    HD 1080p বাংলা
                   </span>
-                  <button
-                    type="button"
-                    onClick={handleFullscreen}
-                    className="hover:text-emerald-400 transition cursor-pointer"
-                    title="ফুলস্ক্রিন করুন"
-                  >
-                    <Maximize2 className="h-4 w-4" />
-                  </button>
                 </div>
               </div>
             </div>
 
           </div>
 
-          {/* 4 Core Pillars Below Video */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 mt-3 pt-2 border-t border-slate-800 text-xs font-bold text-slate-300">
+          {/* 4 Clean Micro-Pill Benefits */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2.5 pt-2 border-t border-slate-800 text-xs font-bold text-slate-300">
             <div className="flex items-center gap-2 p-1.5">
               <Zap className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>১০০% অফলাইনে ফুল স্পিডে চলে</span>
+              <span>১০০% অফলাইনে বিলিং</span>
             </div>
             <div className="flex items-center gap-2 p-1.5">
               <Package className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>১,৩৫৯টি আসল পণ্যের ছবি লোড করা</span>
+              <span>১,৩৫৯টি আসল পণ্যের ছবি</span>
             </div>
             <div className="flex items-center gap-2 p-1.5">
-              <MessageCircle className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>অটোমেটিক হোয়াটসঅ্যাপ/এসএমএস তাগাদা</span>
+              <Smartphone className="h-4 w-4 text-emerald-400 shrink-0" />
+              <span>অটোমেটিক বাকি এসএমএস</span>
             </div>
             <div className="flex items-center gap-2 p-1.5">
               <Printer className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>থার্মাল প্রিন্টারে মেমো প্রিন্ট</span>
+              <span>থার্মাল মেমো প্রিন্ট</span>
             </div>
           </div>
 
@@ -791,220 +643,328 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 18 REAL SCREENSHOT FEATURE TOUR WITH INTERACTIVE FILTER */}
+      {/* INTERACTIVE HOOK-DRIVEN SHOWCASE (CLEAN DOKANDARPRO-STYLE) */}
       {/* ======================================================== */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900/60 border-t border-slate-200/80 dark:border-slate-800">
+      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900/60 border-t border-slate-200/70 dark:border-slate-800/80">
         <div className="mx-auto max-w-7xl">
           
-          <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="text-center max-w-3xl mx-auto mb-8">
             <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-              বাস্তব ইন্টারফেসের ১৮টি স্ক্রিনশট গ্যালারি
+              ফিচার প্রেজেন্টেশন ও লাইভ স্ক্রিনশট
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white mt-2">
-              সফটওয়্যারটির প্রতিটি মডিউল নিজের চোখে দেখে নিন
+              আপনার দোকানের প্রতিটি সমস্যার সহজ সমাধান
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              যেকোনো স্ক্রিনশটে ক্লিক করে সম্পূর্ণ বড় স্ক্রিনে আসল হিসাব, ইনভয়েস ও মেমো দেখুন।
+            <p className="mt-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              নিচের ট্যাবগুলোতে ক্লিক করে প্রতিটি মডিউলের আসল ইন্টারফেস ও কার্যকারিতা দেখুন।
             </p>
+          </div>
 
-            {/* Filter Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-6">
-              {[
-                { id: 'all', label: 'সব ফিচার (১৮টি)' },
-                { id: 'pos', label: 'কাউন্টার পিওএস ও মেমো' },
-                { id: 'catalog', label: '১,৩৫৯ পণ্যের ক্যাটালগ' },
-                { id: 'khata', label: 'বাকি খাতা ও এজিং' },
-                { id: 'profit', label: 'লাভ-ক্ষতি ও ক্যাশ ড্রয়ার' },
-                { id: 'suppliers', label: 'কোম্পানি চালান ও মহাজন' },
-                { id: 'ecommerce', label: 'অনলাইন শপ ও অ্যাড বিল্ডার' },
-              ].map((tab) => (
+          {/* Interactive Navigation Tabs */}
+          <div className="flex overflow-x-auto pb-2 scrollbar-none items-center justify-start sm:justify-center gap-2 mb-8">
+            {SHOWCASE_TABS.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTabId === tab.id;
+              return (
                 <button
                   key={tab.id}
                   type="button"
-                  onClick={() => setActiveCategory(tab.id as any)}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
-                    activeCategory === tab.id
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 dark:bg-emerald-500'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-black whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 scale-102 dark:bg-emerald-500'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
                   }`}
                 >
-                  {tab.label}
+                  <Icon className={`h-4 w-4 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
+                  <span>{tab.tabLabel}</span>
                 </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Feature Grid with Real High-Res Screenshots */}
-          <div className="space-y-12">
-            {filteredFeatures.map((feat, idx) => {
-              const isEven = idx % 2 === 1;
-              return (
-                <div
-                  key={feat.id}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center rounded-3xl border border-slate-200/90 bg-[#F8FAF7] p-5 sm:p-8 dark:border-slate-800 dark:bg-slate-900 shadow-sm hover:shadow-md transition duration-300"
-                >
-                  {/* Text Details Side */}
-                  <div className={`lg:col-span-6 space-y-3.5 ${isEven ? 'order-1 lg:order-2' : 'order-1'}`}>
-                    <div className="flex items-center gap-2">
-                      <span className={`rounded-full px-2.5 py-0.5 text-xs font-black ${feat.badgeColor}`}>
-                        {feat.badge}
-                      </span>
-                      {feat.highlightText && (
-                        <span className="text-[11px] font-bold text-amber-600 dark:text-amber-400">
-                          ⭐ {feat.highlightText}
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-tight">
-                      {feat.title}
-                    </h3>
-
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                      {feat.description}
-                    </p>
-
-                    <div className="space-y-2 text-xs font-bold text-slate-800 dark:text-slate-200 pt-1">
-                      {feat.bullets.map((b, bIdx) => (
-                        <div key={bIdx} className="flex items-center gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                          <span>{b}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="pt-2 flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setLightboxImage({
-                            url: feat.image,
-                            title: feat.title,
-                            desc: feat.description,
-                            badge: feat.badge,
-                          })
-                        }
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-2 text-xs font-black text-emerald-800 hover:bg-emerald-100 transition cursor-pointer dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
-                      >
-                        <Eye className="h-3.5 w-3.5 text-emerald-600" />
-                        <span>স্ক্রিনশট বড় করে দেখুন ↗</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => setIsDemoModalOpen(true)}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 cursor-pointer"
-                      >
-                        <span>সরাসরি টেস্ট করুন</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Screenshot Image Side with Zoom Hover & Click */}
-                  <div
-                    className={`lg:col-span-6 ${
-                      isEven ? 'order-2 lg:order-1' : 'order-2'
-                    } rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white dark:border-slate-700 group/img relative cursor-pointer`}
-                    onClick={() =>
-                      setLightboxImage({
-                        url: feat.image,
-                        title: feat.title,
-                        desc: feat.description,
-                        badge: feat.badge,
-                      })
-                    }
-                  >
-                    <img
-                      src={feat.image}
-                      alt={feat.alt}
-                      className="w-full h-auto object-cover group-hover/img:scale-102 transition-transform duration-500"
-                      loading="lazy"
-                    />
-
-                    {/* Hover Overlay Hint */}
-                    <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="rounded-full bg-white/95 px-4 py-2 text-xs font-black text-slate-900 shadow-xl flex items-center gap-1.5">
-                        <Search className="h-3.5 w-3.5 text-emerald-600" />
-                        <span>বড় করে দেখতে ক্লিক করুন</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
               );
             })}
           </div>
 
+          {/* Active Tab Spotlight Showcase Card */}
+          <div className="rounded-3xl border border-slate-200/90 bg-[#F9FBFA] p-6 sm:p-10 shadow-sm dark:border-slate-800 dark:bg-slate-900/90 transition-all">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              
+              {/* Left Column: Sharp Hook & Punchy Points */}
+              <div className="lg:col-span-5 space-y-4">
+                
+                <span className={`inline-block rounded-full border px-3 py-0.5 text-xs font-black ${activeTab.tagColor}`}>
+                  {activeTab.tag}
+                </span>
+
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-snug">
+                  {activeTab.hookTitle}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                  {activeTab.punchline}
+                </p>
+
+                {/* Micro Highlights */}
+                <div className="space-y-3 pt-2">
+                  {activeTab.highlights.map((h, hIdx) => (
+                    <div key={hIdx} className="flex items-start gap-2.5">
+                      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 mt-0.5">
+                        <Check className="h-3.5 w-3.5" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">
+                          {h.title}
+                        </h4>
+                        <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                          {h.desc}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Sub-Screenshot Selector Pills (If more than 1 screenshot) */}
+                {activeTab.screenshots.length > 1 && (
+                  <div className="pt-3">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      স্ক্রিনশট পরিবর্তন করুন:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {activeTab.screenshots.map((s, sIdx) => (
+                        <button
+                          key={sIdx}
+                          type="button"
+                          onClick={() => setActiveScreenshotIdx(sIdx)}
+                          className={`rounded-xl px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+                            activeScreenshotIdx === sIdx
+                              ? 'bg-slate-900 text-white shadow-sm dark:bg-emerald-600'
+                              : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          }`}
+                        >
+                          {sIdx + 1}. {s.title}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="pt-2 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setLightboxData({
+                        url: activeScreenshot.image,
+                        title: activeScreenshot.title,
+                        caption: activeScreenshot.caption,
+                      })
+                    }
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-300 bg-white px-4 py-2 text-xs font-black text-emerald-800 shadow-xs hover:bg-emerald-50 dark:border-emerald-800 dark:bg-slate-800 dark:text-emerald-300 transition cursor-pointer"
+                  >
+                    <Eye className="h-3.5 w-3.5 text-emerald-600" />
+                    <span>পূর্ণাঙ্গ স্ক্রিনশট দেখুন ↗</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsDemoModalOpen(true)}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 cursor-pointer"
+                  >
+                    <span>ডেমো মোডে চালান</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+
+              </div>
+
+              {/* Right Column: Clean Screenshot Frame with Hover Zoom */}
+              <div className="lg:col-span-7">
+                <div
+                  className="rounded-2xl border border-slate-200/90 bg-white shadow-lg overflow-hidden group/screen relative cursor-pointer dark:border-slate-700 dark:bg-slate-950"
+                  onClick={() =>
+                    setLightboxData({
+                      url: activeScreenshot.image,
+                      title: activeScreenshot.title,
+                      caption: activeScreenshot.caption,
+                    })
+                  }
+                >
+                  {/* Mock Window Bar */}
+                  <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/80 px-4 py-2 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/60">
+                    <div className="flex items-center gap-1.5">
+                      <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+                      <span className="ml-2 font-mono text-[10px] text-slate-400">mudidokanpro.web.app</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-emerald-600 flex items-center gap-1">
+                      <Search className="h-3 w-3" />
+                      <span>জুম করতে ক্লিক করুন</span>
+                    </span>
+                  </div>
+
+                  <img
+                    src={activeScreenshot.image}
+                    alt={activeScreenshot.alt}
+                    className="w-full h-auto object-cover group-hover/screen:scale-101 transition-transform duration-300"
+                  />
+
+                  {/* Caption Bar */}
+                  <div className="p-3 bg-white border-t border-slate-100 dark:border-slate-800 dark:bg-slate-900 flex items-center justify-between text-xs">
+                    <div>
+                      <p className="font-black text-slate-900 dark:text-white">{activeScreenshot.title}</p>
+                      <p className="text-[11px] text-slate-500">{activeScreenshot.caption}</p>
+                    </div>
+                    <span className="rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-[10px] font-bold text-emerald-700 dark:bg-emerald-950 dark:border-emerald-800 dark:text-emerald-300">
+                      লাইভ ইন্টারফেস
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* COMPARISON MATRIX: Paper Khata vs Other POS vs MudirDokan */}
+      {/* 6-PILLAR BENTO GRID (CLEAN & SPACIOUS VISUAL EFFECTS) */}
       {/* ======================================================== */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#F8FAF7] dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
-        <div className="mx-auto max-w-5xl text-center">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FAFCF8] dark:bg-slate-950 border-t border-slate-200/70 dark:border-slate-800/80">
+        <div className="mx-auto max-w-6xl">
           
-          <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-            স্পষ্ট পার্থক্য দেখুন
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white mt-2">
-            কেন সাধারণ সফটওয়্যার ফেলে মুদি দোকান প্রো বেছে নেবেন?
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+              ৬টি অতুলনীয় সুবিধা
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+              কেন মুদির দোকান প্রো আপনার সেরা পছন্দ?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            
+            {/* Card 1 */}
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400 mb-4">
+                <Zap className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">১০০% অফলাইন পিওএস</h3>
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                দোকানের কারেন্ট বা ওয়াইফাই চলে গেলেও কাউন্টারের একটি সেলও আটকাবে না। অফলাইনে বিল প্রিন্ট হবে এবং নেট আসলে ক্লাউডে অটো-সিঙ্ক হবে।
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-50 text-teal-600 dark:bg-teal-950 dark:text-teal-400 mb-4">
+                <Package className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">১,৩৫৯টি আসল পণ্যের ফটো</h3>
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                আপনাকে বসে বসে ১ মাস ধরে পণ্যের ছবি ও নাম এন্ট্রি করতে হবে না। বাংলাদেশের জনপ্রিয় সব ব্র্যান্ড ও গ্রোসারি পণ্য আগে থেকেই রেডি।
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-400 mb-4">
+                <Smartphone className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">অটো হোয়াটসঅ্যাপ ও এসএমএস</h3>
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                মুখে চেয়ে সম্পর্ক খারাপ না করে কাস্টমারকে সম্মানজনক ভাষায় ডিজিটাল মেমো ও বাকির তাগাদা পাঠান। টাকা আদায় হবে দ্রুত।
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400 mb-4">
+                <TrendingUp className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">আসল লাভ ও কস্টিং ইঞ্জিন</h3>
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                ওয়েটেড এভারেজ কস্টিং ফর্মুলায় প্রতিটি পণ্যের ক্রয়মূল্য ও দোকান খরচ বাদ দিয়ে আসল লাভ হিসাব হবে—কখনোই লস হবে না।
+              </p>
+            </div>
+
+            {/* Card 5 */}
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-400 mb-4">
+                <Printer className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">কালির খরচহীন থার্মাল প্রিন্ট</h3>
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                যেকোনো ব্লুটুথ বা ইউএসবি থার্মাল প্রিন্টারে মাত্র ১ সেকেন্ডে দোকান ব্র্যান্ডিং সহ মেমো প্রিন্ট। প্রতি মাসে কালির হাজার টাকা সাশ্রয়।
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 dark:bg-purple-950 dark:text-purple-400 mb-4">
+                <ShoppingBag className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">ফ্রি অনলাইন গ্রোসারি স্টোর</h3>
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                ঘরেরবাজার ও চালডাল ধাঁচের নিজস্ব অনলাইন অর্ডার স্টোরফ্রন্ট। এলাকার কাস্টমাররা ঘরে বসেই মোবাইল দিয়ে অর্ডার করতে পারবে।
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* CLEAN COMPARISON TABLE */}
+      {/* ======================================================== */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900/60 border-t border-slate-200/70 dark:border-slate-800/80">
+        <div className="mx-auto max-w-4xl text-center">
+          
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
+            কাগজের খাতা বনাম মুদির দোকান প্রো
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-            অন্যান্য কোম্পানি শুধু বিক্রি দেখায়, কিন্তু মুদির দোকান প্রো আপনার সারাদিনের হিসাব, বাকি ও লাভ নিশ্চিত করে।
+          <p className="mt-1 text-xs sm:text-sm text-slate-500 max-w-lg mx-auto">
+            খাতার হিসাবে ভুল ও ক্ষতি বন্ধ করে আধুনিক ব্যবসার নিয়ন্ত্রণ নিজের হাতে নিন।
           </p>
 
-          <div className="mt-10 overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-md dark:border-slate-800 dark:bg-slate-950 text-left">
+          <div className="mt-8 overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-950 text-left">
             <table className="w-full text-xs sm:text-sm">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/60 font-black text-slate-700 dark:text-slate-200">
-                  <th className="p-4 sm:p-5">ফিচার / সুবিধা</th>
-                  <th className="p-4 sm:p-5 text-slate-400">কাগজের খাতা</th>
-                  <th className="p-4 sm:p-5 text-slate-400">সাধারণ সফটওয়্যার</th>
-                  <th className="p-4 sm:p-5 bg-emerald-50 text-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300 font-black">
-                    মুদি দোকান প্রো 👑
+                <tr className="border-b border-slate-100 bg-slate-50/70 dark:border-slate-800 dark:bg-slate-900/60 font-black text-slate-700 dark:text-slate-200">
+                  <th className="p-3.5 sm:p-4">বিষয়</th>
+                  <th className="p-3.5 sm:p-4 text-slate-400">কাগজের খাতা</th>
+                  <th className="p-3.5 sm:p-4 bg-emerald-50 text-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300 font-black">
+                    মুদির দোকান প্রো 👑
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 font-medium text-slate-600 dark:text-slate-300">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-600 dark:text-slate-300">
                 <tr>
-                  <td className="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">১,৩৫৯টি আসল পণ্যের ফটো ডাটাবেজ</td>
-                  <td className="p-4 sm:p-5 text-rose-500">❌ কোনো সুযোগ নেই</td>
-                  <td className="p-4 sm:p-5 text-amber-600">⚠️ নিজেকে ফটো তুলে নাম টাইপ করতে হয়</td>
-                  <td className="p-4 sm:p-5 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 font-bold">
-                    ✅ আগে থেকেই সব পণ্যের ছবি দেওয়া আছে
+                  <td className="p-3.5 sm:p-4 font-bold text-slate-900 dark:text-white">১,৩৫৯টি পণ্যের ফটো ক্যাটালগ</td>
+                  <td className="p-3.5 sm:p-4 text-rose-500">❌ নেই</td>
+                  <td className="p-3.5 sm:p-4 bg-emerald-50/40 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 font-bold">
+                    ✅ আগে থেকেই লোড করা
                   </td>
                 </tr>
                 <tr>
-                  <td className="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">ইন্টারনেট ছাড়া অফলাইন পিওএস বিলিং</td>
-                  <td className="p-4 sm:p-5 text-slate-500">ম্যানুয়াল কলম-কাগজ</td>
-                  <td className="p-4 sm:p-5 text-rose-500">❌ নেট না থাকলে বিল বন্ধ</td>
-                  <td className="p-4 sm:p-5 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 font-bold">
-                    ✅ ১০০% অফলাইনে বিদ্যুৎ/নেট ছাড়াই সচল
+                  <td className="p-3.5 sm:p-4 font-bold text-slate-900 dark:text-white">ইন্টারনেট ছাড়া অফলাইন পিওএস</td>
+                  <td className="p-3.5 sm:p-4 text-slate-500">ম্যানুয়াল কলম-কাগজ</td>
+                  <td className="p-3.5 sm:p-4 bg-emerald-50/40 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 font-bold">
+                    ✅ ১০০% সচল অফলাইনেও
                   </td>
                 </tr>
                 <tr>
-                  <td className="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">কাস্টমার বাকি অটো এসএমএস / হোয়াটসঅ্যাপ</td>
-                  <td className="p-4 sm:p-5 text-rose-500">❌ মুখে চাইতে অস্বস্তি</td>
-                  <td className="p-4 sm:p-5 text-slate-400">সাধারণত থাকে না</td>
-                  <td className="p-4 sm:p-5 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 font-bold">
-                    ✅ ১-ক্লিকে সম্মানজনক ভাষায় তাগাদা মেসেজ
+                  <td className="p-3.5 sm:p-4 font-bold text-slate-900 dark:text-white">বাকি কালেকশনে অটো এসএমএস</td>
+                  <td className="p-3.5 sm:p-4 text-rose-500">❌ চেয়ে চেয়ে লজ্জা</td>
+                  <td className="p-3.5 sm:p-4 bg-emerald-50/40 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 font-bold">
+                    ✅ ১-ক্লিকে প্রফেশনাল তাগাদা
                   </td>
                 </tr>
                 <tr>
-                  <td className="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">আসল লাভ-লোকসান (গড় ক্রয়মূল্য ফর্মুলা)</td>
-                  <td className="p-4 sm:p-5 text-rose-500">❌ কখনোই হিসাব মেলে না</td>
-                  <td className="p-4 sm:p-5 text-amber-600">⚠️ শুধু মোট বিক্রি দেখায়, লাভ নয়</td>
-                  <td className="p-4 sm:p-5 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 font-bold">
-                    ✅ কেনা দাম ও খরচ বাদ দিয়ে প্রকৃত নিট লাভ
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">অনলাইন অর্ডার স্টোর ও অ্যাড বিল্ডার</td>
-                  <td className="p-4 sm:p-5 text-rose-500">❌ নেই</td>
-                  <td className="p-4 sm:p-5 text-rose-500">❌ আলাদা ২০-৩০ হাজার টাকা খরচ</td>
-                  <td className="p-4 sm:p-5 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 font-bold">
-                    ✅ সম্পূর্ণ ফ্রিতে সফটওয়্যারের ভেতরেই যুক্ত
+                  <td className="p-3.5 sm:p-4 font-bold text-slate-900 dark:text-white">আসল লাভ ও ক্যাশ ড্রয়ার মেলানো</td>
+                  <td className="p-3.5 sm:p-4 text-rose-500">❌ কখনো মেলে না</td>
+                  <td className="p-3.5 sm:p-4 bg-emerald-50/40 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 font-bold">
+                    ✅ ১ পয়সারও অমিল থাকবে না
                   </td>
                 </tr>
               </tbody>
@@ -1015,62 +975,59 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* PRICING & BUY PRO SECTION: 3 REVISED PACKAGES */}
+      {/* CLEAN PRICING SECTION — MATCHING PROMO VIDEO EXACTLY */}
       {/* ======================================================== */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-emerald-50/30 to-white dark:from-slate-900 dark:via-slate-900/80 dark:to-slate-900">
-        <div className="mx-auto max-w-6xl text-center">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-emerald-50/20 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <div className="mx-auto max-w-5xl text-center">
           
           <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-100 px-3.5 py-1 text-xs font-black text-rose-800 dark:bg-rose-950 dark:text-rose-300 mb-3 animate-pulse">
             <Zap className="h-3.5 w-3.5 text-rose-600" />
-            <span>সীমিত সময়ের স্পেশাল ডিসকাউন্ট অফার</span>
+            <span>সীমিত সময়ের স্পেশাল অফার</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
             আপনার সুবিধাজনক প্যাকেজ বেছে নিন
           </h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-            বিকাশ বা নগদ-এ পেমেন্ট করুন 01884700631 নম্বরে • সাথে সাথে অ্যাক্টিভেশন • ফ্রি সাপোর্ট
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+            বিকাশ বা নগদ সেন্ড মানি করুন <strong className="text-emerald-600 font-mono">01884700631</strong> নম্বরে • সাথে সাথে অ্যাক্টিভেশন
           </p>
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             
             {/* Package 1: Monthly (50% Off: 1000 -> 499) */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between hover:shadow-md transition">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs hover:shadow-md transition flex flex-col justify-between dark:border-slate-800 dark:bg-slate-900">
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
-                    ৫০% মেগা ছাড় 🔥
-                  </span>
-                  <span className="text-[10px] font-bold text-slate-500">১ মাসের জন্য</span>
-                </div>
+                <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+                  ৫০% ছাড় 🔥
+                </span>
 
                 <h3 className="mt-3 text-lg font-black text-slate-900 dark:text-white">১ মাস সাবস্ক্রিপশন</h3>
                 
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="font-mono text-3xl font-black text-emerald-700 dark:text-emerald-400">৳৪৯৯</span>
                   <span className="text-xs text-slate-500">/মাস</span>
-                  <span className="font-mono text-xs line-through text-slate-400">রেগুলার ৳১,০০০</span>
+                  <span className="font-mono text-xs line-through text-slate-400">৳১,০০০</span>
                 </div>
 
-                <p className="mt-1.5 text-xs font-bold text-amber-700 dark:text-amber-400">
-                  রেগুলার ১,০০০৳ — ৫০% ছাড়ে মাত্র ৪৯৯৳!
+                <p className="mt-1 text-xs font-bold text-amber-700 dark:text-amber-400">
+                  ৫০% ছাড়ে মাত্র ৪৯৯৳
                 </p>
 
-                <ul className="mt-5 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span>১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span>ফাস্ট বারকোড পিওএস ও প্রিন্টিং</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span>ডিজিটাল বাকি খাতা ও এসএমএস তাগাদা</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span>অফলাইন ক্যাশ কাউন্টার ও ড্রয়ার মেলানো</span>
                   </li>
                 </ul>
@@ -1079,58 +1036,51 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
               <button
                 type="button"
                 onClick={() => setIsBuyModalOpen(true)}
-                className="mt-6 w-full rounded-2xl border-2 border-emerald-600 bg-emerald-50 py-2.5 text-xs font-black text-emerald-900 hover:bg-emerald-100 transition cursor-pointer"
+                className="mt-6 w-full rounded-2xl border-2 border-emerald-600 bg-emerald-50 py-2.5 text-xs font-black text-emerald-900 hover:bg-emerald-100 transition cursor-pointer dark:bg-emerald-950/40 dark:text-emerald-300"
               >
                 ১ মাসের প্যাকেজ কিনুন (৳৪৯৯) ⚡
               </button>
             </div>
 
-            {/* Package 2: Yearly Super Saver (10,000 -> 3,588 = 299/mo) */}
-            <div className="relative rounded-3xl border-2 border-emerald-500 bg-white p-6 shadow-xl dark:border-emerald-500 dark:bg-slate-900 flex flex-col justify-between ring-4 ring-emerald-500/10">
+            {/* Package 2: Yearly Super Saver (Highlighted) */}
+            <div className="relative rounded-3xl border-2 border-emerald-500 bg-white p-6 shadow-xl flex flex-col justify-between ring-4 ring-emerald-500/10 dark:border-emerald-500 dark:bg-slate-900">
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-1 text-[11px] font-black text-white shadow-md">
                 ⭐ সেরা সেভার (মাসে মাত্র ৳২৯৯!)
               </div>
 
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                    বিগ সেভ অফার 🎉
-                  </span>
-                  <span className="text-[10px] font-bold text-emerald-700">পূর্ণ ১ বছর</span>
-                </div>
+                <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                  মেগা সেভ অফার 🎉
+                </span>
 
                 <h3 className="mt-3 text-lg font-black text-slate-900 dark:text-white">১ বছর মেগা সেভার</h3>
                 
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="font-mono text-3xl font-black text-emerald-700 dark:text-emerald-400">৳৩,৫৮৮</span>
                   <span className="text-xs text-slate-500">/বছর</span>
-                  <span className="text-xs font-black text-emerald-700">(মাসে মাত্র ৳২৯৯!)</span>
+                  <span className="text-xs font-black text-emerald-700">(মাসে মাত্র ৳২৯৯)</span>
                 </div>
 
                 <div className="mt-1 flex items-center gap-2 text-xs font-bold text-slate-400">
                   <span className="line-through">রেগুলার ৳১০,০০০</span>
-                  <span className="line-through text-rose-500">১২ মাসে ৪৯৯ করে ৳৫,৯৮৮</span>
+                  <span className="text-rose-600 font-extrabold">বছরে ৳৬,৪১২ সেভ!</span>
                 </div>
 
-                <p className="mt-1 text-xs font-black text-emerald-600 dark:text-emerald-400">
-                  🎉 বছরে এককালীন মোট ৳৬,৪১২ সেভিংস!
-                </p>
-
-                <ul className="mt-5 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
                   <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span>পূর্ণ ১ বছরের আনলিমিটেড লাইসেন্স</span>
                   </li>
                   <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <span>চাল-ডাল ও ঘরের বাজার স্টাইল ফ্রি অনলাইন স্টোর</span>
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <span>ফ্রি অনলাইন বাজার স্টোরফ্রন্ট</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span>ফ্রি সাবডোমেন (*.mudidokanpro.com)</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span>২৪/৭ ভিআইপি হোয়াটসঅ্যাপ সাপোর্ট</span>
                   </li>
                 </ul>
@@ -1145,15 +1095,12 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
               </button>
             </div>
 
-            {/* Package 3: Custom Domain VIP (5,000 first year, 3,500 renewal) */}
-            <div className="rounded-3xl border border-indigo-200 bg-white p-6 shadow-sm dark:border-indigo-900/60 dark:bg-slate-900 flex flex-col justify-between hover:shadow-md transition">
+            {/* Package 3: Custom Domain VIP */}
+            <div className="rounded-3xl border border-indigo-200 bg-white p-6 shadow-xs hover:shadow-md transition flex flex-col justify-between dark:border-indigo-900/60 dark:bg-slate-900">
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-black text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                    👑 কাস্টম ডোমেন ভিআইপি
-                  </span>
-                  <span className="text-[10px] font-bold text-indigo-600">নিজস্ব .com ডোমেন</span>
-                </div>
+                <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-black text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                  👑 কাস্টম ডোমেন ভিআইপি
+                </span>
 
                 <h3 className="mt-3 text-lg font-black text-slate-900 dark:text-white">হাই-স্পিড ডোমেন + ক্লাউড</h3>
                 
@@ -1167,26 +1114,18 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                   রিনিউয়াল ফি: মাত্র ৳৩,৫০০ / বছর
                 </p>
 
-                <p className="mt-1 text-xs text-indigo-900 dark:text-indigo-300 leading-snug">
-                  💡 নিজস্ব .com ব্র্যান্ডে ঘরের বাজার ও চাল-ডাল ধাঁচের ফুল ই-কমার্স ও ডেলিভারি অটোমেশন।
-                </p>
-
                 <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
                   <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                    <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
                     <span>নিজস্ব .com ডোমেন (যেমন: yourshop.com)</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
                     <span>হাই-স্পিড ডেডিকেটেড ক্লাউড হোস্টিং</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <Check className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
                     <span>সম্পূর্ণ অটোমেটিক ক্লাউড ব্যাকআপ</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-indigo-600 shrink-0" />
-                    <span>ব্যক্তিগত ট্রেনিং ও ভিআইপি অনবোর্ডিং</span>
                   </li>
                 </ul>
               </div>
@@ -1196,7 +1135,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                 onClick={() => setIsBuyModalOpen(true)}
                 className="mt-6 w-full rounded-2xl bg-indigo-600 hover:bg-indigo-700 py-2.5 text-xs font-black text-white shadow-md shadow-indigo-600/30 transition cursor-pointer"
               >
-                কাস্টম ডোমেন ভিআইপি কিনুন (৳৫,০০০) 👑
+                কাস্টম ডোমেন ভিআইপি (৳৫,০০০) 👑
               </button>
             </div>
 
@@ -1205,11 +1144,11 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-slate-200 bg-white py-6 px-4 dark:border-slate-800 dark:bg-slate-950 text-center text-xs text-slate-500">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} Mudir Dokan Pro — Smart Grocery Business Solution.</p>
-          <div className="flex items-center gap-4 text-xs font-bold text-slate-600 dark:text-slate-400">
-            <span>হেল্পলাইন: 01884700631</span>
+      <footer className="border-t border-slate-200/80 bg-white py-6 px-4 dark:border-slate-800 dark:bg-slate-950 text-center text-xs text-slate-500">
+        <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© {new Date().getFullYear()} Mudir Dokan Pro — Smart Grocery Solution.</p>
+          <div className="flex items-center gap-4 font-bold text-slate-600 dark:text-slate-400">
+            <span>হোয়াটসঅ্যাপ হেল্পলাইন: 01884700631</span>
             <button type="button" onClick={onOpenPortal} className="hover:text-emerald-600 cursor-pointer">
               কাস্টমার পোর্টাল
             </button>

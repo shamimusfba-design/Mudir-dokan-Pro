@@ -251,7 +251,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "ACI Pure",
       "nameBn": "এসিআই পিওর",
       "company": "ACI Limited",
-      "logoUrl": "/catalog/brands/aci-pure.svg",
+      "logoUrl": "/catalog/brands/aci-pure.png",
       "logoSource": "Official ACI Pure Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#2563EB"
@@ -404,7 +404,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Closeup",
       "nameBn": "ক্লোজআপ",
       "company": "Unilever Bangladesh",
-      "logoUrl": "/catalog/brands/closeup.svg",
+      "logoUrl": "/catalog/brands/closeup.png",
       "logoSource": "Official Closeup Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -422,7 +422,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Rin",
       "nameBn": "রিন",
       "company": "Unilever Bangladesh",
-      "logoUrl": "/catalog/brands/rin.svg",
+      "logoUrl": "/catalog/brands/rin.png",
       "logoSource": "Official Rin Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#2563EB"
@@ -431,7 +431,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Wheel",
       "nameBn": "হুইল",
       "company": "Unilever Bangladesh",
-      "logoUrl": "/catalog/brands/wheel.svg",
+      "logoUrl": "/catalog/brands/wheel.png",
       "logoSource": "Official Wheel Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#0284C7"
@@ -440,7 +440,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Vim",
       "nameBn": "ভিম",
       "company": "Unilever Bangladesh",
-      "logoUrl": "/catalog/brands/vim.svg",
+      "logoUrl": "/catalog/brands/vim.png",
       "logoSource": "Official Vim Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#EAB308"
@@ -467,7 +467,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Danish",
       "nameBn": "ড্যানিশ",
       "company": "Partex Star Group",
-      "logoUrl": "/catalog/brands/danish.svg",
+      "logoUrl": "/catalog/brands/danish.png",
       "logoSource": "Official Danish Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#0284C7"
@@ -476,7 +476,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Igloo",
       "nameBn": "ইগলু",
       "company": "Abdul Monem Limited",
-      "logoUrl": "/catalog/brands/igloo.svg",
+      "logoUrl": "/catalog/brands/igloo.png",
       "logoSource": "Official Igloo Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#0891B2"
@@ -494,7 +494,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Dekko",
       "nameBn": "ডেক্কো",
       "company": "Dekko Foods",
-      "logoUrl": "/catalog/brands/dekko.svg",
+      "logoUrl": "/catalog/brands/dekko.png",
       "logoSource": "Official Dekko Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#7C3AED"
@@ -521,7 +521,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Mojo",
       "nameBn": "মোজো",
       "company": "Akij Food & Beverage",
-      "logoUrl": "/catalog/brands/mojo.svg",
+      "logoUrl": "/catalog/brands/mojo.png",
       "logoSource": "Official Mojo Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#E11D48"
@@ -530,7 +530,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Dano",
       "nameBn": "ডানো",
       "company": "Arla Foods Bangladesh",
-      "logoUrl": "/catalog/brands/dano.svg",
+      "logoUrl": "/catalog/brands/dano.png",
       "logoSource": "Official Dano Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#2563EB"
@@ -539,7 +539,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Diploma",
       "nameBn": "ডিপ্লোমা",
       "company": "New Zealand Dairy",
-      "logoUrl": "/catalog/brands/diploma.svg",
+      "logoUrl": "/catalog/brands/diploma.png",
       "logoSource": "Official Diploma Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#059669"
@@ -548,7 +548,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Marks",
       "nameBn": "মার্কস",
       "company": "Abul Khair Group",
-      "logoUrl": "/catalog/brands/marks.svg",
+      "logoUrl": "/catalog/brands/marks.png",
       "logoSource": "Official Marks Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -566,7 +566,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Finlay",
       "nameBn": "ফিনলে",
       "company": "The Consolidated Tea",
-      "logoUrl": "/catalog/brands/finlay.svg",
+      "logoUrl": "/catalog/brands/finlay.png",
       "logoSource": "Official Finlay Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#B45309"
@@ -575,7 +575,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Taaza",
       "nameBn": "তাজা",
       "company": "Unilever Bangladesh",
-      "logoUrl": "/catalog/brands/taaza.svg",
+      "logoUrl": "/catalog/brands/taaza.png",
       "logoSource": "Official Taaza Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#15803D"
@@ -584,7 +584,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Haque",
       "nameBn": "হক",
       "company": "Haque Food Industries",
-      "logoUrl": "/catalog/brands/haque.svg",
+      "logoUrl": "/catalog/brands/haque.png",
       "logoSource": "Official Haque Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -602,7 +602,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Savlon",
       "nameBn": "স্যাভলন",
       "company": "ACI Consumer Brands",
-      "logoUrl": "/catalog/brands/savlon.svg",
+      "logoUrl": "/catalog/brands/savlon.png",
       "logoSource": "Official Savlon Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#059669"
@@ -629,7 +629,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Harpic",
       "nameBn": "হারপিক",
       "company": "Reckitt Benckiser",
-      "logoUrl": "/catalog/brands/harpic.svg",
+      "logoUrl": "/catalog/brands/harpic.png",
       "logoSource": "Official Harpic Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#1E40AF"
@@ -647,7 +647,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Lizol",
       "nameBn": "লাইজল",
       "company": "Reckitt Benckiser",
-      "logoUrl": "/catalog/brands/lizol.svg",
+      "logoUrl": "/catalog/brands/lizol.png",
       "logoSource": "Official Lizol Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#EA580C"
@@ -656,7 +656,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Good Knight",
       "nameBn": "গুড নাইট",
       "company": "Godrej Bangladesh",
-      "logoUrl": "/catalog/brands/good-knight.svg",
+      "logoUrl": "/catalog/brands/good-knight.png",
       "logoSource": "Official Good Knight Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -665,7 +665,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Mortein",
       "nameBn": "মর্টিন",
       "company": "Reckitt Benckiser",
-      "logoUrl": "/catalog/brands/mortein.svg",
+      "logoUrl": "/catalog/brands/mortein.png",
       "logoSource": "Official Mortein Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -674,7 +674,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Hit",
       "nameBn": "হিট",
       "company": "Godrej Bangladesh",
-      "logoUrl": "/catalog/brands/hit.svg",
+      "logoUrl": "/catalog/brands/hit.png",
       "logoSource": "Official Hit Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -683,7 +683,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "SMC",
       "nameBn": "এসএমসি",
       "company": "Social Marketing Company",
-      "logoUrl": "/catalog/brands/smc.svg",
+      "logoUrl": "/catalog/brands/smc.png",
       "logoSource": "Official SMC Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#2563EB"
@@ -692,7 +692,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Matador",
       "nameBn": "মেটাডোর",
       "company": "Matador Group",
-      "logoUrl": "/catalog/brands/matador.svg",
+      "logoUrl": "/catalog/brands/matador.png",
       "logoSource": "Official Matador Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#0284C7"
@@ -710,7 +710,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Aarong Dairy",
       "nameBn": "আড়ং ডেইরি",
       "company": "BRAC Enterprises",
-      "logoUrl": "/catalog/brands/aarong-dairy.svg",
+      "logoUrl": "/catalog/brands/aarong-dairy.png",
       "logoSource": "Official Aarong Dairy Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -755,7 +755,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Sensodyne",
       "nameBn": "সেনসোডাইন",
       "company": "Haleon",
-      "logoUrl": "/catalog/brands/sensodyne.svg",
+      "logoUrl": "/catalog/brands/sensodyne.png",
       "logoSource": "Official Sensodyne Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#0284C7"
@@ -764,7 +764,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Meril",
       "nameBn": "মেরিল",
       "company": "Square Toiletries",
-      "logoUrl": "/catalog/brands/meril.svg",
+      "logoUrl": "/catalog/brands/meril.png",
       "logoSource": "Official Meril Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#059669"
@@ -773,7 +773,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Parachute",
       "nameBn": "প্যারাসুট",
       "company": "Marico Bangladesh",
-      "logoUrl": "/catalog/brands/parachute.svg",
+      "logoUrl": "/catalog/brands/parachute.png",
       "logoSource": "Official Parachute Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#0284C7"
@@ -782,7 +782,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Jui",
       "nameBn": "জুঁই",
       "company": "Square Toiletries",
-      "logoUrl": "/catalog/brands/jui.svg",
+      "logoUrl": "/catalog/brands/jui.png",
       "logoSource": "Official Jui Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#047857"
@@ -791,7 +791,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Kumarika",
       "nameBn": "কুমারিকা",
       "company": "Hemas Consumer",
-      "logoUrl": "/catalog/brands/kumarika.svg",
+      "logoUrl": "/catalog/brands/kumarika.png",
       "logoSource": "Official Kumarika Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#15803D"
@@ -800,7 +800,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Tibet",
       "nameBn": "তিব্বত",
       "company": "Kohinoor Chemical",
-      "logoUrl": "/catalog/brands/tibet.svg",
+      "logoUrl": "/catalog/brands/tibet.png",
       "logoSource": "Official Tibet Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#0284C7"
@@ -809,7 +809,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Sandalina",
       "nameBn": "স্যান্ডালিনা",
       "company": "Kohinoor Chemical",
-      "logoUrl": "/catalog/brands/sandalina.svg",
+      "logoUrl": "/catalog/brands/sandalina.png",
       "logoSource": "Official Sandalina Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#D97706"
@@ -818,7 +818,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "All Time",
       "nameBn": "অল টাইম",
       "company": "PRAN Foods",
-      "logoUrl": "/catalog/brands/all-time.svg",
+      "logoUrl": "/catalog/brands/all-time.png",
       "logoSource": "Official All Time Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#EA580C"
@@ -827,7 +827,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Dan Cake",
       "nameBn": "ড্যান কেক",
       "company": "Dan Cake Bangladesh",
-      "logoUrl": "/catalog/brands/dan-cake.svg",
+      "logoUrl": "/catalog/brands/dan-cake.png",
       "logoSource": "Official Dan Cake Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -845,7 +845,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Ahmed",
       "nameBn": "আহমেদ",
       "company": "Ahmed Food Products",
-      "logoUrl": "/catalog/brands/ahmed.svg",
+      "logoUrl": "/catalog/brands/ahmed.png",
       "logoSource": "Official Ahmed Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -854,7 +854,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "BD Foods",
       "nameBn": "বিডি ফুডস",
       "company": "BD Foods Limited",
-      "logoUrl": "/catalog/brands/bd-foods.svg",
+      "logoUrl": "/catalog/brands/bd-foods.png",
       "logoSource": "Official BD Foods Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#15803D"
@@ -863,7 +863,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Dragon",
       "nameBn": "ড্রাগন",
       "company": "Dragon Matches",
-      "logoUrl": "/catalog/brands/dragon.svg",
+      "logoUrl": "/catalog/brands/dragon.png",
       "logoSource": "Official Dragon Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -872,7 +872,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Supermom",
       "nameBn": "সুপারমম",
       "company": "Square Toiletries",
-      "logoUrl": "/catalog/brands/supermom.svg",
+      "logoUrl": "/catalog/brands/supermom.png",
       "logoSource": "Official Supermom Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#EC4899"
@@ -881,7 +881,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Huggies",
       "nameBn": "হাগিস",
       "company": "Kimberly-Clark",
-      "logoUrl": "/catalog/brands/huggies.svg",
+      "logoUrl": "/catalog/brands/huggies.png",
       "logoSource": "Official Huggies Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"
@@ -890,7 +890,7 @@ export const CLIENT_BD_BRANDS = [
       "name": "Napa",
       "nameBn": "নাপা",
       "company": "Beximco Pharmaceuticals",
-      "logoUrl": "/catalog/brands/napa.svg",
+      "logoUrl": "/catalog/brands/napa.png",
       "logoSource": "Official Napa Brand Mark",
       "logoStatus": "VERIFIED",
       "brandColor": "#DC2626"

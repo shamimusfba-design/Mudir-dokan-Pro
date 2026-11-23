@@ -1,25 +1,25 @@
 sku,product_name,product_name_bn,brand,category,variant,image_path,selling_price,cost_price,base_unit,status
 MDK-0001,ACI Pure Miniket Rice,ACI Pure Miniket Rice,ACI Pure,"Rice, Dal & Grains",1 kg,/images/products/MDK-0001_miniket_rice_1_kg.webp,85.00,71.40,Kg,VERIFIED
 MDK-0002,ACI Pure Miniket Rice,ACI Pure Miniket Rice,ACI Pure,"Rice, Dal & Grains",5 kg,/images/products/MDK-0002_loose_local_miniket_rice_5_kg.webp,410.00,344.40,Kg,VERIFIED
-MDK-0003,ACI Pure Nazirshail Rice,ACI Pure Nazirshail Rice,ACI Pure,"Rice, Dal & Grains",1 kg,/images/products/MDK-0003_miniket_rice_25_kg.webp,90.00,75.60,Kg,VERIFIED
-MDK-0004,ACI Pure Nazirshail Rice,ACI Pure Nazirshail Rice,ACI Pure,"Rice, Dal & Grains",5 kg,/images/products/MDK-0004_nazirshail_rice_1_kg.webp,440.00,369.60,Kg,VERIFIED
+MDK-0003,ACI Pure Nazirshail Rice,ACI Pure Nazirshail Rice,ACI Pure,"Rice, Dal & Grains",1 kg,/images/products/MDK-0003_aci_pure_nazirshail_rice.webp,90.00,75.60,Kg,VERIFIED
+MDK-0004,ACI Pure Nazirshail Rice,ACI Pure Nazirshail Rice,ACI Pure,"Rice, Dal & Grains",5 kg,/images/products/MDK-0004_aci_pure_nazirshail_rice.webp,440.00,369.60,Kg,VERIFIED
 MDK-0005,ACI Pure Chinigura Aromatic Rice,ACI Pure Chinigura Aromatic Rice,ACI Pure,"Rice, Dal & Grains",1 kg,/images/products/MDK-0005_loose_local_nazirshail_rice_5_kg.webp,160.00,134.40,Kg,VERIFIED
-MDK-0006,ACI Pure Chinigura Aromatic Rice,ACI Pure Chinigura Aromatic Rice,ACI Pure,"Rice, Dal & Grains",2 kg,/images/products/MDK-0006_nazirshail_rice_25_kg.webp,315.00,264.60,Kg,VERIFIED
-MDK-0007,Teer Premium Miniket Rice,Teer Premium Miniket Rice,Teer,"Rice, Dal & Grains",5 kg,/images/products/MDK-0007_paijam_rice_1_kg.webp,415.00,348.60,Kg,VERIFIED
-MDK-0008,Teer Premium Nazirshail Rice,Teer Premium Nazirshail Rice,Teer,"Rice, Dal & Grains",5 kg,/images/products/MDK-0008_paijam_rice_5_kg.webp,450.00,378.00,Kg,VERIFIED
+MDK-0006,ACI Pure Chinigura Aromatic Rice,ACI Pure Chinigura Aromatic Rice,ACI Pure,"Rice, Dal & Grains",2 kg,/images/products/MDK-0006_aci_pure_chinigura_aromatic_rice.webp,315.00,264.60,Kg,VERIFIED
+MDK-0007,Teer Premium Miniket Rice,Teer Premium Miniket Rice,Teer,"Rice, Dal & Grains",5 kg,/images/products/MDK-0007_teer_premium_miniket_rice.webp,415.00,348.60,Kg,VERIFIED
+MDK-0008,Teer Premium Nazirshail Rice,Teer Premium Nazirshail Rice,Teer,"Rice, Dal & Grains",5 kg,/images/products/MDK-0008_teer_premium_nazirshail_rice.webp,450.00,378.00,Kg,VERIFIED
 MDK-0009,Teer Chinigura Aromatic Rice,Teer Chinigura Aromatic Rice,Teer,"Rice, Dal & Grains",1 kg,/images/products/MDK-0009_paijam_rice_25_kg.webp,165.00,138.60,Kg,VERIFIED
-MDK-0010,Chashi Aromatic Chinigura Rice,Chashi Aromatic Chinigura Rice,Chashi,"Rice, Dal & Grains",1 kg,/images/products/MDK-0010_atash_rice_1_kg.webp,170.00,142.80,Kg,VERIFIED
-MDK-0011,Chashi Aromatic Chinigura Rice,Chashi Aromatic Chinigura Rice,Chashi,"Rice, Dal & Grains",2 kg,/images/products/MDK-0011_atash_rice_5_kg.webp,335.00,281.40,Kg,VERIFIED
+MDK-0010,Chashi Aromatic Chinigura Rice,Chashi Aromatic Chinigura Rice,Chashi,"Rice, Dal & Grains",1 kg,/images/products/MDK-0010_chashi_aromatic_chinigura_rice.webp,170.00,142.80,Kg,VERIFIED
+MDK-0011,Chashi Aromatic Chinigura Rice,Chashi Aromatic Chinigura Rice,Chashi,"Rice, Dal & Grains",2 kg,/images/products/MDK-0011_chashi_aromatic_chinigura_rice.webp,335.00,281.40,Kg,VERIFIED
 MDK-0012,Chashi Kalijira Rice,Chashi Kalijira Rice,Chashi,"Rice, Dal & Grains",1 kg,/images/products/MDK-0012_loose_local_chinigura_rice_1_kg.webp,180.00,151.20,Kg,VERIFIED
 MDK-0013,PRAN Premium Nazirshail Rice,PRAN Premium Nazirshail Rice,PRAN,"Rice, Dal & Grains",5 kg,/images/products/MDK-0013_loose_local_chinigura_rice_5_kg.webp,430.00,361.20,Kg,VERIFIED
-MDK-0014,PRAN Chinigura Rice,PRAN Chinigura Rice,PRAN,"Rice, Dal & Grains",1 kg,/images/products/MDK-0014_brown_rice_1_kg.webp,160.00,134.40,Kg,VERIFIED
-MDK-0015,Fresh Miniket Rice,Fresh Miniket Rice,Fresh,"Rice, Dal & Grains",5 kg,/images/products/MDK-0015_brown_rice_5_kg.webp,410.00,344.40,Kg,VERIFIED
-MDK-0016,Fresh Nazirshail Rice,Fresh Nazirshail Rice,Fresh,"Rice, Dal & Grains",5 kg,/images/products/MDK-0016_loose_local_wheat_1_kg.webp,440.00,369.60,Kg,VERIFIED
-MDK-0017,Fresh Chinigura Rice,Fresh Chinigura Rice,Fresh,"Rice, Dal & Grains",1 kg,/images/products/MDK-0017_loose_local_wheat_5_kg.webp,165.00,138.60,Kg,VERIFIED
+MDK-0014,PRAN Chinigura Rice,PRAN Chinigura Rice,PRAN,"Rice, Dal & Grains",1 kg,/images/products/MDK-0014_pran_chinigura_rice.webp,160.00,134.40,Kg,VERIFIED
+MDK-0015,Fresh Miniket Rice,Fresh Miniket Rice,Fresh,"Rice, Dal & Grains",5 kg,/images/products/MDK-0015_fresh_miniket_rice.webp,410.00,344.40,Kg,VERIFIED
+MDK-0016,Fresh Nazirshail Rice,Fresh Nazirshail Rice,Fresh,"Rice, Dal & Grains",5 kg,/images/products/MDK-0016_fresh_nazirshail_rice.webp,440.00,369.60,Kg,VERIFIED
+MDK-0017,Fresh Chinigura Rice,Fresh Chinigura Rice,Fresh,"Rice, Dal & Grains",1 kg,/images/products/MDK-0017_fresh_chinigura_rice.webp,165.00,138.60,Kg,VERIFIED
 MDK-0018,Fortune Everyday Basmati Rice,Fortune Everyday Basmati Rice,Loose / Local,"Rice, Dal & Grains",1 kg,/images/products/MDK-0018_loose_local_flattened_rice_chira_500_g.webp,310.00,260.40,Kg,VERIFIED
 MDK-0019,Fortune Biryani Special Basmati Rice,Fortune Biryani Special Basmati Rice,Loose / Local,"Rice, Dal & Grains",1 kg,/images/products/MDK-0019_flattened_rice_chira_1_kg.webp,380.00,319.20,Kg,VERIFIED
 MDK-0020,Daawat Rozana Basmati Rice,Daawat Rozana Basmati Rice,Loose / Local,"Rice, Dal & Grains",1 kg,/images/products/MDK-0020_loose_local_puffed_rice_muri_500_g.webp,340.00,285.60,Kg,VERIFIED
-MDK-0021,Daawat Super Basmati Rice,Daawat Super Basmati Rice,Loose / Local,"Rice, Dal & Grains",1 kg,/images/products/MDK-0021_puffed_rice_muri_1_kg.webp,420.00,352.80,Kg,VERIFIED
+MDK-0021,Daawat Super Basmati Rice,Daawat Super Basmati Rice,Loose / Local,"Rice, Dal & Grains",1 kg,/images/products/MDK-0021_daawat_super_basmati_rice.webp,420.00,352.80,Kg,VERIFIED
 MDK-0022,Kohinoor Traditional Basmati Rice,Kohinoor Traditional Basmati Rice,Loose / Local,"Rice, Dal & Grains",1 kg,/images/products/MDK-0022_loose_local_lentil_masoor_dal_500_g.webp,450.00,378.00,Kg,VERIFIED
 MDK-0023,Miniket Loose - Regular,খোলা মিনিকেট চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ২৫ কেজি বস্তা,/images/products/MDK-0023_loose_local_lentil_masoor_dal_1_kg.webp,75.00,63.00,Kg,VERIFIED
 MDK-0024,Super Miniket Premium,খোলা সুপার মিনিকেট চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0024_loose_local_chickpea_boot_500_g.webp,80.00,67.20,Kg,VERIFIED
@@ -28,8 +28,8 @@ MDK-0026,Nazirshail Extra Long,খোলা প্রিমিয়াম ন�
 MDK-0027,Paijam Loose,খোলা পাইজাম চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0027_loose_local_moong_dal_1_kg.webp,60.00,50.40,Kg,VERIFIED
 MDK-0028,BR-28 Loose,খোলা বিআর-২৮ চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0028_loose_local_motor_dal_500_g.webp,62.00,52.08,Kg,VERIFIED
 MDK-0029,BR-29 Loose,খোলা বিআর-২৯ চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0029_motor_dal_1_kg.webp,58.00,48.72,Kg,VERIFIED
-MDK-0030,Swarna Rice - Coarse,খোলা স্বর্ণা চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0030_loose_local_besan_500_g.webp,52.00,43.68,Kg,VERIFIED
-MDK-0031,Atash Rice,খোলা আটাশ চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0031_loose_local_besan_1_kg.webp,62.00,52.08,Kg,VERIFIED
+MDK-0030,Swarna Rice - Coarse,খোলা স্বর্ণা চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0030_swarna_rice_coarse.webp,52.00,43.68,Kg,VERIFIED
+MDK-0031,Atash Rice,খোলা আটাশ চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0031_atash_rice.webp,62.00,52.08,Kg,VERIFIED
 MDK-0032,Kataribhog Loose,খোলা কাটারিভোগ চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি / ২৫ কেজি বস্তা,/images/products/MDK-0032_loose_local_wheat_flour_atta_1_kg.webp,85.00,71.40,Kg,VERIFIED
 MDK-0033,Basmati Loose,খোলা বাসমতী চাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0033_loose_local_wheat_flour_atta_2_kg.webp,250.00,210.00,Kg,VERIFIED
 MDK-0034,Chinigura Loose,খোলা পোলাও চাল / চিনিগুঁড়া,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0034_loose_local_maida_1_kg.webp,140.00,117.60,Kg,VERIFIED
@@ -41,43 +41,43 @@ MDK-0039,Teer Deshi Mosur Dal,Teer Deshi Mosur Dal,Teer,"Rice, Dal & Grains",1 k
 MDK-0040,Fresh Deshi Mosur Dal,Fresh Deshi Mosur Dal,Fresh,"Rice, Dal & Grains",1 kg,/images/products/MDK-0040_soybean_oil_5_l.webp,175.00,147.00,Kg,VERIFIED
 MDK-0041,PRAN Premium Mung Dal,PRAN Premium Mung Dal,PRAN,"Rice, Dal & Grains",500 g,/images/products/MDK-0041_soybean_oil_1_l.webp,95.00,79.80,Piece,VERIFIED
 MDK-0042,PRAN Premium Mung Dal,PRAN Premium Mung Dal,PRAN,"Rice, Dal & Grains",1 kg,/images/products/MDK-0042_fresh_soybean_oil_2_l.webp,185.00,155.40,Kg,VERIFIED
-MDK-0043,Chashi Special Mung Dal,Chashi Special Mung Dal,Chashi,"Rice, Dal & Grains",500 g,/images/products/MDK-0043_fresh_soybean_oil_5_l.webp,100.00,84.00,Piece,VERIFIED
+MDK-0043,Chashi Special Mung Dal,Chashi Special Mung Dal,Chashi,"Rice, Dal & Grains",500 g,/images/products/MDK-0043_chashi_special_mung_dal.webp,100.00,84.00,Piece,VERIFIED
 MDK-0044,চিকন দানা,খোলা মসুর ডাল দেশি,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0044_rupchanda_soybean_oil_1_l.webp,150.00,126.00,Kg,VERIFIED
 MDK-0045,কানাডিয়ান / অস্ট্রেলিয়ান,খোলা মসুর ডাল মোটা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0045_rupchanda_soybean_oil_2_l.webp,110.00,92.40,Kg,VERIFIED
 MDK-0046,ভাজা সোনালী,খোলা মুগ ডাল ভাজা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0046_rupchanda_soybean_oil_5_l.webp,160.00,134.40,Kg,VERIFIED
-MDK-0047,খোলা মুগ ডাল কাঁচা,খোলা মুগ ডাল কাঁচা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0047_mustard_oil_250_ml.webp,150.00,126.00,Kg,VERIFIED
+MDK-0047,খোলা মুগ ডাল কাঁচা,খোলা মুগ ডাল কাঁচা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0047_loose_moong_dal_raw.webp,150.00,126.00,Kg,VERIFIED
 MDK-0048,Khesari Dal,খোলা খেসারি ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0048_mustard_oil_500_ml.webp,90.00,75.60,Kg,VERIFIED
-MDK-0049,Chhola Dal / Chana Dal,খোলা ছোলার ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0049_mustard_oil_1_l.webp,110.00,92.40,Kg,VERIFIED
-MDK-0050,Whole Chickpeas / Chhola Boot,খোলা গোটা ছোলা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0050_mustard_oil_loose_250_ml.webp,100.00,84.00,Kg,VERIFIED
+MDK-0049,Chhola Dal / Chana Dal,খোলা ছোলার ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0049_chhola_dal_chana_dal.webp,110.00,92.40,Kg,VERIFIED
+MDK-0050,Whole Chickpeas / Chhola Boot,খোলা গোটা ছোলা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0050_whole_chickpeas_chhola_boot.webp,100.00,84.00,Kg,VERIFIED
 MDK-0051,Split Bengal Gram,খোলা বুটের ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0051_loose_local_mustard_oil_loose_500_ml.webp,105.00,88.20,Kg,VERIFIED
-MDK-0052,Mashkalai Dal,খোলা মাষকলাই ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0052_loose_local_mustard_oil_loose_1_l.webp,180.00,151.20,Kg,VERIFIED
-MDK-0053,Green Peas Dal,খোলা সবুজ মটর ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0053_loose_local_white_sugar_1_kg.webp,75.00,63.00,Kg,VERIFIED
+MDK-0052,Mashkalai Dal,খোলা মাষকলাই ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0052_mashkalai_dal.webp,180.00,151.20,Kg,VERIFIED
+MDK-0053,Green Peas Dal,খোলা সবুজ মটর ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0053_green_peas_dal.webp,75.00,63.00,Kg,VERIFIED
 MDK-0054,White Peas / Dabli,খোলা ডাবলি মটর,Hit,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0054_loose_local_white_sugar_2_kg.webp,70.00,58.80,Kg,VERIFIED
-MDK-0055,Toor Dal / Arhar Dal,খোলা অড়হর ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0055_loose_local_brown_sugar_1_kg.webp,200.00,168.00,Kg,VERIFIED
-MDK-0056,Red Kidney Beans,খোলা রাজমা,Loose / Local,"Rice, Dal & Grains",৫০০ গ্রাম / ১ কেজি,/images/products/MDK-0056_refined_sugar_1_kg.webp,220.00,184.80,Kg,VERIFIED
-MDK-0057,Raw Peanuts,খোলা কাঁচা চিনাবাদাম,Loose / Local,"Rice, Dal & Grains",৫০০ গ্রাম / ১ কেজি,/images/products/MDK-0057_refined_sugar_2_kg.webp,160.00,134.40,Kg,VERIFIED
+MDK-0055,Toor Dal / Arhar Dal,খোলা অড়হর ডাল,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0055_toor_dal_arhar_dal.webp,200.00,168.00,Kg,VERIFIED
+MDK-0056,Red Kidney Beans,খোলা রাজমা,Loose / Local,"Rice, Dal & Grains",৫০০ গ্রাম / ১ কেজি,/images/products/MDK-0056_red_kidney_beans.webp,220.00,184.80,Kg,VERIFIED
+MDK-0057,Raw Peanuts,খোলা কাঁচা চিনাবাদাম,Loose / Local,"Rice, Dal & Grains",৫০০ গ্রাম / ১ কেজি,/images/products/MDK-0057_raw_peanuts.webp,160.00,134.40,Kg,VERIFIED
 MDK-0058,Corn Kernels,খোলা ভুট্টা দানা / পপকর্ন,Loose / Local,"Rice, Dal & Grains",৫০০ গ্রাম,/images/products/MDK-0058_salt_1_kg.webp,80.00,67.20,Kg,VERIFIED
 MDK-0059,Whole Wheat Grain,খোলা গম,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0059_salt_500_g.webp,50.00,42.00,Kg,VERIFIED
 MDK-0060,Barley Grain,খোলা যব / বার্লি,Loose / Local,"Rice, Dal & Grains",৫০০ গ্রাম,/images/products/MDK-0060_aci_pure_salt_1_kg.webp,70.00,58.80,Kg,VERIFIED
 MDK-0061,PRAN Deshi Muri,মুড়ি,PRAN,"Rice, Dal & Grains",500 g,/images/products/MDK-0061_aci_pure_salt_500_g.webp,50.00,42.00,Piece,VERIFIED
 MDK-0062,Fresh Muri,Fresh Muri,Fresh,"Rice, Dal & Grains",500 g,/images/products/MDK-0062_radhuni_turmeric_powder_100_g.webp,50.00,42.00,Piece,VERIFIED
 MDK-0063,ACI Pure Premium Muri,ACI Pure Premium Muri,ACI Pure,"Rice, Dal & Grains",500 g,/images/products/MDK-0063_radhuni_turmeric_powder_200_g.webp,55.00,46.20,Piece,VERIFIED
-MDK-0064,Golden Grain Lal Chira,লাল চিড়া,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0064_radhuni_chili_powder_100_g.webp,60.00,50.40,Piece,VERIFIED
+MDK-0064,Golden Grain Lal Chira,লাল চিড়া,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0064_golden_grain_lal_chira.webp,60.00,50.40,Piece,VERIFIED
 MDK-0065,PRAN White Chira,সাদা চিড়া,PRAN,"Rice, Dal & Grains",500 g,/images/products/MDK-0065_radhuni_chili_powder_200_g.webp,55.00,46.20,Piece,VERIFIED
 MDK-0066,Chashi White Chira,Chashi White Chira,Chashi,"Rice, Dal & Grains",500 g,/images/products/MDK-0066_radhuni_coriander_powder_100_g.webp,60.00,50.40,Piece,VERIFIED
 MDK-0067,Hand Roasted Muri,খোলা দেশি হাতে ভাজা মুড়ি,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0067_radhuni_coriander_powder_200_g.webp,80.00,67.20,Kg,VERIFIED
 MDK-0068,খোলা সাদা সাধারণ মুড়ি,খোলা সাদা সাধারণ মুড়ি,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0068_radhuni_cumin_powder_50_g.webp,70.00,58.80,Kg,VERIFIED
 MDK-0069,খোলা পাতলা সাদা চিড়া,খোলা পাতলা সাদা চিড়া,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0069_radhuni_cumin_powder_100_g.webp,80.00,67.20,Kg,VERIFIED
-MDK-0070,খোলা মোটা লাল চিড়া,খোলা মোটা লাল চিড়া,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0070_radhuni_garam_masala_50_g.webp,90.00,75.60,Kg,VERIFIED
-MDK-0071,Puffed Paddy / Khoi,খোলা ধানের খই,Loose / Local,"Rice, Dal & Grains",২৫০ গ্রাম,/images/products/MDK-0071_radhuni_garam_masala_100_g.webp,50.00,42.00,Kg,VERIFIED
-MDK-0072,Quaker Oats Pouch,কোয়েকার ওটস,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0072_radhuni_chicken_curry_masala_50_g.webp,320.00,268.80,Piece,VERIFIED
-MDK-0073,Kellogg's Oats,Kellogg's Oats,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0073_radhuni_chicken_curry_masala_100_g.webp,340.00,285.60,Piece,VERIFIED
-MDK-0074,Sabudana,সাগু দানা / সাবুদানা,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0074_radhuni_fish_curry_masala_50_g.webp,65.00,54.60,Piece,VERIFIED
-MDK-0075,খোলা সাবুদানা বড় দানা,খোলা সাবুদানা বড় দানা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0075_radhuni_fish_curry_masala_100_g.webp,120.00,100.80,Kg,VERIFIED
-MDK-0076,খোলা সাবুদানা ছোট দানা,খোলা সাবুদানা ছোট দানা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0076_radhuni_biryani_masala_40_g.webp,110.00,92.40,Kg,VERIFIED
-MDK-0077,Chia Seeds,চিয়া সিডস,Loose / Local,"Rice, Dal & Grains",200 g,/images/products/MDK-0077_radhuni_biryani_masala_80_g.webp,180.00,151.20,Piece,VERIFIED
-MDK-0078,Flax Seeds,তিসি বীজ,Loose / Local,"Rice, Dal & Grains",250 g,/images/products/MDK-0078_radhuni_kacchi_biryani_masala_40_g.webp,80.00,67.20,Piece,VERIFIED
-MDK-0079,Basil Seeds,তোকমা দানা,Loose / Local,"Rice, Dal & Grains",100 g,/images/products/MDK-0079_radhuni_kacchi_biryani_masala_80_g.webp,60.00,50.40,Piece,VERIFIED
+MDK-0070,খোলা মোটা লাল চিড়া,খোলা মোটা লাল চিড়া,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0070_loose.webp,90.00,75.60,Kg,VERIFIED
+MDK-0071,Puffed Paddy / Khoi,খোলা ধানের খই,Loose / Local,"Rice, Dal & Grains",২৫০ গ্রাম,/images/products/MDK-0071_puffed_paddy_khoi.webp,50.00,42.00,Kg,VERIFIED
+MDK-0072,Quaker Oats Pouch,কোয়েকার ওটস,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0072_quaker_oats_pouch.webp,320.00,268.80,Piece,VERIFIED
+MDK-0073,Kellogg's Oats,Kellogg's Oats,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0073_kellogg_s_oats.webp,340.00,285.60,Piece,VERIFIED
+MDK-0074,Sabudana,সাগু দানা / সাবুদানা,Loose / Local,"Rice, Dal & Grains",500 g,/images/products/MDK-0074_sabudana.webp,65.00,54.60,Piece,VERIFIED
+MDK-0075,খোলা সাবুদানা বড় দানা,খোলা সাবুদানা বড় দানা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0075_loose.webp,120.00,100.80,Kg,VERIFIED
+MDK-0076,খোলা সাবুদানা ছোট দানা,খোলা সাবুদানা ছোট দানা,Loose / Local,"Rice, Dal & Grains",১ কেজি,/images/products/MDK-0076_loose.webp,110.00,92.40,Kg,VERIFIED
+MDK-0077,Chia Seeds,চিয়া সিডস,Loose / Local,"Rice, Dal & Grains",200 g,/images/products/MDK-0077_chia_seeds.webp,180.00,151.20,Piece,VERIFIED
+MDK-0078,Flax Seeds,তিসি বীজ,Loose / Local,"Rice, Dal & Grains",250 g,/images/products/MDK-0078_flax_seeds.webp,80.00,67.20,Piece,VERIFIED
+MDK-0079,Basil Seeds,তোকমা দানা,Loose / Local,"Rice, Dal & Grains",100 g,/images/products/MDK-0079_basil_seeds.webp,60.00,50.40,Piece,VERIFIED
 MDK-0080,Robinson's Barley Pouch,বার্লি পাউডার,Loose / Local,"Rice, Dal & Grains",400 g,/images/products/MDK-0080_turmeric_powder_100_g.webp,260.00,218.40,Piece,VERIFIED
 MDK-0081,Teer Fortified Soybean Oil,Teer Fortified Soybean Oil,Teer,Cooking Oil & Ghee,1 L Poly,/images/products/MDK-0081_turmeric_powder_200_g.webp,185.00,155.40,L,VERIFIED
 MDK-0082,Teer Fortified Soybean Oil,Teer Fortified Soybean Oil,Teer,Cooking Oil & Ghee,1 L Pet Bottle,/images/products/MDK-0082_chili_powder_100_g.webp,190.00,159.60,L,VERIFIED
@@ -86,47 +86,47 @@ MDK-0084,Teer Fortified Soybean Oil,Teer Fortified Soybean Oil,Teer,Cooking Oil 
 MDK-0085,Rupchanda Fortified Soybean Oil,Rupchanda Fortified Soybean Oil,Rupchanda,Cooking Oil & Ghee,1 L Pet Bottle,/images/products/MDK-0085_coriander_powder_200_g.webp,195.00,163.80,L,VERIFIED
 MDK-0086,Rupchanda Fortified Soybean Oil,Rupchanda Fortified Soybean Oil,Rupchanda,Cooking Oil & Ghee,2 L Pet Bottle,/images/products/MDK-0086_cumin_powder_50_g.webp,385.00,323.40,L,VERIFIED
 MDK-0087,Rupchanda Fortified Soybean Oil,Rupchanda Fortified Soybean Oil,Rupchanda,Cooking Oil & Ghee,5 L Can/Jar,/images/products/MDK-0087_cumin_powder_100_g.webp,925.00,777.00,L,VERIFIED
-MDK-0088,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,1 L Poly,/images/products/MDK-0088_2_minute_noodles_70_g.webp,185.00,155.40,L,VERIFIED
-MDK-0089,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,1 L Pet Bottle,/images/products/MDK-0089_2_minute_noodles_280_g.webp,190.00,159.60,L,VERIFIED
-MDK-0090,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,2 L Pet Bottle,/images/products/MDK-0090_instant_noodles_70_g.webp,375.00,315.00,L,VERIFIED
-MDK-0091,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,5 L Can/Jar,/images/products/MDK-0091_instant_noodles_280_g.webp,910.00,764.40,L,VERIFIED
+MDK-0088,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,1 L Poly,/images/products/MDK-0088_fresh_fortified_soybean_oil.webp,185.00,155.40,L,VERIFIED
+MDK-0089,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,1 L Pet Bottle,/images/products/MDK-0089_fresh_fortified_soybean_oil.webp,190.00,159.60,L,VERIFIED
+MDK-0090,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,2 L Pet Bottle,/images/products/MDK-0090_fresh_fortified_soybean_oil.webp,375.00,315.00,L,VERIFIED
+MDK-0091,Fresh Fortified Soybean Oil,Fresh Fortified Soybean Oil,Fresh,Cooking Oil & Ghee,5 L Can/Jar,/images/products/MDK-0091_fresh_fortified_soybean_oil.webp,910.00,764.40,L,VERIFIED
 MDK-0092,Bashundhara Fortified Soybean Oil,Bashundhara Fortified Soybean Oil,Bashundhara,Cooking Oil & Ghee,1 L Pet,/images/products/MDK-0092_pran_chow_mein_noodles_200_g.webp,190.00,159.60,L,VERIFIED
-MDK-0093,Bashundhara Fortified Soybean Oil,Bashundhara Fortified Soybean Oil,Bashundhara,Cooking Oil & Ghee,2 L Pet,/images/products/MDK-0093_pran_chow_mein_noodles_500_g.webp,375.00,315.00,L,VERIFIED
-MDK-0094,Bashundhara Fortified Soybean Oil,Bashundhara Fortified Soybean Oil,Bashundhara,Cooking Oil & Ghee,5 L Jar,/images/products/MDK-0094_instant_noodles_70_g.webp,910.00,764.40,L,VERIFIED
-MDK-0095,ACI Nutrilife Rice Bran Oil,ACI Nutrilife Rice Bran Oil,ACI,Cooking Oil & Ghee,1 L,/images/products/MDK-0095_instant_noodles_280_g.webp,250.00,210.00,L,VERIFIED
-MDK-0096,ACI Nutrilife Rice Bran Oil,ACI Nutrilife Rice Bran Oil,ACI,Cooking Oil & Ghee,2 L,/images/products/MDK-0096_potato_crackers_20_g.webp,490.00,411.60,L,VERIFIED
-MDK-0097,ACI Nutrilife Rice Bran Oil,ACI Nutrilife Rice Bran Oil,ACI,Cooking Oil & Ghee,5 L,/images/products/MDK-0097_potato_crackers_45_g.webp,1150.00,966.00,L,VERIFIED
+MDK-0093,Bashundhara Fortified Soybean Oil,Bashundhara Fortified Soybean Oil,Bashundhara,Cooking Oil & Ghee,2 L Pet,/images/products/MDK-0093_bashundhara_fortified_soybean_oil.webp,375.00,315.00,L,VERIFIED
+MDK-0094,Bashundhara Fortified Soybean Oil,Bashundhara Fortified Soybean Oil,Bashundhara,Cooking Oil & Ghee,5 L Jar,/images/products/MDK-0094_bashundhara_fortified_soybean_oil.webp,910.00,764.40,L,VERIFIED
+MDK-0095,ACI Nutrilife Rice Bran Oil,ACI Nutrilife Rice Bran Oil,ACI,Cooking Oil & Ghee,1 L,/images/products/MDK-0095_aci_nutrilife_rice_bran_oil.webp,250.00,210.00,L,VERIFIED
+MDK-0096,ACI Nutrilife Rice Bran Oil,ACI Nutrilife Rice Bran Oil,ACI,Cooking Oil & Ghee,2 L,/images/products/MDK-0096_aci_nutrilife_rice_bran_oil.webp,490.00,411.60,L,VERIFIED
+MDK-0097,ACI Nutrilife Rice Bran Oil,ACI Nutrilife Rice Bran Oil,ACI,Cooking Oil & Ghee,5 L,/images/products/MDK-0097_aci_nutrilife_rice_bran_oil.webp,1150.00,966.00,L,VERIFIED
 MDK-0098,Olitalia Extra Virgin Olive Oil,Olitalia Extra Virgin Olive Oil,Loose / Local,Cooking Oil & Ghee,500 ml,/images/products/MDK-0098_pran_potato_crackers_100_g.webp,750.00,630.00,L,VERIFIED
-MDK-0099,Olitalia Extra Virgin Olive Oil,Olitalia Extra Virgin Olive Oil,Loose / Local,Cooking Oil & Ghee,1 L,/images/products/MDK-0099_potato_chips_20_g.webp,1350.00,1134.00,L,VERIFIED
-MDK-0100,Figaro Pure Olive Oil,Figaro Pure Olive Oil,Loose / Local,Cooking Oil & Ghee,500 ml,/images/products/MDK-0100_potato_chips_45_g.webp,780.00,655.20,L,VERIFIED
+MDK-0099,Olitalia Extra Virgin Olive Oil,Olitalia Extra Virgin Olive Oil,Loose / Local,Cooking Oil & Ghee,1 L,/images/products/MDK-0099_olitalia_extra_virgin_olive_oil.webp,1350.00,1134.00,L,VERIFIED
+MDK-0100,Figaro Pure Olive Oil,Figaro Pure Olive Oil,Loose / Local,Cooking Oil & Ghee,500 ml,/images/products/MDK-0100_figaro_pure_olive_oil.webp,780.00,655.20,L,VERIFIED
 MDK-0101,Borges Extra Virgin Olive Oil,Borges Extra Virgin Olive Oil,Loose / Local,Cooking Oil & Ghee,500 ml,/images/products/MDK-0101_ruchi_chanachur_150_g.webp,790.00,663.60,L,VERIFIED
 MDK-0102,Radhuni Pure Mustard Oil,সরিষার তেল,Radhuni,Cooking Oil & Ghee,250 ml,/images/products/MDK-0102_ruchi_chanachur_300_g.webp,90.00,75.60,L,VERIFIED
 MDK-0103,Radhuni Pure Mustard Oil,Radhuni Pure Mustard Oil,Radhuni,Cooking Oil & Ghee,500 ml,/images/products/MDK-0103_chanachur_150_g.webp,175.00,147.00,L,VERIFIED
 MDK-0104,Radhuni Pure Mustard Oil,Radhuni Pure Mustard Oil,Radhuni,Cooking Oil & Ghee,1 L Pet,/images/products/MDK-0104_chanachur_300_g.webp,340.00,285.60,L,VERIFIED
-MDK-0105,Suresh Pure Mustard Oil,Suresh Pure Mustard Oil,Loose / Local,Cooking Oil & Ghee,250 ml,/images/products/MDK-0105_energy_plus_biscuit_small_pack.webp,95.00,79.80,L,VERIFIED
-MDK-0106,Suresh Pure Mustard Oil,Suresh Pure Mustard Oil,Loose / Local,Cooking Oil & Ghee,500 ml,/images/products/MDK-0106_energy_plus_biscuit_family_pack.webp,185.00,155.40,L,VERIFIED
-MDK-0107,Suresh Pure Mustard Oil,Suresh Pure Mustard Oil,Loose / Local,Cooking Oil & Ghee,1 L,/images/products/MDK-0107_digestive_biscuit_small_pack.webp,360.00,302.40,L,VERIFIED
-MDK-0108,Teer Pure Mustard Oil,Teer Pure Mustard Oil,Teer,Cooking Oil & Ghee,250 ml,/images/products/MDK-0108_digestive_biscuit_family_pack.webp,85.00,71.40,L,VERIFIED
-MDK-0109,Teer Pure Mustard Oil,Teer Pure Mustard Oil,Teer,Cooking Oil & Ghee,500 ml,/images/products/MDK-0109_butter_cookies_150_g.webp,165.00,138.60,L,VERIFIED
-MDK-0110,Teer Pure Mustard Oil,Teer Pure Mustard Oil,Teer,Cooking Oil & Ghee,1 L,/images/products/MDK-0110_butter_cookies_300_g.webp,320.00,268.80,L,VERIFIED
-MDK-0111,Fresh Mustard Oil,Fresh Mustard Oil,Fresh,Cooking Oil & Ghee,500 ml,/images/products/MDK-0111_potato_biscuits_small_pack.webp,165.00,138.60,L,VERIFIED
-MDK-0112,Fresh Mustard Oil,Fresh Mustard Oil,Fresh,Cooking Oil & Ghee,1 L,/images/products/MDK-0112_potato_biscuits_large_pack.webp,320.00,268.80,L,VERIFIED
-MDK-0113,Loose Soybean Oil,খোলা সয়াবিন তেল,Loose / Local,Cooking Oil & Ghee,১ লিটার / ১ ড্রাম,/images/products/MDK-0113_milk_marie_biscuit_small_pack.webp,175.00,147.00,L,VERIFIED
-MDK-0114,Loose Super Palm Oil,খোলা পাম তেল,Loose / Local,Cooking Oil & Ghee,১ লিটার,/images/products/MDK-0114_milk_marie_biscuit_family_pack.webp,150.00,126.00,L,VERIFIED
-MDK-0115,Loose Ghani Mustard Oil,খোলা সরিষার তেল খাঁটি,Loose / Local,Cooking Oil & Ghee,১ লিটার,/images/products/MDK-0115_toast_biscuit_200_g.webp,300.00,252.00,L,VERIFIED
-MDK-0116,Loose Blackseed Oil,খোলা কালোজিরা তেল,Loose / Local,Cooking Oil & Ghee,১০০ মিলি,/images/products/MDK-0116_toast_biscuit_400_g.webp,150.00,126.00,L,VERIFIED
-MDK-0117,Baghabari Pure Ghee,বাঘাবাড়ী ঘি টিন,Loose / Local,Cooking Oil & Ghee,200 g,/images/products/MDK-0117_pran_jelly_250_g.webp,320.00,268.80,Piece,VERIFIED
-MDK-0118,Baghabari Pure Ghee,Baghabari Pure Ghee,Loose / Local,Cooking Oil & Ghee,400 g,/images/products/MDK-0118_pran_jelly_500_g.webp,630.00,529.20,Piece,VERIFIED
-MDK-0119,Baghabari Pure Ghee,Baghabari Pure Ghee,Loose / Local,Cooking Oil & Ghee,900 g,/images/products/MDK-0119_pran_mango_juice_250_ml.webp,1380.00,1159.20,Piece,VERIFIED
-MDK-0120,Milk Vita Pure Ghee,Milk Vita Pure Ghee,Milk Vita,Cooking Oil & Ghee,200 g,/images/products/MDK-0120_pran_mango_juice_1_l.webp,310.00,260.40,Piece,VERIFIED
-MDK-0121,Milk Vita Pure Ghee,Milk Vita Pure Ghee,Milk Vita,Cooking Oil & Ghee,450 g,/images/products/MDK-0121_pran_orange_juice_250_ml.webp,680.00,571.20,Piece,VERIFIED
-MDK-0122,Milk Vita Pure Ghee,Milk Vita Pure Ghee,Milk Vita,Cooking Oil & Ghee,900 g,/images/products/MDK-0122_pran_orange_juice_1_l.webp,1350.00,1134.00,Piece,VERIFIED
-MDK-0123,Aarong Dairy Pure Ghee,Aarong Dairy Pure Ghee,Aarong Dairy,Cooking Oil & Ghee,200 g,/images/products/MDK-0123_frutika_mango_juice_250_ml.webp,340.00,285.60,Piece,VERIFIED
+MDK-0105,Suresh Pure Mustard Oil,Suresh Pure Mustard Oil,Loose / Local,Cooking Oil & Ghee,250 ml,/images/products/MDK-0105_suresh_pure_mustard_oil.webp,95.00,79.80,L,VERIFIED
+MDK-0106,Suresh Pure Mustard Oil,Suresh Pure Mustard Oil,Loose / Local,Cooking Oil & Ghee,500 ml,/images/products/MDK-0106_suresh_pure_mustard_oil.webp,185.00,155.40,L,VERIFIED
+MDK-0107,Suresh Pure Mustard Oil,Suresh Pure Mustard Oil,Loose / Local,Cooking Oil & Ghee,1 L,/images/products/MDK-0107_suresh_pure_mustard_oil.webp,360.00,302.40,L,VERIFIED
+MDK-0108,Teer Pure Mustard Oil,Teer Pure Mustard Oil,Teer,Cooking Oil & Ghee,250 ml,/images/products/MDK-0108_teer_pure_mustard_oil.webp,85.00,71.40,L,VERIFIED
+MDK-0109,Teer Pure Mustard Oil,Teer Pure Mustard Oil,Teer,Cooking Oil & Ghee,500 ml,/images/products/MDK-0109_teer_pure_mustard_oil.webp,165.00,138.60,L,VERIFIED
+MDK-0110,Teer Pure Mustard Oil,Teer Pure Mustard Oil,Teer,Cooking Oil & Ghee,1 L,/images/products/MDK-0110_teer_pure_mustard_oil.webp,320.00,268.80,L,VERIFIED
+MDK-0111,Fresh Mustard Oil,Fresh Mustard Oil,Fresh,Cooking Oil & Ghee,500 ml,/images/products/MDK-0111_fresh_mustard_oil.webp,165.00,138.60,L,VERIFIED
+MDK-0112,Fresh Mustard Oil,Fresh Mustard Oil,Fresh,Cooking Oil & Ghee,1 L,/images/products/MDK-0112_fresh_mustard_oil.webp,320.00,268.80,L,VERIFIED
+MDK-0113,Loose Soybean Oil,খোলা সয়াবিন তেল,Loose / Local,Cooking Oil & Ghee,১ লিটার / ১ ড্রাম,/images/products/MDK-0113_loose_soybean_oil.webp,175.00,147.00,L,VERIFIED
+MDK-0114,Loose Super Palm Oil,খোলা পাম তেল,Loose / Local,Cooking Oil & Ghee,১ লিটার,/images/products/MDK-0114_loose_super_palm_oil.webp,150.00,126.00,L,VERIFIED
+MDK-0115,Loose Ghani Mustard Oil,খোলা সরিষার তেল খাঁটি,Loose / Local,Cooking Oil & Ghee,১ লিটার,/images/products/MDK-0115_loose_ghani_mustard_oil.webp,300.00,252.00,L,VERIFIED
+MDK-0116,Loose Blackseed Oil,খোলা কালোজিরা তেল,Loose / Local,Cooking Oil & Ghee,১০০ মিলি,/images/products/MDK-0116_loose_blackseed_oil.webp,150.00,126.00,L,VERIFIED
+MDK-0117,Baghabari Pure Ghee,বাঘাবাড়ী ঘি টিন,Loose / Local,Cooking Oil & Ghee,200 g,/images/products/MDK-0117_baghabari_pure_ghee.webp,320.00,268.80,Piece,VERIFIED
+MDK-0118,Baghabari Pure Ghee,Baghabari Pure Ghee,Loose / Local,Cooking Oil & Ghee,400 g,/images/products/MDK-0118_baghabari_pure_ghee.webp,630.00,529.20,Piece,VERIFIED
+MDK-0119,Baghabari Pure Ghee,Baghabari Pure Ghee,Loose / Local,Cooking Oil & Ghee,900 g,/images/products/MDK-0119_baghabari_pure_ghee.webp,1380.00,1159.20,Piece,VERIFIED
+MDK-0120,Milk Vita Pure Ghee,Milk Vita Pure Ghee,Milk Vita,Cooking Oil & Ghee,200 g,/images/products/MDK-0120_milk_vita_pure_ghee.webp,310.00,260.40,Piece,VERIFIED
+MDK-0121,Milk Vita Pure Ghee,Milk Vita Pure Ghee,Milk Vita,Cooking Oil & Ghee,450 g,/images/products/MDK-0121_milk_vita_pure_ghee.webp,680.00,571.20,Piece,VERIFIED
+MDK-0122,Milk Vita Pure Ghee,Milk Vita Pure Ghee,Milk Vita,Cooking Oil & Ghee,900 g,/images/products/MDK-0122_milk_vita_pure_ghee.webp,1350.00,1134.00,Piece,VERIFIED
+MDK-0123,Aarong Dairy Pure Ghee,Aarong Dairy Pure Ghee,Aarong Dairy,Cooking Oil & Ghee,200 g,/images/products/MDK-0123_aarong_dairy_pure_ghee.webp,340.00,285.60,Piece,VERIFIED
 MDK-0124,Aarong Dairy Pure Ghee,Aarong Dairy Pure Ghee,Aarong Dairy,Cooking Oil & Ghee,400 g,/images/products/MDK-0124_frutika_mango_juice_500_ml.webp,660.00,554.40,Piece,VERIFIED
-MDK-0125,Aarong Dairy Pure Ghee,Aarong Dairy Pure Ghee,Aarong Dairy,Cooking Oil & Ghee,900 g,/images/products/MDK-0125_frutika_mango_juice_1_l.webp,1420.00,1192.80,Piece,VERIFIED
-MDK-0126,PRAN Premium Ghee,PRAN Premium Ghee,PRAN,Cooking Oil & Ghee,200 g,/images/products/MDK-0126_drinking_water_500_ml.webp,300.00,252.00,Piece,VERIFIED
-MDK-0127,PRAN Premium Ghee,PRAN Premium Ghee,PRAN,Cooking Oil & Ghee,400 g,/images/products/MDK-0127_drinking_water_1_l.webp,590.00,495.60,Piece,VERIFIED
-MDK-0128,Fresh Special Ghee,Fresh Special Ghee,Fresh,Cooking Oil & Ghee,200 g,/images/products/MDK-0128_drinking_water_2_l.webp,300.00,252.00,Piece,VERIFIED
+MDK-0125,Aarong Dairy Pure Ghee,Aarong Dairy Pure Ghee,Aarong Dairy,Cooking Oil & Ghee,900 g,/images/products/MDK-0125_aarong_dairy_pure_ghee.webp,1420.00,1192.80,Piece,VERIFIED
+MDK-0126,PRAN Premium Ghee,PRAN Premium Ghee,PRAN,Cooking Oil & Ghee,200 g,/images/products/MDK-0126_pran_premium_ghee.webp,300.00,252.00,Piece,VERIFIED
+MDK-0127,PRAN Premium Ghee,PRAN Premium Ghee,PRAN,Cooking Oil & Ghee,400 g,/images/products/MDK-0127_pran_premium_ghee.webp,590.00,495.60,Piece,VERIFIED
+MDK-0128,Fresh Special Ghee,Fresh Special Ghee,Fresh,Cooking Oil & Ghee,200 g,/images/products/MDK-0128_fresh_special_ghee.webp,300.00,252.00,Piece,VERIFIED
 MDK-0129,Fresh Special Ghee,Fresh Special Ghee,Fresh,Cooking Oil & Ghee,400 g,/images/products/MDK-0129_coca_cola_carbonated_drink_250_ml.webp,580.00,487.20,Piece,VERIFIED
 MDK-0130,Loose Village Deshi Ghee,খোলা গাওয়া ঘি,Loose / Local,Cooking Oil & Ghee,৫০০ গ্রাম / ১ কেজি,/images/products/MDK-0130_carbonated_drink_500_ml.webp,1400.00,1176.00,Kg,VERIFIED
 MDK-0131,Milk Vita Salted Butter,Milk Vita Salted Butter,Milk Vita,Cooking Oil & Ghee,100 g,/images/products/MDK-0131_coca_cola_carbonated_drink_1_l.webp,110.00,92.40,Piece,VERIFIED
@@ -137,8 +137,8 @@ MDK-0135,Amul Pasteurized Butter,Amul Pasteurized Butter,Loose / Local,Cooking O
 MDK-0136,Amul Pasteurized Butter,Amul Pasteurized Butter,Loose / Local,Cooking Oil & Ghee,500 g,/images/products/MDK-0136_mojo_carbonated_drink_500_ml.webp,560.00,470.40,Piece,VERIFIED
 MDK-0137,Dalda Vanaspati,ডালডা বনস্পতি,Loose / Local,Cooking Oil & Ghee,500 g,/images/products/MDK-0137_mojo_carbonated_drink_1_l.webp,120.00,100.80,Piece,VERIFIED
 MDK-0138,Teer Vanaspati Dalda,Teer Vanaspati Dalda,Teer,Cooking Oil & Ghee,1 kg,/images/products/MDK-0138_speed_energy_drink_250_ml.webp,220.00,184.80,Kg,VERIFIED
-MDK-0139,Loose Dalda,খোলা ডালডা বনস্পতি,Loose / Local,Cooking Oil & Ghee,১ কেজি,/images/products/MDK-0139_classic_coffee_25_g.webp,190.00,159.60,Kg,VERIFIED
-MDK-0140,Pure Sesame Oil,তিলের তেল,Loose / Local,Cooking Oil & Ghee,250 ml,/images/products/MDK-0140_classic_coffee_50_g.webp,180.00,151.20,L,VERIFIED
+MDK-0139,Loose Dalda,খোলা ডালডা বনস্পতি,Loose / Local,Cooking Oil & Ghee,১ কেজি,/images/products/MDK-0139_loose_dalda.webp,190.00,159.60,Kg,VERIFIED
+MDK-0140,Pure Sesame Oil,তিলের তেল,Loose / Local,Cooking Oil & Ghee,250 ml,/images/products/MDK-0140_pure_sesame_oil.webp,180.00,151.20,L,VERIFIED
 MDK-0141,Teer Fortified Atta,Teer Fortified Atta,Teer,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0141_mirzapore_tea_100_g.webp,55.00,46.20,Kg,VERIFIED
 MDK-0142,Teer Fortified Atta,Teer Fortified Atta,Teer,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0142_ispahani_mirzapore_tea_200_g.webp,105.00,88.20,Kg,VERIFIED
 MDK-0143,Teer White Maida,Teer White Maida,Teer,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0143_ispahani_mirzapore_tea_400_g.webp,65.00,54.60,Kg,VERIFIED
@@ -146,8 +146,8 @@ MDK-0144,Teer White Maida,Teer White Maida,Teer,"Flour, Atta, Maida & Suji",2 kg
 MDK-0145,Teer Suji,Teer Suji,Teer,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0145_finlay_tea_200_g.webp,45.00,37.80,Piece,VERIFIED
 MDK-0146,Teer Suji,Teer Suji,Teer,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0146_finlay_tea_400_g.webp,85.00,71.40,Kg,VERIFIED
 MDK-0147,Fresh Atta,Fresh Atta,Fresh,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0147_fresh_full_cream_milk_powder_250_g.webp,55.00,46.20,Kg,VERIFIED
-MDK-0148,Fresh Atta,Fresh Atta,Fresh,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0148_fresh_full_cream_milk_powder_500_g.webp,105.00,88.20,Kg,VERIFIED
-MDK-0149,Fresh Maida,Fresh Maida,Fresh,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0149_fresh_full_cream_milk_powder_1_kg.webp,65.00,54.60,Kg,VERIFIED
+MDK-0148,Fresh Atta,Fresh Atta,Fresh,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0148_fresh_atta.webp,105.00,88.20,Kg,VERIFIED
+MDK-0149,Fresh Maida,Fresh Maida,Fresh,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0149_fresh_maida.webp,65.00,54.60,Kg,VERIFIED
 MDK-0150,Fresh Maida,Fresh Maida,Fresh,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0150_full_cream_milk_powder_250_g.webp,125.00,105.00,Kg,VERIFIED
 MDK-0151,Fresh Suji,Fresh Suji,Fresh,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0151_dano_full_cream_milk_powder_500_g.webp,45.00,37.80,Piece,VERIFIED
 MDK-0152,ACI Pure Atta,ACI Pure Atta,ACI Pure,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0152_dano_full_cream_milk_powder_1_kg.webp,55.00,46.20,Kg,VERIFIED
@@ -157,28 +157,28 @@ MDK-0155,ACI Pure Maida,ACI Pure Maida,ACI Pure,"Flour, Atta, Maida & Suji",2 kg
 MDK-0156,ACI Pure Suji,ACI Pure Suji,ACI Pure,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0156_pran_uht_milk_1_l.webp,45.00,37.80,Piece,VERIFIED
 MDK-0157,Bashundhara Atta,Bashundhara Atta,Bashundhara,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0157_aarong_pasteurized_milk_500_ml.webp,55.00,46.20,Kg,VERIFIED
 MDK-0158,Bashundhara Atta,Bashundhara Atta,Bashundhara,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0158_aarong_pasteurized_milk_1_l.webp,105.00,88.20,Kg,VERIFIED
-MDK-0159,Bashundhara Maida,Bashundhara Maida,Bashundhara,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0159_farm_fresh_pasteurized_milk_500_ml.webp,65.00,54.60,Kg,VERIFIED
-MDK-0160,Bashundhara Maida,Bashundhara Maida,Bashundhara,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0160_farm_fresh_pasteurized_milk_1_l.webp,125.00,105.00,Kg,VERIFIED
-MDK-0161,Bashundhara Suji,Bashundhara Suji,Bashundhara,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0161_eggs_1_piece.webp,45.00,37.80,Piece,VERIFIED
+MDK-0159,Bashundhara Maida,Bashundhara Maida,Bashundhara,"Flour, Atta, Maida & Suji",1 kg,/images/products/MDK-0159_bashundhara_maida.webp,65.00,54.60,Kg,VERIFIED
+MDK-0160,Bashundhara Maida,Bashundhara Maida,Bashundhara,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0160_bashundhara_maida.webp,125.00,105.00,Kg,VERIFIED
+MDK-0161,Bashundhara Suji,Bashundhara Suji,Bashundhara,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0161_bashundhara_suji.webp,45.00,37.80,Piece,VERIFIED
 MDK-0162,PRAN Atta,PRAN Atta,PRAN,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0162_local_eggs_12_pieces.webp,105.00,88.20,Kg,VERIFIED
-MDK-0163,PRAN Maida,PRAN Maida,PRAN,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0163_eggs_30_pieces.webp,125.00,105.00,Kg,VERIFIED
+MDK-0163,PRAN Maida,PRAN Maida,PRAN,"Flour, Atta, Maida & Suji",2 kg,/images/products/MDK-0163_pran_maida.webp,125.00,105.00,Kg,VERIFIED
 MDK-0164,PRAN Suji,PRAN Suji,PRAN,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0164_local_butter_100_g.webp,45.00,37.80,Piece,VERIFIED
 MDK-0165,Radhuni Pure Besan,বেসন,Radhuni,"Flour, Atta, Maida & Suji",250 g,/images/products/MDK-0165_local_butter_200_g.webp,40.00,33.60,Piece,VERIFIED
-MDK-0166,Radhuni Pure Besan,Radhuni Pure Besan,Radhuni,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0166_local_yogurt_500_g.webp,75.00,63.00,Piece,VERIFIED
-MDK-0167,ACI Pure Besan,ACI Pure Besan,ACI Pure,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0167_local_yogurt_1_kg.webp,75.00,63.00,Piece,VERIFIED
-MDK-0168,Teer Pure Besan,Teer Pure Besan,Teer,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0168_bread_small_loaf.webp,75.00,63.00,Piece,VERIFIED
-MDK-0169,Loose Whole Wheat Brown Atta,খোলা লাল আটা,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0169_bread_large_loaf.webp,48.00,40.32,Kg,VERIFIED
-MDK-0170,Loose White Atta,খোলা সাদা আটা,Hit,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0170_local_bun_1_piece.webp,47.00,39.48,Kg,VERIFIED
+MDK-0166,Radhuni Pure Besan,Radhuni Pure Besan,Radhuni,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0166_radhuni_pure_besan.webp,75.00,63.00,Piece,VERIFIED
+MDK-0167,ACI Pure Besan,ACI Pure Besan,ACI Pure,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0167_aci_pure_besan.webp,75.00,63.00,Piece,VERIFIED
+MDK-0168,Teer Pure Besan,Teer Pure Besan,Teer,"Flour, Atta, Maida & Suji",500 g,/images/products/MDK-0168_teer_pure_besan.webp,75.00,63.00,Piece,VERIFIED
+MDK-0169,Loose Whole Wheat Brown Atta,খোলা লাল আটা,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0169_loose_whole_wheat_brown_atta.webp,48.00,40.32,Kg,VERIFIED
+MDK-0170,Loose White Atta,খোলা সাদা আটা,Hit,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0170_loose_white_atta.webp,47.00,39.48,Kg,VERIFIED
 MDK-0171,Loose Maida,খোলা স্পেশাল ময়দা,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0171_local_bun_4_pieces.webp,56.00,47.04,Kg,VERIFIED
-MDK-0172,Loose Suji,খোলা সুজি,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0172_wheel_washing_powder_200_g.webp,70.00,58.80,Kg,VERIFIED
-MDK-0173,Chola Besan Loose,খোলা বুটের ডালের বেসন,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0173_wheel_washing_powder_500_g.webp,130.00,109.20,Kg,VERIFIED
-MDK-0174,Khesari Besan Loose,খোলা খেসারি ডালের বেসন,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0174_wheel_washing_powder_1_kg.webp,100.00,84.00,Kg,VERIFIED
+MDK-0172,Loose Suji,খোলা সুজি,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0172_loose_suji.webp,70.00,58.80,Kg,VERIFIED
+MDK-0173,Chola Besan Loose,খোলা বুটের ডালের বেসন,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0173_chola_besan_loose.webp,130.00,109.20,Kg,VERIFIED
+MDK-0174,Khesari Besan Loose,খোলা খেসারি ডালের বেসন,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0174_khesari_besan_loose.webp,100.00,84.00,Kg,VERIFIED
 MDK-0175,পিয়াজু স্পেশাল বেসন,খোলা মিশ্র বেসন,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0175_unilever_surf_excel_detergent_200_g.webp,90.00,75.60,Kg,VERIFIED
 MDK-0176,আতপ চালের গুঁড়া - Rice Flour,খোলা চালের গুঁড়া,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0176_unilever_surf_excel_detergent_500_g.webp,80.00,67.20,Kg,VERIFIED
 MDK-0177,খোলা সিদ্ধ চালের গুঁড়া,খোলা সিদ্ধ চালের গুঁড়া,Loose / Local,"Flour, Atta, Maida & Suji",১ কেজি,/images/products/MDK-0177_unilever_surf_excel_detergent_1_kg.webp,70.00,58.80,Kg,VERIFIED
-MDK-0178,Corn Flower Box,কর্নফ্লাওয়ার,Loose / Local,"Flour, Atta, Maida & Suji",100 g,/images/products/MDK-0178_rin_washing_powder_200_g.webp,45.00,37.80,Piece,VERIFIED
-MDK-0179,Foster Clark's Corn Flour,Foster Clark's Corn Flour,Loose / Local,"Flour, Atta, Maida & Suji",400 g,/images/products/MDK-0179_rin_washing_powder_500_g.webp,180.00,151.20,Piece,VERIFIED
-MDK-0180,Baking Powder Container,বেকিং পাউডার,Loose / Local,"Flour, Atta, Maida & Suji",100 g,/images/products/MDK-0180_rin_washing_powder_1_kg.webp,60.00,50.40,Piece,VERIFIED
+MDK-0178,Corn Flower Box,কর্নফ্লাওয়ার,Loose / Local,"Flour, Atta, Maida & Suji",100 g,/images/products/MDK-0178_corn_flower_box.webp,45.00,37.80,Piece,VERIFIED
+MDK-0179,Foster Clark's Corn Flour,Foster Clark's Corn Flour,Loose / Local,"Flour, Atta, Maida & Suji",400 g,/images/products/MDK-0179_foster_clark_s_corn_flour.webp,180.00,151.20,Piece,VERIFIED
+MDK-0180,Baking Powder Container,বেকিং পাউডার,Loose / Local,"Flour, Atta, Maida & Suji",100 g,/images/products/MDK-0180_baking_powder_container.webp,60.00,50.40,Piece,VERIFIED
 MDK-0181,Baking Soda Pouch,বেকিং সোডা / খাবার সোডা,Loose / Local,"Flour, Atta, Maida & Suji",100 g,/images/products/MDK-0181_unilever_vim_dishwashing_bar_125_g.webp,30.00,25.20,Piece,VERIFIED
 MDK-0182,Instant Dry Yeast,ইস্ট পাউডার,Loose / Local,"Flour, Atta, Maida & Suji",50 g,/images/products/MDK-0182_unilever_vim_dishwashing_bar_300_g.webp,50.00,42.00,Piece,VERIFIED
 MDK-0183,ACI Pure Vacuum Salt,ACI Pure Vacuum Salt,ACI Pure,Salt & Sugar,1 kg,/images/products/MDK-0183_unilever_vim_liquid_250_ml.webp,42.00,35.28,Kg,VERIFIED
@@ -187,119 +187,119 @@ MDK-0185,Molla Super Salt,Molla Super Salt,Loose / Local,Salt & Sugar,1 kg,/imag
 MDK-0186,Teer Refined Iodized Salt,Teer Refined Iodized Salt,Teer,Salt & Sugar,1 kg,/images/products/MDK-0186_lux_soap_150_g.webp,40.00,33.60,Kg,VERIFIED
 MDK-0187,Confidence Iodized Salt,Confidence Iodized Salt,Loose / Local,Salt & Sugar,1 kg,/images/products/MDK-0187_lifebuoy_soap_100_g.webp,38.00,31.92,Kg,VERIFIED
 MDK-0188,Muskan Iodized Salt,Muskan Iodized Salt,Loose / Local,Salt & Sugar,1 kg,/images/products/MDK-0188_lifebuoy_soap_150_g.webp,38.00,31.92,Kg,VERIFIED
-MDK-0189,ACI Pure Crystal Sugar,ACI Pure Crystal Sugar,ACI Pure,Salt & Sugar,1 kg,/images/products/MDK-0189_dove_soap_100_g.webp,140.00,117.60,Kg,VERIFIED
+MDK-0189,ACI Pure Crystal Sugar,ACI Pure Crystal Sugar,ACI Pure,Salt & Sugar,1 kg,/images/products/MDK-0189_aci_pure_crystal_sugar.webp,140.00,117.60,Kg,VERIFIED
 MDK-0190,Fresh White Refined Sugar,Fresh White Refined Sugar,Fresh,Salt & Sugar,1 kg,/images/products/MDK-0190_lifebuoy_handwash_200_ml.webp,140.00,117.60,Kg,VERIFIED
 MDK-0191,Teer Refined Sugar,Teer Refined Sugar,Teer,Salt & Sugar,1 kg,/images/products/MDK-0191_lifebuoy_handwash_refill_170_ml.webp,140.00,117.60,Kg,VERIFIED
-MDK-0192,Deshi Brown Sugar,দেশি প্যাকেট লাল চিনি,Loose / Local,Salt & Sugar,1 kg,/images/products/MDK-0192_sunsilk_shampoo_80_ml.webp,160.00,134.40,Kg,VERIFIED
-MDK-0193,Loose White Sugar,খোলা সাদা চিনি,Hit,Salt & Sugar,১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0193_sunsilk_shampoo_170_ml.webp,135.00,113.40,Kg,VERIFIED
-MDK-0194,Loose Brown Sugar,খোলা লাল চিনি,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0194_sunsilk_shampoo_340_ml.webp,150.00,126.00,Kg,VERIFIED
-MDK-0195,Loose Salt,খোলা মোটা লবণ / আয়োডিনযুক্ত লবণ,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0195_clear_shampoo_80_ml.webp,25.00,21.00,Kg,VERIFIED
+MDK-0192,Deshi Brown Sugar,দেশি প্যাকেট লাল চিনি,Loose / Local,Salt & Sugar,1 kg,/images/products/MDK-0192_deshi_brown_sugar.webp,160.00,134.40,Kg,VERIFIED
+MDK-0193,Loose White Sugar,খোলা সাদা চিনি,Hit,Salt & Sugar,১ কেজি / ৫০ কেজি বস্তা,/images/products/MDK-0193_loose_white_sugar.webp,135.00,113.40,Kg,VERIFIED
+MDK-0194,Loose Brown Sugar,খোলা লাল চিনি,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0194_loose_brown_sugar.webp,150.00,126.00,Kg,VERIFIED
+MDK-0195,Loose Salt,খোলা মোটা লবণ / আয়োডিনযুক্ত লবণ,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0195_loose_salt.webp,25.00,21.00,Kg,VERIFIED
 MDK-0196,Rock Salt / Black Salt,খোলা বিট লবণ,Loose / Local,Salt & Sugar,২৫০ গ্রাম,/images/products/MDK-0196_unilever_clear_shampoo_170_ml.webp,30.00,25.20,Kg,VERIFIED
-MDK-0197,ACI Pure Bit Salt,প্যাকেট বিট লবণ,ACI Pure,Salt & Sugar,100 g,/images/products/MDK-0197_closeup_toothpaste_100_g.webp,25.00,21.00,Piece,VERIFIED
-MDK-0198,Himalayan Pink Salt Jar,সৈন্ধব লবণ,Loose / Local,Salt & Sugar,500 g,/images/products/MDK-0198_closeup_toothpaste_150_g.webp,150.00,126.00,Piece,VERIFIED
-MDK-0199,Sugarcane Jaggery Block,আখের খাঁটি গুড়,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0199_pepsodent_toothpaste_100_g.webp,140.00,117.60,Kg,VERIFIED
-MDK-0200,Date Palm Jaggery Patali,খেজুরের পাটালি গুড়,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0200_pepsodent_toothpaste_150_g.webp,350.00,294.00,Kg,VERIFIED
+MDK-0197,ACI Pure Bit Salt,প্যাকেট বিট লবণ,ACI Pure,Salt & Sugar,100 g,/images/products/MDK-0197_aci_pure_bit_salt.webp,25.00,21.00,Piece,VERIFIED
+MDK-0198,Himalayan Pink Salt Jar,সৈন্ধব লবণ,Loose / Local,Salt & Sugar,500 g,/images/products/MDK-0198_himalayan_pink_salt_jar.webp,150.00,126.00,Piece,VERIFIED
+MDK-0199,Sugarcane Jaggery Block,আখের খাঁটি গুড়,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0199_sugarcane_jaggery_block.webp,140.00,117.60,Kg,VERIFIED
+MDK-0200,Date Palm Jaggery Patali,খেজুরের পাটালি গুড়,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0200_date_palm_jaggery_patali.webp,350.00,294.00,Kg,VERIFIED
 MDK-0201,Liquid Date Jaggery,খেজুরের নলেন ঝোলা গুড়,Loose / Local,Salt & Sugar,১ কেজি,/images/products/MDK-0201_aci_savlon_antiseptic_100_ml.webp,380.00,319.20,Kg,VERIFIED
-MDK-0202,Palm Jaggery,তাল পাটালি গুড়,Loose / Local,Salt & Sugar,৫০০ গ্রাম,/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp,220.00,184.80,Kg,VERIFIED
+MDK-0202,Palm Jaggery,তাল পাটালি গুড়,Loose / Local,Salt & Sugar,৫০০ গ্রাম,/images/products/MDK-0202_palm_jaggery.webp,220.00,184.80,Kg,VERIFIED
 MDK-0203,Sugar Candy / Mishri,খোলা মিছরি,Loose / Local,Salt & Sugar,৫০০ গ্রাম,/images/products/MDK-0203_savlon_handwash_200_ml.webp,80.00,67.20,Kg,VERIFIED
-MDK-0204,Palm Candy / Tal Mishri,তাল মিছরি,Loose / Local,Salt & Sugar,২৫০ গ্রাম,/images/products/MDK-0204_aci_savlon_handwash_500_ml.webp,120.00,100.80,Kg,VERIFIED
+MDK-0204,Palm Candy / Tal Mishri,তাল মিছরি,Loose / Local,Salt & Sugar,২৫০ গ্রাম,/images/products/MDK-0204_palm_candy_tal_mishri.webp,120.00,100.80,Kg,VERIFIED
 MDK-0205,Ispaghula Husk Pouch,ইসুবগুলের ভুসি,Loose / Local,Salt & Sugar,100 g,/images/products/MDK-0205_meril_petroleum_jelly_50_ml.webp,110.00,92.40,Piece,VERIFIED
 MDK-0206,Ispaghula Husk Pouch,ইসুবগুলের ভুসি,Loose / Local,Salt & Sugar,200 g,/images/products/MDK-0206_meril_petroleum_jelly_100_ml.webp,210.00,176.40,Piece,VERIFIED
 MDK-0207,Loose Ispaghula Husk,খোলা ভুসি,Loose / Local,Salt & Sugar,২৫০ গ্রাম,/images/products/MDK-0207_coconut_oil_100_ml.webp,260.00,218.40,Kg,VERIFIED
 MDK-0208,Glaxose-D Tin,গ্লুকোজ-ডি,Loose / Local,Salt & Sugar,400 g,/images/products/MDK-0208_parachute_coconut_oil_200_ml.webp,220.00,184.80,Piece,VERIFIED
 MDK-0209,Glucose Powder,Dextrose Powder Pouch,Loose / Local,Salt & Sugar,200 g,/images/products/MDK-0209_parachute_coconut_oil_300_ml.webp,70.00,58.80,Piece,VERIFIED
-MDK-0210,Canderel Tablets,সুগার ফ্রি / সুইটেনার,Loose / Local,Salt & Sugar,100 pcs,/images/products/MDK-0210_coconut_oil_100_ml.webp,350.00,294.00,Piece,VERIFIED
+MDK-0210,Canderel Tablets,সুগার ফ্রি / সুইটেনার,Loose / Local,Salt & Sugar,100 pcs,/images/products/MDK-0210_canderel_tablets.webp,350.00,294.00,Piece,VERIFIED
 MDK-0211,Equal Sweetener Tablets,Equal Sweetener Tablets,Loose / Local,Salt & Sugar,100 pcs,/images/products/MDK-0211_jui_coconut_oil_200_ml.webp,320.00,268.80,Piece,VERIFIED
-MDK-0212,Dabur Honey Jar,মধু,Loose / Local,Salt & Sugar,250 g,/images/products/MDK-0212_facial_tissue_100_pulls.webp,250.00,210.00,Piece,VERIFIED
-MDK-0213,Dabur Honey,Dabur Honey,Loose / Local,Salt & Sugar,500 g,/images/products/MDK-0213_facial_tissue_200_pulls.webp,460.00,386.40,Piece,VERIFIED
+MDK-0212,Dabur Honey Jar,মধু,Loose / Local,Salt & Sugar,250 g,/images/products/MDK-0212_dabur_honey_jar.webp,250.00,210.00,Piece,VERIFIED
+MDK-0213,Dabur Honey,Dabur Honey,Loose / Local,Salt & Sugar,500 g,/images/products/MDK-0213_dabur_honey.webp,460.00,386.40,Piece,VERIFIED
 MDK-0214,AP Honey,এপি খাঁটি মধু,Loose / Local,Salt & Sugar,250 g,/images/products/MDK-0214_bashundhara_toilet_tissue_1_roll.webp,220.00,184.80,Piece,VERIFIED
 MDK-0215,AP Honey,AP Honey,Loose / Local,Salt & Sugar,500 g,/images/products/MDK-0215_bashundhara_toilet_tissue_4_rolls.webp,420.00,352.80,Piece,VERIFIED
-MDK-0216,Sundarbans Honey Bottle,সুন্দরবনের প্রাকৃতিক মধু,Loose / Local,Salt & Sugar,৫০০ গ্রাম,/images/products/MDK-0216_baby_diaper_small_10_pcs.webp,500.00,420.00,Kg,VERIFIED
-MDK-0217,Radhuni Kasundi Bottle,কাসুন্দি,Radhuni,Salt & Sugar,285 ml,/images/products/MDK-0217_baby_diaper_medium_10_pcs.webp,85.00,71.40,L,VERIFIED
-MDK-0218,Fresh Kasundi Bottle,ফ্রেশ কাসুন্দি,Fresh,Salt & Sugar,300 ml,/images/products/MDK-0218_baby_diaper_large_10_pcs.webp,80.00,67.20,L,VERIFIED
-MDK-0219,Radhuni Turmeric Powder,হলুদ গুঁড়া,Radhuni,Spices & Masala,100 g,/images/products/MDK-0219_baby_diaper_small_10_pcs.webp,45.00,37.80,Piece,VERIFIED
-MDK-0220,Radhuni Turmeric Powder,Radhuni Turmeric Powder,Radhuni,Spices & Masala,200 g,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,85.00,71.40,Piece,VERIFIED
+MDK-0216,Sundarbans Honey Bottle,সুন্দরবনের প্রাকৃতিক মধু,Loose / Local,Salt & Sugar,৫০০ গ্রাম,/images/products/MDK-0216_sundarbans_honey_bottle.webp,500.00,420.00,Kg,VERIFIED
+MDK-0217,Radhuni Kasundi Bottle,কাসুন্দি,Radhuni,Salt & Sugar,285 ml,/images/products/MDK-0217_radhuni_kasundi_bottle.webp,85.00,71.40,L,VERIFIED
+MDK-0218,Fresh Kasundi Bottle,ফ্রেশ কাসুন্দি,Fresh,Salt & Sugar,300 ml,/images/products/MDK-0218_fresh_kasundi_bottle.webp,80.00,67.20,L,VERIFIED
+MDK-0219,Radhuni Turmeric Powder,হলুদ গুঁড়া,Radhuni,Spices & Masala,100 g,/images/products/MDK-0219_radhuni_turmeric_powder.webp,45.00,37.80,Piece,VERIFIED
+MDK-0220,Radhuni Turmeric Powder,Radhuni Turmeric Powder,Radhuni,Spices & Masala,200 g,/images/products/MDK-0220_radhuni_turmeric_powder.webp,85.00,71.40,Piece,VERIFIED
 MDK-0221,Radhuni Turmeric Powder,Radhuni Turmeric Powder,Radhuni,Spices & Masala,500 g,/images/products/MDK-0081_turmeric_powder_200_g.webp,200.00,168.00,Piece,VERIFIED
-MDK-0222,Radhuni Chilli Powder,মরিচ গুঁড়া,Radhuni,Spices & Masala,100 g,/images/categories/spices_masala.webp,55.00,46.20,Piece,VERIFIED
-MDK-0223,Radhuni Chilli Powder,Radhuni Chilli Powder,Radhuni,Spices & Masala,200 g,/images/categories/spices_masala.webp,110.00,92.40,Piece,VERIFIED
-MDK-0224,Radhuni Chilli Powder,Radhuni Chilli Powder,Radhuni,Spices & Masala,500 g,/images/categories/spices_masala.webp,260.00,218.40,Piece,VERIFIED
+MDK-0222,Radhuni Chilli Powder,মরিচ গুঁড়া,Radhuni,Spices & Masala,100 g,/images/products/MDK-0222_radhuni_chilli_powder.webp,55.00,46.20,Piece,VERIFIED
+MDK-0223,Radhuni Chilli Powder,Radhuni Chilli Powder,Radhuni,Spices & Masala,200 g,/images/products/MDK-0223_radhuni_chilli_powder.webp,110.00,92.40,Piece,VERIFIED
+MDK-0224,Radhuni Chilli Powder,Radhuni Chilli Powder,Radhuni,Spices & Masala,500 g,/images/products/MDK-0224_radhuni_chilli_powder.webp,260.00,218.40,Piece,VERIFIED
 MDK-0225,Radhuni Coriander Powder,ধনিয়া গুঁড়া,Radhuni,Spices & Masala,100 g,/images/products/MDK-0085_coriander_powder_200_g.webp,40.00,33.60,Piece,VERIFIED
 MDK-0226,Radhuni Coriander Powder,Radhuni Coriander Powder,Radhuni,Spices & Masala,200 g,/images/products/MDK-0085_coriander_powder_200_g.webp,75.00,63.00,Piece,VERIFIED
 MDK-0227,Radhuni Cumin Powder,জিরা গুঁড়া,Radhuni,Spices & Masala,100 g,/images/products/MDK-0087_cumin_powder_100_g.webp,110.00,92.40,Piece,VERIFIED
 MDK-0228,Radhuni Cumin Powder,Radhuni Cumin Powder,Radhuni,Spices & Masala,200 g,/images/products/MDK-0087_cumin_powder_100_g.webp,215.00,180.60,Piece,VERIFIED
-MDK-0229,Radhuni Meat Curry Masala,মাংসের মসলা,Radhuni,Spices & Masala,100 g,/images/categories/spices_masala.webp,85.00,71.40,Piece,VERIFIED
-MDK-0230,Radhuni Beef Masala,Radhuni Beef Masala,Radhuni,Spices & Masala,100 g,/images/categories/spices_masala.webp,85.00,71.40,Piece,VERIFIED
-MDK-0231,Radhuni Chicken Masala,Radhuni Chicken Masala,Radhuni,Spices & Masala,100 g,/images/categories/spices_masala.webp,80.00,67.20,Piece,VERIFIED
-MDK-0232,Radhuni Biryani Masala,Radhuni Biryani Masala,Radhuni,Spices & Masala,40 g,/images/products/MDK-0077_radhuni_biryani_masala_80_g.webp,55.00,46.20,Piece,VERIFIED
-MDK-0233,Radhuni Tehari Masala,Radhuni Tehari Masala,Radhuni,Spices & Masala,45 g,/images/categories/spices_masala.webp,55.00,46.20,Piece,VERIFIED
-MDK-0234,Radhuni Khichuri Masala,Radhuni Khichuri Masala,Radhuni,Spices & Masala,50 g,/images/categories/spices_masala.webp,45.00,37.80,Piece,VERIFIED
-MDK-0235,Radhuni Haleem Mix,Radhuni Haleem Mix,Radhuni,Spices & Masala,200 g,/images/categories/spices_masala.webp,70.00,58.80,Piece,VERIFIED
-MDK-0236,Radhuni Fish Curry Masala,Radhuni Fish Curry Masala,Radhuni,Spices & Masala,100 g,/images/products/MDK-0075_radhuni_fish_curry_masala_100_g.webp,70.00,58.80,Piece,VERIFIED
-MDK-0237,Radhuni Roast Masala,Radhuni Roast Masala,Radhuni,Spices & Masala,35 g,/images/categories/spices_masala.webp,50.00,42.00,Piece,VERIFIED
-MDK-0238,Radhuni Garam Masala Powder,Radhuni Garam Masala Powder,Radhuni,Spices & Masala,50 g,/images/products/MDK-0071_radhuni_garam_masala_100_g.webp,65.00,54.60,Piece,VERIFIED
-MDK-0239,Radhuni Borhani Masala,Radhuni Borhani Masala,Radhuni,Spices & Masala,50 g,/images/categories/spices_masala.webp,45.00,37.80,Piece,VERIFIED
-MDK-0240,Radhuni Chatpati Masala,Radhuni Chatpati Masala,Radhuni,Spices & Masala,50 g,/images/categories/spices_masala.webp,45.00,37.80,Piece,VERIFIED
-MDK-0241,Radhuni Kasuri Methi,Radhuni Kasuri Methi,Radhuni,Spices & Masala,25 g,/images/categories/spices_masala.webp,45.00,37.80,Piece,VERIFIED
+MDK-0229,Radhuni Meat Curry Masala,মাংসের মসলা,Radhuni,Spices & Masala,100 g,/images/products/MDK-0229_radhuni_meat_curry_masala.webp,85.00,71.40,Piece,VERIFIED
+MDK-0230,Radhuni Beef Masala,Radhuni Beef Masala,Radhuni,Spices & Masala,100 g,/images/products/MDK-0230_radhuni_beef_masala.webp,85.00,71.40,Piece,VERIFIED
+MDK-0231,Radhuni Chicken Masala,Radhuni Chicken Masala,Radhuni,Spices & Masala,100 g,/images/products/MDK-0231_radhuni_chicken_masala.webp,80.00,67.20,Piece,VERIFIED
+MDK-0232,Radhuni Biryani Masala,Radhuni Biryani Masala,Radhuni,Spices & Masala,40 g,/images/products/MDK-0232_radhuni_biryani_masala.webp,55.00,46.20,Piece,VERIFIED
+MDK-0233,Radhuni Tehari Masala,Radhuni Tehari Masala,Radhuni,Spices & Masala,45 g,/images/products/MDK-0233_radhuni_tehari_masala.webp,55.00,46.20,Piece,VERIFIED
+MDK-0234,Radhuni Khichuri Masala,Radhuni Khichuri Masala,Radhuni,Spices & Masala,50 g,/images/products/MDK-0234_radhuni_khichuri_masala.webp,45.00,37.80,Piece,VERIFIED
+MDK-0235,Radhuni Haleem Mix,Radhuni Haleem Mix,Radhuni,Spices & Masala,200 g,/images/products/MDK-0235_radhuni_haleem_mix.webp,70.00,58.80,Piece,VERIFIED
+MDK-0236,Radhuni Fish Curry Masala,Radhuni Fish Curry Masala,Radhuni,Spices & Masala,100 g,/images/products/MDK-0236_radhuni_fish_curry_masala.webp,70.00,58.80,Piece,VERIFIED
+MDK-0237,Radhuni Roast Masala,Radhuni Roast Masala,Radhuni,Spices & Masala,35 g,/images/products/MDK-0237_radhuni_roast_masala.webp,50.00,42.00,Piece,VERIFIED
+MDK-0238,Radhuni Garam Masala Powder,Radhuni Garam Masala Powder,Radhuni,Spices & Masala,50 g,/images/products/MDK-0238_radhuni_garam_masala_powder.webp,65.00,54.60,Piece,VERIFIED
+MDK-0239,Radhuni Borhani Masala,Radhuni Borhani Masala,Radhuni,Spices & Masala,50 g,/images/products/MDK-0239_radhuni_borhani_masala.webp,45.00,37.80,Piece,VERIFIED
+MDK-0240,Radhuni Chatpati Masala,Radhuni Chatpati Masala,Radhuni,Spices & Masala,50 g,/images/products/MDK-0240_radhuni_chatpati_masala.webp,45.00,37.80,Piece,VERIFIED
+MDK-0241,Radhuni Kasuri Methi,Radhuni Kasuri Methi,Radhuni,Spices & Masala,25 g,/images/products/MDK-0241_radhuni_kasuri_methi.webp,45.00,37.80,Piece,VERIFIED
 MDK-0242,ACI Pure Turmeric Powder,ACI Pure Turmeric Powder,ACI Pure,Spices & Masala,200 g,/images/products/MDK-0081_turmeric_powder_200_g.webp,85.00,71.40,Piece,VERIFIED
-MDK-0243,ACI Pure Chilli Powder,ACI Pure Chilli Powder,ACI Pure,Spices & Masala,200 g,/images/categories/spices_masala.webp,110.00,92.40,Piece,VERIFIED
+MDK-0243,ACI Pure Chilli Powder,ACI Pure Chilli Powder,ACI Pure,Spices & Masala,200 g,/images/products/MDK-0243_aci_pure_chilli_powder.webp,110.00,92.40,Piece,VERIFIED
 MDK-0244,ACI Pure Coriander Powder,ACI Pure Coriander Powder,ACI Pure,Spices & Masala,200 g,/images/products/MDK-0085_coriander_powder_200_g.webp,75.00,63.00,Piece,VERIFIED
 MDK-0245,ACI Pure Cumin Powder,ACI Pure Cumin Powder,ACI Pure,Spices & Masala,200 g,/images/products/MDK-0087_cumin_powder_100_g.webp,215.00,180.60,Piece,VERIFIED
-MDK-0246,ACI Pure Meat Masala,ACI Pure Meat Masala,ACI Pure,Spices & Masala,100 g,/images/categories/spices_masala.webp,80.00,67.20,Piece,VERIFIED
-MDK-0247,ACI Pure Biryani Masala,ACI Pure Biryani Masala,ACI Pure,Spices & Masala,40 g,/images/products/MDK-0077_radhuni_biryani_masala_80_g.webp,50.00,42.00,Piece,VERIFIED
+MDK-0246,ACI Pure Meat Masala,ACI Pure Meat Masala,ACI Pure,Spices & Masala,100 g,/images/products/MDK-0246_aci_pure_meat_masala.webp,80.00,67.20,Piece,VERIFIED
+MDK-0247,ACI Pure Biryani Masala,ACI Pure Biryani Masala,ACI Pure,Spices & Masala,40 g,/images/products/MDK-0247_aci_pure_biryani_masala.webp,50.00,42.00,Piece,VERIFIED
 MDK-0248,PRAN Turmeric Powder,PRAN Turmeric Powder,PRAN,Spices & Masala,200 g,/images/products/MDK-0081_turmeric_powder_200_g.webp,80.00,67.20,Piece,VERIFIED
-MDK-0249,PRAN Chilli Powder,PRAN Chilli Powder,PRAN,Spices & Masala,200 g,/images/categories/spices_masala.webp,105.00,88.20,Piece,VERIFIED
+MDK-0249,PRAN Chilli Powder,PRAN Chilli Powder,PRAN,Spices & Masala,200 g,/images/products/MDK-0249_pran_chilli_powder.webp,105.00,88.20,Piece,VERIFIED
 MDK-0250,PRAN Coriander Powder,PRAN Coriander Powder,PRAN,Spices & Masala,200 g,/images/products/MDK-0085_coriander_powder_200_g.webp,70.00,58.80,Piece,VERIFIED
 MDK-0251,PRAN Cumin Powder,PRAN Cumin Powder,PRAN,Spices & Masala,200 g,/images/products/MDK-0087_cumin_powder_100_g.webp,200.00,168.00,Piece,VERIFIED
-MDK-0252,PRAN Meat Masala,PRAN Meat Masala,PRAN,Spices & Masala,100 g,/images/categories/spices_masala.webp,75.00,63.00,Piece,VERIFIED
-MDK-0253,PRAN Biryani Masala,PRAN Biryani Masala,PRAN,Spices & Masala,40 g,/images/products/MDK-0077_radhuni_biryani_masala_80_g.webp,50.00,42.00,Piece,VERIFIED
+MDK-0252,PRAN Meat Masala,PRAN Meat Masala,PRAN,Spices & Masala,100 g,/images/products/MDK-0252_pran_meat_masala.webp,75.00,63.00,Piece,VERIFIED
+MDK-0253,PRAN Biryani Masala,PRAN Biryani Masala,PRAN,Spices & Masala,40 g,/images/products/MDK-0253_pran_biryani_masala.webp,50.00,42.00,Piece,VERIFIED
 MDK-0254,Fresh Turmeric Powder,Fresh Turmeric Powder,Fresh,Spices & Masala,200 g,/images/products/MDK-0081_turmeric_powder_200_g.webp,85.00,71.40,Piece,VERIFIED
-MDK-0255,Fresh Chilli Powder,Fresh Chilli Powder,Fresh,Spices & Masala,200 g,/images/categories/spices_masala.webp,110.00,92.40,Piece,VERIFIED
+MDK-0255,Fresh Chilli Powder,Fresh Chilli Powder,Fresh,Spices & Masala,200 g,/images/products/MDK-0255_fresh_chilli_powder.webp,110.00,92.40,Piece,VERIFIED
 MDK-0256,Fresh Coriander Powder,Fresh Coriander Powder,Fresh,Spices & Masala,200 g,/images/products/MDK-0085_coriander_powder_200_g.webp,75.00,63.00,Piece,VERIFIED
 MDK-0257,Fresh Cumin Powder,Fresh Cumin Powder,Fresh,Spices & Masala,200 g,/images/products/MDK-0087_cumin_powder_100_g.webp,215.00,180.60,Piece,VERIFIED
 MDK-0258,BD Foods Turmeric Powder,BD Foods Turmeric Powder,BD Foods,Spices & Masala,200 g,/images/products/MDK-0081_turmeric_powder_200_g.webp,85.00,71.40,Piece,VERIFIED
-MDK-0259,BD Foods Chilli Powder,BD Foods Chilli Powder,BD Foods,Spices & Masala,200 g,/images/categories/spices_masala.webp,110.00,92.40,Piece,VERIFIED
+MDK-0259,BD Foods Chilli Powder,BD Foods Chilli Powder,BD Foods,Spices & Masala,200 g,/images/products/MDK-0259_bd_foods_chilli_powder.webp,110.00,92.40,Piece,VERIFIED
 MDK-0260,BD Foods Cumin Powder,BD Foods Cumin Powder,BD Foods,Spices & Masala,200 g,/images/products/MDK-0087_cumin_powder_100_g.webp,215.00,180.60,Piece,VERIFIED
-MDK-0261,Maggi Shad-e-Magic,ম্যাগি স্বাদে ম্যাজিক স্যাচে,Maggi,Spices & Masala,5 g x 12 pcs Strip,/images/categories/spices_masala.webp,60.00,50.40,Piece,VERIFIED
-MDK-0262,Maggi Chicken Cube,Maggi Chicken Cube,Maggi,Spices & Masala,4 pcs Box,/images/categories/spices_masala.webp,50.00,42.00,Box,VERIFIED
-MDK-0263,Knorr Chicken Cube,Knorr Chicken Cube,Loose / Local,Spices & Masala,6 pcs Box,/images/categories/spices_masala.webp,70.00,58.80,Box,VERIFIED
-MDK-0264,Ajinomoto,টেস্টিং সল্ট / মনোসোডিয়াম গ্লুটামেট,Loose / Local,Spices & Masala,50 g,/images/categories/spices_masala.webp,40.00,33.60,Piece,VERIFIED
-MDK-0265,Loose Dry Red Chilli - হাটহাজারী/পঞ্চগড়,খোলা শুকনো মরিচ,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,450.00,378.00,Kg,VERIFIED
-MDK-0266,খোলা শুকনো মরিচ বোঁটা ছাড়া,খোলা শুকনো মরিচ বোঁটা ছাড়া,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,480.00,403.20,Kg,VERIFIED
-MDK-0267,Whole Dry Turmeric Roots,খোলা আস্ত হলুদ,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,280.00,235.20,Kg,VERIFIED
-MDK-0268,Whole Cumin Seeds - Indian Cumin,খোলা আস্ত জিরা,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,850.00,714.00,Kg,VERIFIED
-MDK-0269,Jeera Extra Clean,খোলা প্রিমিয়াম জিরা,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,900.00,756.00,Kg,VERIFIED
-MDK-0270,Whole Coriander Seeds,খোলা আস্ত ধনিয়া,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,180.00,151.20,Kg,VERIFIED
-MDK-0271,Green Cardamom / Elachi,খোলা সবুজ ছোট এলাচ,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,380.00,319.20,Kg,VERIFIED
-MDK-0272,Cardamom Jumbo 8mm,খোলা এলাচ বড় দানা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,450.00,378.00,Kg,VERIFIED
-MDK-0273,Cinnamon Sticks / Dalchini,খোলা দারুচিনি,Ruchi,Spices & Masala,২৫০ গ্রাম,/images/categories/spices_masala.webp,130.00,109.20,Kg,VERIFIED
-MDK-0274,Cloves / Labanga,খোলা লবঙ্গ,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,180.00,151.20,Kg,VERIFIED
-MDK-0275,Black Pepper,খোলা কালো গোলমরিচ,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,140.00,117.60,Kg,VERIFIED
-MDK-0276,White Pepper,খোলা সাদা গোলমরিচ,Hit,Spices & Masala,৫০ গ্রাম,/images/categories/spices_masala.webp,100.00,84.00,Kg,VERIFIED
-MDK-0277,Bay Leaves,খোলা তেজপাতা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/categories/spices_masala.webp,50.00,42.00,Kg,VERIFIED
-MDK-0278,Whole Nutmeg / Jaiphal,খোলা জয়ফল,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/categories/spices_masala.webp,90.00,75.60,Kg,VERIFIED
-MDK-0279,Mace / Javitri,খোলা জয়ত্রী,Loose / Local,Spices & Masala,২৫ গ্রাম,/images/categories/spices_masala.webp,120.00,100.80,Kg,VERIFIED
-MDK-0280,Star Anise,খোলা স্টার অ্যানিস / চক্রফুল,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/categories/spices_masala.webp,80.00,67.20,Kg,VERIFIED
-MDK-0281,Allspice / Kabab Chini,খোলা কাবাব চিনি,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/categories/spices_masala.webp,110.00,92.40,Kg,VERIFIED
-MDK-0282,Shahi Jeera,খোলা শাহি জিরা,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/categories/spices_masala.webp,70.00,58.80,Kg,VERIFIED
-MDK-0283,Fenugreek Seeds,খোলা মেথি দানা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,30.00,25.20,Kg,VERIFIED
-MDK-0284,Fennel Seeds / Mouri,খোলা মৌরি / মিষ্টি জিরা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,40.00,33.60,Kg,VERIFIED
-MDK-0285,Black Cumin / Kalijira,খোলা কালোজিরা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,60.00,50.40,Kg,VERIFIED
-MDK-0286,Panch Phoron Mix,খোলা পাঁচফোড়ন,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,40.00,33.60,Kg,VERIFIED
-MDK-0287,Yellow Mustard Seeds,খোলা হলুদ সরিষা দানা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/categories/spices_masala.webp,50.00,42.00,Kg,VERIFIED
-MDK-0288,Black Mustard Seeds,খোলা কালো সরিষা দানা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/categories/spices_masala.webp,45.00,37.80,Kg,VERIFIED
-MDK-0289,Poppy Seeds / Postodana,খোলা পোস্তাদানা,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/categories/spices_masala.webp,180.00,151.20,Kg,VERIFIED
-MDK-0290,Ginger Paste Pouch,রাঁধুনী আদা বাটা,Radhuni,Spices & Masala,200 g,/images/categories/spices_masala.webp,55.00,46.20,Piece,VERIFIED
-MDK-0291,Garlic Paste Pouch,রাঁধুনী রসুন বাটা,Radhuni,Spices & Masala,200 g,/images/categories/spices_masala.webp,55.00,46.20,Piece,VERIFIED
-MDK-0292,Fried Onion Beresta,রাঁধুনী পেঁয়াজ বেরেস্তা,Radhuni,Spices & Masala,100 g,/images/categories/spices_masala.webp,100.00,84.00,Piece,VERIFIED
-MDK-0293,Loose Crispy Beresta,খোলা পেঁয়াজ বেরেস্তা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/categories/spices_masala.webp,200.00,168.00,Kg,VERIFIED
-MDK-0294,Deshi Onion,দেশি পেঁয়াজ,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,80.00,67.20,Kg,VERIFIED
-MDK-0295,Indian Onion,ভারতীয় পেঁয়াজ,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,65.00,54.60,Kg,VERIFIED
-MDK-0296,Deshi Garlic,দেশি রসুন,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,180.00,151.20,Kg,VERIFIED
-MDK-0297,Imported Garlic,চাইনিজ / ভারতীয় বড় রসুন,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,220.00,184.80,Kg,VERIFIED
-MDK-0298,Deshi Ginger,দেশি আদা,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,160.00,134.40,Kg,VERIFIED
-MDK-0299,Imported Ginger,চাইনিজ ধোয়া আদা,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,240.00,201.60,Kg,VERIFIED
-MDK-0300,Potato,ডায়মন্ড আলু / লাল গোল আলু,Loose / Local,Spices & Masala,১ কেজি,/images/categories/spices_masala.webp,35.00,29.40,Kg,VERIFIED
-MDK-0301,Fresh Green Chilli,কাঁচা মরিচ,Fresh,Spices & Masala,২৫০ গ্রাম,/images/categories/spices_masala.webp,30.00,25.20,Kg,VERIFIED
+MDK-0261,Maggi Shad-e-Magic,ম্যাগি স্বাদে ম্যাজিক স্যাচে,Maggi,Spices & Masala,5 g x 12 pcs Strip,/images/products/MDK-0261_maggi_shad_e_magic.webp,60.00,50.40,Piece,VERIFIED
+MDK-0262,Maggi Chicken Cube,Maggi Chicken Cube,Maggi,Spices & Masala,4 pcs Box,/images/products/MDK-0262_maggi_chicken_cube.webp,50.00,42.00,Box,VERIFIED
+MDK-0263,Knorr Chicken Cube,Knorr Chicken Cube,Loose / Local,Spices & Masala,6 pcs Box,/images/products/MDK-0263_knorr_chicken_cube.webp,70.00,58.80,Box,VERIFIED
+MDK-0264,Ajinomoto,টেস্টিং সল্ট / মনোসোডিয়াম গ্লুটামেট,Loose / Local,Spices & Masala,50 g,/images/products/MDK-0264_ajinomoto.webp,40.00,33.60,Piece,VERIFIED
+MDK-0265,Loose Dry Red Chilli - হাটহাজারী/পঞ্চগড়,খোলা শুকনো মরিচ,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0265_loose_dry_red_chilli.webp,450.00,378.00,Kg,VERIFIED
+MDK-0266,খোলা শুকনো মরিচ বোঁটা ছাড়া,খোলা শুকনো মরিচ বোঁটা ছাড়া,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0266_loose_chili.webp,480.00,403.20,Kg,VERIFIED
+MDK-0267,Whole Dry Turmeric Roots,খোলা আস্ত হলুদ,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0267_whole_dry_turmeric_roots.webp,280.00,235.20,Kg,VERIFIED
+MDK-0268,Whole Cumin Seeds - Indian Cumin,খোলা আস্ত জিরা,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0268_whole_cumin_seeds_indian_cumin.webp,850.00,714.00,Kg,VERIFIED
+MDK-0269,Jeera Extra Clean,খোলা প্রিমিয়াম জিরা,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0269_jeera_extra_clean.webp,900.00,756.00,Kg,VERIFIED
+MDK-0270,Whole Coriander Seeds,খোলা আস্ত ধনিয়া,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0270_whole_coriander_seeds.webp,180.00,151.20,Kg,VERIFIED
+MDK-0271,Green Cardamom / Elachi,খোলা সবুজ ছোট এলাচ,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0271_green_cardamom_elachi.webp,380.00,319.20,Kg,VERIFIED
+MDK-0272,Cardamom Jumbo 8mm,খোলা এলাচ বড় দানা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0272_cardamom_jumbo_8mm.webp,450.00,378.00,Kg,VERIFIED
+MDK-0273,Cinnamon Sticks / Dalchini,খোলা দারুচিনি,Ruchi,Spices & Masala,২৫০ গ্রাম,/images/products/MDK-0273_cinnamon_sticks_dalchini.webp,130.00,109.20,Kg,VERIFIED
+MDK-0274,Cloves / Labanga,খোলা লবঙ্গ,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0274_cloves_labanga.webp,180.00,151.20,Kg,VERIFIED
+MDK-0275,Black Pepper,খোলা কালো গোলমরিচ,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0275_black_pepper.webp,140.00,117.60,Kg,VERIFIED
+MDK-0276,White Pepper,খোলা সাদা গোলমরিচ,Hit,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0276_white_pepper.webp,100.00,84.00,Kg,VERIFIED
+MDK-0277,Bay Leaves,খোলা তেজপাতা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/products/MDK-0277_bay_leaves.webp,50.00,42.00,Kg,VERIFIED
+MDK-0278,Whole Nutmeg / Jaiphal,খোলা জয়ফল,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0278_whole_nutmeg_jaiphal.webp,90.00,75.60,Kg,VERIFIED
+MDK-0279,Mace / Javitri,খোলা জয়ত্রী,Loose / Local,Spices & Masala,২৫ গ্রাম,/images/products/MDK-0279_mace_javitri.webp,120.00,100.80,Kg,VERIFIED
+MDK-0280,Star Anise,খোলা স্টার অ্যানিস / চক্রফুল,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0280_star_anise.webp,80.00,67.20,Kg,VERIFIED
+MDK-0281,Allspice / Kabab Chini,খোলা কাবাব চিনি,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0281_allspice_kabab_chini.webp,110.00,92.40,Kg,VERIFIED
+MDK-0282,Shahi Jeera,খোলা শাহি জিরা,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0282_shahi_jeera.webp,70.00,58.80,Kg,VERIFIED
+MDK-0283,Fenugreek Seeds,খোলা মেথি দানা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0283_fenugreek_seeds.webp,30.00,25.20,Kg,VERIFIED
+MDK-0284,Fennel Seeds / Mouri,খোলা মৌরি / মিষ্টি জিরা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0284_fennel_seeds_mouri.webp,40.00,33.60,Kg,VERIFIED
+MDK-0285,Black Cumin / Kalijira,খোলা কালোজিরা,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0285_black_cumin_kalijira.webp,60.00,50.40,Kg,VERIFIED
+MDK-0286,Panch Phoron Mix,খোলা পাঁচফোড়ন,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/products/MDK-0286_panch_phoron_mix.webp,40.00,33.60,Kg,VERIFIED
+MDK-0287,Yellow Mustard Seeds,খোলা হলুদ সরিষা দানা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/products/MDK-0287_yellow_mustard_seeds.webp,50.00,42.00,Kg,VERIFIED
+MDK-0288,Black Mustard Seeds,খোলা কালো সরিষা দানা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/products/MDK-0288_black_mustard_seeds.webp,45.00,37.80,Kg,VERIFIED
+MDK-0289,Poppy Seeds / Postodana,খোলা পোস্তাদানা,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0289_poppy_seeds_postodana.webp,180.00,151.20,Kg,VERIFIED
+MDK-0290,Ginger Paste Pouch,রাঁধুনী আদা বাটা,Radhuni,Spices & Masala,200 g,/images/products/MDK-0290_ginger_paste_pouch.webp,55.00,46.20,Piece,VERIFIED
+MDK-0291,Garlic Paste Pouch,রাঁধুনী রসুন বাটা,Radhuni,Spices & Masala,200 g,/images/products/MDK-0291_garlic_paste_pouch.webp,55.00,46.20,Piece,VERIFIED
+MDK-0292,Fried Onion Beresta,রাঁধুনী পেঁয়াজ বেরেস্তা,Radhuni,Spices & Masala,100 g,/images/products/MDK-0292_fried_onion_beresta.webp,100.00,84.00,Piece,VERIFIED
+MDK-0293,Loose Crispy Beresta,খোলা পেঁয়াজ বেরেস্তা,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/products/MDK-0293_loose_crispy_beresta.webp,200.00,168.00,Kg,VERIFIED
+MDK-0294,Deshi Onion,দেশি পেঁয়াজ,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0294_deshi_onion.webp,80.00,67.20,Kg,VERIFIED
+MDK-0295,Indian Onion,ভারতীয় পেঁয়াজ,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0295_indian_onion.webp,65.00,54.60,Kg,VERIFIED
+MDK-0296,Deshi Garlic,দেশি রসুন,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0296_deshi_garlic.webp,180.00,151.20,Kg,VERIFIED
+MDK-0297,Imported Garlic,চাইনিজ / ভারতীয় বড় রসুন,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0297_imported_garlic.webp,220.00,184.80,Kg,VERIFIED
+MDK-0298,Deshi Ginger,দেশি আদা,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0298_deshi_ginger.webp,160.00,134.40,Kg,VERIFIED
+MDK-0299,Imported Ginger,চাইনিজ ধোয়া আদা,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0299_imported_ginger.webp,240.00,201.60,Kg,VERIFIED
+MDK-0300,Potato,ডায়মন্ড আলু / লাল গোল আলু,Loose / Local,Spices & Masala,১ কেজি,/images/products/MDK-0300_potato.webp,35.00,29.40,Kg,VERIFIED
+MDK-0301,Fresh Green Chilli,কাঁচা মরিচ,Fresh,Spices & Masala,২৫০ গ্রাম,/images/products/MDK-0301_fresh_green_chilli.webp,30.00,25.20,Kg,VERIFIED
 MDK-0302,Fresh Green Lemon,লেবু,Fresh,Spices & Masala,৪ পিস হালি,/images/categories/spices_masala.webp,40.00,33.60,Hali,VERIFIED
 MDK-0303,রাঁধুনী কাবাব মসলা,রাঁধুনী কাবাব মসলা,Radhuni,Spices & Masala,50 g,/images/categories/spices_masala.webp,50.00,42.00,Piece,VERIFIED
 MDK-0304,রাঁধুনী চটপটি মসলা,রাঁধুনী চটপটি মসলা,Radhuni,Spices & Masala,50 g,/images/categories/spices_masala.webp,45.00,37.80,Piece,VERIFIED
@@ -308,7 +308,7 @@ MDK-0306,আহমেদ মিট কারি মসলা,আহমেদ ম
 MDK-0307,Shan Bombay Biryani,শান বোম্বাই বিরিয়ানি মসলা,Loose / Local,Spices & Masala,60 g,/images/categories/spices_masala.webp,120.00,100.80,Piece,VERIFIED
 MDK-0308,Shan Nihari,শান নিহারি মসলা,Loose / Local,Spices & Masala,60 g,/images/categories/spices_masala.webp,120.00,100.80,Piece,VERIFIED
 MDK-0309,শান হালিম মিক্স,শান হালিম মিক্স,Loose / Local,Spices & Masala,60 g,/images/categories/spices_masala.webp,120.00,100.80,Piece,VERIFIED
-MDK-0310,শান তন্দুরি চিকেন মসলা,শান তন্দুরি চিকেন মসলা,Loose / Local,Spices & Masala,50 g,/images/products/MDK-0073_radhuni_chicken_curry_masala_100_g.webp,120.00,100.80,Piece,VERIFIED
+MDK-0310,শান তন্দুরি চিকেন মসলা,শান তন্দুরি চিকেন মসলা,Loose / Local,Spices & Masala,50 g,/images/products/MDK-0310_item_mdk-0310.webp,120.00,100.80,Piece,VERIFIED
 MDK-0311,শান মাটন বিরিয়ানি মসলা,শান মাটন বিরিয়ানি মসলা,Loose / Local,Spices & Masala,60 g,/images/categories/spices_masala.webp,120.00,100.80,Piece,VERIFIED
 MDK-0312,National Biryani,ন্যাশনাল বিরিয়ানি মসলা,Loose / Local,Spices & Masala,50 g,/images/categories/spices_masala.webp,110.00,92.40,Piece,VERIFIED
 MDK-0313,Mehran Biryani,মেহরান বিরিয়ানি মসলা,Loose / Local,Spices & Masala,50 g,/images/categories/spices_masala.webp,110.00,92.40,Piece,VERIFIED
@@ -317,7 +317,7 @@ MDK-0315,কাঁচা হলুদ বাটা,কাঁচা হলুদ 
 MDK-0316,কাঁচা মরিচ বাটা,কাঁচা মরিচ বাটা,Loose / Local,Spices & Masala,২০০ গ্রাম,/images/categories/spices_masala.webp,60.00,50.40,Kg,VERIFIED
 MDK-0317,Dry Mango Powder / Amchur,আমচুর পাউডার,Loose / Local,Spices & Masala,50 g,/images/categories/spices_masala.webp,60.00,50.40,Piece,VERIFIED
 MDK-0318,Everest / MDH Chat Masala,চাট মসলা,Loose / Local,Spices & Masala,100 g,/images/categories/spices_masala.webp,130.00,109.20,Piece,VERIFIED
-MDK-0319,গরম মসলা গোটা স্পেশাল মিক্স প্যাকেট,গরম মসলা গোটা স্পেশাল মিক্স প্যাকেট,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0071_radhuni_garam_masala_100_g.webp,80.00,67.20,Kg,VERIFIED
+MDK-0319,গরম মসলা গোটা স্পেশাল মিক্স প্যাকেট,গরম মসলা গোটা স্পেশাল মিক্স প্যাকেট,Loose / Local,Spices & Masala,৫০ গ্রাম,/images/products/MDK-0319_item_mdk-0319.webp,80.00,67.20,Kg,VERIFIED
 MDK-0320,খাসির মাংসের মসলা স্পেশাল মিক্স,খাসির মাংসের মসলা স্পেশাল মিক্স,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,90.00,75.60,Kg,VERIFIED
 MDK-0321,হাঁসের মাংসের মসলা স্পেশাল মিক্স,হাঁসের মাংসের মসলা স্পেশাল মিক্স,Loose / Local,Spices & Masala,১০০ গ্রাম,/images/categories/spices_masala.webp,90.00,75.60,Kg,VERIFIED
 MDK-0322,দেশি পাকা বিচিযুক্ত তেঁতুল,তেঁতুল,Loose / Local,Spices & Masala,২৫০ গ্রাম,/images/categories/spices_masala.webp,50.00,42.00,Kg,VERIFIED
@@ -463,14 +463,14 @@ MDK-0461,এমু পাখির ডিম,এমু পাখির ডিম
 MDK-0462,ব্রয়লার মুরগির ছাঁটা গিলা-কলিজা,ব্রয়লার মুরগির ছাঁটা গিলা-কলিজা,Loose / Local,Eggs,৫০০ গ্রাম,/images/categories/eggs.webp,130.00,109.20,Kg,VERIFIED
 MDK-0463,কোল্ড স্টোর,ব্রয়লার ড্রেসড চিকেন,Loose / Local,Eggs,১ কেজি,/images/categories/eggs.webp,200.00,168.00,Kg,VERIFIED
 MDK-0464,কোল্ড ড্রেসড,সোনালী মুরগি,Loose / Local,Eggs,১ কেজি,/images/categories/eggs.webp,320.00,268.80,Kg,VERIFIED
-MDK-0465,Olympic Energy Plus Biscuit,Olympic Energy Plus Biscuit,Olympic,Biscuits & Bakery,100 g,/images/products/MDK-0106_energy_plus_biscuit_family_pack.webp,15.00,12.60,Piece,VERIFIED
-MDK-0466,Olympic Energy Plus Biscuit,Olympic Energy Plus Biscuit,Olympic,Biscuits & Bakery,300 g Family Pack,/images/products/MDK-0106_energy_plus_biscuit_family_pack.webp,50.00,42.00,L,VERIFIED
+MDK-0465,Olympic Energy Plus Biscuit,Olympic Energy Plus Biscuit,Olympic,Biscuits & Bakery,100 g,/images/products/MDK-0465_olympic_energy_plus_biscuit.webp,15.00,12.60,Piece,VERIFIED
+MDK-0466,Olympic Energy Plus Biscuit,Olympic Energy Plus Biscuit,Olympic,Biscuits & Bakery,300 g Family Pack,/images/products/MDK-0466_olympic_energy_plus_biscuit.webp,50.00,42.00,L,VERIFIED
 MDK-0467,Olympic Tip Biscuit,Olympic Tip Biscuit,Olympic,Biscuits & Bakery,100 g,/images/categories/biscuits_bakery.webp,15.00,12.60,Piece,VERIFIED
 MDK-0468,Olympic Hilux Biscuit,Olympic Hilux Biscuit,Lux,Biscuits & Bakery,100 g,/images/categories/biscuits_bakery.webp,15.00,12.60,Piece,VERIFIED
 MDK-0469,Olympic Nutty Peanut Biscuit,Olympic Nutty Peanut Biscuit,Olympic,Biscuits & Bakery,150 g,/images/categories/biscuits_bakery.webp,30.00,25.20,Piece,VERIFIED
 MDK-0470,Olympic Dry Cake,Olympic Dry Cake,Olympic,Biscuits & Bakery,250 g Box,/images/categories/biscuits_bakery.webp,70.00,58.80,Box,VERIFIED
 MDK-0471,Olympic Dry Cake,Olympic Dry Cake,Olympic,Biscuits & Bakery,400 g Jar,/images/categories/biscuits_bakery.webp,120.00,100.80,Piece,VERIFIED
-MDK-0472,Olympic Milk Marie Biscuit,Olympic Milk Marie Biscuit,Olympic,Biscuits & Bakery,200 g,/images/products/MDK-0114_milk_marie_biscuit_family_pack.webp,35.00,29.40,Piece,VERIFIED
+MDK-0472,Olympic Milk Marie Biscuit,Olympic Milk Marie Biscuit,Olympic,Biscuits & Bakery,200 g,/images/products/MDK-0472_olympic_milk_marie_biscuit.webp,35.00,29.40,Piece,VERIFIED
 MDK-0473,Olympic Pine Fresh Pineapple Biscuit,Olympic Pine Fresh Pineapple Biscuit,Fresh,Biscuits & Bakery,100 g,/images/categories/biscuits_bakery.webp,15.00,12.60,Piece,VERIFIED
 MDK-0474,Olympic Badami Toast,Olympic Badami Toast,Olympic,Biscuits & Bakery,250 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0475,Olympic Daily Toast,Olympic Daily Toast,Olympic,Biscuits & Bakery,300 g,/images/categories/biscuits_bakery.webp,55.00,46.20,Piece,VERIFIED
@@ -478,13 +478,13 @@ MDK-0476,Haque Mr. Cookie Biscuit,Haque Mr. Cookie Biscuit,Haque,Biscuits & Bake
 MDK-0477,Haque Mr. Cookie Biscuit,Haque Mr. Cookie Biscuit,Haque,Biscuits & Bakery,250 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0478,Haque Cream Cracker,Haque Cream Cracker,Haque,Biscuits & Bakery,200 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0479,Haque Bourbon Chocolate Biscuit,Haque Bourbon Chocolate Biscuit,Haque,Biscuits & Bakery,100 g,/images/categories/biscuits_bakery.webp,25.00,21.00,Piece,VERIFIED
-MDK-0480,Haque Digestive Biscuit,Haque Digestive Biscuit,Haque,Biscuits & Bakery,150 g,/images/products/MDK-0108_digestive_biscuit_family_pack.webp,40.00,33.60,Piece,VERIFIED
+MDK-0480,Haque Digestive Biscuit,Haque Digestive Biscuit,Haque,Biscuits & Bakery,150 g,/images/products/MDK-0480_haque_digestive_biscuit.webp,40.00,33.60,Piece,VERIFIED
 MDK-0481,Danish Lexus Vegetable Biscuit,Danish Lexus Vegetable Biscuit,Danish,Biscuits & Bakery,150 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0482,Danish Lexus Vegetable Biscuit,Danish Lexus Vegetable Biscuit,Danish,Biscuits & Bakery,300 g,/images/categories/biscuits_bakery.webp,95.00,79.80,Piece,VERIFIED
-MDK-0483,Danish Butter Cookies Tin,Danish Butter Cookies Tin,Danish,Biscuits & Bakery,400 g,/images/products/MDK-0110_butter_cookies_300_g.webp,420.00,352.80,Piece,VERIFIED
+MDK-0483,Danish Butter Cookies Tin,Danish Butter Cookies Tin,Danish,Biscuits & Bakery,400 g,/images/products/MDK-0483_danish_butter_cookies_tin.webp,420.00,352.80,Piece,VERIFIED
 MDK-0484,Danish Milk Marie,Danish Milk Marie,Danish,Biscuits & Bakery,200 g,/images/categories/biscuits_bakery.webp,35.00,29.40,Piece,VERIFIED
 MDK-0485,Danish Dry Cake,Danish Dry Cake,Danish,Biscuits & Bakery,300 g,/images/categories/biscuits_bakery.webp,80.00,67.20,Piece,VERIFIED
-MDK-0486,Danish Toast Biscuit,Danish Toast Biscuit,Danish,Biscuits & Bakery,300 g,/images/products/MDK-0116_toast_biscuit_400_g.webp,55.00,46.20,Piece,VERIFIED
+MDK-0486,Danish Toast Biscuit,Danish Toast Biscuit,Danish,Biscuits & Bakery,300 g,/images/products/MDK-0486_danish_toast_biscuit.webp,55.00,46.20,Piece,VERIFIED
 MDK-0487,Nabisco Glucose Biscuit,Nabisco Glucose Biscuit,Loose / Local,Biscuits & Bakery,75 g,/images/categories/biscuits_bakery.webp,10.00,8.40,Piece,VERIFIED
 MDK-0488,Nabisco Glucose Family Pack,Nabisco Glucose Family Pack,Loose / Local,Biscuits & Bakery,300 g,/images/categories/biscuits_bakery.webp,40.00,33.60,Piece,VERIFIED
 MDK-0489,Nabisco Milk Marie,Nabisco Milk Marie,Loose / Local,Biscuits & Bakery,200 g,/images/categories/biscuits_bakery.webp,35.00,29.40,Piece,VERIFIED
@@ -492,7 +492,7 @@ MDK-0490,Nabisco Elachi Biscuit,Nabisco Elachi Biscuit,Loose / Local,Biscuits & 
 MDK-0491,Nabisco Pineapple Biscuit,Nabisco Pineapple Biscuit,Loose / Local,Biscuits & Bakery,100 g,/images/categories/biscuits_bakery.webp,15.00,12.60,Piece,VERIFIED
 MDK-0492,Cocola Glucose Biscuit,Cocola Glucose Biscuit,Cocola,Biscuits & Bakery,75 g,/images/categories/biscuits_bakery.webp,10.00,8.40,Piece,VERIFIED
 MDK-0493,Cocola Marie Biscuit,Cocola Marie Biscuit,Cocola,Biscuits & Bakery,200 g,/images/categories/biscuits_bakery.webp,35.00,29.40,Piece,VERIFIED
-MDK-0494,Cocola Toast Biscuit,Cocola Toast Biscuit,Cocola,Biscuits & Bakery,300 g,/images/products/MDK-0116_toast_biscuit_400_g.webp,55.00,46.20,Piece,VERIFIED
+MDK-0494,Cocola Toast Biscuit,Cocola Toast Biscuit,Cocola,Biscuits & Bakery,300 g,/images/products/MDK-0494_cocola_toast_biscuit.webp,55.00,46.20,Piece,VERIFIED
 MDK-0495,Cocola Coconut Cookies,Cocola Coconut Cookies,Cocola,Biscuits & Bakery,150 g,/images/categories/biscuits_bakery.webp,30.00,25.20,Piece,VERIFIED
 MDK-0496,Britannia Marie Gold Biscuit,Britannia Marie Gold Biscuit,Britannia,Biscuits & Bakery,200 g,/images/categories/biscuits_bakery.webp,45.00,37.80,Piece,VERIFIED
 MDK-0497,Britannia Little Hearts,Britannia Little Hearts,Britannia,Biscuits & Bakery,75 g,/images/categories/biscuits_bakery.webp,30.00,25.20,Piece,VERIFIED
@@ -501,16 +501,16 @@ MDK-0499,Britannia Good Day Cashew,Britannia Good Day Cashew,Britannia,Biscuits 
 MDK-0500,Oreo Original Chocolate Cookie,Oreo Original Chocolate Cookie,Loose / Local,Biscuits & Bakery,120 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0501,Oreo Vanilla Cream Cookie,Oreo Vanilla Cream Cookie,Loose / Local,Biscuits & Bakery,120 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0502,Parle-G Glucose Biscuit,Parle-G Glucose Biscuit,Loose / Local,Biscuits & Bakery,250 g,/images/categories/biscuits_bakery.webp,40.00,33.60,Piece,VERIFIED
-MDK-0503,All Time Milk Bread,পাউরুটি,All Time,Biscuits & Bakery,400 g,/images/products/MDK-0169_bread_large_loaf.webp,55.00,46.20,Piece,VERIFIED
-MDK-0504,All Time Sandwich Bread,All Time Sandwich Bread,All Time,Biscuits & Bakery,400 g,/images/products/MDK-0169_bread_large_loaf.webp,60.00,50.40,Piece,VERIFIED
+MDK-0503,All Time Milk Bread,পাউরুটি,All Time,Biscuits & Bakery,400 g,/images/products/MDK-0503_all_time_milk_bread.webp,55.00,46.20,Piece,VERIFIED
+MDK-0504,All Time Sandwich Bread,All Time Sandwich Bread,All Time,Biscuits & Bakery,400 g,/images/products/MDK-0504_all_time_sandwich_bread.webp,60.00,50.40,Piece,VERIFIED
 MDK-0505,All Time Butter Bun,All Time Butter Bun,All Time,Biscuits & Bakery,Single 60 g,/images/products/MDK-0165_local_butter_200_g.webp,15.00,12.60,L,VERIFIED
 MDK-0506,All Time Honey Bun,All Time Honey Bun,All Time,Biscuits & Bakery,Single 60 g,/images/categories/biscuits_bakery.webp,15.00,12.60,L,VERIFIED
 MDK-0507,All Time Fruit Cake,All Time Fruit Cake,All Time,Biscuits & Bakery,250 g,/images/categories/biscuits_bakery.webp,60.00,50.40,Piece,VERIFIED
 MDK-0508,All Time Plain Cake,All Time Plain Cake,All Time,Biscuits & Bakery,200 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0509,All Time Cream Roll,All Time Cream Roll,All Time,Biscuits & Bakery,35 g,/images/categories/biscuits_bakery.webp,10.00,8.40,Piece,VERIFIED
 MDK-0510,All Time Family Toast,All Time Family Toast,All Time,Biscuits & Bakery,350 g,/images/categories/biscuits_bakery.webp,65.00,54.60,Piece,VERIFIED
-MDK-0511,Wonder Plain Bread,Wonder Plain Bread,Loose / Local,Biscuits & Bakery,400 g,/images/products/MDK-0169_bread_large_loaf.webp,50.00,42.00,Piece,VERIFIED
-MDK-0512,Wonder Milk Bread,Wonder Milk Bread,Loose / Local,Biscuits & Bakery,400 g,/images/products/MDK-0169_bread_large_loaf.webp,55.00,46.20,Piece,VERIFIED
+MDK-0511,Wonder Plain Bread,Wonder Plain Bread,Loose / Local,Biscuits & Bakery,400 g,/images/products/MDK-0511_wonder_plain_bread.webp,50.00,42.00,Piece,VERIFIED
+MDK-0512,Wonder Milk Bread,Wonder Milk Bread,Loose / Local,Biscuits & Bakery,400 g,/images/products/MDK-0512_wonder_milk_bread.webp,55.00,46.20,Piece,VERIFIED
 MDK-0513,Dan Cake Layer Cake Chocolate,Dan Cake Layer Cake Chocolate,Dan Cake,Biscuits & Bakery,Single 30 g,/images/categories/biscuits_bakery.webp,15.00,12.60,L,VERIFIED
 MDK-0514,Dan Cake Marble Cake,Dan Cake Marble Cake,Dan Cake,Biscuits & Bakery,200 g,/images/categories/biscuits_bakery.webp,70.00,58.80,Piece,VERIFIED
 MDK-0515,Dan Cake Swiss Roll Strawberry,Dan Cake Swiss Roll Strawberry,Dan Cake,Biscuits & Bakery,60 g,/images/categories/biscuits_bakery.webp,30.00,25.20,Piece,VERIFIED
@@ -533,12 +533,12 @@ MDK-0531,ফুডস অ্যান্ড ফ্লেভার ক্রি�
 MDK-0532,ফ্রোজেন,ব্ল্যাক ফরেস্ট পেস্ট্রি কেক,Loose / Local,Biscuits & Bakery,১০০ গ্রাম,/images/categories/biscuits_bakery.webp,60.00,50.40,Kg,VERIFIED
 MDK-0533,কাপকেক ভ্যানিলা,কাপকেক ভ্যানিলা,Loose / Local,Biscuits & Bakery,১২ পিস বক্স,/images/categories/biscuits_bakery.webp,120.00,100.80,Box,VERIFIED
 MDK-0534,কাপকেক চকলেট,কাপকেক চকলেট,Loose / Local,Biscuits & Bakery,১২ পিস বক্স,/images/categories/biscuits_bakery.webp,120.00,100.80,Box,VERIFIED
-MDK-0535,বাটার কুকিজ ড্যানিশ জার,বাটার কুকিজ ড্যানিশ জার,Danish,Biscuits & Bakery,৪০০ গ্রাম,/images/products/MDK-0110_butter_cookies_300_g.webp,160.00,134.40,Kg,VERIFIED
-MDK-0536,লোকাল মিষ্টি পাউরুটি,লোকাল মিষ্টি পাউরুটি,Loose / Local,Biscuits & Bakery,৩০০ গ্রাম,/images/products/MDK-0169_bread_large_loaf.webp,40.00,33.60,Kg,VERIFIED
-MDK-0537,Brown Wheat Bread,আটা পাউরুটি,Loose / Local,Biscuits & Bakery,৪০০ গ্রাম,/images/products/MDK-0017_loose_local_wheat_5_kg.webp,65.00,54.60,Kg,VERIFIED
+MDK-0535,বাটার কুকিজ ড্যানিশ জার,বাটার কুকিজ ড্যানিশ জার,Danish,Biscuits & Bakery,৪০০ গ্রাম,/images/products/MDK-0535_item_mdk-0535.webp,160.00,134.40,Kg,VERIFIED
+MDK-0536,লোকাল মিষ্টি পাউরুটি,লোকাল মিষ্টি পাউরুটি,Loose / Local,Biscuits & Bakery,৩০০ গ্রাম,/images/products/MDK-0536_item_mdk-0536.webp,40.00,33.60,Kg,VERIFIED
+MDK-0537,Brown Wheat Bread,আটা পাউরুটি,Loose / Local,Biscuits & Bakery,৪০০ গ্রাম,/images/products/MDK-0537_brown_wheat_bread.webp,65.00,54.60,Kg,VERIFIED
 MDK-0538,গার্লিক ব্রেড টোস্ট,গার্লিক ব্রেড টোস্ট,Loose / Local,Biscuits & Bakery,২০০ গ্রাম,/images/categories/biscuits_bakery.webp,70.00,58.80,Kg,VERIFIED
 MDK-0539,ড্রাই কেক ফ্রুটস মিক্স,ড্রাই কেক ফ্রুটস মিক্স,Loose / Local,Biscuits & Bakery,৫০০ গ্রাম,/images/categories/biscuits_bakery.webp,150.00,126.00,Kg,VERIFIED
-MDK-0540,পিনাট বাটার কুকিজ,পিনাট বাটার কুকিজ,Loose / Local,Biscuits & Bakery,২০০ গ্রাম,/images/products/MDK-0110_butter_cookies_300_g.webp,80.00,67.20,Kg,VERIFIED
+MDK-0540,পিনাট বাটার কুকিজ,পিনাট বাটার কুকিজ,Loose / Local,Biscuits & Bakery,২০০ গ্রাম,/images/products/MDK-0540_item_mdk-0540.webp,80.00,67.20,Kg,VERIFIED
 MDK-0541,ওটস কুকিজ ডায়াবেটিক স্পেশাল,ওটস কুকিজ ডায়াবেটিক স্পেশাল,Loose / Local,Biscuits & Bakery,২০০ গ্রাম,/images/categories/biscuits_bakery.webp,120.00,100.80,Kg,VERIFIED
 MDK-0542,Olympic Sugar Free,সুগার ফ্রি বিস্কুট,Olympic,Biscuits & Bakery,150 g,/images/categories/biscuits_bakery.webp,50.00,42.00,Piece,VERIFIED
 MDK-0543,ড্যানিশ সুগার ফ্রি ডাইজেস্টিভ,ড্যানিশ সুগার ফ্রি ডাইজেস্টিভ,Danish,Biscuits & Bakery,150 g,/images/categories/biscuits_bakery.webp,60.00,50.40,Piece,VERIFIED
@@ -551,7 +551,7 @@ MDK-0549,জিরা সল্ট বিস্কুট,জিরা সল্�
 MDK-0550,সল্টেড ক্র্যাকার বিস্কুট,সল্টেড ক্র্যাকার বিস্কুট,Loose / Local,Biscuits & Bakery,২০০ গ্রাম,/images/categories/biscuits_bakery.webp,45.00,37.80,Kg,VERIFIED
 MDK-0551,পট্যাটো বিস্কুট প্রিমিয়াম,পট্যাটো বিস্কুট প্রিমিয়াম,Loose / Local,Biscuits & Bakery,১০০ গ্রাম,/images/categories/biscuits_bakery.webp,25.00,21.00,Kg,VERIFIED
 MDK-0552,চিজ ক্র্যাকারস,চিজ ক্র্যাকারস,Loose / Local,Biscuits & Bakery,১০০ গ্রাম,/images/categories/biscuits_bakery.webp,35.00,29.40,Kg,VERIFIED
-MDK-0553,স্পাইসি টোস্ট বিস্কুট,স্পাইসি টোস্ট বিস্কুট,Loose / Local,Biscuits & Bakery,২৫০ গ্রাম,/images/products/MDK-0116_toast_biscuit_400_g.webp,55.00,46.20,Kg,VERIFIED
+MDK-0553,স্পাইসি টোস্ট বিস্কুট,স্পাইসি টোস্ট বিস্কুট,Loose / Local,Biscuits & Bakery,২৫০ গ্রাম,/images/products/MDK-0553_biscuit.webp,55.00,46.20,Kg,VERIFIED
 MDK-0554,সুইট অ্যান্ড সল্টি ক্র্যাকার,সুইট অ্যান্ড সল্টি ক্র্যাকার,Loose / Local,Biscuits & Bakery,১৫০ গ্রাম,/images/categories/biscuits_bakery.webp,30.00,25.20,Kg,VERIFIED
 MDK-0555,Bombay Sweets Bombay Chanachur,সবুজ প্যাকেট,Bombay Sweets,Snacks & Chips,150 g,/images/products/MDK-0104_chanachur_300_g.webp,40.00,33.60,Piece,VERIFIED
 MDK-0556,Bombay Sweets Bombay Chanachur,Bombay Sweets Bombay Chanachur,Bombay Sweets,Snacks & Chips,300 g,/images/products/MDK-0104_chanachur_300_g.webp,80.00,67.20,Piece,VERIFIED
@@ -580,7 +580,7 @@ MDK-0578,Kurkure Green Chutney,Kurkure Green Chutney,Loose / Local,Snacks & Chip
 MDK-0579,Pringles Original Potato Crisps,Pringles Original Potato Crisps,Rin,Snacks & Chips,107 g Can,/images/categories/snacks_chips.webp,180.00,151.20,Piece,VERIFIED
 MDK-0580,Pringles Sour Cream & Onion,Pringles Sour Cream & Onion,Rin,Snacks & Chips,107 g Can,/images/categories/snacks_chips.webp,180.00,151.20,Piece,VERIFIED
 MDK-0581,Sun Chips BBQ Flavour,Sun Chips BBQ Flavour,Loose / Local,Snacks & Chips,25 g,/images/categories/snacks_chips.webp,15.00,12.60,Piece,VERIFIED
-MDK-0582,Meridian Potato Chips,Meridian Potato Chips,Loose / Local,Snacks & Chips,25 g,/images/products/MDK-0100_potato_chips_45_g.webp,15.00,12.60,Piece,VERIFIED
+MDK-0582,Meridian Potato Chips,Meridian Potato Chips,Loose / Local,Snacks & Chips,25 g,/images/products/MDK-0582_meridian_potato_chips.webp,15.00,12.60,Piece,VERIFIED
 MDK-0583,Loose Spicy Chanachur,খোলা ঝাল চানাচুর,Loose / Local,Snacks & Chips,১ কেজি,/images/products/MDK-0104_chanachur_300_g.webp,160.00,134.40,Kg,VERIFIED
 MDK-0584,খোলা মিষ্টি চানাচুর,খোলা মিষ্টি চানাচুর,Loose / Local,Snacks & Chips,১ কেজি,/images/categories/snacks_chips.webp,160.00,134.40,Kg,VERIFIED
 MDK-0585,খোলা বোম্বে চানাচুর,খোলা বোম্বে চানাচুর,Loose / Local,Snacks & Chips,১ কেজি,/images/categories/snacks_chips.webp,180.00,151.20,Kg,VERIFIED
@@ -653,9 +653,9 @@ MDK-0651,বনফুল ঘি ভাজা লাচ্ছা সেমাই,
 MDK-0652,Ahmed Lachha Semai,আহমেদ লাচ্ছা সেমাই,Ahmed,Noodles & Pasta,200 g,/images/products/MDK-0652_ahmed_lachha_semai.webp,50.00,42.00,Piece,VERIFIED
 MDK-0653,Kolson Lachha Semai,কুলসন লাচ্ছা সেমাই,Loose / Local,Noodles & Pasta,200 g,/images/products/MDK-0653_kolson_lachha_semai.webp,50.00,42.00,Piece,VERIFIED
 MDK-0654,PRAN Lachha Semai,প্রাণ লাচ্ছা সেমাই,PRAN,Noodles & Pasta,200 g,/images/products/MDK-0654_pran_lachha_semai.webp,50.00,42.00,Piece,VERIFIED
-MDK-0655,প্রিন্স লাচ্ছা সেমাই,প্রিন্স লাচ্ছা সেমাই,Rin,Noodles & Pasta,200 g,/images/products/MDK-0655_.webp,50.00,42.00,Piece,VERIFIED
-MDK-0656,আলাউদ্দিন লাচ্ছা সেমাই,আলাউদ্দিন লাচ্ছা সেমাই,Loose / Local,Noodles & Pasta,200 g,/images/products/MDK-0656_.webp,60.00,50.40,Piece,VERIFIED
-MDK-0657,খোকা বাবু লাচ্ছা সেমাই,খোকা বাবু লাচ্ছা সেমাই,Loose / Local,Noodles & Pasta,২০০ গ্রাম,/images/products/MDK-0657_.webp,50.00,42.00,Kg,VERIFIED
+MDK-0655,প্রিন্স লাচ্ছা সেমাই,প্রিন্স লাচ্ছা সেমাই,Rin,Noodles & Pasta,200 g,/images/products/MDK-0655_prince_lachha_semai.webp,50.00,42.00,Piece,VERIFIED
+MDK-0656,আলাউদ্দিন লাচ্ছা সেমাই,আলাউদ্দিন লাচ্ছা সেমাই,Loose / Local,Noodles & Pasta,200 g,/images/products/MDK-0656_alauddin_lachha_semai.webp,60.00,50.40,Piece,VERIFIED
+MDK-0657,খোকা বাবু লাচ্ছা সেমাই,খোকা বাবু লাচ্ছা সেমাই,Loose / Local,Noodles & Pasta,২০০ গ্রাম,/images/products/MDK-0657_khoka_babu_lachha_semai.webp,50.00,42.00,Kg,VERIFIED
 MDK-0658,Loose Lachha Semai,খোলা লাচ্ছা সেমাই,Loose / Local,Noodles & Pasta,১ কেজি,/images/products/MDK-0658_loose_lachha_semai.webp,180.00,151.20,Kg,VERIFIED
 MDK-0659,Vermicelli / Khula Semai,বনফুল লম্বা বাংলা সেমাই,Loose / Local,Noodles & Pasta,200 g,/images/products/MDK-0659_vermicelli_khula_semai.webp,35.00,29.40,Piece,VERIFIED
 MDK-0660,আহমেদ বাংলা লম্বা সেমাই,আহমেদ বাংলা লম্বা সেমাই,Ahmed,Noodles & Pasta,200 g,/images/products/MDK-0660_.webp,35.00,29.40,Piece,VERIFIED
@@ -821,8 +821,8 @@ MDK-0819,Kinder Joy for Boys,Kinder Joy for Boys,Loose / Local,Chocolate & Candy
 MDK-0820,Kinder Joy for Girls,Kinder Joy for Girls,Loose / Local,Chocolate & Candy,20 g Egg,/images/categories/chocolate_candy.webp,80.00,67.20,Piece,VERIFIED
 MDK-0821,Alpenliebe Caramel Candy,Alpenliebe Caramel Candy,Loose / Local,Chocolate & Candy,Single 4 g,/images/categories/chocolate_candy.webp,2.00,1.68,L,VERIFIED
 MDK-0822,Alpenliebe Caramel Pouch,Alpenliebe Caramel Pouch,Loose / Local,Chocolate & Candy,50 pcs,/images/categories/chocolate_candy.webp,100.00,84.00,Piece,VERIFIED
-MDK-0823,Alpenliebe Juzt Jelly Strawberry,Alpenliebe Juzt Jelly Strawberry,Loose / Local,Chocolate & Candy,Single,/images/products/MDK-0118_pran_jelly_500_g.webp,5.00,4.20,L,VERIFIED
-MDK-0824,Alpenliebe Juzt Jelly Pouch,Alpenliebe Juzt Jelly Pouch,Loose / Local,Chocolate & Candy,40 pcs,/images/products/MDK-0118_pran_jelly_500_g.webp,100.00,84.00,Piece,VERIFIED
+MDK-0823,Alpenliebe Juzt Jelly Strawberry,Alpenliebe Juzt Jelly Strawberry,Loose / Local,Chocolate & Candy,Single,/images/products/MDK-0823_alpenliebe_juzt_jelly_strawberry.webp,5.00,4.20,L,VERIFIED
+MDK-0824,Alpenliebe Juzt Jelly Pouch,Alpenliebe Juzt Jelly Pouch,Loose / Local,Chocolate & Candy,40 pcs,/images/products/MDK-0824_alpenliebe_juzt_jelly_pouch.webp,100.00,84.00,Piece,VERIFIED
 MDK-0825,Chupa Chups Lollipop,Chupa Chups Lollipop,Loose / Local,Chocolate & Candy,Single,/images/categories/chocolate_candy.webp,15.00,12.60,L,VERIFIED
 MDK-0826,Mentos Mint Candy Roll,Mentos Mint Candy Roll,Loose / Local,Chocolate & Candy,37 g,/images/categories/chocolate_candy.webp,20.00,16.80,Piece,VERIFIED
 MDK-0827,Mentos Fruit Candy Roll,Mentos Fruit Candy Roll,Loose / Local,Chocolate & Candy,37 g,/images/categories/chocolate_candy.webp,20.00,16.80,Piece,VERIFIED
@@ -888,12 +888,12 @@ MDK-0886,Speed Energy Drink Can,Speed Energy Drink Can,Rin,Soft Drinks & Beverag
 MDK-0887,Speed Energy Drink Pet,Speed Energy Drink Pet,Rin,Soft Drinks & Beverages,250 ml,/images/products/MDK-0138_speed_energy_drink_250_ml.webp,30.00,25.20,L,VERIFIED
 MDK-0888,Tiger Energy Drink Can,Tiger Energy Drink Can,Rin,Soft Drinks & Beverages,250 ml,/images/products/MDK-0138_speed_energy_drink_250_ml.webp,40.00,33.60,L,VERIFIED
 MDK-0889,Black Horse Energy Drink Pet,Black Horse Energy Drink Pet,Rin,Soft Drinks & Beverages,250 ml,/images/products/MDK-0138_speed_energy_drink_250_ml.webp,30.00,25.20,L,VERIFIED
-MDK-0890,PRAN Frooto Mango Juice,PRAN Frooto Mango Juice,PRAN,Soft Drinks & Beverages,250 ml Pet,/images/products/MDK-0125_frutika_mango_juice_1_l.webp,25.00,21.00,L,VERIFIED
-MDK-0891,PRAN Frooto Mango Juice,PRAN Frooto Mango Juice,PRAN,Soft Drinks & Beverages,500 ml Pet,/images/products/MDK-0125_frutika_mango_juice_1_l.webp,50.00,42.00,L,VERIFIED
-MDK-0892,PRAN Frooto Mango Juice,PRAN Frooto Mango Juice,PRAN,Soft Drinks & Beverages,1 L Pet,/images/products/MDK-0125_frutika_mango_juice_1_l.webp,95.00,79.80,L,VERIFIED
-MDK-0893,Frutika Mango Juice Pet,Frutika Mango Juice Pet,Jui,Soft Drinks & Beverages,250 ml,/images/products/MDK-0125_frutika_mango_juice_1_l.webp,25.00,21.00,L,VERIFIED
-MDK-0894,Frutika Mango Juice Pet,Frutika Mango Juice Pet,Jui,Soft Drinks & Beverages,1 L,/images/products/MDK-0125_frutika_mango_juice_1_l.webp,100.00,84.00,L,VERIFIED
-MDK-0895,Shezan Mango Juice Tetra Pack,Shezan Mango Juice Tetra Pack,Jui,Soft Drinks & Beverages,200 ml,/images/products/MDK-0125_frutika_mango_juice_1_l.webp,25.00,21.00,L,VERIFIED
+MDK-0890,PRAN Frooto Mango Juice,PRAN Frooto Mango Juice,PRAN,Soft Drinks & Beverages,250 ml Pet,/images/products/MDK-0890_pran_frooto_mango_juice.webp,25.00,21.00,L,VERIFIED
+MDK-0891,PRAN Frooto Mango Juice,PRAN Frooto Mango Juice,PRAN,Soft Drinks & Beverages,500 ml Pet,/images/products/MDK-0891_pran_frooto_mango_juice.webp,50.00,42.00,L,VERIFIED
+MDK-0892,PRAN Frooto Mango Juice,PRAN Frooto Mango Juice,PRAN,Soft Drinks & Beverages,1 L Pet,/images/products/MDK-0892_pran_frooto_mango_juice.webp,95.00,79.80,L,VERIFIED
+MDK-0893,Frutika Mango Juice Pet,Frutika Mango Juice Pet,Jui,Soft Drinks & Beverages,250 ml,/images/products/MDK-0893_frutika_mango_juice_pet.webp,25.00,21.00,L,VERIFIED
+MDK-0894,Frutika Mango Juice Pet,Frutika Mango Juice Pet,Jui,Soft Drinks & Beverages,1 L,/images/products/MDK-0894_frutika_mango_juice_pet.webp,100.00,84.00,L,VERIFIED
+MDK-0895,Shezan Mango Juice Tetra Pack,Shezan Mango Juice Tetra Pack,Jui,Soft Drinks & Beverages,200 ml,/images/products/MDK-0895_shezan_mango_juice_tetra_pack.webp,25.00,21.00,L,VERIFIED
 MDK-0896,PRAN Junior Mango Tetra Pack,PRAN Junior Mango Tetra Pack,PRAN,Soft Drinks & Beverages,200 ml,/images/categories/soft_drinks.webp,22.00,18.48,L,VERIFIED
 MDK-0897,Ceres 100% Apple Juice Brick,Ceres 100% Apple Juice Brick,Jui,Soft Drinks & Beverages,1 L,/images/categories/soft_drinks.webp,350.00,294.00,L,VERIFIED
 MDK-0898,Ceres 100% Mixed Fruit Juice Brick,Ceres 100% Mixed Fruit Juice Brick,Jui,Soft Drinks & Beverages,1 L,/images/categories/soft_drinks.webp,350.00,294.00,L,VERIFIED
@@ -903,8 +903,8 @@ MDK-0901,Hamdard Rooh Afza Syrup Bottle,Hamdard Rooh Afza Syrup Bottle,Loose / L
 MDK-0902,আহমেদ রুহ-ই-শরবত সিরাপ,আহমেদ রুহ-ই-শরবত সিরাপ,Ahmed,Soft Drinks & Beverages,750 ml,/images/categories/soft_drinks.webp,240.00,201.60,L,VERIFIED
 MDK-0903,Kinley Soda Can,কিনলে সোডা ওয়াটার ক্যান,Loose / Local,Soft Drinks & Beverages,250 ml,/images/categories/soft_drinks.webp,40.00,33.60,L,VERIFIED
 MDK-0904,Schweppes Tonic Water,শ্বেপস টনিক ওয়াটার ক্যান,Loose / Local,Soft Drinks & Beverages,250 ml,/images/categories/soft_drinks.webp,80.00,67.20,L,VERIFIED
-MDK-0905,Nestlé Cerelac Wheat Apple,Nestlé Cerelac Wheat Apple,Nestlé,Baby Food & Baby Care,400 g Bib,/images/products/MDK-0017_loose_local_wheat_5_kg.webp,450.00,378.00,Piece,VERIFIED
-MDK-0906,Nestlé Cerelac Wheat Apple & Carrot,Nestlé Cerelac Wheat Apple & Carrot,Nestlé,Baby Food & Baby Care,400 g,/images/products/MDK-0017_loose_local_wheat_5_kg.webp,460.00,386.40,Piece,VERIFIED
+MDK-0905,Nestlé Cerelac Wheat Apple,Nestlé Cerelac Wheat Apple,Nestlé,Baby Food & Baby Care,400 g Bib,/images/products/MDK-0905_nestl_cerelac_wheat_apple.webp,450.00,378.00,Piece,VERIFIED
+MDK-0906,Nestlé Cerelac Wheat Apple & Carrot,Nestlé Cerelac Wheat Apple & Carrot,Nestlé,Baby Food & Baby Care,400 g,/images/products/MDK-0906_nestl_cerelac_wheat_apple_carrot.webp,460.00,386.40,Piece,VERIFIED
 MDK-0907,Nestlé Cerelac Rice,Nestlé Cerelac Rice,Nestlé,Baby Food & Baby Care,400 g,/images/categories/baby_food.webp,440.00,369.60,Piece,VERIFIED
 MDK-0908,Nestlé Cerelac 3 Fruits with Milk,Nestlé Cerelac 3 Fruits with Milk,Nestlé,Baby Food & Baby Care,400 g,/images/categories/baby_food.webp,480.00,403.20,Piece,VERIFIED
 MDK-0909,Nestlé Lactogen 1 Infant Formula,Nestlé Lactogen 1 Infant Formula,Nestlé,Baby Food & Baby Care,400 g Tin,/images/categories/baby_food.webp,750.00,630.00,Piece,VERIFIED
@@ -918,16 +918,16 @@ MDK-0916,Biomil 3 Growing-up Formula,Biomil 3 Growing-up Formula,Loose / Local,B
 MDK-0917,Dano Baby 1 Infant Formula,Dano Baby 1 Infant Formula,Dano,Baby Food & Baby Care,400 g,/images/categories/baby_food.webp,620.00,520.80,Piece,VERIFIED
 MDK-0918,Dano Baby 2 Infant Formula,Dano Baby 2 Infant Formula,Dano,Baby Food & Baby Care,400 g,/images/categories/baby_food.webp,620.00,520.80,Piece,VERIFIED
 MDK-0919,Farex Baby Cereal,Farex Baby Cereal,Loose / Local,Baby Food & Baby Care,400 g,/images/categories/baby_food.webp,420.00,352.80,Piece,VERIFIED
-MDK-0920,Supermom Baby Diaper Belt Small,Supermom Baby Diaper Belt Small,Supermom,Baby Food & Baby Care,10 pcs,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,160.00,134.40,Piece,VERIFIED
-MDK-0921,Supermom Baby Diaper Belt Medium,Supermom Baby Diaper Belt Medium,Supermom,Baby Food & Baby Care,10 pcs,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,180.00,151.20,Piece,VERIFIED
-MDK-0922,Supermom Baby Diaper Belt Large,Supermom Baby Diaper Belt Large,Supermom,Baby Food & Baby Care,10 pcs,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,200.00,168.00,Piece,VERIFIED
-MDK-0923,Supermom Baby Diaper Pant Medium,Supermom Baby Diaper Pant Medium,Supermom,Baby Food & Baby Care,34 pcs,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,650.00,546.00,Piece,VERIFIED
-MDK-0924,Supermom Baby Diaper Pant Large,Supermom Baby Diaper Pant Large,Supermom,Baby Food & Baby Care,32 pcs,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,650.00,546.00,Piece,VERIFIED
-MDK-0925,Supermom Baby Diaper Pant XL,Supermom Baby Diaper Pant XL,Supermom,Baby Food & Baby Care,28 pcs,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,650.00,546.00,Piece,VERIFIED
+MDK-0920,Supermom Baby Diaper Belt Small,Supermom Baby Diaper Belt Small,Supermom,Baby Food & Baby Care,10 pcs,/images/products/MDK-0920_supermom_baby_diaper_belt_small.webp,160.00,134.40,Piece,VERIFIED
+MDK-0921,Supermom Baby Diaper Belt Medium,Supermom Baby Diaper Belt Medium,Supermom,Baby Food & Baby Care,10 pcs,/images/products/MDK-0921_supermom_baby_diaper_belt_medium.webp,180.00,151.20,Piece,VERIFIED
+MDK-0922,Supermom Baby Diaper Belt Large,Supermom Baby Diaper Belt Large,Supermom,Baby Food & Baby Care,10 pcs,/images/products/MDK-0922_supermom_baby_diaper_belt_large.webp,200.00,168.00,Piece,VERIFIED
+MDK-0923,Supermom Baby Diaper Pant Medium,Supermom Baby Diaper Pant Medium,Supermom,Baby Food & Baby Care,34 pcs,/images/products/MDK-0923_supermom_baby_diaper_pant_medium.webp,650.00,546.00,Piece,VERIFIED
+MDK-0924,Supermom Baby Diaper Pant Large,Supermom Baby Diaper Pant Large,Supermom,Baby Food & Baby Care,32 pcs,/images/products/MDK-0924_supermom_baby_diaper_pant_large.webp,650.00,546.00,Piece,VERIFIED
+MDK-0925,Supermom Baby Diaper Pant XL,Supermom Baby Diaper Pant XL,Supermom,Baby Food & Baby Care,28 pcs,/images/products/MDK-0925_supermom_baby_diaper_pant_xl.webp,650.00,546.00,Piece,VERIFIED
 MDK-0926,Huggies Wonder Pants Medium,Huggies Wonder Pants Medium,Huggies,Baby Food & Baby Care,30 pcs,/images/categories/baby_food.webp,720.00,604.80,Piece,VERIFIED
 MDK-0927,Huggies Wonder Pants Large,Huggies Wonder Pants Large,Huggies,Baby Food & Baby Care,28 pcs,/images/categories/baby_food.webp,720.00,604.80,Piece,VERIFIED
 MDK-0928,Pampers Baby Dry Pants Medium,Pampers Baby Dry Pants Medium,Loose / Local,Baby Food & Baby Care,32 pcs,/images/categories/baby_food.webp,850.00,714.00,Piece,VERIFIED
-MDK-0929,Twinkle Baby Diaper Pant Large,Twinkle Baby Diaper Pant Large,Loose / Local,Baby Food & Baby Care,30 pcs,/images/products/MDK-0220_baby_diaper_medium_10_pcs.webp,550.00,462.00,Piece,VERIFIED
+MDK-0929,Twinkle Baby Diaper Pant Large,Twinkle Baby Diaper Pant Large,Loose / Local,Baby Food & Baby Care,30 pcs,/images/products/MDK-0929_twinkle_baby_diaper_pant_large.webp,550.00,462.00,Piece,VERIFIED
 MDK-0930,Johnson's Baby Soap,Johnson's Baby Soap,Loose / Local,Baby Food & Baby Care,100 g,/images/categories/baby_food.webp,110.00,92.40,Piece,VERIFIED
 MDK-0931,Johnson's Baby Shampoo,Johnson's Baby Shampoo,Loose / Local,Baby Food & Baby Care,100 ml,/images/categories/baby_food.webp,190.00,159.60,L,VERIFIED
 MDK-0932,Johnson's Baby Shampoo,Johnson's Baby Shampoo,Loose / Local,Baby Food & Baby Care,200 ml,/images/categories/baby_food.webp,340.00,285.60,L,VERIFIED
@@ -943,67 +943,67 @@ MDK-0941,Meril Baby Gel Toothpaste,Meril Baby Gel Toothpaste,Meril,Baby Food & B
 MDK-0942,Feeding Bottle 250ml BPA Free,বেবি ফিডিং বোতল,Loose / Local,Baby Food & Baby Care,Single,/images/categories/baby_food.webp,130.00,109.20,L,VERIFIED
 MDK-0943,Cotton Buds Plastic Box,বেবি কটন বাডস,Loose / Local,Baby Food & Baby Care,100 pcs,/images/categories/baby_food.webp,50.00,42.00,Piece,VERIFIED
 MDK-0944,Pampers / Huggies Wipes,বেবি ওয়েট ওয়াইপস,Huggies,Baby Food & Baby Care,80 wipes,/images/categories/baby_food.webp,220.00,184.80,Piece,VERIFIED
-MDK-0945,Lux Beauty Soap Soft Rose,Lux Beauty Soap Soft Rose,Lux,Soap & Personal Care,75 g,/images/categories/soap_personal.webp,55.00,46.20,Piece,VERIFIED
-MDK-0946,Lux Beauty Soap Soft Rose,Lux Beauty Soap Soft Rose,Lux,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,70.00,58.80,Piece,VERIFIED
-MDK-0947,Lux Beauty Soap Soft Rose,Lux Beauty Soap Soft Rose,Lux,Soap & Personal Care,150 g,/images/categories/soap_personal.webp,95.00,79.80,Piece,VERIFIED
-MDK-0948,Lux Velvet Glow Jasmine,Lux Velvet Glow Jasmine,Lux,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,70.00,58.80,Piece,VERIFIED
-MDK-0949,Lux Bright Glow Camellia,Lux Bright Glow Camellia,Lux,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,70.00,58.80,Piece,VERIFIED
-MDK-0950,Lifebuoy Total 10 Red Soap,Lifebuoy Total 10 Red Soap,Lifebuoy,Soap & Personal Care,75 g,/images/categories/soap_personal.webp,45.00,37.80,Piece,VERIFIED
-MDK-0951,Lifebuoy Total 10 Red Soap,Lifebuoy Total 10 Red Soap,Lifebuoy,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,60.00,50.40,Piece,VERIFIED
-MDK-0952,Lifebuoy Total 10 Red Soap,Lifebuoy Total 10 Red Soap,Lifebuoy,Soap & Personal Care,150 g,/images/categories/soap_personal.webp,80.00,67.20,Piece,VERIFIED
-MDK-0953,Lifebuoy Lemon Fresh Soap,Lifebuoy Lemon Fresh Soap,Fresh,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,60.00,50.40,Piece,VERIFIED
-MDK-0954,Lifebuoy Care Soap,Blue,Lifebuoy,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,60.00,50.40,Piece,VERIFIED
-MDK-0955,Dove White Beauty Bar Soap,Dove White Beauty Bar Soap,Dove,Soap & Personal Care,75 g,/images/categories/soap_personal.webp,110.00,92.40,Piece,VERIFIED
-MDK-0956,Dove White Beauty Bar Soap,Dove White Beauty Bar Soap,Dove,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,140.00,117.60,Piece,VERIFIED
-MDK-0957,Dettol Original Antiseptic Soap,Dettol Original Antiseptic Soap,Dettol,Soap & Personal Care,75 g,/images/categories/soap_personal.webp,55.00,46.20,Piece,VERIFIED
-MDK-0958,Dettol Original Antiseptic Soap,Dettol Original Antiseptic Soap,Dettol,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,70.00,58.80,Piece,VERIFIED
-MDK-0959,Dettol Skincare Soap,Dettol Skincare Soap,Dettol,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,70.00,58.80,Piece,VERIFIED
-MDK-0960,Dettol Cool Soap,Dettol Cool Soap,Dettol,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,70.00,58.80,Piece,VERIFIED
-MDK-0961,Savlon Antiseptic Soap Active Blue,Savlon Antiseptic Soap Active Blue,Savlon,Soap & Personal Care,75 g,/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp,50.00,42.00,Piece,VERIFIED
-MDK-0962,Savlon Antiseptic Soap Active Blue,Savlon Antiseptic Soap Active Blue,Savlon,Soap & Personal Care,100 g,/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp,65.00,54.60,Piece,VERIFIED
-MDK-0963,Savlon Fresh Soap,Green,Fresh,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,65.00,54.60,Piece,VERIFIED
-MDK-0964,Tibet Luxury Beauty Soap,Tibet Luxury Beauty Soap,Lux,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,40.00,33.60,Piece,VERIFIED
-MDK-0965,Meril Splash Beauty Soap,Meril Splash Beauty Soap,Meril,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,50.00,42.00,Piece,VERIFIED
-MDK-0966,Sandalina Sandalwood Soap,Sandalina Sandalwood Soap,Sandalina,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,60.00,50.40,Piece,VERIFIED
-MDK-0967,Sandalina Sandalwood Soap,Sandalina Sandalwood Soap,Sandalina,Soap & Personal Care,125 g,/images/categories/soap_personal.webp,75.00,63.00,Piece,VERIFIED
-MDK-0968,Neem Antiseptic Soap,Neem Antiseptic Soap,Loose / Local,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,50.00,42.00,Piece,VERIFIED
-MDK-0969,Pears Pure & Gentle Glycerin Soap,Pears Pure & Gentle Glycerin Soap,Rin,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,110.00,92.40,Piece,VERIFIED
-MDK-0970,Lifebuoy Total Handwash Pump,Lifebuoy Total Handwash Pump,Lifebuoy,Soap & Personal Care,200 ml,/images/categories/soap_personal.webp,105.00,88.20,L,VERIFIED
+MDK-0945,Lux Beauty Soap Soft Rose,Lux Beauty Soap Soft Rose,Lux,Soap & Personal Care,75 g,/images/products/MDK-0945_lux_beauty_soap_soft_rose.webp,55.00,46.20,Piece,VERIFIED
+MDK-0946,Lux Beauty Soap Soft Rose,Lux Beauty Soap Soft Rose,Lux,Soap & Personal Care,100 g,/images/products/MDK-0946_lux_beauty_soap_soft_rose.webp,70.00,58.80,Piece,VERIFIED
+MDK-0947,Lux Beauty Soap Soft Rose,Lux Beauty Soap Soft Rose,Lux,Soap & Personal Care,150 g,/images/products/MDK-0947_lux_beauty_soap_soft_rose.webp,95.00,79.80,Piece,VERIFIED
+MDK-0948,Lux Velvet Glow Jasmine,Lux Velvet Glow Jasmine,Lux,Soap & Personal Care,100 g,/images/products/MDK-0948_lux_velvet_glow_jasmine.webp,70.00,58.80,Piece,VERIFIED
+MDK-0949,Lux Bright Glow Camellia,Lux Bright Glow Camellia,Lux,Soap & Personal Care,100 g,/images/products/MDK-0949_lux_bright_glow_camellia.webp,70.00,58.80,Piece,VERIFIED
+MDK-0950,Lifebuoy Total 10 Red Soap,Lifebuoy Total 10 Red Soap,Lifebuoy,Soap & Personal Care,75 g,/images/products/MDK-0950_lifebuoy_total_10_red_soap.webp,45.00,37.80,Piece,VERIFIED
+MDK-0951,Lifebuoy Total 10 Red Soap,Lifebuoy Total 10 Red Soap,Lifebuoy,Soap & Personal Care,100 g,/images/products/MDK-0951_lifebuoy_total_10_red_soap.webp,60.00,50.40,Piece,VERIFIED
+MDK-0952,Lifebuoy Total 10 Red Soap,Lifebuoy Total 10 Red Soap,Lifebuoy,Soap & Personal Care,150 g,/images/products/MDK-0952_lifebuoy_total_10_red_soap.webp,80.00,67.20,Piece,VERIFIED
+MDK-0953,Lifebuoy Lemon Fresh Soap,Lifebuoy Lemon Fresh Soap,Fresh,Soap & Personal Care,100 g,/images/products/MDK-0953_lifebuoy_lemon_fresh_soap.webp,60.00,50.40,Piece,VERIFIED
+MDK-0954,Lifebuoy Care Soap,Blue,Lifebuoy,Soap & Personal Care,100 g,/images/products/MDK-0954_lifebuoy_care_soap.webp,60.00,50.40,Piece,VERIFIED
+MDK-0955,Dove White Beauty Bar Soap,Dove White Beauty Bar Soap,Dove,Soap & Personal Care,75 g,/images/products/MDK-0955_dove_white_beauty_bar_soap.webp,110.00,92.40,Piece,VERIFIED
+MDK-0956,Dove White Beauty Bar Soap,Dove White Beauty Bar Soap,Dove,Soap & Personal Care,100 g,/images/products/MDK-0956_dove_white_beauty_bar_soap.webp,140.00,117.60,Piece,VERIFIED
+MDK-0957,Dettol Original Antiseptic Soap,Dettol Original Antiseptic Soap,Dettol,Soap & Personal Care,75 g,/images/products/MDK-0957_dettol_original_antiseptic_soap.webp,55.00,46.20,Piece,VERIFIED
+MDK-0958,Dettol Original Antiseptic Soap,Dettol Original Antiseptic Soap,Dettol,Soap & Personal Care,100 g,/images/products/MDK-0958_dettol_original_antiseptic_soap.webp,70.00,58.80,Piece,VERIFIED
+MDK-0959,Dettol Skincare Soap,Dettol Skincare Soap,Dettol,Soap & Personal Care,100 g,/images/products/MDK-0959_dettol_skincare_soap.webp,70.00,58.80,Piece,VERIFIED
+MDK-0960,Dettol Cool Soap,Dettol Cool Soap,Dettol,Soap & Personal Care,100 g,/images/products/MDK-0960_dettol_cool_soap.webp,70.00,58.80,Piece,VERIFIED
+MDK-0961,Savlon Antiseptic Soap Active Blue,Savlon Antiseptic Soap Active Blue,Savlon,Soap & Personal Care,75 g,/images/products/MDK-0961_savlon_antiseptic_soap_active_blue.webp,50.00,42.00,Piece,VERIFIED
+MDK-0962,Savlon Antiseptic Soap Active Blue,Savlon Antiseptic Soap Active Blue,Savlon,Soap & Personal Care,100 g,/images/products/MDK-0962_savlon_antiseptic_soap_active_blue.webp,65.00,54.60,Piece,VERIFIED
+MDK-0963,Savlon Fresh Soap,Green,Fresh,Soap & Personal Care,100 g,/images/products/MDK-0963_savlon_fresh_soap.webp,65.00,54.60,Piece,VERIFIED
+MDK-0964,Tibet Luxury Beauty Soap,Tibet Luxury Beauty Soap,Lux,Soap & Personal Care,100 g,/images/products/MDK-0964_tibet_luxury_beauty_soap.webp,40.00,33.60,Piece,VERIFIED
+MDK-0965,Meril Splash Beauty Soap,Meril Splash Beauty Soap,Meril,Soap & Personal Care,100 g,/images/products/MDK-0965_meril_splash_beauty_soap.webp,50.00,42.00,Piece,VERIFIED
+MDK-0966,Sandalina Sandalwood Soap,Sandalina Sandalwood Soap,Sandalina,Soap & Personal Care,100 g,/images/products/MDK-0966_sandalina_sandalwood_soap.webp,60.00,50.40,Piece,VERIFIED
+MDK-0967,Sandalina Sandalwood Soap,Sandalina Sandalwood Soap,Sandalina,Soap & Personal Care,125 g,/images/products/MDK-0967_sandalina_sandalwood_soap.webp,75.00,63.00,Piece,VERIFIED
+MDK-0968,Neem Antiseptic Soap,Neem Antiseptic Soap,Loose / Local,Soap & Personal Care,100 g,/images/products/MDK-0968_neem_antiseptic_soap.webp,50.00,42.00,Piece,VERIFIED
+MDK-0969,Pears Pure & Gentle Glycerin Soap,Pears Pure & Gentle Glycerin Soap,Rin,Soap & Personal Care,100 g,/images/products/MDK-0969_pears_pure_gentle_glycerin_soap.webp,110.00,92.40,Piece,VERIFIED
+MDK-0970,Lifebuoy Total Handwash Pump,Lifebuoy Total Handwash Pump,Lifebuoy,Soap & Personal Care,200 ml,/images/products/MDK-0970_lifebuoy_total_handwash_pump.webp,105.00,88.20,L,VERIFIED
 MDK-0971,Lifebuoy Handwash Refill Pouch,Lifebuoy Handwash Refill Pouch,Lifebuoy,Soap & Personal Care,180 ml,/images/products/MDK-0191_lifebuoy_handwash_refill_170_ml.webp,65.00,54.60,L,VERIFIED
-MDK-0972,Savlon Handwash Herbal Pump,Savlon Handwash Herbal Pump,Savlon,Soap & Personal Care,200 ml,/images/products/MDK-0204_aci_savlon_handwash_500_ml.webp,100.00,84.00,L,VERIFIED
-MDK-0973,Savlon Handwash Refill Pouch,Savlon Handwash Refill Pouch,Savlon,Soap & Personal Care,180 ml,/images/products/MDK-0204_aci_savlon_handwash_500_ml.webp,60.00,50.40,L,VERIFIED
-MDK-0974,Dettol Handwash Original Pump,Dettol Handwash Original Pump,Dettol,Soap & Personal Care,200 ml,/images/categories/soap_personal.webp,110.00,92.40,L,VERIFIED
-MDK-0975,Dettol Handwash Refill Pouch,Dettol Handwash Refill Pouch,Dettol,Soap & Personal Care,175 ml,/images/categories/soap_personal.webp,65.00,54.60,L,VERIFIED
-MDK-0976,Meril Petroleum Jelly,মেরিল পেট্রোলিয়াম জেলি,Meril,Soap & Personal Care,50 ml,/images/products/MDK-0118_pran_jelly_500_g.webp,55.00,46.20,L,VERIFIED
-MDK-0977,Meril Petroleum Jelly,Meril Petroleum Jelly,Meril,Soap & Personal Care,100 ml,/images/products/MDK-0118_pran_jelly_500_g.webp,100.00,84.00,L,VERIFIED
-MDK-0978,Vaseline Petroleum Jelly,ভেসলিন পিওর জেলি,Loose / Local,Soap & Personal Care,50 ml,/images/products/MDK-0118_pran_jelly_500_g.webp,85.00,71.40,L,VERIFIED
-MDK-0979,Vaseline Petroleum Jelly,Vaseline Petroleum Jelly,Loose / Local,Soap & Personal Care,100 ml,/images/products/MDK-0118_pran_jelly_500_g.webp,150.00,126.00,L,VERIFIED
-MDK-0980,Vaseline Intensive Care Body Lotion,Vaseline Intensive Care Body Lotion,Loose / Local,Soap & Personal Care,100 ml,/images/categories/soap_personal.webp,130.00,109.20,L,VERIFIED
-MDK-0981,Vaseline Intensive Care Body Lotion,Vaseline Intensive Care Body Lotion,Loose / Local,Soap & Personal Care,200 ml,/images/categories/soap_personal.webp,240.00,201.60,L,VERIFIED
-MDK-0982,Vaseline Healthy Bright Daily Brightening Lotion,Vaseline Healthy Bright Daily Brightening Lotion,Loose / Local,Soap & Personal Care,200 ml,/images/categories/soap_personal.webp,280.00,235.20,L,VERIFIED
-MDK-0983,Nivea Body Lotion Milk Nourishing,Nivea Body Lotion Milk Nourishing,Loose / Local,Soap & Personal Care,200 ml,/images/categories/soap_personal.webp,300.00,252.00,L,VERIFIED
-MDK-0984,Nivea Soft Light Moisturizing Cream,Nivea Soft Light Moisturizing Cream,Loose / Local,Soap & Personal Care,100 ml,/images/categories/soap_personal.webp,220.00,184.80,L,VERIFIED
-MDK-0985,Glow & Lovely Advanced Multi-Vitamin Cream,Glow & Lovely Advanced Multi-Vitamin Cream,Loose / Local,Soap & Personal Care,25 g,/images/categories/soap_personal.webp,55.00,46.20,Piece,VERIFIED
-MDK-0986,Glow & Lovely Advanced Multi-Vitamin Cream,Glow & Lovely Advanced Multi-Vitamin Cream,Loose / Local,Soap & Personal Care,50 g,/images/categories/soap_personal.webp,110.00,92.40,Piece,VERIFIED
-MDK-0987,Fair & Handsome Men's Fairness Cream,Fair & Handsome Men's Fairness Cream,Loose / Local,Soap & Personal Care,30 g,/images/categories/soap_personal.webp,65.00,54.60,Piece,VERIFIED
-MDK-0988,Ponds White Beauty Face Wash,Ponds White Beauty Face Wash,Hit,Soap & Personal Care,50 g,/images/categories/soap_personal.webp,110.00,92.40,Piece,VERIFIED
-MDK-0989,Ponds Pure Detox Activated Charcoal Face Wash,Ponds Pure Detox Activated Charcoal Face Wash,Loose / Local,Soap & Personal Care,100 g,/images/categories/soap_personal.webp,220.00,184.80,Piece,VERIFIED
-MDK-0990,Garnier Men Acno Fight Face Wash,Garnier Men Acno Fight Face Wash,Loose / Local,Soap & Personal Care,50 g,/images/categories/soap_personal.webp,150.00,126.00,Piece,VERIFIED
-MDK-0991,Gillette Vector Razor,Gillette Vector Razor,Loose / Local,Soap & Personal Care,1 Razor + 1 Cartridge,/images/categories/soap_personal.webp,120.00,100.80,Piece,VERIFIED
-MDK-0992,Gillette Vector Blades,Gillette Vector Blades,Loose / Local,Soap & Personal Care,4 Cartridges Pack,/images/categories/soap_personal.webp,200.00,168.00,Piece,VERIFIED
-MDK-0993,Gillette Mach3 Razor,Gillette Mach3 Razor,Loose / Local,Soap & Personal Care,Standard,/images/categories/soap_personal.webp,450.00,378.00,Piece,VERIFIED
-MDK-0994,সুপার ম্যাক্স ডিসপোজেবল শেভিং রেজর,সুপার ম্যাক্স ডিসপোজেবল শেভিং রেজর,Loose / Local,Soap & Personal Care,৩ পিস প্যাক,/images/categories/soap_personal.webp,60.00,50.40,Piece,VERIFIED
-MDK-0995,Super-Max Stainless Steel Double Edge Blades,Super-Max Stainless Steel Double Edge Blades,Loose / Local,Soap & Personal Care,5 Blades,/images/categories/soap_personal.webp,20.00,16.80,L,VERIFIED
-MDK-0996,Tibet Shaving Foam Can,তিব্বত শেভিং ফোম,Tibet,Soap & Personal Care,200 ml,/images/categories/soap_personal.webp,180.00,151.20,L,VERIFIED
-MDK-0997,Dettol Shaving Cream,Dettol Shaving Cream,Dettol,Soap & Personal Care,78 g,/images/categories/soap_personal.webp,80.00,67.20,Piece,VERIFIED
-MDK-0998,Gillette Classic Shaving Foam,Gillette Classic Shaving Foam,Loose / Local,Soap & Personal Care,200 ml,/images/categories/soap_personal.webp,260.00,218.40,L,VERIFIED
-MDK-0999,Dettol Antiseptic Liquid,ডেটল অ্যান্টিসেপটিক লিকুইড,Dettol,Soap & Personal Care,100 ml,/images/categories/soap_personal.webp,100.00,84.00,L,VERIFIED
+MDK-0972,Savlon Handwash Herbal Pump,Savlon Handwash Herbal Pump,Savlon,Soap & Personal Care,200 ml,/images/products/MDK-0972_savlon_handwash_herbal_pump.webp,100.00,84.00,L,VERIFIED
+MDK-0973,Savlon Handwash Refill Pouch,Savlon Handwash Refill Pouch,Savlon,Soap & Personal Care,180 ml,/images/products/MDK-0973_savlon_handwash_refill_pouch.webp,60.00,50.40,L,VERIFIED
+MDK-0974,Dettol Handwash Original Pump,Dettol Handwash Original Pump,Dettol,Soap & Personal Care,200 ml,/images/products/MDK-0974_dettol_handwash_original_pump.webp,110.00,92.40,L,VERIFIED
+MDK-0975,Dettol Handwash Refill Pouch,Dettol Handwash Refill Pouch,Dettol,Soap & Personal Care,175 ml,/images/products/MDK-0975_dettol_handwash_refill_pouch.webp,65.00,54.60,L,VERIFIED
+MDK-0976,Meril Petroleum Jelly,মেরিল পেট্রোলিয়াম জেলি,Meril,Soap & Personal Care,50 ml,/images/products/MDK-0976_meril_petroleum_jelly.webp,55.00,46.20,L,VERIFIED
+MDK-0977,Meril Petroleum Jelly,Meril Petroleum Jelly,Meril,Soap & Personal Care,100 ml,/images/products/MDK-0977_meril_petroleum_jelly.webp,100.00,84.00,L,VERIFIED
+MDK-0978,Vaseline Petroleum Jelly,ভেসলিন পিওর জেলি,Loose / Local,Soap & Personal Care,50 ml,/images/products/MDK-0978_vaseline_petroleum_jelly.webp,85.00,71.40,L,VERIFIED
+MDK-0979,Vaseline Petroleum Jelly,Vaseline Petroleum Jelly,Loose / Local,Soap & Personal Care,100 ml,/images/products/MDK-0979_vaseline_petroleum_jelly.webp,150.00,126.00,L,VERIFIED
+MDK-0980,Vaseline Intensive Care Body Lotion,Vaseline Intensive Care Body Lotion,Loose / Local,Soap & Personal Care,100 ml,/images/products/MDK-0980_vaseline_intensive_care_body_lotion.webp,130.00,109.20,L,VERIFIED
+MDK-0981,Vaseline Intensive Care Body Lotion,Vaseline Intensive Care Body Lotion,Loose / Local,Soap & Personal Care,200 ml,/images/products/MDK-0981_vaseline_intensive_care_body_lotion.webp,240.00,201.60,L,VERIFIED
+MDK-0982,Vaseline Healthy Bright Daily Brightening Lotion,Vaseline Healthy Bright Daily Brightening Lotion,Loose / Local,Soap & Personal Care,200 ml,/images/products/MDK-0982_vaseline_healthy_bright_daily_brightening_lotion.webp,280.00,235.20,L,VERIFIED
+MDK-0983,Nivea Body Lotion Milk Nourishing,Nivea Body Lotion Milk Nourishing,Loose / Local,Soap & Personal Care,200 ml,/images/products/MDK-0983_nivea_body_lotion_milk_nourishing.webp,300.00,252.00,L,VERIFIED
+MDK-0984,Nivea Soft Light Moisturizing Cream,Nivea Soft Light Moisturizing Cream,Loose / Local,Soap & Personal Care,100 ml,/images/products/MDK-0984_nivea_soft_light_moisturizing_cream.webp,220.00,184.80,L,VERIFIED
+MDK-0985,Glow & Lovely Advanced Multi-Vitamin Cream,Glow & Lovely Advanced Multi-Vitamin Cream,Loose / Local,Soap & Personal Care,25 g,/images/products/MDK-0985_glow_lovely_advanced_multi_vitamin_cream.webp,55.00,46.20,Piece,VERIFIED
+MDK-0986,Glow & Lovely Advanced Multi-Vitamin Cream,Glow & Lovely Advanced Multi-Vitamin Cream,Loose / Local,Soap & Personal Care,50 g,/images/products/MDK-0986_glow_lovely_advanced_multi_vitamin_cream.webp,110.00,92.40,Piece,VERIFIED
+MDK-0987,Fair & Handsome Men's Fairness Cream,Fair & Handsome Men's Fairness Cream,Loose / Local,Soap & Personal Care,30 g,/images/products/MDK-0987_fair_handsome_men_s_fairness_cream.webp,65.00,54.60,Piece,VERIFIED
+MDK-0988,Ponds White Beauty Face Wash,Ponds White Beauty Face Wash,Hit,Soap & Personal Care,50 g,/images/products/MDK-0988_ponds_white_beauty_face_wash.webp,110.00,92.40,Piece,VERIFIED
+MDK-0989,Ponds Pure Detox Activated Charcoal Face Wash,Ponds Pure Detox Activated Charcoal Face Wash,Loose / Local,Soap & Personal Care,100 g,/images/products/MDK-0989_ponds_pure_detox_activated_charcoal_face_wash.webp,220.00,184.80,Piece,VERIFIED
+MDK-0990,Garnier Men Acno Fight Face Wash,Garnier Men Acno Fight Face Wash,Loose / Local,Soap & Personal Care,50 g,/images/products/MDK-0990_garnier_men_acno_fight_face_wash.webp,150.00,126.00,Piece,VERIFIED
+MDK-0991,Gillette Vector Razor,Gillette Vector Razor,Loose / Local,Soap & Personal Care,1 Razor + 1 Cartridge,/images/products/MDK-0991_gillette_vector_razor.webp,120.00,100.80,Piece,VERIFIED
+MDK-0992,Gillette Vector Blades,Gillette Vector Blades,Loose / Local,Soap & Personal Care,4 Cartridges Pack,/images/products/MDK-0992_gillette_vector_blades.webp,200.00,168.00,Piece,VERIFIED
+MDK-0993,Gillette Mach3 Razor,Gillette Mach3 Razor,Loose / Local,Soap & Personal Care,Standard,/images/products/MDK-0993_gillette_mach3_razor.webp,450.00,378.00,Piece,VERIFIED
+MDK-0994,সুপার ম্যাক্স ডিসপোজেবল শেভিং রেজর,সুপার ম্যাক্স ডিসপোজেবল শেভিং রেজর,Loose / Local,Soap & Personal Care,৩ পিস প্যাক,/images/products/MDK-0994_item_mdk-0994.webp,60.00,50.40,Piece,VERIFIED
+MDK-0995,Super-Max Stainless Steel Double Edge Blades,Super-Max Stainless Steel Double Edge Blades,Loose / Local,Soap & Personal Care,5 Blades,/images/products/MDK-0995_super_max_stainless_steel_double_edge_blades.webp,20.00,16.80,L,VERIFIED
+MDK-0996,Tibet Shaving Foam Can,তিব্বত শেভিং ফোম,Tibet,Soap & Personal Care,200 ml,/images/products/MDK-0996_tibet_shaving_foam_can.webp,180.00,151.20,L,VERIFIED
+MDK-0997,Dettol Shaving Cream,Dettol Shaving Cream,Dettol,Soap & Personal Care,78 g,/images/products/MDK-0997_dettol_shaving_cream.webp,80.00,67.20,Piece,VERIFIED
+MDK-0998,Gillette Classic Shaving Foam,Gillette Classic Shaving Foam,Loose / Local,Soap & Personal Care,200 ml,/images/products/MDK-0998_gillette_classic_shaving_foam.webp,260.00,218.40,L,VERIFIED
+MDK-0999,Dettol Antiseptic Liquid,ডেটল অ্যান্টিসেপটিক লিকুইড,Dettol,Soap & Personal Care,100 ml,/images/products/MDK-0999_dettol_antiseptic_liquid.webp,100.00,84.00,L,VERIFIED
 MDK-1000,Sunsilk Thick & Long Shampoo,Pink,Sunsilk,Shampoo & Hair Care,160 ml,/images/categories/shampoo_hair.webp,180.00,151.20,L,VERIFIED
 MDK-1001,Sunsilk Thick & Long Shampoo,Sunsilk Thick & Long Shampoo,Sunsilk,Shampoo & Hair Care,375 ml,/images/categories/shampoo_hair.webp,380.00,319.20,L,VERIFIED
 MDK-1002,Sunsilk Black Shine Shampoo,Sunsilk Black Shine Shampoo,Sunsilk,Shampoo & Hair Care,160 ml,/images/categories/shampoo_hair.webp,180.00,151.20,L,VERIFIED
 MDK-1003,Sunsilk Black Shine Shampoo,Sunsilk Black Shine Shampoo,Sunsilk,Shampoo & Hair Care,375 ml,/images/categories/shampoo_hair.webp,380.00,319.20,L,VERIFIED
 MDK-1004,Sunsilk Soft & Smooth Shampoo,Yellow,Sunsilk,Shampoo & Hair Care,160 ml,/images/categories/shampoo_hair.webp,180.00,151.20,L,VERIFIED
-MDK-1005,Sunsilk Shampoo Mini Sachet 6ml,Sunsilk Shampoo Mini Sachet 6ml,Sunsilk,Shampoo & Hair Care,Strip 12 pcs,/images/products/MDK-0194_sunsilk_shampoo_340_ml.webp,36.00,30.24,Piece,VERIFIED
+MDK-1005,Sunsilk Shampoo Mini Sachet 6ml,Sunsilk Shampoo Mini Sachet 6ml,Sunsilk,Shampoo & Hair Care,Strip 12 pcs,/images/products/MDK-1005_sunsilk_shampoo_mini_sachet_6ml.webp,36.00,30.24,Piece,VERIFIED
 MDK-1006,Clear Men Cool Sport Menthol Anti-Dandruff,Clear Men Cool Sport Menthol Anti-Dandruff,Loose / Local,Shampoo & Hair Care,160 ml,/images/categories/shampoo_hair.webp,200.00,168.00,L,VERIFIED
 MDK-1007,Clear Men Cool Sport Menthol,Clear Men Cool Sport Menthol,Loose / Local,Shampoo & Hair Care,330 ml,/images/categories/shampoo_hair.webp,390.00,327.60,L,VERIFIED
 MDK-1008,Clear Complete Active Care Anti-Dandruff,Clear Complete Active Care Anti-Dandruff,Loose / Local,Shampoo & Hair Care,160 ml,/images/categories/shampoo_hair.webp,190.00,159.60,L,VERIFIED
@@ -1048,20 +1048,20 @@ MDK-1046,হেয়ার কালার ব্রাশ ও বাটি স
 MDK-1047,Plastic Hair Comb,প্লাস্টিক চিরুনি,Loose / Local,Shampoo & Hair Care,Single,/images/categories/shampoo_hair.webp,15.00,12.60,L,VERIFIED
 MDK-1048,বেবি হেয়ার ব্যান্ড প্যাকেট,বেবি হেয়ার ব্যান্ড প্যাকেট,Loose / Local,Shampoo & Hair Care,,/images/categories/shampoo_hair.webp,30.00,25.20,Piece,VERIFIED
 MDK-1049,কালো হেয়ার ক্লিপ / ববি পিন কার্ড,কালো হেয়ার ক্লিপ / ববি পিন কার্ড,Loose / Local,Shampoo & Hair Care,,/images/categories/shampoo_hair.webp,15.00,12.60,Piece,VERIFIED
-MDK-1050,Closeup Everfresh Red Hot Toothpaste,Closeup Everfresh Red Hot Toothpaste,Fresh,Toothpaste & Oral Care,45 g,/images/categories/toothpaste_oral.webp,45.00,37.80,Piece,VERIFIED
-MDK-1051,Closeup Everfresh Red Hot Toothpaste,Closeup Everfresh Red Hot Toothpaste,Fresh,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,95.00,79.80,Piece,VERIFIED
-MDK-1052,Closeup Everfresh Red Hot Toothpaste,Closeup Everfresh Red Hot Toothpaste,Fresh,Toothpaste & Oral Care,150 g,/images/categories/toothpaste_oral.webp,130.00,109.20,Piece,VERIFIED
-MDK-1053,Closeup Menthol Fresh Green,Closeup Menthol Fresh Green,Fresh,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,95.00,79.80,Piece,VERIFIED
-MDK-1054,Pepsodent Germi Check Toothpaste,Pepsodent Germi Check Toothpaste,Pepsodent,Toothpaste & Oral Care,45 g,/images/categories/toothpaste_oral.webp,40.00,33.60,Piece,VERIFIED
-MDK-1055,Pepsodent Germi Check Toothpaste,Pepsodent Germi Check Toothpaste,Pepsodent,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,85.00,71.40,Piece,VERIFIED
-MDK-1056,Pepsodent Germi Check Toothpaste,Pepsodent Germi Check Toothpaste,Pepsodent,Toothpaste & Oral Care,150 g,/images/categories/toothpaste_oral.webp,120.00,100.80,Piece,VERIFIED
-MDK-1057,Pepsodent Expert Protection,Pepsodent Expert Protection,Pepsodent,Toothpaste & Oral Care,140 g,/images/categories/toothpaste_oral.webp,150.00,126.00,Piece,VERIFIED
-MDK-1058,Colgate Strong Teeth Toothpaste,Colgate Strong Teeth Toothpaste,Colgate,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,85.00,71.40,Piece,VERIFIED
-MDK-1059,Colgate MaxFresh Spicy Fresh Gel,Colgate MaxFresh Spicy Fresh Gel,Fresh,Toothpaste & Oral Care,80 g,/images/categories/toothpaste_oral.webp,80.00,67.20,Piece,VERIFIED
-MDK-1060,Colgate Total 12 Professional Clean,Colgate Total 12 Professional Clean,Colgate,Toothpaste & Oral Care,120 g,/images/categories/toothpaste_oral.webp,200.00,168.00,Piece,VERIFIED
-MDK-1061,Mediplus Dental Cream,Mediplus Dental Cream,Loose / Local,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,85.00,71.40,Piece,VERIFIED
-MDK-1062,Sensodyne Fresh Gel Sensitive Teeth,Sensodyne Fresh Gel Sensitive Teeth,Fresh,Toothpaste & Oral Care,75 g,/images/categories/toothpaste_oral.webp,200.00,168.00,Piece,VERIFIED
-MDK-1063,Sensodyne Rapid Relief,Sensodyne Rapid Relief,Sensodyne,Toothpaste & Oral Care,80 g,/images/categories/toothpaste_oral.webp,270.00,226.80,Piece,VERIFIED
+MDK-1050,Closeup Everfresh Red Hot Toothpaste,Closeup Everfresh Red Hot Toothpaste,Fresh,Toothpaste & Oral Care,45 g,/images/products/MDK-1050_closeup_everfresh_red_hot_toothpaste.webp,45.00,37.80,Piece,VERIFIED
+MDK-1051,Closeup Everfresh Red Hot Toothpaste,Closeup Everfresh Red Hot Toothpaste,Fresh,Toothpaste & Oral Care,100 g,/images/products/MDK-1051_closeup_everfresh_red_hot_toothpaste.webp,95.00,79.80,Piece,VERIFIED
+MDK-1052,Closeup Everfresh Red Hot Toothpaste,Closeup Everfresh Red Hot Toothpaste,Fresh,Toothpaste & Oral Care,150 g,/images/products/MDK-1052_closeup_everfresh_red_hot_toothpaste.webp,130.00,109.20,Piece,VERIFIED
+MDK-1053,Closeup Menthol Fresh Green,Closeup Menthol Fresh Green,Fresh,Toothpaste & Oral Care,100 g,/images/products/MDK-1053_closeup_menthol_fresh_green.webp,95.00,79.80,Piece,VERIFIED
+MDK-1054,Pepsodent Germi Check Toothpaste,Pepsodent Germi Check Toothpaste,Pepsodent,Toothpaste & Oral Care,45 g,/images/products/MDK-1054_pepsodent_germi_check_toothpaste.webp,40.00,33.60,Piece,VERIFIED
+MDK-1055,Pepsodent Germi Check Toothpaste,Pepsodent Germi Check Toothpaste,Pepsodent,Toothpaste & Oral Care,100 g,/images/products/MDK-1055_pepsodent_germi_check_toothpaste.webp,85.00,71.40,Piece,VERIFIED
+MDK-1056,Pepsodent Germi Check Toothpaste,Pepsodent Germi Check Toothpaste,Pepsodent,Toothpaste & Oral Care,150 g,/images/products/MDK-1056_pepsodent_germi_check_toothpaste.webp,120.00,100.80,Piece,VERIFIED
+MDK-1057,Pepsodent Expert Protection,Pepsodent Expert Protection,Pepsodent,Toothpaste & Oral Care,140 g,/images/products/MDK-1057_pepsodent_expert_protection.webp,150.00,126.00,Piece,VERIFIED
+MDK-1058,Colgate Strong Teeth Toothpaste,Colgate Strong Teeth Toothpaste,Colgate,Toothpaste & Oral Care,100 g,/images/products/MDK-1058_colgate_strong_teeth_toothpaste.webp,85.00,71.40,Piece,VERIFIED
+MDK-1059,Colgate MaxFresh Spicy Fresh Gel,Colgate MaxFresh Spicy Fresh Gel,Fresh,Toothpaste & Oral Care,80 g,/images/products/MDK-1059_colgate_maxfresh_spicy_fresh_gel.webp,80.00,67.20,Piece,VERIFIED
+MDK-1060,Colgate Total 12 Professional Clean,Colgate Total 12 Professional Clean,Colgate,Toothpaste & Oral Care,120 g,/images/products/MDK-1060_colgate_total_12_professional_clean.webp,200.00,168.00,Piece,VERIFIED
+MDK-1061,Mediplus Dental Cream,Mediplus Dental Cream,Loose / Local,Toothpaste & Oral Care,100 g,/images/products/MDK-1061_mediplus_dental_cream.webp,85.00,71.40,Piece,VERIFIED
+MDK-1062,Sensodyne Fresh Gel Sensitive Teeth,Sensodyne Fresh Gel Sensitive Teeth,Fresh,Toothpaste & Oral Care,75 g,/images/products/MDK-1062_sensodyne_fresh_gel_sensitive_teeth.webp,200.00,168.00,Piece,VERIFIED
+MDK-1063,Sensodyne Rapid Relief,Sensodyne Rapid Relief,Sensodyne,Toothpaste & Oral Care,80 g,/images/products/MDK-1063_sensodyne_rapid_relief.webp,270.00,226.80,Piece,VERIFIED
 MDK-1064,Meswak Herbal Toothpaste,Meswak Herbal Toothpaste,Loose / Local,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,110.00,92.40,Piece,VERIFIED
 MDK-1065,Dabur Red Toothpaste,Dabur Red Toothpaste,Loose / Local,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,90.00,75.60,Piece,VERIFIED
 MDK-1066,Tibet Tooth Powder Tin,তিব্বত টুথপাউডার,Tibet,Toothpaste & Oral Care,100 g,/images/categories/toothpaste_oral.webp,40.00,33.60,Piece,VERIFIED
@@ -1088,69 +1088,69 @@ MDK-1086,সেনসোডাইন টুথব্রাশ এক্সট্
 MDK-1087,কোলগেট স্লিম সফট চারকোল ব্রাশ,কোলগেট স্লিম সফট চারকোল ব্রাশ,Colgate,Toothpaste & Oral Care,Single,/images/categories/toothpaste_oral.webp,80.00,67.20,L,VERIFIED
 MDK-1088,স্মাইল কিডস জেল টুথপেস্ট স্ট্রবেরি,স্মাইল কিডস জেল টুথপেস্ট স্ট্রবেরি,Loose / Local,Toothpaste & Oral Care,৪৫ গ্রাম,/images/categories/toothpaste_oral.webp,50.00,42.00,Kg,VERIFIED
 MDK-1089,বেবি ফিঙ্গার ব্রাশ সিলিকন,বেবি ফিঙ্গার ব্রাশ সিলিকন,Loose / Local,Toothpaste & Oral Care,Single,/images/categories/toothpaste_oral.webp,60.00,50.40,L,VERIFIED
-MDK-1090,Surf Excel Easy Wash Detergent Powder,Surf Excel Easy Wash Detergent Powder,Surf Excel,Detergent & Dishwashing,200 g,/images/categories/detergent_dishwashing.webp,55.00,46.20,Piece,VERIFIED
-MDK-1091,Surf Excel Easy Wash Detergent Powder,Surf Excel Easy Wash Detergent Powder,Surf Excel,Detergent & Dishwashing,500 g,/images/categories/detergent_dishwashing.webp,130.00,109.20,Piece,VERIFIED
-MDK-1092,Surf Excel Easy Wash Detergent Powder,Surf Excel Easy Wash Detergent Powder,Surf Excel,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,250.00,210.00,Kg,VERIFIED
-MDK-1093,Surf Excel Matic Front Load Detergent,Surf Excel Matic Front Load Detergent,Surf Excel,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,320.00,268.80,Kg,VERIFIED
-MDK-1094,Surf Excel Matic Top Load Detergent,Surf Excel Matic Top Load Detergent,Surf Excel,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,290.00,243.60,Kg,VERIFIED
-MDK-1095,Surf Excel Stain Eraser Liquid Detergent,Surf Excel Stain Eraser Liquid Detergent,Surf Excel,Detergent & Dishwashing,500 ml,/images/categories/detergent_dishwashing.webp,170.00,142.80,L,VERIFIED
-MDK-1096,Surf Excel Stain Eraser Liquid Detergent,Surf Excel Stain Eraser Liquid Detergent,Surf Excel,Detergent & Dishwashing,1 L,/images/categories/detergent_dishwashing.webp,320.00,268.80,L,VERIFIED
-MDK-1097,Rin Advanced Detergent Powder,Rin Advanced Detergent Powder,Rin,Detergent & Dishwashing,200 g,/images/categories/detergent_dishwashing.webp,35.00,29.40,Piece,VERIFIED
-MDK-1098,Rin Advanced Detergent Powder,Rin Advanced Detergent Powder,Rin,Detergent & Dishwashing,500 g,/images/categories/detergent_dishwashing.webp,80.00,67.20,Piece,VERIFIED
-MDK-1099,Rin Advanced Detergent Powder,Rin Advanced Detergent Powder,Rin,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,155.00,130.20,Kg,VERIFIED
-MDK-1100,Rin Antibac Detergent Powder,Rin Antibac Detergent Powder,Rin,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,160.00,134.40,Kg,VERIFIED
-MDK-1101,Wheel 2-in-1 Detergent Powder,Wheel 2-in-1 Detergent Powder,Wheel,Detergent & Dishwashing,200 g,/images/categories/detergent_dishwashing.webp,25.00,21.00,Piece,VERIFIED
-MDK-1102,Wheel 2-in-1 Detergent Powder,Wheel 2-in-1 Detergent Powder,Wheel,Detergent & Dishwashing,500 g,/images/categories/detergent_dishwashing.webp,55.00,46.20,Piece,VERIFIED
-MDK-1103,Wheel 2-in-1 Detergent Powder,Wheel 2-in-1 Detergent Powder,Wheel,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,105.00,88.20,Kg,VERIFIED
-MDK-1104,Chaka Detergent Powder,Chaka Detergent Powder,Loose / Local,Detergent & Dishwashing,500 g,/images/categories/detergent_dishwashing.webp,50.00,42.00,Piece,VERIFIED
-MDK-1105,Chaka Detergent Powder,Chaka Detergent Powder,Loose / Local,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,95.00,79.80,Kg,VERIFIED
-MDK-1106,Tibet Fast Wash Detergent Powder,Tibet Fast Wash Detergent Powder,Tibet,Detergent & Dishwashing,500 g,/images/categories/detergent_dishwashing.webp,50.00,42.00,Piece,VERIFIED
-MDK-1107,Tibet Fast Wash Detergent Powder,Tibet Fast Wash Detergent Powder,Tibet,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,95.00,79.80,Kg,VERIFIED
-MDK-1108,ACI White Detergent Powder,ACI White Detergent Powder,ACI,Detergent & Dishwashing,1 kg,/images/categories/detergent_dishwashing.webp,100.00,84.00,Kg,VERIFIED
-MDK-1109,Loose Laundry Powder,খোলা ডিটারজেন্ট পাউডার,Loose / Local,Detergent & Dishwashing,১ কেজি,/images/categories/detergent_dishwashing.webp,70.00,58.80,Kg,VERIFIED
-MDK-1110,Wheel Washing Soap Bar,Wheel Washing Soap Bar,Wheel,Detergent & Dishwashing,130 g,/images/categories/detergent_dishwashing.webp,25.00,21.00,Piece,VERIFIED
-MDK-1111,Chaka Laundry Soap Bar,Chaka Laundry Soap Bar,Loose / Local,Detergent & Dishwashing,130 g,/images/categories/detergent_dishwashing.webp,25.00,21.00,Piece,VERIFIED
-MDK-1112,Tibet Laundry Soap Bar,Tibet Laundry Soap Bar,Tibet,Detergent & Dishwashing,130 g,/images/categories/detergent_dishwashing.webp,22.00,18.48,Piece,VERIFIED
-MDK-1113,খোলা ৫০৭ সাবান,তিব্বত বল সাবান,Tibet,Detergent & Dishwashing,১৫০ গ্রাম,/images/categories/detergent_dishwashing.webp,20.00,16.80,Kg,VERIFIED
-MDK-1114,বাংলা কাপড় কাচা সাবান খোলা,বাংলা কাপড় কাচা সাবান খোলা,Loose / Local,Detergent & Dishwashing,২৫০ গ্রাম,/images/categories/detergent_dishwashing.webp,35.00,29.40,Kg,VERIFIED
-MDK-1115,Rin Detergent Bar,রিন আলা ডিটারজেন্ট বার,Rin,Detergent & Dishwashing,125 g,/images/categories/detergent_dishwashing.webp,25.00,21.00,Piece,VERIFIED
-MDK-1116,Rin Bar,Rin Bar,Rin,Detergent & Dishwashing,250 g,/images/categories/detergent_dishwashing.webp,45.00,37.80,Piece,VERIFIED
-MDK-1117,Vanish Oxi Action,ভ্যানিশ ওক্সি অ্যাকশন পাউডার,Loose / Local,Detergent & Dishwashing,100 g,/images/categories/detergent_dishwashing.webp,110.00,92.40,Piece,VERIFIED
-MDK-1118,Vanish Oxi Action Pouch,Vanish Oxi Action Pouch,Loose / Local,Detergent & Dishwashing,400 g,/images/categories/detergent_dishwashing.webp,340.00,285.60,Piece,VERIFIED
-MDK-1119,Comfort Fabric Conditioner Blue,কমফোর্ট ফেব্রিক কন্ডিশনার,Loose / Local,Detergent & Dishwashing,200 ml,/images/categories/detergent_dishwashing.webp,120.00,100.80,L,VERIFIED
-MDK-1120,Comfort Fabric Conditioner Pink,Comfort Fabric Conditioner Pink,Loose / Local,Detergent & Dishwashing,860 ml Bottle,/images/categories/detergent_dishwashing.webp,450.00,378.00,L,VERIFIED
-MDK-1121,Robin Liquid Blue,রবিন ব্লু নীল তরল,Loose / Local,Detergent & Dishwashing,75 ml,/images/categories/detergent_dishwashing.webp,35.00,29.40,L,VERIFIED
-MDK-1122,Robin Liquid Blue,Robin Liquid Blue,Loose / Local,Detergent & Dishwashing,150 ml,/images/categories/detergent_dishwashing.webp,65.00,54.60,L,VERIFIED
-MDK-1123,উজ্জ্বল লিকুইড নীল,উজ্জ্বল লিকুইড নীল,Loose / Local,Detergent & Dishwashing,৭৫ মিলি,/images/categories/detergent_dishwashing.webp,30.00,25.20,L,VERIFIED
-MDK-1124,Loose Ultramarine Blue Powder,খোলা গুঁড়া নীল,Rin,Detergent & Dishwashing,১০০ গ্রাম,/images/categories/detergent_dishwashing.webp,30.00,25.20,Kg,VERIFIED
-MDK-1125,রবিন গুঁড়া নীল স্যাচে,রবিন গুঁড়া নীল স্যাচে,Loose / Local,Detergent & Dishwashing,২০ গ্রাম,/images/categories/detergent_dishwashing.webp,10.00,8.40,Kg,VERIFIED
-MDK-1126,Ala Fabric Bleach,আলা ব্লিচিং লিকুইড সাদা কাপড়ের,Loose / Local,Detergent & Dishwashing,500 ml,/images/categories/detergent_dishwashing.webp,85.00,71.40,L,VERIFIED
-MDK-1127,কলার ও কাফ ক্লিনার স্প্রে,কলার ও কাফ ক্লিনার স্প্রে,Loose / Local,Detergent & Dishwashing,২৫০ মিলি,/images/categories/detergent_dishwashing.webp,120.00,100.80,L,VERIFIED
-MDK-1128,Laundry Washing Brush,কাপড়ের ব্রাশ প্লাস্টিক,Loose / Local,Detergent & Dishwashing,Single,/images/categories/detergent_dishwashing.webp,30.00,25.20,L,VERIFIED
-MDK-1129,কাপড়ের কাঠের ব্রাশ,কাপড়ের কাঠের ব্রাশ,Loose / Local,Detergent & Dishwashing,Single,/images/categories/detergent_dishwashing.webp,40.00,33.60,L,VERIFIED
-MDK-1130,Cloth Pegs / Clips,প্লাস্টিক কাপড় মেলার ক্লিপ,Loose / Local,Detergent & Dishwashing,12 pcs Pack,/images/categories/detergent_dishwashing.webp,40.00,33.60,Piece,VERIFIED
-MDK-1131,Plastic Cloth Hangers,প্লাস্টিক হ্যাঙ্গার সেট,Loose / Local,Detergent & Dishwashing,6 pcs Pack,/images/categories/detergent_dishwashing.webp,80.00,67.20,Piece,VERIFIED
-MDK-1132,Nylon Clothesline Rope 10m,নাইলন কাপড়ের দড়ি,Loose / Local,Detergent & Dishwashing,,/images/categories/detergent_dishwashing.webp,30.00,25.20,Piece,VERIFIED
-MDK-1133,লোহা কাপড়ের ক্লিপ,লোহা কাপড়ের ক্লিপ,Loose / Local,Detergent & Dishwashing,১২ পিস,/images/categories/detergent_dishwashing.webp,35.00,29.40,Piece,VERIFIED
-MDK-1134,Fabric Starch / Revive Liquid,কাপড়ের মাড় গুঁড়া,Loose / Local,Detergent & Dishwashing,200 ml,/images/categories/detergent_dishwashing.webp,80.00,67.20,L,VERIFIED
-MDK-1135,ড্রায়ার শিট সুগন্ধি,ড্রায়ার শিট সুগন্ধি,Loose / Local,Detergent & Dishwashing,২০ শিট,/images/categories/detergent_dishwashing.webp,200.00,168.00,Piece,VERIFIED
-MDK-1136,Genteel Liquid,উল ধোয়ার স্পেশাল লিকুইড জেন্টল,Loose / Local,Detergent & Dishwashing,500 ml,/images/categories/detergent_dishwashing.webp,180.00,151.20,L,VERIFIED
-MDK-1137,এসিআই কাপড়ের অ্যান্টিব্যাকটেরিয়াল লিকুইড,এসিআই কাপড়ের অ্যান্টিব্যাকটেরিয়াল লিকুইড,ACI,Detergent & Dishwashing,৫০০ মিলি,/images/categories/detergent_dishwashing.webp,160.00,134.40,L,VERIFIED
-MDK-1138,লন্ড্রি বালতি প্লাস্টিক আরএফএল ১৫ লিটার,লন্ড্রি বালতি প্লাস্টিক আরএফএল ১৫ লিটার,Loose / Local,Detergent & Dishwashing,,/images/categories/detergent_dishwashing.webp,180.00,151.20,Piece,VERIFIED
-MDK-1139,লন্ড্রি মগ প্লাস্টিক আরএফএল ১ লিটার,লন্ড্রি মগ প্লাস্টিক আরএফএল ১ লিটার,Loose / Local,Detergent & Dishwashing,,/images/categories/detergent_dishwashing.webp,35.00,29.40,Piece,VERIFIED
-MDK-1140,লন্ড্রি ঝুড়ি / ময়লা কাপড়ের বাস্কেট,লন্ড্রি ঝুড়ি / ময়লা কাপড়ের বাস্কেট,Loose / Local,Detergent & Dishwashing,,/images/categories/detergent_dishwashing.webp,250.00,210.00,Piece,VERIFIED
-MDK-1141,সিলিকন ওয়াশিং প্যাড,সিলিকন ওয়াশিং প্যাড,Loose / Local,Detergent & Dishwashing,Single,/images/categories/detergent_dishwashing.webp,40.00,33.60,L,VERIFIED
-MDK-1142,Washing Machine Mesh Bag,লন্ড্রি নেট ব্যাগ,Loose / Local,Detergent & Dishwashing,Single,/images/categories/detergent_dishwashing.webp,80.00,67.20,L,VERIFIED
-MDK-1143,Vim Dishwash Bar,Vim Dishwash Bar,Vim,Detergent & Dishwashing,100 g,/images/categories/detergent_dishwashing.webp,20.00,16.80,Piece,VERIFIED
-MDK-1144,Vim Dishwash Bar,Vim Dishwash Bar,Vim,Detergent & Dishwashing,300 g,/images/categories/detergent_dishwashing.webp,50.00,42.00,Piece,VERIFIED
-MDK-1145,Vim Bar Anti-Smell Lemon,Vim Bar Anti-Smell Lemon,Vim,Detergent & Dishwashing,300 g,/images/categories/detergent_dishwashing.webp,55.00,46.20,Piece,VERIFIED
+MDK-1090,Surf Excel Easy Wash Detergent Powder,Surf Excel Easy Wash Detergent Powder,Surf Excel,Detergent & Dishwashing,200 g,/images/products/MDK-1090_surf_excel_easy_wash_detergent_powder.webp,55.00,46.20,Piece,VERIFIED
+MDK-1091,Surf Excel Easy Wash Detergent Powder,Surf Excel Easy Wash Detergent Powder,Surf Excel,Detergent & Dishwashing,500 g,/images/products/MDK-1091_surf_excel_easy_wash_detergent_powder.webp,130.00,109.20,Piece,VERIFIED
+MDK-1092,Surf Excel Easy Wash Detergent Powder,Surf Excel Easy Wash Detergent Powder,Surf Excel,Detergent & Dishwashing,1 kg,/images/products/MDK-1092_surf_excel_easy_wash_detergent_powder.webp,250.00,210.00,Kg,VERIFIED
+MDK-1093,Surf Excel Matic Front Load Detergent,Surf Excel Matic Front Load Detergent,Surf Excel,Detergent & Dishwashing,1 kg,/images/products/MDK-1093_surf_excel_matic_front_load_detergent.webp,320.00,268.80,Kg,VERIFIED
+MDK-1094,Surf Excel Matic Top Load Detergent,Surf Excel Matic Top Load Detergent,Surf Excel,Detergent & Dishwashing,1 kg,/images/products/MDK-1094_surf_excel_matic_top_load_detergent.webp,290.00,243.60,Kg,VERIFIED
+MDK-1095,Surf Excel Stain Eraser Liquid Detergent,Surf Excel Stain Eraser Liquid Detergent,Surf Excel,Detergent & Dishwashing,500 ml,/images/products/MDK-1095_surf_excel_stain_eraser_liquid_detergent.webp,170.00,142.80,L,VERIFIED
+MDK-1096,Surf Excel Stain Eraser Liquid Detergent,Surf Excel Stain Eraser Liquid Detergent,Surf Excel,Detergent & Dishwashing,1 L,/images/products/MDK-1096_surf_excel_stain_eraser_liquid_detergent.webp,320.00,268.80,L,VERIFIED
+MDK-1097,Rin Advanced Detergent Powder,Rin Advanced Detergent Powder,Rin,Detergent & Dishwashing,200 g,/images/products/MDK-1097_rin_advanced_detergent_powder.webp,35.00,29.40,Piece,VERIFIED
+MDK-1098,Rin Advanced Detergent Powder,Rin Advanced Detergent Powder,Rin,Detergent & Dishwashing,500 g,/images/products/MDK-1098_rin_advanced_detergent_powder.webp,80.00,67.20,Piece,VERIFIED
+MDK-1099,Rin Advanced Detergent Powder,Rin Advanced Detergent Powder,Rin,Detergent & Dishwashing,1 kg,/images/products/MDK-1099_rin_advanced_detergent_powder.webp,155.00,130.20,Kg,VERIFIED
+MDK-1100,Rin Antibac Detergent Powder,Rin Antibac Detergent Powder,Rin,Detergent & Dishwashing,1 kg,/images/products/MDK-1100_rin_antibac_detergent_powder.webp,160.00,134.40,Kg,VERIFIED
+MDK-1101,Wheel 2-in-1 Detergent Powder,Wheel 2-in-1 Detergent Powder,Wheel,Detergent & Dishwashing,200 g,/images/products/MDK-1101_wheel_2_in_1_detergent_powder.webp,25.00,21.00,Piece,VERIFIED
+MDK-1102,Wheel 2-in-1 Detergent Powder,Wheel 2-in-1 Detergent Powder,Wheel,Detergent & Dishwashing,500 g,/images/products/MDK-1102_wheel_2_in_1_detergent_powder.webp,55.00,46.20,Piece,VERIFIED
+MDK-1103,Wheel 2-in-1 Detergent Powder,Wheel 2-in-1 Detergent Powder,Wheel,Detergent & Dishwashing,1 kg,/images/products/MDK-1103_wheel_2_in_1_detergent_powder.webp,105.00,88.20,Kg,VERIFIED
+MDK-1104,Chaka Detergent Powder,Chaka Detergent Powder,Loose / Local,Detergent & Dishwashing,500 g,/images/products/MDK-1104_chaka_detergent_powder.webp,50.00,42.00,Piece,VERIFIED
+MDK-1105,Chaka Detergent Powder,Chaka Detergent Powder,Loose / Local,Detergent & Dishwashing,1 kg,/images/products/MDK-1105_chaka_detergent_powder.webp,95.00,79.80,Kg,VERIFIED
+MDK-1106,Tibet Fast Wash Detergent Powder,Tibet Fast Wash Detergent Powder,Tibet,Detergent & Dishwashing,500 g,/images/products/MDK-1106_tibet_fast_wash_detergent_powder.webp,50.00,42.00,Piece,VERIFIED
+MDK-1107,Tibet Fast Wash Detergent Powder,Tibet Fast Wash Detergent Powder,Tibet,Detergent & Dishwashing,1 kg,/images/products/MDK-1107_tibet_fast_wash_detergent_powder.webp,95.00,79.80,Kg,VERIFIED
+MDK-1108,ACI White Detergent Powder,ACI White Detergent Powder,ACI,Detergent & Dishwashing,1 kg,/images/products/MDK-1108_aci_white_detergent_powder.webp,100.00,84.00,Kg,VERIFIED
+MDK-1109,Loose Laundry Powder,খোলা ডিটারজেন্ট পাউডার,Loose / Local,Detergent & Dishwashing,১ কেজি,/images/products/MDK-1109_loose_laundry_powder.webp,70.00,58.80,Kg,VERIFIED
+MDK-1110,Wheel Washing Soap Bar,Wheel Washing Soap Bar,Wheel,Detergent & Dishwashing,130 g,/images/products/MDK-1110_wheel_washing_soap_bar.webp,25.00,21.00,Piece,VERIFIED
+MDK-1111,Chaka Laundry Soap Bar,Chaka Laundry Soap Bar,Loose / Local,Detergent & Dishwashing,130 g,/images/products/MDK-1111_chaka_laundry_soap_bar.webp,25.00,21.00,Piece,VERIFIED
+MDK-1112,Tibet Laundry Soap Bar,Tibet Laundry Soap Bar,Tibet,Detergent & Dishwashing,130 g,/images/products/MDK-1112_tibet_laundry_soap_bar.webp,22.00,18.48,Piece,VERIFIED
+MDK-1113,খোলা ৫০৭ সাবান,তিব্বত বল সাবান,Tibet,Detergent & Dishwashing,১৫০ গ্রাম,/images/products/MDK-1113_loose_soap.webp,20.00,16.80,Kg,VERIFIED
+MDK-1114,বাংলা কাপড় কাচা সাবান খোলা,বাংলা কাপড় কাচা সাবান খোলা,Loose / Local,Detergent & Dishwashing,২৫০ গ্রাম,/images/products/MDK-1114_tea_soap_loose.webp,35.00,29.40,Kg,VERIFIED
+MDK-1115,Rin Detergent Bar,রিন আলা ডিটারজেন্ট বার,Rin,Detergent & Dishwashing,125 g,/images/products/MDK-1115_rin_detergent_bar.webp,25.00,21.00,Piece,VERIFIED
+MDK-1116,Rin Bar,Rin Bar,Rin,Detergent & Dishwashing,250 g,/images/products/MDK-1116_rin_bar.webp,45.00,37.80,Piece,VERIFIED
+MDK-1117,Vanish Oxi Action,ভ্যানিশ ওক্সি অ্যাকশন পাউডার,Loose / Local,Detergent & Dishwashing,100 g,/images/products/MDK-1117_vanish_oxi_action.webp,110.00,92.40,Piece,VERIFIED
+MDK-1118,Vanish Oxi Action Pouch,Vanish Oxi Action Pouch,Loose / Local,Detergent & Dishwashing,400 g,/images/products/MDK-1118_vanish_oxi_action_pouch.webp,340.00,285.60,Piece,VERIFIED
+MDK-1119,Comfort Fabric Conditioner Blue,কমফোর্ট ফেব্রিক কন্ডিশনার,Loose / Local,Detergent & Dishwashing,200 ml,/images/products/MDK-1119_comfort_fabric_conditioner_blue.webp,120.00,100.80,L,VERIFIED
+MDK-1120,Comfort Fabric Conditioner Pink,Comfort Fabric Conditioner Pink,Loose / Local,Detergent & Dishwashing,860 ml Bottle,/images/products/MDK-1120_comfort_fabric_conditioner_pink.webp,450.00,378.00,L,VERIFIED
+MDK-1121,Robin Liquid Blue,রবিন ব্লু নীল তরল,Loose / Local,Detergent & Dishwashing,75 ml,/images/products/MDK-1121_robin_liquid_blue.webp,35.00,29.40,L,VERIFIED
+MDK-1122,Robin Liquid Blue,Robin Liquid Blue,Loose / Local,Detergent & Dishwashing,150 ml,/images/products/MDK-1122_robin_liquid_blue.webp,65.00,54.60,L,VERIFIED
+MDK-1123,উজ্জ্বল লিকুইড নীল,উজ্জ্বল লিকুইড নীল,Loose / Local,Detergent & Dishwashing,৭৫ মিলি,/images/products/MDK-1123_item_mdk-1123.webp,30.00,25.20,L,VERIFIED
+MDK-1124,Loose Ultramarine Blue Powder,খোলা গুঁড়া নীল,Rin,Detergent & Dishwashing,১০০ গ্রাম,/images/products/MDK-1124_loose_ultramarine_blue_powder.webp,30.00,25.20,Kg,VERIFIED
+MDK-1125,রবিন গুঁড়া নীল স্যাচে,রবিন গুঁড়া নীল স্যাচে,Loose / Local,Detergent & Dishwashing,২০ গ্রাম,/images/products/MDK-1125_item_mdk-1125.webp,10.00,8.40,Kg,VERIFIED
+MDK-1126,Ala Fabric Bleach,আলা ব্লিচিং লিকুইড সাদা কাপড়ের,Loose / Local,Detergent & Dishwashing,500 ml,/images/products/MDK-1126_ala_fabric_bleach.webp,85.00,71.40,L,VERIFIED
+MDK-1127,কলার ও কাফ ক্লিনার স্প্রে,কলার ও কাফ ক্লিনার স্প্রে,Loose / Local,Detergent & Dishwashing,২৫০ মিলি,/images/products/MDK-1127_item_mdk-1127.webp,120.00,100.80,L,VERIFIED
+MDK-1128,Laundry Washing Brush,কাপড়ের ব্রাশ প্লাস্টিক,Loose / Local,Detergent & Dishwashing,Single,/images/products/MDK-1128_laundry_washing_brush.webp,30.00,25.20,L,VERIFIED
+MDK-1129,কাপড়ের কাঠের ব্রাশ,কাপড়ের কাঠের ব্রাশ,Loose / Local,Detergent & Dishwashing,Single,/images/products/MDK-1129_item_mdk-1129.webp,40.00,33.60,L,VERIFIED
+MDK-1130,Cloth Pegs / Clips,প্লাস্টিক কাপড় মেলার ক্লিপ,Loose / Local,Detergent & Dishwashing,12 pcs Pack,/images/products/MDK-1130_cloth_pegs_clips.webp,40.00,33.60,Piece,VERIFIED
+MDK-1131,Plastic Cloth Hangers,প্লাস্টিক হ্যাঙ্গার সেট,Loose / Local,Detergent & Dishwashing,6 pcs Pack,/images/products/MDK-1131_plastic_cloth_hangers.webp,80.00,67.20,Piece,VERIFIED
+MDK-1132,Nylon Clothesline Rope 10m,নাইলন কাপড়ের দড়ি,Loose / Local,Detergent & Dishwashing,,/images/products/MDK-1132_nylon_clothesline_rope_10m.webp,30.00,25.20,Piece,VERIFIED
+MDK-1133,লোহা কাপড়ের ক্লিপ,লোহা কাপড়ের ক্লিপ,Loose / Local,Detergent & Dishwashing,১২ পিস,/images/products/MDK-1133_item_mdk-1133.webp,35.00,29.40,Piece,VERIFIED
+MDK-1134,Fabric Starch / Revive Liquid,কাপড়ের মাড় গুঁড়া,Loose / Local,Detergent & Dishwashing,200 ml,/images/products/MDK-1134_fabric_starch_revive_liquid.webp,80.00,67.20,L,VERIFIED
+MDK-1135,ড্রায়ার শিট সুগন্ধি,ড্রায়ার শিট সুগন্ধি,Loose / Local,Detergent & Dishwashing,২০ শিট,/images/products/MDK-1135_item_mdk-1135.webp,200.00,168.00,Piece,VERIFIED
+MDK-1136,Genteel Liquid,উল ধোয়ার স্পেশাল লিকুইড জেন্টল,Loose / Local,Detergent & Dishwashing,500 ml,/images/products/MDK-1136_genteel_liquid.webp,180.00,151.20,L,VERIFIED
+MDK-1137,এসিআই কাপড়ের অ্যান্টিব্যাকটেরিয়াল লিকুইড,এসিআই কাপড়ের অ্যান্টিব্যাকটেরিয়াল লিকুইড,ACI,Detergent & Dishwashing,৫০০ মিলি,/images/products/MDK-1137_aci.webp,160.00,134.40,L,VERIFIED
+MDK-1138,লন্ড্রি বালতি প্লাস্টিক আরএফএল ১৫ লিটার,লন্ড্রি বালতি প্লাস্টিক আরএফএল ১৫ লিটার,Loose / Local,Detergent & Dishwashing,,/images/products/MDK-1138_item_mdk-1138.webp,180.00,151.20,Piece,VERIFIED
+MDK-1139,লন্ড্রি মগ প্লাস্টিক আরএফএল ১ লিটার,লন্ড্রি মগ প্লাস্টিক আরএফএল ১ লিটার,Loose / Local,Detergent & Dishwashing,,/images/products/MDK-1139_item_mdk-1139.webp,35.00,29.40,Piece,VERIFIED
+MDK-1140,লন্ড্রি ঝুড়ি / ময়লা কাপড়ের বাস্কেট,লন্ড্রি ঝুড়ি / ময়লা কাপড়ের বাস্কেট,Loose / Local,Detergent & Dishwashing,,/images/products/MDK-1140_item_mdk-1140.webp,250.00,210.00,Piece,VERIFIED
+MDK-1141,সিলিকন ওয়াশিং প্যাড,সিলিকন ওয়াশিং প্যাড,Loose / Local,Detergent & Dishwashing,Single,/images/products/MDK-1141_item_mdk-1141.webp,40.00,33.60,L,VERIFIED
+MDK-1142,Washing Machine Mesh Bag,লন্ড্রি নেট ব্যাগ,Loose / Local,Detergent & Dishwashing,Single,/images/products/MDK-1142_washing_machine_mesh_bag.webp,80.00,67.20,L,VERIFIED
+MDK-1143,Vim Dishwash Bar,Vim Dishwash Bar,Vim,Detergent & Dishwashing,100 g,/images/products/MDK-1143_vim_dishwash_bar.webp,20.00,16.80,Piece,VERIFIED
+MDK-1144,Vim Dishwash Bar,Vim Dishwash Bar,Vim,Detergent & Dishwashing,300 g,/images/products/MDK-1144_vim_dishwash_bar.webp,50.00,42.00,Piece,VERIFIED
+MDK-1145,Vim Bar Anti-Smell Lemon,Vim Bar Anti-Smell Lemon,Vim,Detergent & Dishwashing,300 g,/images/products/MDK-1145_vim_bar_anti_smell_lemon.webp,55.00,46.20,Piece,VERIFIED
 MDK-1146,Vim Liquid Dishwash Bottle,Vim Liquid Dishwash Bottle,Vim,Detergent & Dishwashing,250 ml,/images/products/MDK-0184_unilever_vim_liquid_500_ml.webp,85.00,71.40,L,VERIFIED
 MDK-1147,Vim Liquid Dishwash Bottle,Vim Liquid Dishwash Bottle,Vim,Detergent & Dishwashing,500 ml,/images/products/MDK-0184_unilever_vim_liquid_500_ml.webp,155.00,130.20,L,VERIFIED
 MDK-1148,Vim Liquid Dishwash Refill Pouch,Vim Liquid Dishwash Refill Pouch,Vim,Detergent & Dishwashing,450 ml,/images/products/MDK-0184_unilever_vim_liquid_500_ml.webp,130.00,109.20,L,VERIFIED
-MDK-1149,Noble Dishwash Bar,Noble Dishwash Bar,Loose / Local,Detergent & Dishwashing,100 g,/images/categories/detergent_dishwashing.webp,15.00,12.60,Piece,VERIFIED
-MDK-1150,Noble Dishwash Bar,Noble Dishwash Bar,Loose / Local,Detergent & Dishwashing,300 g,/images/categories/detergent_dishwashing.webp,40.00,33.60,Piece,VERIFIED
-MDK-1151,Noble Liquid Dishwash,Noble Liquid Dishwash,Loose / Local,Detergent & Dishwashing,500 ml,/images/categories/detergent_dishwashing.webp,120.00,100.80,L,VERIFIED
-MDK-1152,ACI Clean Dishwash Bar,ACI Clean Dishwash Bar,ACI,Detergent & Dishwashing,300 g,/images/categories/detergent_dishwashing.webp,40.00,33.60,Piece,VERIFIED
+MDK-1149,Noble Dishwash Bar,Noble Dishwash Bar,Loose / Local,Detergent & Dishwashing,100 g,/images/products/MDK-1149_noble_dishwash_bar.webp,15.00,12.60,Piece,VERIFIED
+MDK-1150,Noble Dishwash Bar,Noble Dishwash Bar,Loose / Local,Detergent & Dishwashing,300 g,/images/products/MDK-1150_noble_dishwash_bar.webp,40.00,33.60,Piece,VERIFIED
+MDK-1151,Noble Liquid Dishwash,Noble Liquid Dishwash,Loose / Local,Detergent & Dishwashing,500 ml,/images/products/MDK-1151_noble_liquid_dishwash.webp,120.00,100.80,L,VERIFIED
+MDK-1152,ACI Clean Dishwash Bar,ACI Clean Dishwash Bar,ACI,Detergent & Dishwashing,300 g,/images/products/MDK-1152_aci_clean_dishwash_bar.webp,40.00,33.60,Piece,VERIFIED
 MDK-1153,Scotch-Brite Scrub Sponge,সবুজ-হলুদ ফোম স্পঞ্জ,Loose / Local,Detergent & Dishwashing,Single,/images/categories/detergent_dishwashing.webp,35.00,29.40,L,VERIFIED
 MDK-1154,Scotch-Brite Heavy Duty Scrub Pad,সবুজ তারজালি ছাড়া প্যাড,Loose / Local,Detergent & Dishwashing,Single,/images/categories/detergent_dishwashing.webp,20.00,16.80,L,VERIFIED
 MDK-1155,Scotch-Brite Metallic Steel Scrub Pad,Scotch-Brite Metallic Steel Scrub Pad,Loose / Local,Detergent & Dishwashing,Single,/images/categories/detergent_dishwashing.webp,35.00,29.40,L,VERIFIED
@@ -1227,25 +1227,25 @@ MDK-1225,ওডোমস ক্রিম,ওডোমস ক্রিম,Loose /
 MDK-1226,Magic Cockroach Chalk,চক টিকটিকি ও তেলাপোকা নিধন,Loose / Local,Mosquito Repellent,Single,/images/categories/mosquito_repellent.webp,15.00,12.60,L,VERIFIED
 MDK-1227,ACI Cockroach Gel,এসিআই তেলাপোকা মারার জেল,ACI,Mosquito Repellent,20 g,/images/categories/mosquito_repellent.webp,150.00,126.00,Piece,VERIFIED
 MDK-1228,হিট অ্যান্টি রোচ জেল,হিট অ্যান্টি রোচ জেল,Hit,Mosquito Repellent,20 g,/images/categories/mosquito_repellent.webp,180.00,151.20,Piece,VERIFIED
-MDK-1229,Rat Poison Wheat Bait,ইঁদুর মারার বিষ গম দানা,Loose / Local,Mosquito Repellent,50 g Pack,/images/products/MDK-0017_loose_local_wheat_5_kg.webp,40.00,33.60,Piece,VERIFIED
+MDK-1229,Rat Poison Wheat Bait,ইঁদুর মারার বিষ গম দানা,Loose / Local,Mosquito Repellent,50 g Pack,/images/products/MDK-1229_rat_poison_wheat_bait.webp,40.00,33.60,Piece,VERIFIED
 MDK-1230,Rat Glue Trap Pad,ইঁদুর ধরা আঠার ট্র্যাপ প্যাড,Loose / Local,Mosquito Repellent,Single,/images/categories/mosquito_repellent.webp,80.00,67.20,L,VERIFIED
 MDK-1231,ইঁদুর ধরার লোহার খাঁচা ট্র্যাপ,ইঁদুর ধরার লোহার খাঁচা ট্র্যাপ,Loose / Local,Mosquito Repellent,Single,/images/categories/mosquito_repellent.webp,100.00,84.00,L,VERIFIED
 MDK-1232,Electric Mosquito Swatter Racket,মশা মারার ইলেকট্রিক রিচার্জেবল ব্যাট,Loose / Local,Mosquito Repellent,,/images/categories/mosquito_repellent.webp,350.00,294.00,Piece,VERIFIED
-MDK-1233,Bashundhara Facial Tissue Floral Box,Bashundhara Facial Tissue Floral Box,ACI,Tissue & Paper Products,120 pulls 2-ply,/images/products/MDK-0213_facial_tissue_200_pulls.webp,70.00,58.80,L,VERIFIED
-MDK-1234,Bashundhara Facial Tissue Soft Pack Pouch,Bashundhara Facial Tissue Soft Pack Pouch,ACI,Tissue & Paper Products,100 pulls,/images/products/MDK-0213_facial_tissue_200_pulls.webp,45.00,37.80,L,VERIFIED
+MDK-1233,Bashundhara Facial Tissue Floral Box,Bashundhara Facial Tissue Floral Box,ACI,Tissue & Paper Products,120 pulls 2-ply,/images/products/MDK-1233_bashundhara_facial_tissue_floral_box.webp,70.00,58.80,L,VERIFIED
+MDK-1234,Bashundhara Facial Tissue Soft Pack Pouch,Bashundhara Facial Tissue Soft Pack Pouch,ACI,Tissue & Paper Products,100 pulls,/images/products/MDK-1234_bashundhara_facial_tissue_soft_pack_pouch.webp,45.00,37.80,L,VERIFIED
 MDK-1235,Bashundhara Pocket Tissue,Bashundhara Pocket Tissue,Bashundhara,Tissue & Paper Products,10 packs x 10 pulls,/images/categories/tissue_paper.webp,60.00,50.40,L,VERIFIED
 MDK-1236,Bashundhara Toilet Tissue Roll Pink,Bashundhara Toilet Tissue Roll Pink,Bashundhara,Tissue & Paper Products,Single,/images/products/MDK-0215_bashundhara_toilet_tissue_4_rolls.webp,25.00,21.00,L,VERIFIED
 MDK-1237,Bashundhara Toilet Tissue Roll Pink,Bashundhara Toilet Tissue Roll Pink,Bashundhara,Tissue & Paper Products,4 Rolls Pack,/images/products/MDK-0215_bashundhara_toilet_tissue_4_rolls.webp,95.00,79.80,L,VERIFIED
 MDK-1238,Bashundhara Kitchen Towel Roll,Bashundhara Kitchen Towel Roll,Bashundhara,Tissue & Paper Products,2 Rolls Pack,/images/categories/tissue_paper.webp,130.00,109.20,L,VERIFIED
 MDK-1239,Bashundhara Paper Napkin Paper,Bashundhara Paper Napkin Paper,Bashundhara,Tissue & Paper Products,100 sheets Pack,/images/categories/tissue_paper.webp,50.00,42.00,Piece,VERIFIED
-MDK-1240,Fresh Facial Tissue Box Floral,Fresh Facial Tissue Box Floral,Fresh,Tissue & Paper Products,120 pulls,/images/products/MDK-0213_facial_tissue_200_pulls.webp,65.00,54.60,L,VERIFIED
-MDK-1241,Fresh Facial Tissue Soft Pouch,Fresh Facial Tissue Soft Pouch,Fresh,Tissue & Paper Products,100 pulls,/images/products/MDK-0213_facial_tissue_200_pulls.webp,40.00,33.60,L,VERIFIED
+MDK-1240,Fresh Facial Tissue Box Floral,Fresh Facial Tissue Box Floral,Fresh,Tissue & Paper Products,120 pulls,/images/products/MDK-1240_fresh_facial_tissue_box_floral.webp,65.00,54.60,L,VERIFIED
+MDK-1241,Fresh Facial Tissue Soft Pouch,Fresh Facial Tissue Soft Pouch,Fresh,Tissue & Paper Products,100 pulls,/images/products/MDK-1241_fresh_facial_tissue_soft_pouch.webp,40.00,33.60,L,VERIFIED
 MDK-1242,Fresh Pocket Handkerchief Tissue,Fresh Pocket Handkerchief Tissue,Fresh,Tissue & Paper Products,10 pcs Pack,/images/categories/tissue_paper.webp,55.00,46.20,Piece,VERIFIED
 MDK-1243,Fresh Toilet Tissue Roll,Fresh Toilet Tissue Roll,Fresh,Tissue & Paper Products,Single,/images/products/MDK-0215_bashundhara_toilet_tissue_4_rolls.webp,24.00,20.16,L,VERIFIED
 MDK-1244,Fresh Toilet Tissue Pack,Fresh Toilet Tissue Pack,Fresh,Tissue & Paper Products,4 Rolls,/images/products/MDK-0215_bashundhara_toilet_tissue_4_rolls.webp,90.00,75.60,L,VERIFIED
 MDK-1245,Fresh Kitchen Towel Roll,Fresh Kitchen Towel Roll,Fresh,Tissue & Paper Products,2 Rolls,/images/categories/tissue_paper.webp,120.00,100.80,L,VERIFIED
 MDK-1246,Fresh Dining Napkin,Fresh Dining Napkin,Fresh,Tissue & Paper Products,100 pulls,/images/categories/tissue_paper.webp,45.00,37.80,L,VERIFIED
-MDK-1247,Fay Facial Tissue Box,Fay Facial Tissue Box,ACI,Tissue & Paper Products,120 pulls,/images/products/MDK-0213_facial_tissue_200_pulls.webp,70.00,58.80,L,VERIFIED
+MDK-1247,Fay Facial Tissue Box,Fay Facial Tissue Box,ACI,Tissue & Paper Products,120 pulls,/images/products/MDK-1247_fay_facial_tissue_box.webp,70.00,58.80,L,VERIFIED
 MDK-1248,Fay Toilet Tissue Roll,Fay Toilet Tissue Roll,Loose / Local,Tissue & Paper Products,Single,/images/products/MDK-0215_bashundhara_toilet_tissue_4_rolls.webp,25.00,21.00,L,VERIFIED
 MDK-1249,লোকাল সাধারণ টয়লেট টিস্যু রোল,লোকাল সাধারণ টয়লেট টিস্যু রোল,Loose / Local,Tissue & Paper Products,Single,/images/categories/tissue_paper.webp,15.00,12.60,L,VERIFIED
 MDK-1250,Savlon Wet Wipes,ওয়েট ওয়াইপস অ্যান্টিব্যাকটেরিয়াল,Savlon,Tissue & Paper Products,80 wipes,/images/categories/tissue_paper.webp,200.00,168.00,Piece,VERIFIED
@@ -1339,10 +1339,10 @@ MDK-1337,Clofenac 50mg,ডাইক্লোফেনাক ৫০ মিগ্�
 MDK-1338,Flagyl 400mg,ফ্ল্যাজিল ৪০০ মিগ্রা পেটের আমাশয়,Loose / Local,Miscellaneous,10 Tabs,/images/categories/miscellaneous.webp,25.00,21.00,Piece,VERIFIED
 MDK-1339,Histasin,হিস্টাসিন ট্যাবলেট অ্যালার্জি ও সর্দি,Loose / Local,Miscellaneous,10 Tabs,/images/categories/miscellaneous.webp,5.00,4.20,Piece,VERIFIED
 MDK-1340,Fexo 120mg,ফেক্সোফেনাডিন ১২০ মিগ্রা,Loose / Local,Miscellaneous,10 Tabs,/images/categories/miscellaneous.webp,80.00,67.20,Piece,VERIFIED
-MDK-1341,Savlon Antiseptic Liquid,স্যাভলন অ্যান্টিসেপটিক লিকুইড,Savlon,Miscellaneous,112 ml,/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp,65.00,54.60,L,VERIFIED
-MDK-1342,স্যাভলন অ্যান্টিসেপটিক লিকুইড,স্যাভলন অ্যান্টিসেপটিক লিকুইড,Savlon,Miscellaneous,500 ml,/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp,220.00,184.80,L,VERIFIED
-MDK-1343,Savlon Antiseptic Cream,স্যাভলন অ্যান্টিসেপটিক ক্রিম,Savlon,Miscellaneous,30 g,/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp,55.00,46.20,Piece,VERIFIED
-MDK-1344,স্যাভলন অ্যান্টিসেপটিক ক্রিম,স্যাভলন অ্যান্টিসেপটিক ক্রিম,Savlon,Miscellaneous,60 g,/images/products/MDK-0202_aci_savlon_antiseptic_500_ml.webp,95.00,79.80,Piece,VERIFIED
+MDK-1341,Savlon Antiseptic Liquid,স্যাভলন অ্যান্টিসেপটিক লিকুইড,Savlon,Miscellaneous,112 ml,/images/products/MDK-1341_savlon_antiseptic_liquid.webp,65.00,54.60,L,VERIFIED
+MDK-1342,স্যাভলন অ্যান্টিসেপটিক লিকুইড,স্যাভলন অ্যান্টিসেপটিক লিকুইড,Savlon,Miscellaneous,500 ml,/images/products/MDK-1342_item_mdk-1342.webp,220.00,184.80,L,VERIFIED
+MDK-1343,Savlon Antiseptic Cream,স্যাভলন অ্যান্টিসেপটিক ক্রিম,Savlon,Miscellaneous,30 g,/images/products/MDK-1343_savlon_antiseptic_cream.webp,55.00,46.20,Piece,VERIFIED
+MDK-1344,স্যাভলন অ্যান্টিসেপটিক ক্রিম,স্যাভলন অ্যান্টিসেপটিক ক্রিম,Savlon,Miscellaneous,60 g,/images/products/MDK-1344_item_mdk-1344.webp,95.00,79.80,Piece,VERIFIED
 MDK-1345,Band-Aid Adhesive Strip,ব্যান্ড এইড জীবাণুমুক্ত স্ট্রিপ,Loose / Local,Miscellaneous,1 pc,/images/categories/miscellaneous.webp,2.00,1.68,Piece,VERIFIED
 MDK-1346,ব্যান্ড এইড বক্স,ব্যান্ড এইড বক্স,Loose / Local,Miscellaneous,100 pcs Box,/images/categories/miscellaneous.webp,150.00,126.00,Box,VERIFIED
 MDK-1347,Gauze Bandage 2 inch,ফার্স্ট এইড স্টেরাইল গজ ব্যান্ডেজ,Loose / Local,Miscellaneous,Single,/images/categories/miscellaneous.webp,15.00,12.60,L,VERIFIED
