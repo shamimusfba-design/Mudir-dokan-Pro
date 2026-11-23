@@ -591,8 +591,8 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
 
           {/* Quick Nav Links (DokandarPro style) */}
           <nav className="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-600 dark:text-slate-300">
+            <a href="#benefits" className="hover:text-emerald-600 transition">সমস্যা ও সমাধান</a>
             <a href="#screens" className="hover:text-emerald-600 transition">স্ক্রিন গ্যালারি</a>
-            <a href="#benefits" className="hover:text-emerald-600 transition">সুবিধাসমূহ</a>
             <a href="#pricing" className="hover:text-emerald-600 transition">প্যাকেজ ও মূল্য</a>
             <a href="tel:01884700631" className="text-emerald-600 hover:underline whitespace-nowrap">হেল্পলাইন: 01884700631</a>
           </nav>
@@ -898,90 +898,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 3. DOKANDARPRO-STYLE CLEAN 3-COLUMN SCREEN GALLERY */}
-      {/* ======================================================== */}
-      <section id="screens" className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FBFDFB] dark:bg-slate-950">
-        <div className="mx-auto max-w-6xl">
-          
-          <ScrollReveal animation="fade-up" className="text-center max-w-2xl mx-auto mb-12">
-            <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-              সফটওয়্যার এক নজরে
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white mt-2">
-              মুদির দোকান প্রো-এর বাস্তব স্ক্রিনগুলো দেখুন
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-              ড্যাশবোর্ড থেকে ইনভেন্টরি, বারকোড পিওএস, বাকি খাতা ও রিপোর্ট—সব আসল ইন্টারফেস এক নজরে।
-            </p>
-          </ScrollReveal>
-
-          {/* Clean 3-Column Screen Card Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SCREEN_CARDS.map((card, idx) => (
-              <ScrollReveal
-                key={card.id}
-                animation="fade-up"
-                delay={idx * 40}
-                className="h-full"
-              >
-                <div
-                  className="group h-full rounded-2xl border border-slate-200/90 bg-white p-3 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 cursor-pointer flex flex-col justify-between"
-                  onClick={() =>
-                    setLightboxData({
-                      url: card.image,
-                      title: card.title,
-                      caption: card.subtitle,
-                    })
-                  }
-                >
-                  {/* Screenshot Image Container */}
-                  <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-100 dark:border-slate-800">
-                    <img
-                      src={card.image}
-                      alt={card.alt}
-                      className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                      loading="lazy"
-                    />
-
-                    {/* Hover Hint */}
-                    <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="rounded-full bg-white/95 px-3 py-1.5 text-[11px] font-black text-slate-900 shadow-lg flex items-center gap-1">
-                        <Search className="h-3.5 w-3.5 text-emerald-600" />
-                        <span>জুম করুন</span>
-                      </span>
-                    </div>
-
-                    {/* Top Right Hook Tag */}
-                    <span className="absolute top-2 right-2 rounded-md bg-slate-950/80 backdrop-blur-xs px-2 py-0.5 text-[9px] font-bold text-white shadow-xs">
-                      {card.hookPill}
-                    </span>
-                  </div>
-
-                  {/* Card Bottom Meta (DokandarPro style badge + title + subtitle) */}
-                  <div className="pt-3 pb-1 px-1 flex items-start gap-3">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-xs font-mono font-black text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950 dark:border-emerald-800 dark:text-emerald-300">
-                      {card.badgeNum}
-                    </span>
-
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate">
-                        {card.title}
-                      </h3>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
-                        {card.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 4. HOOK CONVINCING: মুদি দোকানদারদের ৬টি প্রধান চিন্তা ও সমাধান (PHOTO CARDS) */}
+      {/* 3. HOOK CONVINCING: মুদি দোকানদারদের ৬টি প্রধান চিন্তা ও সমাধান (PHOTO CARDS) */}
       {/* ======================================================== */}
       <section id="benefits" className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/40 border-t border-slate-200/80 dark:border-slate-800">
         <div className="mx-auto max-w-6xl">
@@ -1075,6 +992,89 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
 
                   </div>
 
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 4. DOKANDARPRO-STYLE CLEAN 3-COLUMN SCREEN GALLERY (12 FEATURES) */}
+      {/* ======================================================== */}
+      <section id="screens" className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FBFDFB] dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800">
+        <div className="mx-auto max-w-6xl">
+          
+          <ScrollReveal animation="fade-up" className="text-center max-w-2xl mx-auto mb-12">
+            <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+              সফটওয়্যার এক নজরে
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white mt-2">
+              মুদির দোকান প্রো-এর বাস্তব স্ক্রিনগুলো দেখুন
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              ড্যাশবোর্ড থেকে ইনভেন্টরি, বারকোড পিওএস, বাকি খাতা ও রিপোর্ট—সব আসল ইন্টারফেস এক নজরে।
+            </p>
+          </ScrollReveal>
+
+          {/* Clean 3-Column Screen Card Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SCREEN_CARDS.map((card, idx) => (
+              <ScrollReveal
+                key={card.id}
+                animation="fade-up"
+                delay={idx * 40}
+                className="h-full"
+              >
+                <div
+                  className="group h-full rounded-2xl border border-slate-200/90 bg-white p-3 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 cursor-pointer flex flex-col justify-between"
+                  onClick={() =>
+                    setLightboxData({
+                      url: card.image,
+                      title: card.title,
+                      caption: card.subtitle,
+                    })
+                  }
+                >
+                  {/* Screenshot Image Container */}
+                  <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-100 dark:border-slate-800">
+                    <img
+                      src={card.image}
+                      alt={card.alt}
+                      className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+                      loading="lazy"
+                    />
+
+                    {/* Hover Hint */}
+                    <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="rounded-full bg-white/95 px-3 py-1.5 text-[11px] font-black text-slate-900 shadow-lg flex items-center gap-1">
+                        <Search className="h-3.5 w-3.5 text-emerald-600" />
+                        <span>জুম করুন</span>
+                      </span>
+                    </div>
+
+                    {/* Top Right Hook Tag */}
+                    <span className="absolute top-2 right-2 rounded-md bg-slate-950/80 backdrop-blur-xs px-2 py-0.5 text-[9px] font-bold text-white shadow-xs">
+                      {card.hookPill}
+                    </span>
+                  </div>
+
+                  {/* Card Bottom Meta (DokandarPro style badge + title + subtitle) */}
+                  <div className="pt-3 pb-1 px-1 flex items-start gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-xs font-mono font-black text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950 dark:border-emerald-800 dark:text-emerald-300">
+                      {card.badgeNum}
+                    </span>
+
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate">
+                        {card.title}
+                      </h3>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                        {card.subtitle}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
