@@ -28,6 +28,7 @@ import {
   Package,
   Users,
   DollarSign,
+  ChevronLeft,
   ChevronRight,
   Layers,
   HelpCircle,
@@ -317,10 +318,10 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
   const { lang, darkMode, toggleDarkMode } = useApp();
 
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
-  const [buyModalPlan, setBuyModalPlan] = useState<'monthly' | 'yearly' | 'custom_vip'>('yearly');
+  const [buyModalPlan, setBuyModalPlan] = useState<'free_trial' | 'monthly' | 'yearly' | 'custom_vip'>('yearly');
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
 
-  const openBuyModal = (plan: 'monthly' | 'yearly' | 'custom_vip' = 'yearly') => {
+  const openBuyModal = (plan: 'free_trial' | 'monthly' | 'yearly' | 'custom_vip' = 'yearly') => {
     setBuyModalPlan(plan);
     setIsBuyModalOpen(true);
   };
@@ -369,6 +370,53 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(Number((prev - 0.5).toFixed(1)), 1));
   const handleResetZoom = () => setZoomLevel(1);
   const toggleClickZoom = () => setZoomLevel((prev) => (prev > 1 ? 1 : 2));
+
+  // 12-Screen Slideshow Carousel State (Middle 100%, Left & Right 20%)
+  const [activeScreenIndex, setActiveScreenIndex] = useState(0);
+  const [isCarouselAutoPlay, setIsCarouselAutoPlay] = useState(true);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileScreen(window.innerWidth < 640);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isCarouselAutoPlay) return;
+    const interval = setInterval(() => {
+      setActiveScreenIndex((prev) => (prev + 1) % SCREEN_CARDS.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isCarouselAutoPlay]);
+
+  const handleScreenPrev = () => {
+    setActiveScreenIndex((prev) => (prev > 0 ? prev - 1 : SCREEN_CARDS.length - 1));
+  };
+
+  const handleScreenNext = () => {
+    setActiveScreenIndex((prev) => (prev < SCREEN_CARDS.length - 1 ? prev + 1 : 0));
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (diff > 40) {
+      handleScreenNext();
+    } else if (diff < -40) {
+      handleScreenPrev();
+    }
+    setTouchStartX(null);
+  };
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -1001,12 +1049,12 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 4. DOKANDARPRO-STYLE CLEAN 3-COLUMN SCREEN GALLERY (12 FEATURES) */}
+      {/* 4. 12-SCREEN COVERFLOW SLIDESHOW (MIDDLE 100%, LEFT & RIGHT 20%) */}
       {/* ======================================================== */}
-      <section id="screens" className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FBFDFB] dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800">
-        <div className="mx-auto max-w-6xl">
+      <section id="screens" className="py-16 px-2 sm:px-6 lg:px-8 bg-[#FBFDFB] dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800 overflow-hidden">
+        <div className="mx-auto max-w-7xl">
           
-          <ScrollReveal animation="fade-up" className="text-center max-w-2xl mx-auto mb-12">
+          <ScrollReveal animation="fade-up" className="text-center max-w-2xl mx-auto mb-10 px-4">
             <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
               সফটওয়্যার এক নজরে
             </span>
@@ -1014,70 +1062,196 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
               মুদির দোকান প্রো-এর বাস্তব স্ক্রিনগুলো দেখুন
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-              বারকোড পিওএস ও রেডি ক্যাটালগ থেকে বাকি খাতা, থার্মাল প্রিন্ট, ক্যাশ ড্রয়ার ও লাভ-ক্ষতি—সব আসল স্ক্রিন এক নজরে।
+              মাঝখানের স্ক্রিনটি সম্পূর্ণ দেখুন, ডানে ও বামে ক্লিক করে বা সোয়াইপ করে পরবর্তী ফিচারগুলো ব্রাউজ করুন।
             </p>
           </ScrollReveal>
 
-          {/* Clean 3-Column Screen Card Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* COVERFLOW SLIDESHOW CAROUSEL CONTAINER */}
+          <div
+            className="relative w-full overflow-hidden py-4"
+            onMouseEnter={() => setIsCarouselAutoPlay(false)}
+            onMouseLeave={() => setIsCarouselAutoPlay(true)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Left Nav Arrow Button */}
+            <button
+              type="button"
+              onClick={handleScreenPrev}
+              aria-label="আগের স্ক্রিন"
+              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-700 text-slate-800 dark:text-white shadow-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-600 dark:hover:bg-emerald-600 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 backdrop-blur-md"
+            >
+              <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+            </button>
+
+            {/* Right Nav Arrow Button */}
+            <button
+              type="button"
+              onClick={handleScreenNext}
+              aria-label="পরের স্ক্রিন"
+              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-700 text-slate-800 dark:text-white shadow-xl hover:bg-emerald-600 hover:text-white hover:border-emerald-600 dark:hover:bg-emerald-600 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 backdrop-blur-md"
+            >
+              <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+            </button>
+
+            {/* Carousel Moving Track */}
+            <div
+              className="flex items-center transition-transform duration-500 ease-out"
+              style={{
+                gap: `${isMobileScreen ? 14 : 24}px`,
+                transform: `translateX(calc(${isMobileScreen ? 12 : 20}% - ${activeScreenIndex} * (${isMobileScreen ? 76 : 60}% + ${isMobileScreen ? 14 : 24}px)))`,
+              }}
+            >
+              {SCREEN_CARDS.map((card, idx) => {
+                const isActive = idx === activeScreenIndex;
+
+                return (
+                  <div
+                    key={card.id}
+                    style={{
+                      width: `${isMobileScreen ? 76 : 60}%`,
+                    }}
+                    onClick={() => {
+                      if (isActive) {
+                        setLightboxData({
+                          url: card.image,
+                          title: card.title,
+                          caption: card.subtitle,
+                        });
+                      } else {
+                        setActiveScreenIndex(idx);
+                      }
+                    }}
+                    className={`shrink-0 transition-all duration-500 rounded-3xl p-3 sm:p-5 border cursor-pointer select-none ${
+                      isActive
+                        ? 'scale-100 opacity-100 z-20 shadow-2xl border-emerald-500/50 bg-white dark:bg-slate-900 ring-4 ring-emerald-500/15'
+                        : 'scale-90 opacity-40 hover:opacity-75 z-10 border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 hover:scale-[0.93]'
+                    }`}
+                  >
+                    {/* Screenshot Image Container */}
+                    <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-950/5 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 group">
+                      <img
+                        src={card.image}
+                        alt={card.alt}
+                        className={`w-full h-full object-cover transition-transform duration-500 ${
+                          isActive ? 'group-hover:scale-103' : ''
+                        }`}
+                        loading="lazy"
+                      />
+
+                      {/* Hover / Active Hint */}
+                      {isActive && (
+                        <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <span className="rounded-full bg-white/95 dark:bg-slate-900/95 px-3.5 py-1.5 text-xs font-black text-slate-900 dark:text-white shadow-xl flex items-center gap-1.5 backdrop-blur-xs">
+                            <Search className="h-4 w-4 text-emerald-600" />
+                            <span>বড় করে জুম করুন</span>
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Top Badges */}
+                      <div className="absolute top-3 inset-x-3 flex items-center justify-between pointer-events-none">
+                        <span className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-xl bg-slate-950/80 backdrop-blur-xs text-xs sm:text-sm font-mono font-black text-emerald-400 border border-slate-700/80 shadow-md">
+                          {card.badgeNum}
+                        </span>
+                        <span className="rounded-lg bg-slate-950/80 backdrop-blur-xs px-2.5 py-1 text-[10px] sm:text-xs font-bold text-white shadow-sm border border-slate-700/60">
+                          {card.hookPill}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Card Info Box */}
+                    <div className="pt-3.5 pb-1 px-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-left">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 text-[10px] font-black">
+                            {card.category}
+                          </span>
+                          <span className="text-[10px] font-bold text-slate-400">
+                            ফিচার #{card.badgeNum}
+                          </span>
+                        </div>
+                        <h3 className="text-sm sm:text-lg font-black text-slate-900 dark:text-white leading-snug truncate">
+                          {card.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                          {card.subtitle}
+                        </p>
+                      </div>
+
+                      {isActive && (
+                        <div className="flex items-center gap-2 shrink-0 pt-2 sm:pt-0">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLightboxData({
+                                url: card.image,
+                                title: card.title,
+                                caption: card.subtitle,
+                              });
+                            }}
+                            className="inline-flex items-center gap-1 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300/80 dark:border-emerald-800/80 px-3 py-1.5 text-xs font-black transition cursor-pointer"
+                          >
+                            <Search className="h-3.5 w-3.5 text-emerald-600" />
+                            <span>জুম</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsDemoModalOpen(true);
+                            }}
+                            className="inline-flex items-center gap-1 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white px-3 py-1.5 text-xs font-black transition cursor-pointer shadow-sm shadow-amber-500/20"
+                          >
+                            <Sparkles className="h-3.5 w-3.5" />
+                            <span>লাইভ ডেমো</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* QUICK JUMP PILL TABS FOR ALL 12 FEATURES */}
+          <div className="mt-8 flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap max-w-5xl mx-auto px-2">
             {SCREEN_CARDS.map((card, idx) => (
-              <ScrollReveal
+              <button
                 key={card.id}
-                animation="fade-up"
-                delay={idx * 40}
-                className="h-full"
+                type="button"
+                onClick={() => setActiveScreenIndex(idx)}
+                className={`rounded-xl px-2.5 sm:px-3 py-1 text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeScreenIndex === idx
+                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 scale-105'
+                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
               >
-                <div
-                  className="group h-full rounded-2xl border border-slate-200/90 bg-white p-3 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 cursor-pointer flex flex-col justify-between"
-                  onClick={() =>
-                    setLightboxData({
-                      url: card.image,
-                      title: card.title,
-                      caption: card.subtitle,
-                    })
-                  }
-                >
-                  {/* Screenshot Image Container */}
-                  <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-100 dark:border-slate-800">
-                    <img
-                      src={card.image}
-                      alt={card.alt}
-                      className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                      loading="lazy"
-                    />
-
-                    {/* Hover Hint */}
-                    <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="rounded-full bg-white/95 px-3 py-1.5 text-[11px] font-black text-slate-900 shadow-lg flex items-center gap-1">
-                        <Search className="h-3.5 w-3.5 text-emerald-600" />
-                        <span>জুম করুন</span>
-                      </span>
-                    </div>
-
-                    {/* Top Right Hook Tag */}
-                    <span className="absolute top-2 right-2 rounded-md bg-slate-950/80 backdrop-blur-xs px-2 py-0.5 text-[9px] font-bold text-white shadow-xs">
-                      {card.hookPill}
-                    </span>
-                  </div>
-
-                  {/* Card Bottom Meta (DokandarPro style badge + title + subtitle) */}
-                  <div className="pt-3 pb-1 px-1 flex items-start gap-3">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-xs font-mono font-black text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950 dark:border-emerald-800 dark:text-emerald-300">
-                      {card.badgeNum}
-                    </span>
-
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate">
-                        {card.title}
-                      </h3>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
-                        {card.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+                <span className="font-mono text-[10px] opacity-75">{card.badgeNum}</span>
+                <span>{card.category}</span>
+              </button>
             ))}
+          </div>
+
+          {/* SLIDESHOW STATUS & CONTROLS */}
+          <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500 dark:text-slate-400 font-bold">
+            <span className="font-mono text-emerald-600 dark:text-emerald-400 font-black">
+              {SCREEN_CARDS[activeScreenIndex]?.badgeNum} / ১২
+            </span>
+            <span>•</span>
+            <span className="text-slate-700 dark:text-slate-300">
+              {SCREEN_CARDS[activeScreenIndex]?.title}
+            </span>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => setIsCarouselAutoPlay(!isCarouselAutoPlay)}
+              className="text-amber-600 dark:text-amber-400 hover:underline transition cursor-pointer"
+            >
+              {isCarouselAutoPlay ? '⏸ অটো-স্লাইড বন্ধ' : '▶️ অটো-স্লাইড চালু'}
+            </button>
           </div>
 
         </div>
@@ -1125,7 +1299,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                   </div>
 
                   <p className="mt-1 text-xs font-bold text-amber-700 dark:text-amber-400">
-                    টেস্ট করে দেখুন সম্পূর্ণ ফ্রিতে!
+                    ফুল ফিচার সহ ১ মাস সম্পূর্ণ ফ্রি ট্রায়াল!
                   </p>
 
                   <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
@@ -1143,17 +1317,17 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                     </li>
                     <li className="flex items-center gap-1.5">
                       <Check className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-                      <span>ক্যাশ কাউন্টার ও শিফট ক্লোজিং</span>
+                      <span>অনলাইন স্টোর ও কাস্টমার অর্ডার সিস্টেম</span>
                     </li>
                   </ul>
                 </div>
 
                 <button
                   type="button"
-                  onClick={() => setIsDemoModalOpen(true)}
-                  className="mt-6 w-full rounded-2xl border-2 border-amber-500 bg-amber-50 py-2.5 text-xs font-black text-amber-900 hover:bg-amber-100 transition cursor-pointer dark:bg-amber-950/40 dark:text-amber-300 whitespace-nowrap"
+                  onClick={() => openBuyModal('free_trial')}
+                  className="mt-6 w-full rounded-2xl border-2 border-emerald-600 bg-emerald-600 py-2.5 text-xs font-black text-white hover:bg-emerald-700 shadow-md shadow-emerald-600/30 transition cursor-pointer whitespace-nowrap"
                 >
-                  ফ্রি ডেমো শুরু করুন ⚡
+                  ১ মাস ফ্রি চালু করুন (ফুল ফিচার) 🚀
                 </button>
               </div>
             </ScrollReveal>
