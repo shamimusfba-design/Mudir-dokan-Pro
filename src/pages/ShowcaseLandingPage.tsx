@@ -32,6 +32,9 @@ import {
   Layers,
   HelpCircle,
   Truck,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
 } from 'lucide-react';
 import { tx } from '../lib/i18n';
 import { useApp } from '../context/AppContext';
@@ -229,6 +232,81 @@ const SCREEN_CARDS: ScreenCardItem[] = [
   },
 ];
 
+// 6 Real Merchant Problem-Solution Hook Photo Cards
+interface HookProblemCard {
+  id: string;
+  badgeNum: string;
+  question: string;
+  answerStrong: string;
+  answerText: string;
+  tag: string;
+  image: string;
+  alt: string;
+}
+
+const HOOK_PROBLEM_CARDS: HookProblemCard[] = [
+  {
+    id: 'offline-billing',
+    badgeNum: '০১',
+    question: 'নেট বা কারেন্ট চলে গেলে কি বিল বন্ধ থাকবে?',
+    answerStrong: 'না, কখনোই না!',
+    answerText: 'মুদির দোকান প্রো ১০০% অফলাইন টেকনোলজিতে চলে। ইন্টারনেট না থাকলেও ১ সেকেন্ডের জন্য কাউন্টার থামবে না।',
+    tag: 'নেট আসলে ক্লাউডে অটো-সিঙ্ক',
+    image: '/marketing/02-pos-billing-counter.png',
+    alt: '১০০% অফলাইন পিওএস বিলিং কাউন্টার',
+  },
+  {
+    id: 'catalog-entry',
+    badgeNum: '০২',
+    question: 'হাজার পণ্যের নাম আর দাম এন্ট্রি করতে কি ১ মাস লাগবে?',
+    answerStrong: 'একদমই না!',
+    answerText: 'তীর, রূপচাঁদা, প্রাণ, স্কয়ার থেকে ডানো, মিল্কভিটা পর্যন্ত ১,৩৫৯টি আসল পণ্যের ছবি ও বারকোড আমরাই আগে থেকে লোড করে দিয়েছি।',
+    tag: '১ম দিন থেকেই বিলিং শুরু',
+    image: '/marketing/05-product-catalog-grid.png',
+    alt: '১,৩৫৯টি আসল পণ্যের ছবি ও বারকোড ক্যাটালগ',
+  },
+  {
+    id: 'due-khata-sms',
+    badgeNum: '০৩',
+    question: 'বাকি চাইতে লজ্জা লাগে, কাস্টমারের সাথে ভুল বোঝাবুঝি হবে?',
+    answerStrong: 'কোনো অস্বস্তি নেই!',
+    answerText: '১ ক্লিকে সম্মানজনক বাংলা হোয়াটসঅ্যাপ ও এসএমএস তাগাদায় কাস্টমার নিজেই ঘরে বসে মোবাইলে মেমো ও বাকি দেখে টাকা পরিশোধ করবে।',
+    tag: 'সম্পর্ক ঠিক রেখে দ্রুত বাকি আদায়',
+    image: '/marketing/13-customers-digital-khata.png',
+    alt: 'ডিজিটাল বাকি খাতা ও অটো এসএমএস রিমাইন্ডার',
+  },
+  {
+    id: 'online-offline-combo',
+    badgeNum: '০৪',
+    question: 'অনলাইন ও অফলাইন ২টিই কি ১টি অ্যাপে চালানো সম্ভব?',
+    answerStrong: 'হ্যাঁ, ১০০% সম্ভব!',
+    answerText: 'দোকানের কাউন্টারে বসে অফলাইন বারকোড পিওএস বিলিং এবং ইন্টারনেটে এলাকার কাস্টমারদের জন্য অনলাইন গ্রোসারি ডেলিভারি—দুটোই চলবে একটি মাত্র শক্তিশালী অ্যাপে।',
+    tag: 'কাউন্টার ও অনলাইন স্টোর একসঙ্গে ম্যানেজ',
+    image: '/marketing/11-online-storefront.png',
+    alt: 'অনলাইন গ্রোসারি শপ ও অফলাইন পিওএস একই সাথে',
+  },
+  {
+    id: 'auto-sync-powercut',
+    badgeNum: '০৫',
+    question: 'কারেন্ট বা নেট নেই? কোনো সমস্যা নেই!',
+    answerStrong: '১ পয়সার হিসাবও হারাবে না!',
+    answerText: 'বিদ্যুৎ চলে গেলে বা নেট বন্ধ থাকলেও অফলাইনে বিলিং ও বেচাবিক্রি সেকেন্ডের জন্য থামবে না। যখনই কারেন্ট বা নেট আসবে, সাথে সাথে ডাটা ক্লাউডে অটো-আপডেট হয়ে যাবে।',
+    tag: 'অটো সিঙ্ক • ক্লাউড ব্যাকআপ',
+    image: '/marketing/01-dashboard-analytics.png',
+    alt: 'অটো ক্লাউড সিঙ্ক ও রিয়েলটাইম ড্যাশবোর্ড',
+  },
+  {
+    id: 'responsive-ui',
+    badgeNum: '০৬',
+    question: 'মোবাইল ও ডেস্কটপ ফ্রেন্ডলি আধুনিক ইউআই',
+    answerStrong: 'সব ডিভাইসে সুপারস্মুথ!',
+    answerText: 'মোবাইল ফোন, ট্যাবলেট, ল্যাপটপ, কম্পিউটার বা পিওএস—সব ডিভাইসে চলবে। কোনো জটিলতা নেই, একদম সহজে সবাই চালাতে পারবে।',
+    tag: '১০০% রেসপন্সিভ ও ইনস্টলযোগ্য পিডব্লিউএ',
+    image: '/marketing/15-customer-portal-mobile.png',
+    alt: 'মোবাইল ও ডেস্কটপ ফ্রেন্ডলি আধুনিক ইউআই',
+  },
+];
+
 export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
   onBackToLogin,
   onOpenPortal,
@@ -273,12 +351,24 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState(134);
 
-  // Lightbox Modal state
+  // Lightbox Modal state with Zoom controls
   const [lightboxData, setLightboxData] = useState<{
     url: string;
     title: string;
     caption: string;
   } | null>(null);
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
+
+  useEffect(() => {
+    if (lightboxData) {
+      setZoomLevel(1);
+    }
+  }, [lightboxData]);
+
+  const handleZoomIn = () => setZoomLevel((prev) => Math.min(Number((prev + 0.5).toFixed(1)), 3));
+  const handleZoomOut = () => setZoomLevel((prev) => Math.max(Number((prev - 0.5).toFixed(1)), 1));
+  const handleResetZoom = () => setZoomLevel(1);
+  const toggleClickZoom = () => setZoomLevel((prev) => (prev > 1 ? 1 : 2));
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -371,7 +461,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
         </div>
       )}
 
-      {/* LIGHTBOX MODAL */}
+      {/* LIGHTBOX MODAL WITH INTERACTIVE ZOOM & DEMO ACCESS */}
       {lightboxData && (
         <div
           role="dialog"
@@ -383,39 +473,92 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
             className="relative w-full max-w-5xl rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden flex flex-col max-h-[95vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-6 py-3.5 text-white">
-              <div>
+            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/95 px-4 sm:px-6 py-3 text-white gap-3">
+              <div className="min-w-0 flex-1">
                 <h3 className="text-sm sm:text-base font-black truncate">{lightboxData.title}</h3>
-                <p className="text-xs text-slate-400">{lightboxData.caption}</p>
+                <p className="text-xs text-slate-400 truncate">{lightboxData.caption}</p>
               </div>
-              <button
-                type="button"
-                onClick={() => setLightboxData(null)}
-                className="rounded-full p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </button>
+
+              {/* Interactive Zoom Controls */}
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <div className="flex items-center gap-1 bg-slate-800 rounded-xl px-2 py-1 border border-slate-700">
+                  <button
+                    type="button"
+                    onClick={handleZoomOut}
+                    disabled={zoomLevel <= 1}
+                    title="জুম আউট"
+                    className="p-1 rounded-lg hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer"
+                  >
+                    <ZoomOut className="h-4 w-4" />
+                  </button>
+                  <span className="font-mono text-xs font-bold text-slate-200 px-1 min-w-[3rem] text-center select-none">
+                    {Math.round(zoomLevel * 100)}%
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleZoomIn}
+                    disabled={zoomLevel >= 3}
+                    title="জুম ইন"
+                    className="p-1 rounded-lg hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer"
+                  >
+                    <ZoomIn className="h-4 w-4" />
+                  </button>
+                  {zoomLevel > 1 && (
+                    <button
+                      type="button"
+                      onClick={handleResetZoom}
+                      title="রিসেট (১০০%)"
+                      className="p-1 rounded-lg hover:bg-slate-700 text-amber-400 transition cursor-pointer"
+                    >
+                      <RotateCcw className="h-3.5 w-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setLightboxData(null)}
+                  className="rounded-full p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition cursor-pointer"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
             </div>
 
-            <div className="flex-1 overflow-auto bg-slate-950 p-2 sm:p-4 flex items-center justify-center">
-              <img
-                src={lightboxData.url}
-                alt={lightboxData.title}
-                className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl"
-              />
+            {/* Zoomable Image Canvas with Pan/Scroll */}
+            <div className="flex-1 overflow-auto bg-slate-950 p-2 sm:p-4 flex items-center justify-center min-h-[350px]">
+              <div className="relative overflow-auto max-h-[75vh] max-w-full flex items-center justify-center p-2">
+                <img
+                  src={lightboxData.url}
+                  alt={lightboxData.title}
+                  style={{
+                    transform: `scale(${zoomLevel})`,
+                    transformOrigin: 'center center',
+                    transition: 'transform 0.2s cubic-bezier(0.2, 0, 0, 1)',
+                  }}
+                  onClick={toggleClickZoom}
+                  title={zoomLevel > 1 ? 'ক্লিক করে রিসেট করুন' : 'ক্লিক করে জুম করুন'}
+                  className={`max-h-[72vh] w-auto max-w-full object-contain rounded-xl shadow-2xl transition-all cursor-${zoomLevel > 1 ? 'zoom-out' : 'zoom-in'}`}
+                />
+              </div>
             </div>
 
-            <div className="border-t border-slate-800 bg-slate-900 px-6 py-3 flex items-center justify-between">
-              <span className="text-xs text-emerald-400 font-bold">Mudir Dokan Pro · অফিশিয়াল ইন্টারফেস</span>
+            {/* Clean Lightbox Footer: Live Demo Test (No repetitive pricing!) */}
+            <div className="border-t border-slate-800 bg-slate-900 px-4 sm:px-6 py-3 flex items-center justify-between">
+              <span className="text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5" />
+                <span>Mudir Dokan Pro · অফিশিয়াল লাইভ ইন্টারফেস</span>
+              </span>
               <button
                 type="button"
                 onClick={() => {
                   setLightboxData(null);
-                  setIsBuyModalOpen(true);
+                  setIsDemoModalOpen(true);
                 }}
-                className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-1.5 text-xs font-black text-white transition cursor-pointer whitespace-nowrap"
+                className="rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 px-4 py-1.5 text-xs font-black text-white transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 shadow-md shadow-amber-500/20"
               >
-                প্রো চালু করুন (৳৪৯৯/মাস) ⚡
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>⚡ সরাসরি লাইভ ডেমো টেস্ট করুন</span>
               </button>
             </div>
           </div>
@@ -684,80 +827,6 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 3 CORE PILLARS: ONLINE+OFFLINE, AUTO SYNC, RESPONSIVE UI */}
-      {/* ======================================================== */}
-      <section className="px-4 py-8 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/40 border-t border-slate-200/70 dark:border-slate-800/80">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
-            
-            {/* Pillar 1: Online + Offline 2-in-1 */}
-            <ScrollReveal animation="fade-up" delay={0}>
-              <div className="h-full rounded-2xl border border-emerald-200/90 bg-white p-5 shadow-xs dark:border-emerald-900/60 dark:bg-slate-900 flex flex-col justify-between">
-                <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-md shadow-emerald-600/30 mb-3.5">
-                    <Store className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-base font-black text-slate-900 dark:text-white leading-snug">
-                    অনলাইন ও অফলাইন ২টিই ১টি অ্যাপে
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                    দোকানের কাউন্টারে বসে অফলাইন বারকোড পিওএস বিলিং এবং ইন্টারনেটে এলাকার কাস্টমারদের জন্য অনলাইন গ্রোসারি ডেলিভারি—দুটোই চলবে একটি মাত্র শক্তিশালী অ্যাপে।
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                  <Check className="h-4 w-4 shrink-0" />
-                  <span>কাউন্টার ও অনলাইন স্টোর একসঙ্গে ম্যানেজ</span>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Pillar 2: No Current / Net? No Problem! Auto Update */}
-            <ScrollReveal animation="fade-up" delay={100}>
-              <div className="h-full rounded-2xl border border-teal-200/90 bg-white p-5 shadow-xs dark:border-teal-900/60 dark:bg-slate-900 flex flex-col justify-between">
-                <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-600 text-white shadow-md shadow-teal-600/30 mb-3.5">
-                    <Zap className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-base font-black text-slate-900 dark:text-white leading-snug">
-                    কারেন্ট বা নেট নেই? কোনো সমস্যা নেই!
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                    বিদ্যুৎ চলে গেলে বা নেট বন্ধ থাকলেও অফলাইনে বিলিং ও বেচাবিক্রি সেকেন্ডের জন্য থামবে না। যখনই কারেন্ট বা নেট আসবে, সাথে সাথে ডাটা ক্লাউডে অটো-আপডেট হয়ে যাবে।
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-teal-700 dark:text-teal-400 flex items-center gap-1.5">
-                  <Check className="h-4 w-4 shrink-0" />
-                  <span>অটো সিঙ্ক • ১ পয়সার হিসাবও হারাবে না</span>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Pillar 3: Both Mobile & Desktop Friendly UI */}
-            <ScrollReveal animation="fade-up" delay={200}>
-              <div className="h-full rounded-2xl border border-indigo-200/90 bg-white p-5 shadow-xs dark:border-indigo-900/60 dark:bg-slate-900 flex flex-col justify-between">
-                <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/30 mb-3.5">
-                    <Smartphone className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-base font-black text-slate-900 dark:text-white leading-snug">
-                    মোবাইল ও ডেস্কটপ ফ্রেন্ডলি আধুনিক ইউআই
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                    মোবাইল ফোন, ট্যাবলেট, ল্যাপটপ, কম্পিউটার বা টাচস্ক্রিন পিওএস—যেকোনো ডিভাইসে সুপার-স্মুথ চলবে। কোনো জটিলতা নেই, একদম সহজে সবাই চালাতে পারবে।
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
-                  <Check className="h-4 w-4 shrink-0" />
-                  <span>১০০% রেসপন্সিভ ও ইনস্টলযোগ্য পিডব্লিউএ</span>
-                </div>
-              </div>
-            </ScrollReveal>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ======================================================== */}
       {/* 2. DOKANDARPRO-STYLE HORIZONTAL VALUE STRIP */}
       {/* ======================================================== */}
       <section className="border-y border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-900/60 py-4 px-4 sm:px-6">
@@ -912,85 +981,103 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 4. HOOK CONVINCING: ৩টি প্রধান ভয় ও সমস্যার সমাধান */}
+      {/* 4. HOOK CONVINCING: মুদি দোকানদারদের ৬টি প্রধান চিন্তা ও সমাধান (PHOTO CARDS) */}
       {/* ======================================================== */}
-      <section id="benefits" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900/60 border-t border-slate-200/80 dark:border-slate-800">
-        <div className="mx-auto max-w-5xl">
+      <section id="benefits" className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/40 border-t border-slate-200/80 dark:border-slate-800">
+        <div className="mx-auto max-w-6xl">
           
-          <ScrollReveal animation="fade-up" className="text-center max-w-xl mx-auto mb-10">
+          <ScrollReveal animation="fade-up" className="text-center max-w-2xl mx-auto mb-12">
             <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-              স্পষ্ট জবাব
+              বাস্তব সমাধান
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
-              মুদি দোকানদারদের ৩টি প্রধান চিন্তা ও আমাদের সমাধান
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white mt-2 leading-tight">
+              মুদি দোকানদারদের ৬টি প্রধান চিন্তা ও আমাদের সমাধান
             </h2>
+            <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              আমরা মুদি দোকানদারদের দৈনন্দিন বাস্তব সমস্যাগুলো ভেতর থেকে বুঝি এবং প্রতিটি সমস্যার ১০০% পরীক্ষিত ডিজিটাল সমাধান তৈরি করেছি।
+            </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Box 1 */}
-            <ScrollReveal animation="fade-up" delay={0}>
-              <div className="h-full rounded-2xl border border-slate-200/90 bg-[#F8FAF7] p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between">
-                <div>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-400 mb-3">
-                    <Zap className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-sm font-black text-slate-900 dark:text-white leading-snug">
-                    "নেট বা কারেন্ট চলে গেলে কি বিল বন্ধ থাকবে?"
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                    <strong className="text-emerald-700 dark:text-emerald-400">না, কখনোই না!</strong> মুদির দোকান প্রো ১০০% অফলাইন টেকনোলজিতে চলে। ইন্টারনেট না থাকলেও ১ সেকেন্ডের জন্য কাউন্টার থামবে না।
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5" />
-                  <span>নেট আসলে ক্লাউডে অটো-সিঙ্ক</span>
-                </div>
-              </div>
-            </ScrollReveal>
+          {/* 6 Visual Photo Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {HOOK_PROBLEM_CARDS.map((card, idx) => (
+              <ScrollReveal
+                key={card.id}
+                animation="fade-up"
+                delay={idx * 60}
+                className="h-full"
+              >
+                <div className="group h-full rounded-3xl border border-slate-200/90 bg-white shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 overflow-hidden flex flex-col justify-between">
+                  
+                  {/* Photo Header with Zoom Click */}
+                  <div
+                    className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 dark:bg-slate-800 cursor-pointer"
+                    onClick={() =>
+                      setLightboxData({
+                        url: card.image,
+                        title: card.question,
+                        caption: card.tag,
+                      })
+                    }
+                  >
+                    <img
+                      src={card.image}
+                      alt={card.alt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex items-end justify-between p-3">
+                      <span className="rounded-md bg-emerald-600/90 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-black text-white shadow-sm flex items-center gap-1">
+                        <Check className="h-3 w-3" />
+                        <span>{card.tag}</span>
+                      </span>
 
-            {/* Box 2 */}
-            <ScrollReveal animation="fade-up" delay={100}>
-              <div className="h-full rounded-2xl border border-slate-200/90 bg-[#F8FAF7] p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between">
-                <div>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-600 dark:bg-teal-950 dark:text-teal-400 mb-3">
-                    <Package className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-sm font-black text-slate-900 dark:text-white leading-snug">
-                    "হাজার পণ্যের নাম আর দাম এন্ট্রি করতে কি ১ মাস লাগবে?"
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                    <strong className="text-emerald-700 dark:text-emerald-400">একদমই না!</strong> তীর, রূপচাঁদা, প্রাণ, স্কয়ার থেকে ডানো, মিল্কভিটা পর্যন্ত ১,৩৫৯টি আসল পণ্যের ছবি ও বারকোড আমরাই আগে থেকে লোড করে দিয়েছি।
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-[11px] font-bold text-teal-700 dark:text-teal-300 flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5" />
-                  <span>১ম দিন থেকেই বিলিং শুরু</span>
-                </div>
-              </div>
-            </ScrollReveal>
+                      <span className="rounded-full bg-white/90 p-1.5 text-slate-900 shadow-md group-hover:scale-110 transition-transform">
+                        <Search className="h-3 w-3 text-emerald-700" />
+                      </span>
+                    </div>
 
-            {/* Box 3 */}
-            <ScrollReveal animation="fade-up" delay={200}>
-              <div className="h-full rounded-2xl border border-slate-200/90 bg-[#F8FAF7] p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between">
-                <div>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400 mb-3">
-                    <Smartphone className="h-5 w-5" />
+                    <span className="absolute top-3 left-3 flex h-7 w-7 items-center justify-center rounded-xl bg-slate-950/80 backdrop-blur-xs text-xs font-mono font-black text-emerald-400 border border-slate-700/80 shadow-md">
+                      {card.badgeNum}
+                    </span>
                   </div>
-                  <h3 className="text-sm font-black text-slate-900 dark:text-white leading-snug">
-                    "বাকি চাইতে লজ্জা লাগে, কাস্টমারের সাথে ভুল বোঝাবুঝি হবে?"
-                  </h3>
-                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                    <strong className="text-emerald-700 dark:text-emerald-400">কোনো অস্বস্তি নেই!</strong> ১ ক্লিকে সম্মানজনক বাংলা হোয়াটসঅ্যাপ ও এসএমএস তাগাদায় কাস্টমার নিজেই ঘরে বসে মোবাইলে মেমো ও বাকি দেখে টাকা পরিশোধ করবে।
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5" />
-                  <span>সম্পর্ক ঠিক রেখে দ্রুত বাকি আদায়</span>
-                </div>
-              </div>
-            </ScrollReveal>
 
+                  {/* Body Content */}
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white leading-snug">
+                        "{card.question}"
+                      </h3>
+                      <p className="mt-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        <strong className="text-emerald-700 dark:text-emerald-400 font-black">
+                          {card.answerStrong}{' '}
+                        </strong>
+                        {card.answerText}
+                      </p>
+                    </div>
+
+                    {/* Bottom Action: Test in Live Demo (No repetitive pricing clutter!) */}
+                    <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                        <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+                        <span>১০০% সমাধান</span>
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => setIsDemoModalOpen(true)}
+                        className="inline-flex items-center gap-1 text-xs font-black text-amber-600 hover:text-amber-700 dark:text-amber-400 hover:underline cursor-pointer"
+                      >
+                        <span>⚡ সরাসরি ডেমো টেস্ট</span>
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
 
         </div>
