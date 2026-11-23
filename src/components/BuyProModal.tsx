@@ -26,13 +26,23 @@ import { useApp } from '../context/AppContext';
 interface BuyProModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialPlan?: 'monthly' | 'yearly' | 'custom_vip';
 }
 
-export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose }) => {
+export const BuyProModal: React.FC<BuyProModalProps> = ({ isOpen, onClose, initialPlan = 'yearly' }) => {
   const { lang, loginAsOwner } = useApp();
 
-  // 3 Packages (Monthly 499, Yearly 299/mo -> 3,588, Custom Domain & Demand 15,000)
-  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly' | 'custom_vip'>('yearly');
+  // 3 Paid Packages (Monthly 499, Yearly 299/mo -> 3,588, Custom Domain & Demand 15,000)
+  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly' | 'custom_vip'>(initialPlan);
+
+  React.useEffect(() => {
+    if (initialPlan) {
+      setSelectedPlan(initialPlan);
+      if (initialPlan === 'custom_vip') {
+        setEnableCustomDomain(true);
+      }
+    }
+  }, [initialPlan, isOpen]);
 
   // Store & Owner Details
   const [ownerName, setOwnerName] = useState('');

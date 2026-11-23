@@ -239,7 +239,13 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
   const { lang, darkMode, toggleDarkMode } = useApp();
 
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
+  const [buyModalPlan, setBuyModalPlan] = useState<'monthly' | 'yearly' | 'custom_vip'>('yearly');
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+
+  const openBuyModal = (plan: 'monthly' | 'yearly' | 'custom_vip' = 'yearly') => {
+    setBuyModalPlan(plan);
+    setIsBuyModalOpen(true);
+  };
 
   // Scroll Progress and Floating Action Pill state
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -327,7 +333,7 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
     <div className="min-h-screen bg-[#FBFDFB] text-slate-900 selection:bg-emerald-500 selection:text-white dark:bg-[#0A0E17] dark:text-slate-100 font-sans antialiased">
       
       {/* Modals */}
-      <BuyProModal isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} />
+      <BuyProModal isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} initialPlan={buyModalPlan} />
       <DemoAccessModal isOpen={isDemoModalOpen} onClose={() => setIsDemoModalOpen(false)} />
 
       {/* FLOATING ACTION PILL ON SCROLL */}
@@ -991,10 +997,10 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 5. PRICING SECTION — 3 PACKAGES (AS REQUESTED) */}
+      {/* 5. PRICING SECTION — 4 PACKAGES (AS REQUESTED) */}
       {/* ======================================================== */}
       <section id="pricing" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-emerald-50/20 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-        <div className="mx-auto max-w-6xl text-center">
+        <div className="mx-auto max-w-7xl text-center">
           
           <ScrollReveal animation="fade-up">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-100 px-3.5 py-1 text-xs font-black text-rose-800 dark:bg-rose-950 dark:text-rose-300 mb-3 animate-pulse">
@@ -1003,53 +1009,53 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
-              আপনার সুবিধার জন্য ৩টি আকর্ষণীয় প্যাকেজ
+              আপনার সুবিধার জন্য ৪টি স্পষ্ট প্যাকেজ
             </h2>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
               বিকাশ বা নগদ সেন্ড মানি করুন <strong className="text-emerald-600 font-mono">01884700631</strong> নম্বরে • সাথে সাথে অ্যাক্টিভেশন
             </p>
           </ScrollReveal>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-6xl mx-auto">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left max-w-7xl mx-auto">
             
             {/* Package 1: 1 Month Free Demo */}
             <ScrollReveal animation="fade-up" delay={0}>
-              <div className="h-full rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-slate-800 dark:bg-slate-900">
+              <div className="h-full rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-slate-800 dark:bg-slate-900">
                 <div>
                   <div className="flex items-center justify-between">
                     <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
                       সম্পূর্ণ বিনামূল্যে ⚡
                     </span>
-                    <span className="text-[11px] font-bold text-slate-400">১ মাসের জন্য</span>
+                    <span className="text-[11px] font-bold text-slate-400">১ মাস</span>
                   </div>
 
-                  <h3 className="mt-3 text-lg sm:text-xl font-black text-slate-900 dark:text-white">১ মাস ফ্রি ডেমো</h3>
+                  <h3 className="mt-3 text-base sm:text-lg font-black text-slate-900 dark:text-white">১ মাস ফ্রি ডেমো</h3>
                   
-                  <div className="mt-2.5 flex items-baseline gap-2">
-                    <span className="font-mono text-3xl sm:text-4xl font-black text-amber-600 dark:text-amber-400">৳০</span>
+                  <div className="mt-2 flex items-baseline gap-1.5">
+                    <span className="font-mono text-3xl font-black text-amber-600 dark:text-amber-400">৳০</span>
                     <span className="text-xs text-slate-500 font-bold">/১ মাস</span>
-                    <span className="text-xs font-bold text-emerald-600">ফ্রি ট্রায়াল</span>
+                    <span className="text-[10px] font-bold text-emerald-600">ফ্রি ট্রায়াল</span>
                   </div>
 
                   <p className="mt-1 text-xs font-bold text-amber-700 dark:text-amber-400">
                     টেস্ট করে দেখুন সম্পূর্ণ ফ্রিতে!
                   </p>
 
-                  <ul className="mt-5 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                  <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-amber-600 shrink-0" />
                       <span>১,৩৫৯টি আসল পণ্যের ফটো ক্যাটালগ টেস্ট</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-amber-600 shrink-0" />
                       <span>সুপারফাস্ট অফলাইন বারকোড পিওএস</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-amber-600 shrink-0" />
                       <span>ডিজিটাল বাকি খাতা ও এসএমএস তাগাদা</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-amber-600 shrink-0" />
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-amber-600 shrink-0" />
                       <span>ক্যাশ কাউন্টার ও শিফট ক্লোজিং</span>
                     </li>
                   </ul>
@@ -1058,60 +1064,113 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsDemoModalOpen(true)}
-                  className="mt-7 w-full rounded-2xl border-2 border-amber-500 bg-amber-50 py-3 text-xs sm:text-sm font-black text-amber-900 hover:bg-amber-100 transition cursor-pointer dark:bg-amber-950/40 dark:text-amber-300 whitespace-nowrap"
+                  className="mt-6 w-full rounded-2xl border-2 border-amber-500 bg-amber-50 py-2.5 text-xs font-black text-amber-900 hover:bg-amber-100 transition cursor-pointer dark:bg-amber-950/40 dark:text-amber-300 whitespace-nowrap"
                 >
-                  ১ মাস ফ্রি ডেমো শুরু করুন ⚡
+                  ফ্রি ডেমো শুরু করুন ⚡
                 </button>
               </div>
             </ScrollReveal>
 
-            {/* Package 2: Pro Subscription (Monthly 499 / Yearly 299/mo, No Domain & Hosting Fee) */}
-            <ScrollReveal animation="scale" delay={100}>
-              <div className="relative h-full rounded-3xl border-2 border-emerald-500 bg-white p-6 sm:p-7 shadow-xl flex flex-col justify-between ring-4 ring-emerald-500/10 dark:border-emerald-500 dark:bg-slate-900 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-1 text-[11px] font-black text-white shadow-md whitespace-nowrap">
+            {/* Package 2: Monthly Subscription (499 tk/mo) */}
+            <ScrollReveal animation="fade-up" delay={80}>
+              <div className="h-full rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-slate-800 dark:bg-slate-900">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+                      ৫০% মেগা ছাড় 🔥
+                    </span>
+                    <span className="text-[11px] font-bold text-slate-400">প্রতি মাস</span>
+                  </div>
+
+                  <h3 className="mt-3 text-base sm:text-lg font-black text-slate-900 dark:text-white">মাসিক সাবস্ক্রিপশন</h3>
+                  
+                  <div className="mt-2 flex items-baseline gap-1.5">
+                    <span className="font-mono text-3xl font-black text-emerald-700 dark:text-emerald-400">৳৪৯৯</span>
+                    <span className="text-xs text-slate-500 font-bold">/মাস</span>
+                    <span className="font-mono text-[11px] line-through text-slate-400">৳১,০০০</span>
+                  </div>
+
+                  <p className="mt-1 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                    ৫০% ছাড়ে প্রতি মাসে মাত্র ৪৯৯৳
+                  </p>
+
+                  <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                      <span>১,৩৫৯টি রেডি পণ্যের ক্যাটালগ</span>
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                      <span>ইনস্ট্যান্ট বারকোড পিওএস ও মেমো প্রিন্ট</span>
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                      <span>কাস্টমার বাকি খাতা ও এসএমএস তাগাদা</span>
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                      <span>দৈনিক ক্যাশ ড্রয়ার ও শিফট ক্লোজিং</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => openBuyModal('monthly')}
+                  className="mt-6 w-full rounded-2xl border-2 border-emerald-600 bg-emerald-50 py-2.5 text-xs font-black text-emerald-900 hover:bg-emerald-100 transition cursor-pointer dark:bg-emerald-950/40 dark:text-emerald-300 whitespace-nowrap"
+                >
+                  মাসিক প্যাকেজ নিন (৳৪৯৯) ⚡
+                </button>
+              </div>
+            </ScrollReveal>
+
+            {/* Package 3: Yearly Subscription (299 tk/month, No Domain & Hosting Fee) */}
+            <ScrollReveal animation="scale" delay={160}>
+              <div className="relative h-full rounded-3xl border-2 border-emerald-500 bg-white p-5 sm:p-6 shadow-xl flex flex-col justify-between ring-4 ring-emerald-500/10 dark:border-emerald-500 dark:bg-slate-900 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 px-3 py-1 text-[10px] font-black text-white shadow-md whitespace-nowrap">
                   ⭐ সেরা সেভার (সবচেয়ে জনপ্রিয়)
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[10px] font-black text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[9px] font-black text-amber-800 dark:bg-amber-950 dark:text-amber-300">
                       নো ডোমেন ও হোস্টিং ফি 🔥
                     </span>
-                    <span className="text-[11px] font-bold text-emerald-600">সবচেয়ে জনপ্রিয়</span>
+                    <span className="text-[10px] font-bold text-emerald-600">বাৎসরিক অফার</span>
                   </div>
 
-                  <h3 className="mt-3 text-lg sm:text-xl font-black text-slate-900 dark:text-white">প্রো সাবস্ক্রিপশন</h3>
+                  <h3 className="mt-3 text-base sm:text-lg font-black text-slate-900 dark:text-white">১ বছর বাৎসরিক প্যাকেজ</h3>
                   
-                  <div className="mt-2.5 flex items-baseline gap-2">
-                    <span className="font-mono text-3xl sm:text-4xl font-black text-emerald-700 dark:text-emerald-400">৳৪৯৯</span>
+                  <div className="mt-2 flex items-baseline gap-1.5">
+                    <span className="font-mono text-3xl font-black text-emerald-700 dark:text-emerald-400">৳২৯৯</span>
                     <span className="text-xs text-slate-500 font-bold">/মাস</span>
-                    <span className="font-mono text-xs line-through text-slate-400">৳১,০০০</span>
+                    <span className="font-mono text-[11px] line-through text-slate-400">৳১,০০০</span>
                   </div>
 
-                  <div className="mt-2 p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60">
-                    <p className="text-xs font-black text-emerald-800 dark:text-emerald-300">
-                      বাৎসরিক নিলে মাসে মাত্র ৳২৯৯! (এককালীন ৳৩,৫৮৮/বছর)
+                  <div className="mt-1.5 p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 text-left">
+                    <p className="text-[11px] font-black text-emerald-800 dark:text-emerald-300">
+                      বাৎসরিক মাত্র ৳৩,৫৮৮ (মাসে ৳২৯৯!)
                     </p>
-                    <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-0.5">
-                      ✓ কোনো ডোমেন ও হোস্টিং চার্জ নেই • সম্পূর্ণ ফ্রি
+                    <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 mt-0.5">
+                      ✓ কোনো ডোমেন ও হোস্টিং ফি নেই • ফ্রি ক্লাউড
                     </p>
                   </div>
 
-                  <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
-                    <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                  <ul className="mt-3 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                    <li className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                       <span>পূর্ণ ১ বছরের আনলিমিটেড লাইসেন্স</span>
                     </li>
-                    <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <li className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                       <span>ফ্রি অনলাইন বাজার স্টোর ও সাবডোমেন</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                       <span>নো ডোমেন ও হোস্টিং ফি (ক্লাউড ব্যাকআপ ফ্রি)</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                       <span>২৪/৭ ভিআইপি হোয়াটসঅ্যাপ সাপোর্ট ও অটো আপডেট</span>
                     </li>
                   </ul>
@@ -1119,51 +1178,51 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
 
                 <button
                   type="button"
-                  onClick={() => setIsBuyModalOpen(true)}
-                  className="mt-6 w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 py-3 text-xs sm:text-sm font-black text-white hover:from-emerald-700 shadow-md shadow-emerald-600/30 transition cursor-pointer whitespace-nowrap"
+                  onClick={() => openBuyModal('yearly')}
+                  className="mt-6 w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 py-2.5 text-xs font-black text-white hover:from-emerald-700 shadow-md shadow-emerald-600/30 transition cursor-pointer whitespace-nowrap"
                 >
-                  প্রো প্যাকেজ কিনুন (৳৪৯৯/মাস) ⚡
+                  বাৎসরিক প্যাকেজ কিনুন (৳৩,৫৮৮) ⚡
                 </button>
               </div>
             </ScrollReveal>
 
-            {/* Package 3: Custom Domain & Client's Demand VIP (15,000 tk Including All) */}
-            <ScrollReveal animation="fade-up" delay={200}>
-              <div className="h-full rounded-3xl border border-indigo-200 bg-white p-6 sm:p-7 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-indigo-900/60 dark:bg-slate-900">
+            {/* Package 4: Custom Domain & Client's Demand VIP (15,000 tk Including All) */}
+            <ScrollReveal animation="fade-up" delay={240}>
+              <div className="h-full rounded-3xl border border-indigo-200 bg-white p-5 sm:p-6 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between dark:border-indigo-900/60 dark:bg-slate-900">
                 <div>
                   <div className="flex items-center justify-between">
                     <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-black text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
                       👑 কাস্টম ডোমেন ও ডিমান্ড
                     </span>
-                    <span className="text-[11px] font-bold text-indigo-600">VIP সলিউশন</span>
+                    <span className="text-[10px] font-bold text-indigo-600">VIP সলিউশন</span>
                   </div>
 
-                  <h3 className="mt-3 text-lg sm:text-xl font-black text-slate-900 dark:text-white">কাস্টম ডোমেন ফুল সেটআপ</h3>
+                  <h3 className="mt-3 text-base sm:text-lg font-black text-slate-900 dark:text-white">কাস্টম ডোমেন ফুল সেটআপ</h3>
                   
-                  <div className="mt-2.5 flex items-baseline gap-2">
-                    <span className="font-mono text-3xl sm:text-4xl font-black text-indigo-700 dark:text-indigo-400">৳১৫,০০০</span>
-                    <span className="text-xs text-slate-500 font-bold">Including All</span>
+                  <div className="mt-2 flex items-baseline gap-1.5">
+                    <span className="font-mono text-3xl font-black text-indigo-700 dark:text-indigo-400">৳১৫,০০০</span>
+                    <span className="text-[10px] text-slate-500 font-bold">Including All</span>
                   </div>
 
                   <p className="mt-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
-                    ক্লায়েন্টের চাহিদা ও ডিমান্ড অনুযায়ী তৈরি
+                    ক্লায়েন্টের চাহিদা অনুযায়ী তৈরি
                   </p>
 
-                  <ul className="mt-5 space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
-                    <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                  <ul className="mt-4 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                    <li className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
+                      <Check className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
                       <span>ক্লায়েন্টের চাহিদা অনুযায়ী কাস্টমাইজড সফটওয়্যার</span>
                     </li>
-                    <li className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <li className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
+                      <Check className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
                       <span>নিজস্ব .com ডোমেন সহ (যেমন: yourshop.com)</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
                       <span>ডেডিকেটেড হাই-স্পিড ক্লাউড হোস্টিং ও সার্ভার</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                    <li className="flex items-center gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
                       <span>সম্পূর্ণ এককালীন খরচ অন্তর্ভুক্ত (No Hidden Fees)</span>
                     </li>
                   </ul>
@@ -1171,8 +1230,8 @@ export const ShowcaseLandingPage: React.FC<ShowcaseLandingPageProps> = ({
 
                 <button
                   type="button"
-                  onClick={() => setIsBuyModalOpen(true)}
-                  className="mt-6 w-full rounded-2xl bg-indigo-600 hover:bg-indigo-700 py-3 text-xs sm:text-sm font-black text-white shadow-md shadow-indigo-600/30 transition cursor-pointer whitespace-nowrap"
+                  onClick={() => openBuyModal('custom_vip')}
+                  className="mt-6 w-full rounded-2xl bg-indigo-600 hover:bg-indigo-700 py-2.5 text-xs font-black text-white shadow-md shadow-indigo-600/30 transition cursor-pointer whitespace-nowrap"
                 >
                   ভিআইপি প্যাকেজ অর্ডার করুন (৳১৫,০০০) 👑
                 </button>
